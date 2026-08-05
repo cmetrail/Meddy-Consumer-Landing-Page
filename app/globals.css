@@ -1,26 +1,93 @@
 @import "tailwindcss";
+@config "../tailwind.config.ts";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Theme design tokens. `tailwind.config.ts` and `src/config/andt.ts` both
+ * reference these CSS variables instead of hardcoded hex values, so adding
+ * a light theme later is a CSS-only change — set `data-theme="light"` on
+ * <html> (or default it via `:root`) with the values below filled in, and
+ * every Tailwind class / antd token updates automatically. No component
+ * or config code needs to change when a second theme is introduced.
+ */
+:root,
+[data-theme="dark"] {
+  --color-bg: #09090b;
+  --color-bg-surface: #0c0d0f;
+  --color-card: #181818;
+  --color-card-alt: #1e1e22;
+  --color-card-surface: #111113;
+  --color-card-secondary: #171718;
+  --color-border: #1f1f21;
+  --color-text-primary: #f4f4f5;
+  --color-text-secondary: #8a8a82;
+  --color-accent: #17925a;
+  --color-accent-light: #6ee7a0;
+  --color-error: #ff7043;
+  --color-blue: #148bd5;
+  --color-purple: #c084fc;
+  --color-green: #4ade80;
+  --color-amber: #e09a2a;
+  --color-red: #ff5656;
+  --color-neutral-bg: #232324;
+  --color-neutral-icons: #8a8a82;
+  --color-ink: #6ee7a0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+[data-theme="light"] {
+  --color-bg: #f5f5f8;
+  --color-bg-surface: #ededf2;
+  --color-card: #ffffff;
+  --color-card-surface: #f7f7f7;
+  --color-card-secondary: #f0f0f2;
+  --color-card-alt: #f2f2f2;
+  --color-border: #e2e2e2;
+  --color-text-primary: #111118;
+  --color-text-secondary: #8a8a82;
+  --color-accent: #17925a;
+  --color-accent-light: #6ee7a8;
+  --color-error: #ff7043;
+  --color-blue: #148bd5;
+  --color-red: #ff5656;
+  --color-purple: #c084fc;
+  --color-green: #4ade80;
+  --color-amber: #e09a2a;
+  --color-neutral-bg: #f8f8f8;
+  --color-neutral-icons: #8a8a82;
+  --color-ink: #6ee7a0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+* {
+  margin: 0px !important;
+  padding: 0px !important;
+  box-sizing: border-box !important;
+  font-family: var(--font-jakarta), sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
