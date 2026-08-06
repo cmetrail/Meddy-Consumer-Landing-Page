@@ -2,12 +2,12 @@
 
 const REMAINING = 337;
 const TOTAL = 500;
-const R = 30;
+const R = 38;
 const CIRC = 2 * Math.PI * R;
 const greenDash = (REMAINING / TOTAL) * CIRC;
 const grayDash = CIRC - greenDash;
 
-export default function EnrollmentCard() {
+export default function EnrollmentCard({ accentColor }: { accentColor?: string }) {
   return (
     <div className="relative" style={{ width: 378, height: 257 }}>
 
@@ -39,15 +39,15 @@ export default function EnrollmentCard() {
         </svg>
 
         {/* Card content overlay */}
-        <div className="absolute inset-0 flex flex-col justify-between p-[28px]">
-          <p className="text-[#1E1E22] leading-[15px] tracking-[0.02em]" style={{ fontSize: 12, maxWidth: 186 }}>
+        <div className="absolute inset-0 flex flex-col justify-between p-7 pl-4">
+          <p className="text-[#1E1E22] leading-3.75 tracking-[0.02em]" style={{ fontSize: 12, maxWidth: 186 }}>
             Limited enrollment ensures every patient receives personalized, physician guided care without compromise.
           </p>
           <div>
-            <p className="text-[#18181B] uppercase leading-[15px] tracking-[0.02em]" style={{ fontSize: 11.7 }}>
+            <p className="text-[#18181B] uppercase leading-3.75 tracking-[0.02em]" style={{ fontSize: 11.7 }}>
               Now Accepting
             </p>
-            <p className="text-[#18181B] font-bold leading-[34px]" style={{ fontSize: 26.7 }}>
+            <p className="text-[#18181B] font-bold leading-8.5" style={{ fontSize: 26.7 }}>
               Our first 500 patients
             </p>
           </div>
@@ -55,7 +55,7 @@ export default function EnrollmentCard() {
       </div>
 
       {/* Badge SVG — organic blob shape with ring overlay */}
-      <div className="absolute" style={{ width: 174, height: 137, top: 0, left: 184, zIndex: 2 }}>
+      <div className="absolute" style={{ width: 174, height: 137, top: -2, right: -4, zIndex: 2 }}>
         <svg width="174" height="137" viewBox="0 0 174 137" fill="none" xmlns="http://www.w3.org/2000/svg">
           <foreignObject x="-41.7476" y="-41.7476" width="256.579" height="219.827">
             <div
@@ -77,16 +77,16 @@ export default function EnrollmentCard() {
         {/* Ring + text centered over badge */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="relative flex items-center justify-center">
-            <svg width="83" height="83" viewBox="0 0 83 83">
-              <circle cx="41.5" cy="41.5" r={R} fill="none" stroke="#D0D0D0" strokeWidth="7" />
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r={R} fill="none" stroke="#D0D0D0" strokeWidth="7" />
               <circle
-                cx="41.5" cy="41.5" r={R}
+                cx="50" cy="50" r={R}
                 fill="none"
-                stroke="#17925A"
+                stroke={accentColor}
                 strokeWidth="7"
                 strokeLinecap="round"
                 strokeDasharray={`${greenDash} ${grayDash}`}
-                transform="rotate(-90 41.5 41.5)"
+                transform="rotate(-90 50 50)"
               />
             </svg>
             <div className="absolute text-center">

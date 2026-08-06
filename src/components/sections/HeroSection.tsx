@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import HeroHeader from "@/components/helper/HeroHeader";
 import HeroRightPanel from "@/components/helper/HeroRightPanel";
+import EnrollmentCard from "@/components/helper/EnrollmentCard";
 
 gsap.registerPlugin(useGSAP);
 
@@ -158,48 +159,48 @@ export default function HeroSection() {
         </div>
       ))}
 
-      {/* ── PRIMARYCARE headline layers — no z-index so mix-blend-mode reaches bg ── */}
+      {/* ── PRIMARYCARE headline layers ── */}
       {SLIDES.map((s, i) => (
         <div key={i} className="absolute inset-0 pointer-events-none">
           <div className="relative max-w-360 mx-auto h-full">
             <div ref={el => { hlRefs.current[i] = el; }}
-              className="absolute uppercase font-bold leading-none tracking-normal text-[#1E1E22] whitespace-nowrap"
-              style={{ top: "11.7dvh", left: "4.17%", fontSize: "clamp(80px, 12.5vw, 180px)", mixBlendMode: "difference" }}>
+              className="absolute uppercase font-bold leading-none tracking-normal text-[#1E1E22] whitespace-nowrap top-[8dvh] left-[3%] lg:top-[11.7dvh] lg:left-[4.17%]"
+              style={{ fontSize: "clamp(48px, 10vw, 180px)", mixBlendMode: "difference" }}>
               {s.headline.split("").map((char, j) => <span key={j}>{char}</span>)}
             </div>
           </div>
         </div>
       ))}
 
-      {/* ── Person image layers — z-20 sits in front of PRIMARYCARE ── */}
+      {/* ── Person image layers — hidden below sm, responsive size/position ── */}
       {SLIDES.map((s, i) => (
         <div key={i} ref={el => { imageRefs.current[i] = el; }}
           className="absolute inset-0 pointer-events-none z-20">
           <div className="relative max-w-360 mx-auto px-13 h-full">
             <Image src={s.image} alt="" width={715} height={954} priority={i === 0}
-              className="absolute bottom-0 left-[55%] -translate-x-1/2 h-[86dvh] w-auto object-contain object-bottom" />
+              className="hidden sm:block absolute bottom-0 left-[75%] sm:left-[70%] md:left-[62%] lg:left-[55%] -translate-x-1/2 h-[55dvh] sm:h-[65dvh] md:h-[75dvh] lg:h-[86dvh] w-auto object-contain object-bottom" />
           </div>
         </div>
       ))}
 
-      {/* ── Tagline / body / CTA — z-30 sits in front of person image ── */}
+      {/* ── Tagline / body / CTA ── */}
       {SLIDES.map((s, i) => (
         <div key={i} className="absolute inset-0 pointer-events-none z-30">
           <div className="relative max-w-360 mx-auto h-full">
 
-            <div className="absolute flex flex-col gap-[10px]" style={{ top: "33.6dvh", left: "5.21%" }}>
+            <div className="absolute flex flex-col gap-2.5 top-[22dvh] left-[5%] lg:top-[33.6dvh] lg:left-[5.21%]">
               <p ref={el => { taglineRefs.current[i] = el; }}
-                className="text-white uppercase font-normal text-[32px] leading-[40px]">{s.tagline}</p>
+                className="text-white uppercase font-normal text-[22px] md:text-[28px] lg:text-[32px] leading-tight lg:leading-[40px]">{s.tagline}</p>
               <p ref={el => { bodyRefs.current[i] = el; }}
-                className="text-white font-normal text-[20px] leading-[25px] w-[477px]">{s.body}</p>
+                className="text-white font-normal text-[16px] lg:text-[20px] leading-[22px] lg:leading-[25px] w-[min(85vw,477px)]">{s.body}</p>
             </div>
 
-            <div className="absolute pointer-events-auto" style={{ top: "52.2dvh", left: "5.21%" }}>
+            <div className="absolute pointer-events-auto top-[40dvh] left-[5%] lg:top-[52.2dvh] lg:left-[5.21%]">
               <button ref={el => { ctaRefs.current[i] = el; }}
-                className="flex items-center w-[236px] h-[64px] bg-[#18181B] rounded-[40px] pl-[15px] pr-[4px]">
-                <span className="flex-1 text-[#F4F4F5] font-medium text-[24px] leading-[30px] text-left">Get Started</span>
-                <span className="flex items-center justify-center w-[56px] h-[56px] rounded-full bg-[#F4F4F5] shrink-0">
-                  <svg width="29" height="29" viewBox="0 0 24 24" fill="none">
+                className="flex items-center w-[200px] h-[54px] lg:w-[236px] lg:h-[64px] bg-[#18181B] rounded-[40px] pl-[12px] lg:pl-[15px] pr-1">
+                <span className="flex-1 text-[#F4F4F5] font-medium text-[20px] lg:text-[24px] leading-[30px] text-left">Get Started</span>
+                <span className="flex items-center justify-center w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-[#F4F4F5] shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M7 17L17 7M17 7H7M17 7V17" stroke={s.arrow} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </span>
@@ -219,16 +220,19 @@ export default function HeroSection() {
       <div className="absolute inset-0 pointer-events-none z-30">
         <div className="relative max-w-360 mx-auto h-full">
 
-          <div ref={statsRef} className="absolute" style={{ top: "67.9dvh", left: "5.14%" }}>
-            <Image src="/stats.png" alt="Enrollment stats" width={380} height={257} className="w-95 h-auto" />
+          <div ref={statsRef} className="absolute top-[55dvh] left-[5%] md:top-[60dvh] lg:top-[67.9dvh] lg:left-[5.14%] origin-top-left scale-[0.65] sm:scale-[0.75] md:scale-[0.85] lg:scale-100">
+            <EnrollmentCard accentColor={SLIDES[activeSlide].arrow} />
           </div>
 
-          <HeroRightPanel
-            iconsRef={iconsRef}
-            nutritionRef={nutritionRef}
-            activeIndex={activeSlide}
-            nextImage={SLIDES[(activeSlide + 1) % SLIDES.length].rightImage}
-          />
+          {/* Right panel — desktop only */}
+          <div className="hidden lg:contents">
+            <HeroRightPanel
+              iconsRef={iconsRef}
+              nutritionRef={nutritionRef}
+              activeIndex={activeSlide}
+              nextImage={SLIDES[(activeSlide + 1) % SLIDES.length].rightImage}
+            />
+          </div>
 
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -11,58 +11,66 @@ export default function HeroHeader() {
   const containerRef = useRef<HTMLElement>(null);
   const logoRef      = useRef<HTMLDivElement>(null);
   const navRef       = useRef<HTMLElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useGSAP(
     () => {
       gsap.from([logoRef.current, navRef.current], {
-        y: -60,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: "power3.out",
+        y: -60, opacity: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
       });
     },
     { scope: containerRef },
   );
 
   return (
-    <header
-      ref={containerRef}
-      className="flex flex-row justify-between z-50 items-center max-w-360 mx-auto px-13 py-8"
-    >
+    <header ref={containerRef} className="relative flex flex-row justify-between items-center max-w-360 mx-auto px-6 lg:px-13 py-6 lg:py-8">
+
       {/* Logo */}
       <div ref={logoRef}>
         <Image src="/app-logo.png" height={45} width={69} alt="Meddy Health" />
       </div>
 
-      {/* Nav */}
-      <nav ref={navRef} className="flex items-center gap-12.5">
-
-        {/* HOW IT WORKS — active: white + dashed underline */}
-        <a
-          href="#"
+      {/* Desktop nav */}
+      <nav ref={navRef} className="hidden lg:flex items-center gap-12.5">
+        <a href="#"
           className="relative text-white font-semibold text-xl uppercase leading-none tracking-[0.01em]
             after:content-[''] after:absolute after:left-0 after:-bottom-1.75
-            after:w-22 after:border-t-2 after:border-dashed after:border-white"
-        >
+            after:w-22 after:border-t-2 after:border-dashed after:border-white">
           How it works
         </a>
-
-        <a
-          href="#"
-          className="text-[#C5C5C5] font-semibold text-xl uppercase leading-none tracking-[0.01em] hover:text-white transition-colors"
-        >
+        <a href="#" className="text-[#C5C5C5] font-semibold text-xl uppercase leading-none tracking-[0.01em] hover:text-white transition-colors">
           Pricing
         </a>
-
-        <a
-          href="#"
-          className="text-[#C5C5C5] font-semibold text-xl uppercase leading-none tracking-[0.01em] hover:text-white transition-colors"
-        >
+        <a href="#" className="text-[#C5C5C5] font-semibold text-xl uppercase leading-none tracking-[0.01em] hover:text-white transition-colors">
           For Physicians
         </a>
-
       </nav>
+
+      {/* Mobile hamburger */}
+      <button
+        className="lg:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10"
+        onClick={() => setMenuOpen(v => !v)}
+        aria-label="Toggle menu"
+      >
+        <span className={`block h-[2px] w-6 bg-white origin-center transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
+        <span className={`block h-[2px] w-6 bg-white transition-all duration-300 ${menuOpen ? "opacity-0 scale-x-0" : ""}`} />
+        <span className={`block h-[2px] w-6 bg-white origin-center transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
+      </button>
+
+      {/* Mobile dropdown */}
+      <div className={`
+        lg:hidden absolute top-full left-0 right-0 z-50
+        bg-black/70 backdrop-blur-md overflow-hidden
+        transition-all duration-300 ease-in-out
+        ${menuOpen ? "max-h-60 py-6" : "max-h-0 py-0"}
+      `}>
+        <div className="flex flex-col gap-6 px-6">
+          <a href="#" className="text-white font-semibold text-lg uppercase tracking-[0.01em]">How it works</a>
+          <a href="#" className="text-[#C5C5C5] font-semibold text-lg uppercase tracking-[0.01em]">Pricing</a>
+          <a href="#" className="text-[#C5C5C5] font-semibold text-lg uppercase tracking-[0.01em]">For Physicians</a>
+        </div>
+      </div>
+
     </header>
   );
 }
