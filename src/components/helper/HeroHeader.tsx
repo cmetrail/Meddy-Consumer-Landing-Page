@@ -28,7 +28,7 @@ export default function HeroHeader() {
   return (
     <header
       ref={containerRef}
-      className="flex flex-row justify-between items-center max-w-360 mx-auto px-13 py-8"
+      className="flex flex-row justify-between z-50 items-center max-w-360 mx-auto px-13 py-8"
     >
       {/* Logo */}
       <div ref={logoRef}>
