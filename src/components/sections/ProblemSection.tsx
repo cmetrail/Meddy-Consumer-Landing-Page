@@ -56,6 +56,7 @@ export default function ProblemSection() {
       // Phase 1: whole content slides up so cards reach center (~40vh)
       tl.to(contentRef.current, { y: "-10vh", ease: "none", duration: 1.2 }, 0);
 
+
       // Phase 2: cards rise one by one (start after phase 1 settles)
       tl.from(cardRefs.current[0], { yPercent: 105, ease: "none" }, 1.0)
         .from(cardRefs.current[1], { yPercent: 105, ease: "none" }, 1.9)
