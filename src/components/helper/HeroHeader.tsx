@@ -23,7 +23,7 @@ export default function HeroHeader() {
   );
 
   return (
-    <header ref={containerRef} className="relative flex flex-row justify-between items-center max-w-360 mx-auto px-6 lg:px-13 py-6 lg:py-8">
+    <header ref={containerRef} className="relative flex flex-row justify-between items-center max-w-360 mx-auto px-4  py-6">
 
       {/* Logo */}
       <div ref={logoRef}>
@@ -31,19 +31,22 @@ export default function HeroHeader() {
       </div>
 
       {/* Desktop nav */}
-      <nav ref={navRef} className="hidden lg:flex items-center gap-12.5">
-        <a href="#"
-          className="relative text-white font-semibold text-xl uppercase leading-none tracking-[0.01em]
-            after:content-[''] after:absolute after:left-0 after:-bottom-1.75
-            after:w-22 after:border-t-2 after:border-dashed after:border-white">
-          How it works
-        </a>
-        <a href="#" className="text-[#C5C5C5] font-semibold text-xl uppercase leading-none tracking-[0.01em] hover:text-white transition-colors">
-          Pricing
-        </a>
-        <a href="#" className="text-[#C5C5C5] font-semibold text-xl uppercase leading-none tracking-[0.01em] hover:text-white transition-colors">
-          For Physicians
-        </a>
+      <nav ref={navRef} className="hidden lg:flex items-center gap-10">
+        {[
+          { label: "How it works", active: true },
+          { label: "Why Meddy", active: false },
+          { label: "Physician Care", active: false },
+          { label: "Pricing", active: false },
+          { label: "FAQ", active: false },
+        ].map(({ label, active }) => (
+          <a key={label} href="#"
+            className={`relative font-semibold text-base uppercase leading-none tracking-[0.01em] transition-colors
+              ${active
+                ? "text-white after:content-[''] after:absolute after:left-0 after:-bottom-1.75 after:w-full after:border-t-2 after:border-dashed after:border-white"
+                : "text-[#C5C5C5] hover:text-white"}`}>
+            {label}
+          </a>
+        ))}
       </nav>
 
       {/* Mobile hamburger */}
