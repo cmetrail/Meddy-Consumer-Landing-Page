@@ -15,7 +15,7 @@ export default function NutritionCard() {
       className="bg-white/10 flex flex-col gap-3 max-w-62.5  rounded-2xl p-3"
       style={{
         backdropFilter: "blur(14px)",
-        border: "1px solid rgba(255,255,255,0.06)",
+        border: "0.1px solid rgba(255,255,255,1)",
         boxShadow: "0px 0.75px 2.25px 0px #0000000D, 0px 1.5px 9px 0px #00000014",
       }}
     >

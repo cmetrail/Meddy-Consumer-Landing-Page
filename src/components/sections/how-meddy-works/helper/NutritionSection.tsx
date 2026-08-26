@@ -18,7 +18,7 @@ export default function NutritionSection() {
           />
 
           <div className="relative w-full md:w-fit md:mx-auto">
-            <div className="absolute w-62.5 right-[5%] top-[5%] origin-top-right scale-[0.8] sm:scale-100">
+            <div className="absolute w-62.5 right-[3%] top-[10%] origin-top-right scale-[0.8] sm:scale-100">
               <MealCard />
             </div>
             <Image
