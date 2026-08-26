@@ -8,10 +8,12 @@ export default function WorkoutSection() {
   return (
     <div className="">
       <div className="max-w-360 mx-auto px-4 relative">
-        <GiantNumber n="02" align="right" />
-        <div className="grid lg:grid-cols-2 pt-24  lg:pt-24  gap-12 lg:gap-16 items-center">
+        {/* <div>
+          <GiantNumber n="02" align="right" />
+        </div> */}
+        <div className="grid lg:grid-cols-2  gap-12 lg:gap-16">
           <div className="relative w-full md:w-fit md:mx-auto">
-            <div className="absolute right-[0%] top-[0%] origin-top-right scale-[0.8] sm:scale-100 w-[350px]" >
+            <div className="absolute right-[0%] top-[0%] origin-top-right scale-[0.8] sm:scale-100 w-87.5" >
               <WorkoutCard />
             </div>
             <Image
@@ -26,13 +28,21 @@ export default function WorkoutSection() {
               <WorkoutStatsCard />
             </div>
           </div>
-          <div className="flex flex-row justify-end">
-            <FeatureCopy
-              eyebrow="Workouts"
-              headline={["Train with a plan your"]}
-              accent="doctor can actually see."
-              sub="Save workouts and track progress — so your physician knows what's working, not just what you weigh."
-            />
+          <div className="flex flex-row  relative ">
+            <div className="lg:flex hidden">
+              <GiantNumber n="02" align="right" />
+            </div>
+            <div className="flex lg:hidden ">
+              <GiantNumber n="02" />
+            </div>
+            <div className="flex flex-col flex-1 lg:pl-20 py-20 lg:pt-5 justify-center">
+              <FeatureCopy
+                eyebrow="Workouts"
+                headline={["Train with a plan your"]}
+                accent="doctor can actually see."
+                sub="Save workouts and track progress — so your physician knows what's working, not just what you weigh."
+              />
+            </div>
           </div>
         </div>
       </div>
