@@ -34,6 +34,10 @@ export default {
           neutralIcons: "var(--color-neutral-icons)",
         },
       },
+      backgroundImage: {
+        "problem-gradient":
+          "linear-gradient(235.82deg, #D0E2CA 26.41%, #F6F4ED 42.24%, #F6F4ED 69.77%, #F0E6CF 89.05%)",
+      },
     },
   },
   corePlugins: {
