@@ -8,10 +8,7 @@ export default function WorkoutSection() {
   return (
     <div className="">
       <div className="max-w-360 mx-auto px-4 relative">
-        {/* <div>
-          <GiantNumber n="02" align="right" />
-        </div> */}
-        <div className="grid lg:grid-cols-2  gap-12 lg:gap-16">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           <div className="relative w-full md:w-fit md:mx-auto">
             <div className="absolute right-[0%] top-[0%] origin-top-right scale-[0.8] sm:scale-100 w-87.5" >
               <WorkoutCard />
@@ -29,13 +26,8 @@ export default function WorkoutSection() {
             </div>
           </div>
           <div className="flex flex-row  relative ">
-            <div className="lg:flex hidden">
-              <GiantNumber n="02" align="right" />
-            </div>
-            <div className="flex lg:hidden ">
-              <GiantNumber n="02" />
-            </div>
-            <div className="flex flex-col flex-1 lg:pl-20 py-20 lg:pt-5 justify-center">
+            <GiantNumber n="02" className="left-0 lg:right-0" />
+            <div className="flex flex-col flex-1 lg:pl-16 py-20 lg:pt-24 justify-center">
               <FeatureCopy
                 eyebrow="Workouts"
                 headline={["Train with a plan your"]}

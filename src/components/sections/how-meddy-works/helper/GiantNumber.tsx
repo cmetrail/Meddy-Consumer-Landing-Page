@@ -1,11 +1,10 @@
-export default function GiantNumber({ n, align = "left" }: { n: string; align?: "left" | "right" }) {
+export default function GiantNumber({ n, className = "left-0" }: { n: string; className?: string }) {
   return (
     <span
       aria-hidden
-      className="pointer-events-none absolute select-none"
+      className={`pointer-events-none absolute select-none ${className}`}
       style={{
         top: 0,
-        ...(align === "right" ? { right: 0 } : { left: 0 }),
         rotate: "0.31deg",
         opacity: 1,
         mixBlendMode: "plus-lighter",

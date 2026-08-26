@@ -1,53 +1,116 @@
-import ChartCard from "./ChartCard";
+import Image from "next/image";
 import FeatureCopy from "./FeatureCopy";
-import FeatureRow from "./FeatureRow";
-import Photo from "./Photo";
+import GiantNumber from "./GiantNumber";
+import { SleepArchitectureBar, type ISleepStage } from "./SleepArchitectureBar";
+
+const SLEEP_STAGES: ISleepStage[] = [
+  { key: "awake", label: "Awake", shortLabel: "Awake", percentage: 10, color: "bg-[#E3F9FF]", badgeBg: "bg-[#E3F9FF]" },
+  { key: "light", label: "Light", shortLabel: "Light", percentage: 30, color: "bg-[#4DC1FF]", badgeBg: "bg-[#4DC1FF]" },
+  { key: "deep", label: "Deep", shortLabel: "Deep", percentage: 28, color: "bg-[#A953FF]", badgeBg: "bg-[#A953FF]" },
+  { key: "rem", label: "REM", shortLabel: "REM", percentage: 32, color: "bg-[#FF4BA2]", badgeBg: "bg-[#FF4BA2]" },
+];
+
+const DAYS = ["Week", "Mon", "Tue", "Wed", "Thu"];
+
+function SleepArchitectureCard() {
+  return (
+    <div
+      className="flex flex-col gap-3 rounded-[9px] p-3"
+      style={{
+        backdropFilter: "blur(14px)",
+        backgroundColor: "rgba(255,255,255,0.06)",
+        border: "0.1px solid rgba(255,255,255,1)",
+        boxShadow: "0px 0.75px 2.25px 0px #0000000D, 0px 1.5px 9px 0px #00000014",
+      }}
+    >
+      <p className="text-white text-sm font-semibold">Sleep Architecture</p>
+
+      {/* Week day tabs */}
+      <div className="flex gap-1 mb-2">
+        {DAYS.map((d, i) => (
+          <span
+            key={d}
+            className={`rounded-full px-3 py-1.5 text-[12px] font-semibold ${i === 0 ? "bg-[#848484]/14 border border-white text-white" : "border border-transparent bg-[#848484]/14"}`}
+          >
+            {d}
+          </span>
+        ))}
+      </div>
+
+      <SleepArchitectureBar items={SLEEP_STAGES} />
+    </div>
+  );
+}
+
+function SleepScoreCard() {
+  return (
+    <div
+      className="flex flex-col gap-6 rounded-md p-3 overflow-hidden"
+      style={{
+        backdropFilter: "blur(14px)",
+        backgroundColor: "rgba(255,255,255,0.06)",
+        border: "0.1px solid rgba(255,255,255,1)",
+        boxShadow: "0px 0.75px 2.25px 0px #0000000D, 0px 1.5px 9px 0px #00000014",
+      }}
+    >
+      <div className="flex flex-col items-end">
+        <span className="text-white text-[7px] font-medium">Score</span>
+        <p className="text-white font-bold text-base leading-tight">93%</p>
+        <span className="flex items-center gap-1 rounded-full bg-[#57E6FF] px-2 py-0.5 text-[#0C0D0F] text-[7px] font-semibold">
+          Very Stable
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <circle cx="5" cy="5" r="4.5" stroke="#0C0D0F" strokeWidth="1" />
+            <text x="5" y="7.5" textAnchor="middle" fontSize="6" fill="#0C0D0F" fontWeight="700">i</text>
+          </svg>
+        </span>
+      </div>
+      <Image
+        src="/home/sleep-graphs.png"
+        alt="Sleep chart"
+        width={240}
+        height={140}
+        priority
+        className="w-full rounded-lg object-cover"
+      />
+    </div>
+  );
+}
 
 export default function SleepSection() {
   return (
-    <FeatureRow
-      number="03"
-      chart={
-        <ChartCard
-          titleA="Deep Sleep"
-          titleB="· Caffeine Intake"
-          subtitle="Sleep Trend"
-          lines={[
-            { label: "Deep Sleep", color: "#191762", points: "0,160 100,150 200,120 300,140 400,90 500,110 600,80" },
-            { label: "Caffeine", color: "#621717", points: "0,80 100,100 200,90 300,60 400,110 500,70 600,90" },
-          ]}
-          callouts={[
-            { text: "Deep Sleep: 18%", color: "rgba(25,23,98,0.6)" },
-            { text: "Deep Sleep: 14%", color: "rgba(25,23,98,0.6)" },
-            { text: "Caffeine: 172 mg", color: "rgba(98,23,23,0.6)" },
-          ]}
-        />
-      }
-      content={
-        <>
-          <FeatureCopy
-            eyebrow="Sleep Monitoring"
-            headline={["Track your sleep. See how it affects your recovery, performance, and health."]}
-            accent="recovery, performance, and health."
-            sub="Scores your sleep. Never connects it to your training load, caloric deficit, or HRV dip."
-          />
-          <div className="mt-10 relative h-[520px] lg:h-[640px]">
-            <Photo src="/home/sleep-photo.png" alt="Sleep monitoring" className="h-full w-full" />
-            <div className="absolute left-0 top-10 w-[260px] rounded-2xl bg-[#0f1d16] p-4">
-              <div className="flex items-center justify-between">
-                <span className="text-white/70" style={{ fontSize: 13 }}>Score</span>
-                <span className="rounded-full bg-[#57E6FF]/20 px-2 py-0.5 text-[#57E6FF]" style={{ fontSize: 11 }}>Very Stable</span>
-              </div>
-              <p className="mt-1 text-white font-bold" style={{ fontSize: 28 }}>93%</p>
-              <div className="mt-3 flex items-end gap-1" style={{ height: 40 }}>
-                {[40, 60, 35, 55, 70, 45, 65, 50, 75, 55, 40, 60, 70, 50, 65].map((h, i) => (
-                  <span key={i} className="flex-1 rounded-sm bg-[#4DC1FF]/70" style={{ height: `${h}%` }} />
-                ))}
-              </div>
+    <div className="">
+      <div className="max-w-360 mx-auto px-4  relative">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+          <div className="relative w-full md:w-fit md:mx-auto">
+            <div className="absolute right-0 top-0 origin-top-right scale-[0.8] sm:scale-100 md:right-[-18%] md:top-[2%] w-72.5">
+              <SleepArchitectureCard />
+            </div>
+            <Image
+              src="/home/sleep-photo.png"
+              alt="Sleep monitoring"
+              width={522}
+              height={695}
+              priority
+              className="object-contain w-full h-auto md:w-130.5 md:h-173.75"
+            />
+            <div className="absolute left-0 bottom-0 origin-bottom-left scale-[0.8] sm:scale-100  md:bottom-0 lg:bottom-[20%] w-52">
+              <SleepScoreCard />
             </div>
           </div>
-        </>
-      }
-    />
+
+          <div className="flex flex-row relative">
+            <GiantNumber n="03" className="left-0 lg:right-0" />
+            <div className="flex flex-col flex-1 lg:pl-16 pt-20 lg:pt-42 justify-center">
+              <FeatureCopy
+                eyebrow="Sleep Monitoring"
+                headline={["TRACK YOUR SLEEP. SEE HOW IT AFFECTS"]}
+                accent="YOUR RECOVERY, PERFORMANCE, AND HEALTH."
+                sub="Scores your sleep. Never connects it to your training load, caloric deficit, or HRV dip."
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

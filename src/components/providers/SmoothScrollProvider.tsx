@@ -33,7 +33,20 @@ export default function SmoothScrollProvider({
 
     gsap.ticker.lagSmoothing(0);
 
+    const refresh = () => {
+      lenis.resize();
+      ScrollTrigger.refresh();
+    };
+
+    window.addEventListener("load", refresh);
+    document.fonts?.ready?.then(refresh);
+
+    const observer = new ResizeObserver(refresh);
+    observer.observe(document.body);
+
     return () => {
+      window.removeEventListener("load", refresh);
+      observer.disconnect();
       gsap.ticker.remove(ticker);
       lenis.destroy();
     };

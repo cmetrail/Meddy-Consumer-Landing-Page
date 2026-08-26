@@ -17,9 +17,8 @@ export default function HowMeddyWorksSection() {
       <div className="flex flex-col gap-40 lg:gap-64">
         <NutritionSection />
         <WorkoutSection />
-        {/* <SleepSection />
-        <A1cSection />
-        <InsightsSection /> */}
+        <SleepSection />
+        <InsightsSection />
       </div>
     </section>
   );
