@@ -27,7 +27,7 @@ export default function SleepSection() {
         <>
           <FeatureCopy
             eyebrow="Sleep Monitoring"
-            headline="Track your sleep. See how it affects your recovery, performance, and health."
+            headline={["Track your sleep. See how it affects your recovery, performance, and health."]}
             accent="recovery, performance, and health."
             sub="Scores your sleep. Never connects it to your training load, caloric deficit, or HRV dip."
           />

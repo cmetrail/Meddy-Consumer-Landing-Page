@@ -9,7 +9,7 @@ import InsightsSection from "./helper/InsightsSection";
 
 export default function HowMeddyWorksSection() {
   return (
-    <section className="relative w-full bg-[#17231D] text-white overflow-hidden">
+    <section className="relative w-full bg-[#16231d] text-white overflow-hidden">
       {/* ── Hero: How Meddy works ── */}
       <Hero />
 
@@ -17,9 +17,9 @@ export default function HowMeddyWorksSection() {
       <div className="flex flex-col gap-40 lg:gap-64">
         <NutritionSection />
         <WorkoutSection />
-        <SleepSection />
+        {/* <SleepSection />
         <A1cSection />
-        <InsightsSection />
+        <InsightsSection /> */}
       </div>
     </section>
   );

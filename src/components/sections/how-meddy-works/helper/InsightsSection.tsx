@@ -11,7 +11,7 @@ export default function InsightsSection() {
         <Reveal>
           <FeatureCopy
             eyebrow="Health Insights"
-            headline="Know what's actually moving your health."
+            headline={["Know what's actually moving your health."]}
             accent="moving your health."
             sub="See how changes affect your results — and which habits are driving them."
           />

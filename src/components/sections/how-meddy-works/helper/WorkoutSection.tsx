@@ -28,7 +28,7 @@ export default function WorkoutSection() {
         <>
           <FeatureCopy
             eyebrow="Workouts"
-            headline="Train with a plan your doctor can actually see."
+            headline={["Train with a plan your doctor can actually see."]}
             accent="doctor can actually see."
             sub="Save workouts and track progress — so your physician knows what's working, not just what you weigh."
           />
