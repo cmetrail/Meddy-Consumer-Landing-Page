@@ -19,18 +19,18 @@ const BP_PATH =
 // Grid line y-coords from Line.svg (x spans 119.213 → 1389.803)
 const GX1 = 119.213;
 const GX2 = 1389.803;
-const GYS = [182.3, 213.5, 244.7, 275.8, 307.0, 338.2, 369.4, 400.5, 431.7, 462.9, 494.1];
+const GYS = [182.287, 213.48, 244.657, 275.834, 307.01, 338.187, 369.363, 400.54, 431.716, 462.893, 494.069];
 
 // Dot centres in SVG space (from ellipse transforms in Line.svg)
-// W1 BP:  matrix(-1 0 0 1 462 228.003) + r=13.5 → cx=462-13.5=448.5, cy=228+13.5=241.5
-// W1 Sod: matrix(-1 0 0 1 167 260.003) + r=6.5  → cx=160.5, cy=266.5
-// W8 Sod: matrix(-1 0 0 1 1094 328.003)+ r=6.5  → cx=1087.5, cy=334.5
-// W8 BP:  matrix(-1 0 0 1 1232 371.003)+ r=13.5 → cx=1218.5, cy=384.5
+// W1 BP:  matrix(-1 0 0 1 462 228.003) + r=13.5 → cx=462-13.5=448.5, cy=228.003+13.5=241.503
+// W1 Sod: matrix(-1 0 0 1 167 260.003) + r=6.5  → cx=160.5, cy=266.503
+// W8 Sod: matrix(-1 0 0 1 1094 328.003)+ r=6.5  → cx=1087.5, cy=334.503
+// W8 BP:  matrix(-1 0 0 1 1232 371.003)+ r=13.5 → cx=1218.5, cy=384.503
 const DOTS = [
-  { cx: 448.5,  cy: 241.5, rOuter: 13.5, rInner: 10.5, green: true,  filterId: "gbd-f0" },
-  { cx: 160.5,  cy: 266.5, rOuter:  6.5, rInner:  6.5, green: false, filterId: "gbd-f1" },
-  { cx: 1087.5, cy: 334.5, rOuter:  6.5, rInner:  6.5, green: false, filterId: "gbd-f2" },
-  { cx: 1218.5, cy: 384.5, rOuter: 13.5, rInner: 10.5, green: true,  filterId: "gbd-f3" },
+  { cx: 448.5,  cy: 241.503, rOuter: 13.5,  rInner: 10.5,  green: true,  filterId: "gbd-f0" },
+  { cx: 160.5,  cy: 266.503, rOuter:  6.5,  rInner:  5.055, green: false, filterId: "gbd-f1" },
+  { cx: 1087.5, cy: 334.503, rOuter:  6.5,  rInner:  5.055, green: false, filterId: "gbd-f2" },
+  { cx: 1218.5, cy: 384.503, rOuter: 13.5,  rInner: 10.5,  green: true,  filterId: "gbd-f3" },
 ] as const;
 
 // Card anchor positions as % of container (= SVG coord / viewBox dimension × 100)
@@ -204,13 +204,13 @@ export default function GraphBand() {
               {/* Dot fill gradients */}
               <radialGradient id="gbd-green-dot" cx="0" cy="0" r="1"
                 gradientUnits="userSpaceOnUse"
-                gradientTransform="translate(10.5 10.5) rotate(87.4) scale(12.847)">
+                gradientTransform="translate(10.4999 10.5) rotate(87.3975) scale(12.8466)">
                 <stop offset="0.016" stopColor="#68AD75" />
                 <stop offset="1" stopColor="#17622B" />
               </radialGradient>
               <radialGradient id="gbd-red-dot" cx="0" cy="0" r="1"
                 gradientUnits="userSpaceOnUse"
-                gradientTransform="translate(5.055 5.055) rotate(87.4) scale(6.185)">
+                gradientTransform="translate(5.05548 5.05551) rotate(87.3975) scale(6.18534)">
                 <stop offset="0.016" stopColor="#AD8068" />
                 <stop offset="1" stopColor="#621717" />
               </radialGradient>
@@ -222,7 +222,7 @@ export default function GraphBand() {
                 <line
                   key={y}
                   x1={GX1} y1={y} x2={GX2} y2={y}
-                  stroke="#E7E7E7" strokeWidth="0.784"
+                  stroke="#E7E7E7" strokeWidth="0.784314"
                 />
               ))}
             </g>

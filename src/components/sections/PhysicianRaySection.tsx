@@ -10,10 +10,15 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const TRUST_BADGES = [
-  { Icon: ShieldCheck, text: "Board-certified physician" },
-  { Icon: Clock, text: "First consultation free" },
-  { Icon: GlobeLock, text: "HIPAA compliant" },
-  { Icon: ClockCheck, text: "Available in 46 states except · Arkansas · Massachussetts · New Mexico · South Carolina" },
+  { Icon: ShieldCheck, text: "Board-certified physician", bold: false },
+  { Icon: Clock, text: "First consultation free", bold: false },
+  { Icon: GlobeLock, text: "HIPAA compliant", bold: true },
+  {
+    Icon: ClockCheck,
+    text: "Available in 46 states except",
+    bold: false,
+    sub: ["Arkansas", "Massachussetts", "New Mexico", "South Carolina"],
+  },
 ];
 
 export default function PhysicianRaySection() {
@@ -35,68 +40,126 @@ export default function PhysicianRaySection() {
   );
 
   return (
-    <section ref={sectionRef} className="relative w-full bg-[#1D3A1D] text-white overflow-hidden">
-      <div className="absolute left-1/4 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-[#6EE7A0]/10 blur-[120px]" />
+    <section
+      ref={sectionRef}
+      className="relative w-full bg-[#1D3A1D] text-white overflow-hidden"
+    >
+      {/* ambient glow (Figma Group 48095837 — blurred color vectors on the left) */}
+      <div className="pointer-events-none absolute -left-[30%] -top-[20%] h-[160%] w-[110%] rotate-[-20deg] rounded-full bg-[#104526] blur-[200px]" />
+      <div className="pointer-events-none absolute -left-[20%] -top-[10%] h-[120%] w-[90%] rotate-[-30deg] rounded-full bg-[#184C34] blur-[200px]" />
+      <div className="pointer-events-none absolute -left-[15%] top-[10%] h-[80%] w-[60%] rotate-[-25deg] rounded-full bg-[#47652D] blur-[200px]" />
+      <div className="pointer-events-none absolute -left-[10%] top-[25%] h-[55%] w-[40%] rotate-[-20deg] rounded-full bg-[#5D985A] blur-[180px]" />
+      <div className="pointer-events-none absolute -left-[8%] top-[30%] h-[35%] w-[28%] rotate-[-15deg] rounded-full bg-[#EAFFC2] blur-[140px]" />
 
-      <div className="relative max-w-360 mx-auto px-6 lg:px-13 py-20 lg:py-28">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="relative max-w-360 mx-auto px-4 py-10 md:py-16 lg:px-0 lg:py-0">
+        <div className="relative w-full aspect-1442/942 max-lg:aspect-auto">
           {/* Photo */}
-          <div data-reveal className="relative flex justify-center">
+          <div data-reveal className="absolute left-0 top-0 h-full w-[44%] max-lg:hidden">
             <Image
               src="/home/physician-ray.png"
               alt="Dr. Ray, board-certified physician"
-              width={418}
-              height={626}
-              className="object-contain"
+              width={635}
+              height={951}
+              priority
+              className="h-full w-full object-cover"
             />
           </div>
 
-          {/* Copy */}
-          <div data-reveal className="text-center lg:text-right">
-            <p className="text-[#F4F4F5] uppercase tracking-[0.02em]" style={{ fontSize: 20 }}>
+          {/* Copy (right-aligned) */}
+          <div
+            data-reveal
+            className="absolute left-[57.28%] top-[4.99%] w-[37.31%] text-right max-lg:static max-lg:w-full max-lg:text-center"
+          >
+            <p
+              className="uppercase leading-[1.25] tracking-[0.02em] text-[#F4F4F5]"
+              style={{ fontSize: "clamp(14px,1.39vw,20px)" }}
+            >
               Limited availability
             </p>
-            <p className="mt-5 text-white font-semibold uppercase" style={{ fontSize: 36 }}>
+            <p
+              className="mt-[34px] font-semibold uppercase leading-[1.25] text-white"
+              style={{ fontSize: "clamp(24px,2.5vw,36px)" }}
+            >
               500 spots.
             </p>
-            <p className="text-white font-extrabold uppercase leading-none mt-1" style={{ fontSize: "clamp(44px, 5vw, 64px)" }}>
+            <p
+              className="mt-[5px] font-extrabold uppercase leading-[1.26] text-white"
+              style={{ fontSize: "clamp(40px,4.44vw,64px)" }}
+            >
               One physician.
             </p>
-            <p className="mt-5 text-white font-semibold uppercase" style={{ fontSize: 24 }}>
+            <p
+              className="mt-[13px] font-semibold uppercase leading-[1.25] tracking-[0.02em] text-white"
+              style={{ fontSize: "clamp(16px,1.67vw,24px)" }}
+            >
               Your data finally means something.
             </p>
 
-            <div className="mt-9 flex justify-center lg:justify-end gap-4">
-              <button className="rounded-[10px] bg-[#18181B] px-8 py-3.5 text-white uppercase tracking-[0.02em]" style={{ fontSize: 16 }}>
+            {/* Buttons */}
+            <div className="mt-[95px] flex justify-end gap-[33px] max-lg:mt-10 max-lg:justify-center max-sm:flex-col max-sm:items-stretch max-sm:gap-3">
+              <button
+                className="flex h-[50px] w-[200px] items-center justify-center rounded-none bg-[#18181B] uppercase text-white max-sm:w-full"
+                style={{ fontSize: "clamp(12px,1.11vw,16px)" }}
+              >
                 Get started
               </button>
-              <button className="rounded-[10px] border border-white px-8 py-3.5 text-white uppercase tracking-[0.02em]" style={{ fontSize: 16 }}>
+              <button
+                className="flex h-[50px] w-[200px] items-center justify-center rounded-none border border-white uppercase text-white max-sm:w-full"
+                style={{ fontSize: "clamp(12px,1.11vw,16px)" }}
+              >
                 See how it works
               </button>
             </div>
-
-            {/* Social proof card */}
-            <div className="mt-10 inline-block rounded-xl bg-white p-5 text-left shadow-lg">
-              <p className="text-[#0C683E] font-medium uppercase tracking-[0.02em]" style={{ fontSize: 14 }}>
-                Now accepting our first 500 patients
-              </p>
-              <p className="mt-1 text-[#0C683E] font-bold uppercase" style={{ fontSize: 34 }}>
-                327 <span className="text-base font-medium">Remaining spots</span>
-              </p>
-            </div>
           </div>
-        </div>
 
-        {/* Trust badges */}
-        <div data-reveal className="mt-20 flex flex-wrap items-center justify-center gap-x-10 gap-y-5">
-          {TRUST_BADGES.map(({ Icon, text }) => (
-            <div key={text} className="flex items-center gap-2.5">
-              <Icon size={18} className="text-white/90" strokeWidth={2} />
-              <span className="text-white font-medium uppercase" style={{ fontSize: 13 }}>
-                {text}
-              </span>
-            </div>
-          ))}
+          {/* Social proof card (one-physician.svg) */}
+          <div
+            data-reveal
+            className="absolute left-[71.22%] top-[53.18%] w-[23.31%] max-lg:static max-lg:mx-auto max-lg:mt-12 max-lg:w-full max-lg:max-w-[340px]"
+          >
+            <Image
+              src="/home/one-physician.svg"
+              alt="Now accepting our first 500 patients"
+              width={337}
+              height={268}
+              className="h-auto w-full"
+            />
+          </div>
+
+          {/* Trust badges */}
+          <div
+            data-reveal
+            className="absolute left-[22.05%] top-[92.46%] flex w-[73.44%] items-start gap-[25px] max-lg:static max-lg:mx-auto max-lg:mt-12 max-lg:w-full max-lg:flex-wrap max-lg:justify-center max-lg:gap-x-[25px] max-lg:gap-y-5"
+          >
+            {TRUST_BADGES.map(({ Icon, text, bold, sub }) => (
+              <div key={text} className={`flex shrink-0 gap-2.5 ${sub ? "items-start" : "items-center"}`}>
+                <Icon size={24} className="shrink-0 text-white" strokeWidth={1.5} />
+                <div className="flex flex-col items-start">
+                  <span
+                    className={`uppercase text-white ${bold ? "font-extrabold" : "font-medium"}`}
+                    style={{
+                      fontSize: bold ? "clamp(12px,1.11vw,16px)" : "clamp(11px,0.97vw,14px)",
+                      letterSpacing: "0.02em",
+                    }}
+                  >
+                    {text}
+                  </span>
+                  {sub && (
+                    <span className="mt-[7px] flex items-center gap-1">
+                      {sub.map((s, i) => (
+                        <span key={s} className="flex items-center gap-1 text-white">
+                          {i > 0 && <span className="h-[5px] w-[5px] rounded-full bg-white" />}
+                          <span style={{ fontSize: "clamp(9px,0.69vw,10px)", letterSpacing: "0.02em" }}>
+                            {s}
+                          </span>
+                        </span>
+                      ))}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
