@@ -12,7 +12,7 @@ export default function Home() {
       <HeroSection />
       <ProblemSection />
       <HowMeddyWorksSection />
-      {/* <MostCareSection /> */}
+      <MostCareSection />
       {/* <TestimonialsSection />
       <PhysicianRaySection />
       <FooterSection /> */}

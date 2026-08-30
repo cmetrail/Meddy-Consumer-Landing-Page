@@ -6,6 +6,7 @@ import WorkoutSection from "./helper/WorkoutSection";
 import SleepSection from "./helper/SleepSection";
 import A1cSection from "./helper/A1cSection";
 import InsightsSection from "./helper/InsightsSection";
+import GraphBand from "./helper/GraphBand";
 
 export default function HowMeddyWorksSection() {
   return (
@@ -15,6 +16,7 @@ export default function HowMeddyWorksSection() {
 
       {/* ── Feature blocks ── */}
       <div className="flex flex-col gap-40 lg:gap-64">
+        <GraphBand />
         <NutritionSection />
         <WorkoutSection />
         <SleepSection />

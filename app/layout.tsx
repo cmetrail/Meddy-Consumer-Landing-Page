@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} h-full antialiased`} style={{ fontFamily: "var(--font-plus-jakarta), sans-serif" }}>
-      <body className="min-h-full flex flex-col" suppressHydrationWarning={true}>
+    <html lang="en" className={`${plusJakarta.variable} antialiased`} style={{ fontFamily: "var(--font-plus-jakarta), sans-serif" }}>
+      <body className="min-h-dvh flex flex-col" suppressHydrationWarning={true}>
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>

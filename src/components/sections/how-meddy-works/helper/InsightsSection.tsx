@@ -1,7 +1,20 @@
+"use client";
+
 import Image from "next/image";
 import { TrendingDown, TrendingUp } from "lucide-react";
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import FeatureCopy from "./FeatureCopy";
 import GiantNumber from "./GiantNumber";
+
+const A1C_TREND_DATA = [
+  { x: 0, a1c: 10 },
+  { x: 30, a1c: 15 },
+  { x: 60, a1c: 30 },
+  { x: 90, a1c: 20 },
+  { x: 120, a1c: 40 },
+  { x: 150, a1c: 45 },
+  { x: 200, a1c: 60 },
+];
 
 function NetCaloriesCard() {
   return (
@@ -60,22 +73,35 @@ function A1cTrendCard() {
       }}
     >
       <p className="text-white/60 text-[9px]">A1c Trend</p>
-      <div className="relative">
-        <svg viewBox="0 0 200 70" className="h-16 w-full" preserveAspectRatio="none">
-          <polyline
-            points="0,60 30,55 60,40 90,50 120,30 150,25 200,10"
-            fill="none"
-            stroke="#F2A61A"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          {/* Avg badges */}
-          <rect x="28" y="42" width="36" height="10" rx="3" fill="rgba(242,166,26,0.25)" />
-          <text x="46" y="50" textAnchor="middle" fontSize="5.5" fill="#F2A61A" fontWeight="600">Avg: 14.3%</text>
-          <rect x="138" y="14" width="36" height="10" rx="3" fill="rgba(242,166,26,0.25)" />
-          <text x="156" y="22" textAnchor="middle" fontSize="5.5" fill="#F2A61A" fontWeight="600">Avg: 13.8%</text>
-        </svg>
+      <div className="relative h-16 w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={A1C_TREND_DATA} margin={{ top: 4, right: 2, left: 2, bottom: 4 }}>
+            <XAxis dataKey="x" type="number" domain={[0, 200]} hide />
+            <YAxis type="number" domain={[0, 70]} hide />
+            <Line
+              type="monotone"
+              dataKey="a1c"
+              stroke="#F2A61A"
+              strokeWidth={2.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              dot={false}
+              isAnimationActive={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+        <span
+          className="absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-sm px-1 py-0.5 font-semibold"
+          style={{ left: "23%", top: "67%", fontSize: 5.5, color: "#F2A61A", background: "rgba(242,166,26,0.25)" }}
+        >
+          Avg: 14.3%
+        </span>
+        <span
+          className="absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-sm px-1 py-0.5 font-semibold"
+          style={{ left: "78%", top: "27%", fontSize: 5.5, color: "#F2A61A", background: "rgba(242,166,26,0.25)" }}
+        >
+          Avg: 13.8%
+        </span>
       </div>
       <div className="flex justify-between text-white/40" style={{ fontSize: 8 }}>
         {["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"].map((m, i) => (
@@ -114,7 +140,7 @@ export default function InsightsSection() {
               className="object-contain w-full h-auto md:w-110.25 md:h-167.5"
 
             />
-            <div className="absolute left-[0%] bottom-[0%] origin-bottom-left scale-[0.8] sm:scale-100 w-52">
+            <div className="absolute left-[0%] bottom-[0%] origin-bottom-left scale-[0.8] sm:scale-100 w-67">
               <A1cTrendCard />
             </div>
           </div>
