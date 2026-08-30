@@ -30,8 +30,8 @@ function PlanCard({
       }`}
     >
       {badge && (
-        <span className="absolute -top-4 left-8 inline-flex items-center gap-[7px] rounded-full bg-[#17925A] px-4 py-1 text-white" style={{ fontSize: 20 }}>
-          <Crown size={30} /> {badge}
+        <span className="absolute bottom-full -left-1.25 inline-flex items-center gap-2 bg-[#17925A] px-4 py-3 text-white" style={{ fontSize: 18 }}>
+          <Crown size={20} strokeWidth={1.5} /> {badge}
         </span>
       )}
 
@@ -84,7 +84,7 @@ export function Pricing() {
   return (
     <>
       {/* Header */}
-      <div data-reveal className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+      <div data-reveal className="flex flex-col  lg:flex-row lg:items-end lg:justify-between gap-8">
         <div>
           <p className="text-[#F4F4F5] font-medium uppercase tracking-[0.02em]" style={{ fontSize: 24, lineHeight: "30px" }}>
             Pricing
@@ -116,7 +116,7 @@ export function Pricing() {
             cta="Start for free"
           />
         </div>
-        <div data-reveal>
+        <div data-reveal className="pt-14 lg:pt-0">
           <PlanCard
             name="Meddy Care"
             tagline="Track your health. Build better habits"
