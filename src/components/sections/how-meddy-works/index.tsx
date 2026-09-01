@@ -15,7 +15,7 @@ export default function HowMeddyWorksSection() {
       <Hero />
 
       {/* ── Feature blocks ── */}
-      <div className="flex flex-col gap-40">
+      <div className="flex flex-col pt-10 gap-40">
         <GraphBand />
         <NutritionSection />
         <WorkoutSection />

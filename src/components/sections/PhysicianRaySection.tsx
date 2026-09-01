@@ -51,10 +51,10 @@ export default function PhysicianRaySection() {
       <div className="pointer-events-none absolute -left-[10%] top-[25%] h-[55%] w-[40%] rotate-[-20deg] rounded-full bg-[#5D985A] blur-[180px]" />
       <div className="pointer-events-none absolute -left-[8%] top-[30%] h-[35%] w-[28%] rotate-[-15deg] rounded-full bg-[#EAFFC2] blur-[140px]" />
 
-      <div className="relative max-w-360 mx-auto px-4 py-10 md:py-16 lg:px-0 lg:py-0">
-        <div className="relative w-full aspect-1442/942 max-lg:aspect-auto">
+      <div className="relative max-w-360 mx-auto px-4 py-10 md:py-16 xl:px-0 xl:py-0">
+        <div className="relative w-full aspect-1442/942 max-xl:aspect-auto">
           {/* Photo */}
-          <div data-reveal className="absolute left-0 top-0 h-full w-[44%] max-lg:hidden">
+          <div data-reveal className="absolute left-0 top-0 h-full w-[44%] max-xl:hidden">
             <Image
               src="/home/physician-ray.png"
               alt="Dr. Ray, board-certified physician"
@@ -68,7 +68,7 @@ export default function PhysicianRaySection() {
           {/* Copy (right-aligned) */}
           <div
             data-reveal
-            className="absolute left-[57.28%] top-[4.99%] w-[37.31%] text-right max-lg:static max-lg:w-full max-lg:text-center"
+            className="absolute left-[57.28%] top-[4.99%] w-[37.31%] text-right max-xl:static max-xl:w-full max-xl:text-center"
           >
             <p
               className="uppercase leading-[1.25] tracking-[0.02em] text-[#F4F4F5]"
@@ -96,7 +96,7 @@ export default function PhysicianRaySection() {
             </p>
 
             {/* Buttons */}
-            <div className="mt-[95px] flex justify-end gap-[33px] max-lg:mt-10 max-lg:justify-center max-sm:flex-col max-sm:items-stretch max-sm:gap-3">
+            <div className="mt-[95px] flex justify-end gap-[33px] max-xl:mt-10 max-xl:justify-center max-sm:flex-col max-sm:items-stretch max-sm:gap-3">
               <button
                 className="flex h-[50px] w-[200px] items-center justify-center rounded-none bg-[#18181B] uppercase text-white max-sm:w-full"
                 style={{ fontSize: "clamp(12px,1.11vw,16px)" }}
@@ -115,7 +115,7 @@ export default function PhysicianRaySection() {
           {/* Social proof card (one-physician.svg) */}
           <div
             data-reveal
-            className="absolute left-[71.22%] top-[53.18%] w-[23.31%] max-lg:static max-lg:mx-auto max-lg:mt-12 max-lg:w-full max-lg:max-w-[340px]"
+            className="absolute left-[71.22%] top-[53.18%] w-[23.31%] max-xl:static max-xl:mx-auto max-xl:mt-12 max-xl:w-full max-xl:max-w-[340px]"
           >
             <Image
               src="/home/one-physician.svg"
@@ -129,7 +129,7 @@ export default function PhysicianRaySection() {
           {/* Trust badges */}
           <div
             data-reveal
-            className="absolute left-[22.05%] top-[92.46%] flex w-[73.44%] items-start gap-[25px] max-lg:static max-lg:mx-auto max-lg:mt-12 max-lg:w-full max-lg:flex-wrap max-lg:justify-center max-lg:gap-x-[25px] max-lg:gap-y-5"
+            className="absolute left-[22.05%] top-[92.46%] flex w-[73.44%] items-start gap-[25px] max-xl:static max-xl:mx-auto max-xl:mt-12 max-xl:w-full max-xl:flex-wrap max-xl:justify-center max-xl:gap-x-[25px] max-xl:gap-y-5"
           >
             {TRUST_BADGES.map(({ Icon, text, bold, sub }) => (
               <div key={text} className={`flex shrink-0 gap-2.5 ${sub ? "items-start" : "items-center"}`}>

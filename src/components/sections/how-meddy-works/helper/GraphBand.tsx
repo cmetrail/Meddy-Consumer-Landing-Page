@@ -1,8 +1,14 @@
 "use client";
 
-// ─── Extracted from /public/Line.svg (viewBox 0 0 1440 634) ───────────────────
+// ─── Extracted from /public/Line.svg (viewBox 0 0 1440 634) + graph.md ────────
 const W = 1440;
 const H = 634;
+// Crop the SVG to the data region (cards start ~157, grid ends ~494) so the
+// title (above) and legend (below) sit tight against the chart with no dead space.
+const VIEW_Y = 150;
+const VIEW_H = 350;
+const VIEW_X = 45;
+const VIEW_W = 1350;
 
 // Exact bezier paths from Line.svg
 const SOD_PATH =
@@ -22,87 +28,90 @@ const GX2 = 1389.803;
 const GYS = [182.287, 213.48, 244.657, 275.834, 307.01, 338.187, 369.363, 400.54, 431.716, 462.893, 494.069];
 
 // Dot centres in SVG space (from ellipse transforms in Line.svg)
-// W1 BP:  matrix(-1 0 0 1 462 228.003) + r=13.5 → cx=462-13.5=448.5, cy=228.003+13.5=241.503
-// W1 Sod: matrix(-1 0 0 1 167 260.003) + r=6.5  → cx=160.5, cy=266.503
-// W8 Sod: matrix(-1 0 0 1 1094 328.003)+ r=6.5  → cx=1087.5, cy=334.503
-// W8 BP:  matrix(-1 0 0 1 1232 371.003)+ r=13.5 → cx=1218.5, cy=384.503
 const DOTS = [
-  { cx: 448.5,  cy: 241.503, rOuter: 13.5,  rInner: 10.5,  green: true,  filterId: "gbd-f0" },
-  { cx: 160.5,  cy: 266.503, rOuter:  6.5,  rInner:  5.055, green: false, filterId: "gbd-f1" },
-  { cx: 1087.5, cy: 334.503, rOuter:  6.5,  rInner:  5.055, green: false, filterId: "gbd-f2" },
-  { cx: 1218.5, cy: 384.503, rOuter: 13.5,  rInner: 10.5,  green: true,  filterId: "gbd-f3" },
+  { cx: 448.5, cy: 241.503, rOuter: 13.5, rInner: 10.5, green: true, filterId: "gbd-f0" },
+  { cx: 160.5, cy: 266.503, rOuter: 6.5, rInner: 5.055, green: false, filterId: "gbd-f1" },
+  { cx: 1087.5, cy: 334.503, rOuter: 6.5, rInner: 5.055, green: false, filterId: "gbd-f2" },
+  { cx: 1218.5, cy: 384.503, rOuter: 13.5, rInner: 10.5, green: true, filterId: "gbd-f3" },
 ] as const;
 
-// Card anchor positions as % of container (= SVG coord / viewBox dimension × 100)
-// Derived from rect elements in Line.svg:
-//   W1 Sod rect: x=98.5   y=192.503  → left=6.84%  top=30.37%
-//   W1 BP  rect: x=393.5  y=157.503  → left=27.33% top=24.84%
-//   W8 Sod rect: x=1025.5 y=260.503  → left=71.21% top=41.09%
-//   W8 BP  rect: x=1163.5 y=300.503  → left=80.80% top=47.40%
+type Variant = "bp" | "sodium";
 
-function SodiumCard({ week, value }: { week: string; value: string }) {
-  return (
-    <div className="relative inline-block">
-      <div
-        style={{
-          background: "rgba(248,250,248,0.95)",
-          backdropFilter: "blur(10px)",
-          borderRadius: 10,
-          padding: "7px 12px 8px",
-          border: "1px solid rgba(255,255,255,0.9)",
-          boxShadow: "0 2px 16px rgba(0,0,0,0.3)",
-          minWidth: 128,
-        }}
-      >
-        <p style={{ fontSize: 10, color: "rgba(0,0,0,0.4)", fontWeight: 500, marginBottom: 2, lineHeight: 1 }}>
-          {week}
-        </p>
-        <p style={{ fontSize: 13, color: "#111", fontWeight: 600, lineHeight: 1.3 }}>
-          Sodium: <strong style={{ fontWeight: 800 }}>{value}</strong>
-          <span style={{ fontSize: 9, fontWeight: 400, color: "#777" }}> mg</span>
-        </p>
-      </div>
-      <span
-        className="absolute left-1/2 -translate-x-1/2"
-        style={{
-          bottom: -7, width: 0, height: 0,
-          borderLeft: "7px solid transparent",
-          borderRight: "7px solid transparent",
-          borderTop: "8px solid rgba(248,250,248,0.95)",
-        }}
-      />
-    </div>
-  );
-}
+// Callout cards (graph.md Frame 2147225684) — % positions match Line.svg rect coords
+const CALLS: {
+  variant: Variant;
+  week: string;
+  label?: string;
+  value: string;
+  left: string;
+  top: string;
+}[] = [
+  { variant: "sodium", week: "Week 1", label: "Sodium:", value: "3400 mg", left: "3.96%", top: "12.14%" },
+  { variant: "bp", week: "Week 1", value: "BP:138", left: "25.81%", top: "2.14%" },
+  { variant: "sodium", week: "Week 8", label: "Sodium:", value: "2400 mg", left: "72.63%", top: "31.57%" },
+  { variant: "bp", week: "Week 8", value: "BP:130", left: "82.85%", top: "43.00%" },
+];
 
-function BpCard({ week, value }: { week: string; value: string }) {
+// Outlined callout card — transparent bg, 1px border, radius 5px
+function CalloutCard({
+  variant,
+  week,
+  label,
+  value,
+  tail = false,
+}: {
+  variant: Variant;
+  week: string;
+  label?: string;
+  value: string;
+  tail?: boolean;
+}) {
+  const color = variant === "bp" ? "#17925A" : "#FFFFFF";
+  const isBp = variant === "bp";
   return (
-    <div className="relative inline-block">
+    <div className={tail ? "flex flex-col items-center" : "flex flex-col items-start"}>
       <div
-        style={{
-          background: "rgba(10,26,12,0.95)",
-          backdropFilter: "blur(10px)",
-          borderRadius: 10,
-          padding: "7px 12px 8px",
-          border: "1px solid #17925A",
-          boxShadow: "0 2px 16px rgba(0,0,0,0.4)",
-          minWidth: 108,
-        }}
+        className="rounded-[5px] border bg-transparent px-[10px] py-[4px] text-left"
+        style={{ borderColor: color, borderWidth: 1 }}
       >
-        <p style={{ fontSize: 10, color: "rgba(23,146,90,0.7)", fontWeight: 500, marginBottom: 2, lineHeight: 1 }}>
+        <span
+          className="block text-[#ADADAD]"
+          style={{ fontSize: "clamp(9px,0.83vw,12px)", fontWeight: 500, lineHeight: "15px" }}
+        >
           {week}
-        </p>
-        <p style={{ fontSize: 16, color: "#17925A", fontWeight: 800, lineHeight: 1.2 }}>{value}</p>
+        </span>
+        <div className="mt-[4px] flex items-center gap-[5px]">
+          {label && (
+            <span
+              className="text-[#ADADAD]"
+              style={{ fontSize: "clamp(8px,0.69vw,10px)", fontWeight: 400, lineHeight: "13px" }}
+            >
+              {label}
+            </span>
+          )}
+          <span
+            className={isBp ? "uppercase text-[#17925A]" : "text-white"}
+            style={{
+              fontSize: isBp ? "clamp(12px,1.11vw,16px)" : "clamp(10px,0.97vw,14px)",
+              fontWeight: 700,
+              lineHeight: isBp ? "20px" : "18px",
+            }}
+          >
+            {value}
+          </span>
+        </div>
       </div>
-      <span
-        className="absolute left-1/2 -translate-x-1/2"
-        style={{
-          bottom: -7, width: 0, height: 0,
-          borderLeft: "7px solid transparent",
-          borderRight: "7px solid transparent",
-          borderTop: "8px solid rgba(10,26,12,0.95)",
-        }}
-      />
+      {tail && (
+        <span
+          style={{
+            width: 0,
+            height: 0,
+            borderLeft: "20px solid transparent",
+            borderRight: "20px solid transparent",
+            borderTop: `12px solid ${color}`,
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -139,28 +148,43 @@ export default function GraphBand() {
       `}</style>
 
       <div className="max-w-360 mx-auto px-6 lg:px-13">
-
-        {/* Title */}
-        <div className="mb-6">
-          <div className="flex items-center gap-2">
-            <span className="text-white font-semibold" style={{ fontSize: 18 }}>Blood pressure</span>
-            <span className="text-white/50 font-semibold" style={{ fontSize: 18 }}>• Sodium Intake</span>
+        {/* Title (graph.md Heading) */}
+        <div className="mb-8">
+          <div className="flex items-center gap-[17px]">
+            <span
+              className="text-white"
+              style={{ fontSize: "clamp(14px,1.39vw,20px)", fontWeight: 500, letterSpacing: "-0.02em", lineHeight: 1.3 }}
+            >
+              Blood pressure
+            </span>
+            <span className="h-[8px] w-[8px] rounded-full bg-white" />
+            <span
+              className="text-white"
+              style={{ fontSize: "clamp(14px,1.39vw,20px)", fontWeight: 500, letterSpacing: "-0.02em", lineHeight: 1.3 }}
+            >
+              Sodium Intake
+            </span>
           </div>
-          <p style={{ fontSize: 13, color: "#7A9B82", marginTop: 4 }}>Nutrition threshold</p>
+          <p
+            className="mt-[2px] text-[#E7E7E7]"
+            style={{ fontSize: "clamp(11px,0.98vw,14px)", fontWeight: 500, lineHeight: 1.4 }}
+          >
+            Nutrition threshold
+          </p>
         </div>
 
         {/* Chart */}
-        <div className="relative w-full" style={{ aspectRatio: `${W} / ${H}` }}>
+        <div className="relative w-full" style={{ aspectRatio: `${VIEW_W} / ${VIEW_H}` }}>
           <svg
-            viewBox={`0 0 ${W} ${H}`}
+            viewBox={`${VIEW_X} ${VIEW_Y} ${VIEW_W} ${VIEW_H}`}
             preserveAspectRatio="xMidYMid meet"
-            className="absolute inset-0 w-full h-full"
+            className="absolute inset-0 h-full w-full"
           >
             <defs>
               {/* Blur/glow filters for dots — exact from Line.svg */}
               {[
-                { id: "gbd-f0", x: 425.4,  y: 218.403, s: 46.2 },
-                { id: "gbd-f1", x: 144.4,  y: 250.403, s: 32.2 },
+                { id: "gbd-f0", x: 425.4, y: 218.403, s: 46.2 },
+                { id: "gbd-f1", x: 144.4, y: 250.403, s: 32.2 },
                 { id: "gbd-f2", x: 1071.4, y: 318.403, s: 32.2 },
                 { id: "gbd-f3", x: 1195.4, y: 361.403, s: 46.2 },
               ].map((f) => (
@@ -227,7 +251,7 @@ export default function GraphBand() {
               ))}
             </g>
 
-            {/* Sodium line — thin, white radial gradient, draws in */}
+            {/* Sodium line — thin, white radial gradient */}
             <path
               d={SOD_PATH}
               stroke="url(#gbd-sod-grad)"
@@ -238,7 +262,7 @@ export default function GraphBand() {
               className="gbd-sod"
             />
 
-            {/* BP line — thick, green radial gradient, draws in first */}
+            {/* BP line — thick, green radial gradient */}
             <path
               d={BP_PATH}
               stroke="url(#gbd-bp-grad)"
@@ -252,14 +276,12 @@ export default function GraphBand() {
             {/* Dots — fade in after lines finish drawing */}
             {DOTS.map((d) => (
               <g key={d.filterId} className="gbd-dot">
-                {/* Outer glow blob */}
                 <ellipse
                   cx={d.cx} cy={d.cy}
                   rx={d.rOuter} ry={d.rOuter}
                   fill={d.green ? "#55C272" : "#C26E55"}
                   filter={`url(#${d.filterId})`}
                 />
-                {/* Inner filled dot */}
                 <ellipse
                   cx={d.cx} cy={d.cy}
                   rx={d.rInner} ry={d.rInner}
@@ -269,33 +291,46 @@ export default function GraphBand() {
             ))}
           </svg>
 
-          {/* HTML callout cards — % positions match SVG rect coords exactly */}
-          <div className="gbd-card absolute" style={{ left: "6.84%", top: "30.37%" }}>
-            <SodiumCard week="Week  1" value="3400" />
-          </div>
-          <div className="gbd-card absolute" style={{ left: "27.33%", top: "24.84%" }}>
-            <BpCard week="Week  1" value="BP:138" />
-          </div>
-          <div className="gbd-card absolute" style={{ left: "71.21%", top: "41.09%" }}>
-            <SodiumCard week="Week  8" value="2400" />
-          </div>
-          <div className="gbd-card absolute" style={{ left: "80.80%", top: "47.40%" }}>
-            <BpCard week="Week  8" value="BP:130" />
-          </div>
+          {/* Outlined callout cards — absolute, desktop only */}
+          {CALLS.map((c) => (
+            <div
+              key={`${c.week}-${c.value}`}
+              className="gbd-card absolute hidden lg:block"
+              style={{ left: c.left, top: c.top }}
+            >
+              <CalloutCard variant={c.variant} week={c.week} label={c.label} value={c.value} tail />
+            </div>
+          ))}
         </div>
 
-        {/* Legend */}
-        <div className="mt-6 flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-sm" style={{ background: "#4DC87A" }} />
-            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.65)" }}>Blood pressure</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-sm" style={{ background: "#C85858" }} />
-            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.65)" }}>Sodium Intake</span>
-          </div>
+        {/* Callout cards — flow grid, mobile/tablet */}
+        <div className="mt-6 grid grid-cols-2 gap-3 lg:hidden">
+          {CALLS.map((c) => (
+            <CalloutCard key={`${c.week}-${c.value}`} variant={c.variant} week={c.week} label={c.label} value={c.value} />
+          ))}
         </div>
 
+        {/* Legend (graph.md Frame 2147225696) */}
+        <div className="mt-10 flex flex-col gap-2.5">
+          <div className="flex items-center gap-[9.41px]">
+            <span
+              className="rounded-[2.35px]"
+              style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #17622B 0%, rgba(23, 98, 43, 0.5) 100%)" }}
+            />
+            <span className="text-white" style={{ fontSize: "clamp(11px,0.98vw,14px)", fontWeight: 500, lineHeight: 1.4 }}>
+              Blood pressure
+            </span>
+          </div>
+          <div className="flex items-center gap-[9.41px]">
+            <span
+              className="rounded-[2.35px]"
+              style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #621717 0%, rgba(98, 23, 23, 0.5) 100%)" }}
+            />
+            <span className="text-white" style={{ fontSize: "clamp(11px,0.98vw,14px)", fontWeight: 500, lineHeight: 1.4 }}>
+              Sodium Intake
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );

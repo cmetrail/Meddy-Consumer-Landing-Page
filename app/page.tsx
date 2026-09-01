@@ -11,11 +11,11 @@ export default function Home() {
     <main>
       {/* <HeroSection />
       <ProblemSection /> */}
-      {/* <HowMeddyWorksSection /> */}
+      <HowMeddyWorksSection />
       {/* <MostCareSection /> */}
       {/* <TestimonialsSection /> */}
-      <PhysicianRaySection />
-      <FooterSection />
+      {/* <PhysicianRaySection />
+      <FooterSection /> */}
     </main>
   );
 }

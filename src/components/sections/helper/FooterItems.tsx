@@ -20,7 +20,7 @@ export function FooterItems() {
               className="mt-5 max-w-[699px] text-[#F4F4F5] lg:mt-[20px]"
               style={{ fontSize: 20, fontWeight: 400, lineHeight: "150%", letterSpacing: 0 }}
             >
-              Calories, workouts, sleep, labs… Most people manage them separately. Meddy connects
+              Calories, workouts, sleep, labs. Most people manage them separately. Meddy connects
               them and puts a physician in charge of what they mean.
             </p>
 
