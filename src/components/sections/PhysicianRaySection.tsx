@@ -51,20 +51,23 @@ export default function PhysicianRaySection() {
       <div className="pointer-events-none absolute -left-[10%] top-[25%] h-[55%] w-[40%] rotate-[-20deg] rounded-full bg-[#5D985A] blur-[180px]" />
       <div className="pointer-events-none absolute -left-[8%] top-[30%] h-[35%] w-[28%] rotate-[-15deg] rounded-full bg-[#EAFFC2] blur-[140px]" />
 
+      {/* Photo — flush to the left viewport edge (breaks out of the centered container) */}
+      <div
+        data-reveal
+        className="absolute left-0 top-0 h-full w-[44%] max-w-[635px] max-xl:hidden"
+      >
+        <Image
+          src="/home/physician-ray.png"
+          alt="Dr. Ray, board-certified physician"
+          width={635}
+          height={951}
+          priority
+          className="h-full w-full object-cover"
+        />
+      </div>
+
       <div className="relative max-w-360 mx-auto px-4 py-10 md:py-16 xl:px-0 xl:py-0">
         <div className="relative w-full aspect-1442/942 max-xl:aspect-auto">
-          {/* Photo */}
-          <div data-reveal className="absolute left-0 top-0 h-full w-[44%] max-xl:hidden">
-            <Image
-              src="/home/physician-ray.png"
-              alt="Dr. Ray, board-certified physician"
-              width={635}
-              height={951}
-              priority
-              className="h-full w-full object-cover"
-            />
-          </div>
-
           {/* Copy (right-aligned) */}
           <div
             data-reveal
