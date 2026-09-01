@@ -5,7 +5,7 @@ const NAV_LINKS = ["How it works", "Why meddy", "Physician care", "Pricing", "FA
 export function FooterItems() {
   return (
     <div data-reveal className="mt-20 w-full rounded-t-[22px] bg-white/10 backdrop-blur-xl">
-      <div className="mx-auto w-full max-w-360 px-6 pb-4 pt-10 lg:px-[75px] lg:pb-[18px] lg:pt-[73px]">
+      <div className="mx-auto w-full max-w-360 px-4 pb-4 pt-10  lg:pb-[18px] lg:pt-[73px]">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto] lg:gap-x-16 lg:gap-y-0">
           <div>
             <Image
