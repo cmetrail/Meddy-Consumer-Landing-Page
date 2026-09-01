@@ -25,6 +25,7 @@ export default function PhysicianRaySection() {
   const sectionRef = useRef<HTMLElement>(null);
 
 
+
   useGSAP(
     () => {
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
