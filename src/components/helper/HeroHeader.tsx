@@ -15,9 +15,9 @@ export default function HeroHeader() {
 
   useGSAP(
     () => {
-      gsap.from([logoRef.current, navRef.current], {
-        y: -60, opacity: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
-      });
+      gsap.fromTo([logoRef.current, navRef.current],
+        { y: -60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, stagger: 0.1, ease: "power3.out" });
     },
     { scope: containerRef },
   );
@@ -26,12 +26,12 @@ export default function HeroHeader() {
     <header ref={containerRef} className="relative flex flex-row justify-between items-center max-w-360 mx-auto px-4  py-6">
 
       {/* Logo */}
-      <div ref={logoRef}>
+      <div ref={logoRef} style={{ opacity: 0 }}>
         <Image src="/app-logo.png" height={45} width={69} alt="Meddy Health" />
       </div>
 
       {/* Desktop nav */}
-      <nav ref={navRef} className="hidden lg:flex items-center gap-10">
+      <nav ref={navRef} className="hidden lg:flex items-center gap-10" style={{ opacity: 0 }}>
         {[
           { label: "How it works", active: true },
           { label: "Why Meddy", active: false },

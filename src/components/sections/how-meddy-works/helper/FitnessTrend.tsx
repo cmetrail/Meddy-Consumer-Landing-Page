@@ -1,0 +1,313 @@
+"use client";
+
+// ─── Extracted from /public/Line (1).svg (viewBox 0 0 1440 634) ──────────────
+const VIEW_Y = 150;
+const VIEW_H = 350;
+const VIEW_X = 45;
+const VIEW_W = 1350;
+
+const THIN_PATH =
+  "M50.1953 303.869C92.835 261.233 172.195 296.376 298.302 347.024" +
+  "C468.534 415.394 558.286 339.823 602.11 319.31" +
+  "C787.695 232.444 1173.57 345.025 1315.2 494.784";
+
+const THICK_PATH =
+  "M57.8047 460.003C102.324 411.592 202.926 386.882 338.763 434.162" +
+  "C536.37 502.944 566.121 400.567 652.934 336.25" +
+  "C739.747 271.932 805.877 261.378 1026.64 302.154" +
+  "C1211.24 336.25 1233.75 299.18 1332.8 174.003";
+
+const GX1 = 119.213;
+const GX2 = 1389.803;
+const GYS = [182.287, 213.481, 244.657, 275.834, 307.01, 338.187, 369.363, 400.54, 431.716, 462.893, 494.069];
+
+const FILTERS = [
+  { id: "ft-f0", x: 145.4, y: 278.403, s: 32.2 },
+  { id: "ft-f1", x: 1194.4, y: 399.403, s: 32.2 },
+  { id: "ft-f2", x: 845.4, y: 256.403, s: 46.2 },
+];
+
+const DOTS = [
+  { cx: 161.5, cy: 294.503, rOuter: 6.4999, rInner: 5.05548, large: false, filterId: "ft-f0" },
+  { cx: 1210.5, cy: 415.503, rOuter: 6.4999, rInner: 5.05548, large: false, filterId: "ft-f1" },
+  { cx: 868.5, cy: 279.503, rOuter: 13.4999, rInner: 10.4999, large: true, filterId: "ft-f2" },
+] as const;
+
+type Variant = "accent" | "plain";
+
+const CALLS: {
+  variant: Variant;
+  week: string;
+  label?: string;
+  value: string;
+  left: string;
+  top: string;
+}[] = [
+  { variant: "plain", week: "Week 1", label: "Weight:", value: "185 lb", left: "4.19%", top: "20.43%" },
+  { variant: "accent", week: "Week 12", label: "min:", value: "128", left: "56.93%", top: "13.00%" },
+  { variant: "plain", week: "Week 8", label: "Weight:", value: "170 lb", left: "81.96%", top: "54.72%" },
+];
+
+function CalloutCard({
+  variant,
+  week,
+  label,
+  value,
+  tail = false,
+}: {
+  variant: Variant;
+  week: string;
+  label?: string;
+  value: string;
+  tail?: boolean;
+}) {
+  const color = variant === "accent" ? "#17925A" : "#FFFFFF";
+  const isAccent = variant === "accent";
+  return (
+    <div className={tail ? "flex flex-col items-center" : "flex flex-col items-start"}>
+      <div
+        className="rounded-[5px] border bg-transparent px-[10px] py-[4px] text-left"
+        style={{ borderColor: color, borderWidth: 1 }}
+      >
+        <span
+          className="block text-[#ADADAD]"
+          style={{ fontSize: "clamp(9px,0.83vw,12px)", fontWeight: 500, lineHeight: "15px" }}
+        >
+          {week}
+        </span>
+        <div className="mt-[4px] flex items-center gap-[5px]">
+          {label && (
+            <span
+              className="text-[#ADADAD]"
+              style={{ fontSize: "clamp(8px,0.69vw,10px)", fontWeight: 400, lineHeight: "13px" }}
+            >
+              {label}
+            </span>
+          )}
+          <span
+            className={isAccent ? "uppercase text-[#17925A]" : "text-white"}
+            style={{
+              fontSize: isAccent ? "clamp(12px,1.11vw,16px)" : "clamp(10px,0.97vw,14px)",
+              fontWeight: 700,
+              lineHeight: isAccent ? "20px" : "18px",
+            }}
+          >
+            {value}
+          </span>
+        </div>
+      </div>
+      {tail && (
+        <span
+          style={{
+            width: 0,
+            height: 0,
+            borderLeft: "20px solid transparent",
+            borderRight: "20px solid transparent",
+            borderTop: `12px solid ${color}`,
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+export default function FitnessTrend() {
+  return (
+    <div className="relative w-full overflow-hidden py-14 lg:py-20">
+      <style>{`
+        @keyframes ft-draw {
+          to { stroke-dashoffset: 0; }
+        }
+        @keyframes ft-fade {
+          to { opacity: 1; }
+        }
+        .ft-thick {
+          stroke-dasharray: 1;
+          stroke-dashoffset: 1;
+          animation: ft-draw 2.2s cubic-bezier(0.4,0,0.2,1) 0.2s forwards;
+        }
+        .ft-thin {
+          stroke-dasharray: 1;
+          stroke-dashoffset: 1;
+          animation: ft-draw 1.8s cubic-bezier(0.4,0,0.2,1) 0.5s forwards;
+        }
+        .ft-dot {
+          opacity: 0;
+          animation: ft-fade 0.4s ease 2.2s forwards;
+        }
+        .ft-card {
+          opacity: 0;
+          animation: ft-fade 0.5s ease 2.4s forwards;
+        }
+      `}</style>
+
+      <div className="max-w-360 mx-auto px-6 lg:px-13">
+        <div className="mb-8">
+          <div className="flex items-center gap-[17px]">
+            <span
+              className="text-white"
+              style={{ fontSize: "clamp(14px,1.39vw,20px)", fontWeight: 500, letterSpacing: "-0.02em", lineHeight: 1.3 }}
+            >
+              Body Weight
+            </span>
+            <span className="h-[8px] w-[8px] rounded-full bg-white" />
+            <span
+              className="text-white"
+              style={{ fontSize: "clamp(14px,1.39vw,20px)", fontWeight: 500, letterSpacing: "-0.02em", lineHeight: 1.3 }}
+            >
+              HRZone 3 Minutes
+            </span>
+          </div>
+          <p
+            className="mt-[2px] text-[#E7E7E7]"
+            style={{ fontSize: "clamp(11px,0.98vw,14px)", fontWeight: 500, lineHeight: 1.4 }}
+          >
+            Fitness Trend
+          </p>
+        </div>
+
+        <div className="relative w-full" style={{ aspectRatio: `${VIEW_W} / ${VIEW_H}` }}>
+          <svg
+            viewBox={`${VIEW_X} ${VIEW_Y} ${VIEW_W} ${VIEW_H}`}
+            preserveAspectRatio="xMidYMid meet"
+            className="absolute inset-0 h-full w-full"
+          >
+            <defs>
+              {FILTERS.map((f) => (
+                <filter
+                  key={f.id}
+                  id={f.id}
+                  x={f.x} y={f.y} width={f.s} height={f.s}
+                  filterUnits="userSpaceOnUse"
+                  colorInterpolationFilters="sRGB"
+                >
+                  <feFlood floodOpacity="0" result="bg" />
+                  <feBlend mode="normal" in="SourceGraphic" in2="bg" result="shape" />
+                  <feGaussianBlur stdDeviation="4.8" result="blur" />
+                </filter>
+              ))}
+
+              <radialGradient
+                id="ft-thin-grad"
+                cx="0" cy="0" r="1"
+                gradientTransform="matrix(-663.127 23.2727 -93.5053 -2162.6 694.901 297.333)"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="white" />
+                <stop offset="0.812" stopColor="white" />
+                <stop offset="0.951" stopColor="white" stopOpacity="0" />
+              </radialGradient>
+
+              <radialGradient
+                id="ft-thick-grad"
+                cx="0" cy="0" r="1"
+                gradientTransform="matrix(-663.337 27.7703 66.2132 1920.71 721.142 415.243)"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="#61D253" />
+                <stop offset="0.687" stopColor="#4C8935" />
+                <stop offset="0.951" stopColor="#57A832" stopOpacity="0" />
+              </radialGradient>
+
+              <radialGradient id="ft-small-dot" cx="0" cy="0" r="1"
+                gradientUnits="userSpaceOnUse"
+                gradientTransform="translate(5.05548 5.05551) rotate(87.3975) scale(6.18534 6.18529)">
+                <stop offset="0.016" stopColor="#AD8068" />
+                <stop offset="1" stopColor="#621717" />
+              </radialGradient>
+              <radialGradient id="ft-large-dot" cx="0" cy="0" r="1"
+                gradientUnits="userSpaceOnUse"
+                gradientTransform="translate(10.4999 10.5) rotate(87.3975) scale(12.8466 12.8465)">
+                <stop offset="0.016" stopColor="#68AD75" />
+                <stop offset="1" stopColor="#17622B" />
+              </radialGradient>
+            </defs>
+
+            <g opacity="0.2">
+              {GYS.map((y) => (
+                <line
+                  key={y}
+                  x1={GX1} y1={y} x2={GX2} y2={y}
+                  stroke="#E7E7E7" strokeWidth="0.784314"
+                />
+              ))}
+            </g>
+
+            <path
+              d={THIN_PATH}
+              stroke="url(#ft-thin-grad)"
+              strokeWidth="1.003"
+              fill="none"
+              strokeLinecap="round"
+              pathLength="1"
+              className="ft-thin"
+            />
+
+            <path
+              d={THICK_PATH}
+              stroke="url(#ft-thick-grad)"
+              strokeWidth="10.03"
+              fill="none"
+              strokeLinecap="round"
+              pathLength="1"
+              className="ft-thick"
+            />
+
+            {DOTS.map((d) => (
+              <g key={d.filterId} className="ft-dot">
+                <ellipse
+                  cx={d.cx} cy={d.cy}
+                  rx={d.rOuter} ry={d.rOuter}
+                  fill={d.large ? "#55C272" : "#C26E55"}
+                  filter={`url(#${d.filterId})`}
+                />
+                <ellipse
+                  cx={d.cx} cy={d.cy}
+                  rx={d.rInner} ry={d.rInner}
+                  fill={d.large ? "url(#ft-large-dot)" : "url(#ft-small-dot)"}
+                />
+              </g>
+            ))}
+          </svg>
+
+          {CALLS.map((c) => (
+            <div
+              key={`${c.week}-${c.value}`}
+              className="ft-card absolute hidden lg:block"
+              style={{ left: c.left, top: c.top }}
+            >
+              <CalloutCard variant={c.variant} week={c.week} label={c.label} value={c.value} tail />
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 grid grid-cols-2 gap-3 lg:hidden">
+          {CALLS.map((c) => (
+            <CalloutCard key={`${c.week}-${c.value}`} variant={c.variant} week={c.week} label={c.label} value={c.value} />
+          ))}
+        </div>
+
+        <div className="mt-10 flex flex-col gap-2.5">
+          <div className="flex items-center gap-[9.41px]">
+            <span
+              className="rounded-[2.35px]"
+              style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #17622B 0%, rgba(23, 98, 43, 0.5) 100%)" }}
+            />
+            <span className="text-white" style={{ fontSize: "clamp(11px,0.98vw,14px)", fontWeight: 500, lineHeight: 1.4 }}>
+              Intensity
+            </span>
+          </div>
+          <div className="flex items-center gap-[9.41px]">
+            <span
+              className="rounded-[2.35px]"
+              style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #621717 0%, rgba(98, 23, 23, 0.5) 100%)" }}
+            />
+            <span className="text-white" style={{ fontSize: "clamp(11px,0.98vw,14px)", fontWeight: 500, lineHeight: 1.4 }}>
+              Body Weight
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

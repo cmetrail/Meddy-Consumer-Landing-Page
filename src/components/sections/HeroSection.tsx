@@ -13,25 +13,25 @@ gsap.registerPlugin(useGSAP);
 const SLIDES = [
   {
     bg: "radial-gradient(49.4% 83.3% at 53.93% 56.81%, #2FC380 0%, #1D6B40 100%)",
-    image: "/doctor.png", rightImage: "/right-doctor.png", arrow: "#17925A",
+    image: "/doctor.png", rightImage: "/right-doctor.png", arrow: "#17925A", width: 1200, height: 1600,
     headline: "PRIMARYCARE", tagline: "That actually knows your habit",
     body: "A physician-guided health plan built around your nutrition, workouts, sleep, and labs — that moves the needle."
   },
   {
     bg: "radial-gradient(49.4% 83.3% at 53.93% 56.81%, #E6B27D 0%, #B48037 100%)",
-    image: "/women.png", rightImage: "/right-nutrition.png", arrow: "#B48037",
+    image: "/women.png", rightImage: "/right-nutrition.png", arrow: "#B48037", width: 835, height: 913,
     headline: "PRIMARYCARE", tagline: "Eat for your health—not someone else's.",
     body: "Log meals in seconds with AI, understand how food affects your health, and receive guidance that's actually personalized."
   },
   {
     bg: "radial-gradient(49.4% 83.3% at 53.93% 56.81%, #DDD1B9 0%, #B3A07E 100%)",
-    image: "/runner.png", rightImage: "/right-workout.png", arrow: "#B3A07E",
+    image: "/runner.png", rightImage: "/right-workout.png", arrow: "#B3A07E", width: 757, height: 836,
     headline: "PRIMARYCARE", tagline: "Exercise with purpose.",
     body: "Steps, workouts, heart rate, calories, strength, and cardio—all connected so your physician sees more than a yearly physical."
   },
   {
     bg: "radial-gradient(49.4% 83.3% at 53.93% 56.81%, #97CEF0 0%, #547B93 100%)",
-    image: "/women-with-pillow.png", rightImage: "/right-sleep.png", arrow: "#547B93",
+    image: "/women-with-pillow.png", rightImage: "/right-sleep.png", arrow: "#547B93", width: 942, height: 865,
     headline: "PRIMARYCARE", tagline: "Better sleep. Better health.",
     body: "Track sleep duration, quality, heart rate, and recovery automatically. Your care plan adapts as your sleep improves—or when it doesn't."
   },
@@ -58,6 +58,7 @@ export default function HeroSection() {
   const taglineRefs = useRef<(HTMLParagraphElement | null)[]>([]);
   const bodyRefs = useRef<(HTMLParagraphElement | null)[]>([]);
   const ctaRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const statsRef = useRef<HTMLDivElement>(null);
   const progressFillRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -75,6 +76,7 @@ export default function HeroSection() {
   // ── Enter a slide's content ───────────────────────────────────────────────
   const enterContent = (i: number, baseDelay = 0) => {
     const d = baseDelay;
+    gsap.set(contentRefs.current[i], { opacity: 1 });
     const letters = Array.from(hlRefs.current[i]?.children ?? []);
     gsap.fromTo(imageRefs.current[i],
       { yPercent: 50, opacity: 0 },
@@ -107,7 +109,7 @@ export default function HeroSection() {
         onComplete: () => {
           const to = (from + 1) % SLIDES.length;
 
-          gsap.set(bgRefs.current[to], { x: "100%" });
+          gsap.set(bgRefs.current[to], { x: "100%", opacity: 1 });
           gsap.set(imageRefs.current[to], { yPercent: 100, opacity: 0 });
 
           gsap.to(bgRefs.current[from], { x: "-100%", duration: BG_DURATION, ease: "power2.inOut" });
@@ -129,21 +131,21 @@ export default function HeroSection() {
       // Init: all slides except first off-screen
       SLIDES.forEach((_, i) => {
         if (i === 0) return;
-        gsap.set(bgRefs.current[i], { x: "100%" });
+        gsap.set(bgRefs.current[i], { x: "100%", opacity: 1 });
         gsap.set(imageRefs.current[i], { yPercent: 100, opacity: 0 });
         // Hide all non-active content elements
         const letters = Array.from(hlRefs.current[i]?.children ?? []);
         gsap.set([...letters, taglineRefs.current[i], bodyRefs.current[i], ctaRefs.current[i]], { opacity: 0 });
       });
 
+      // Init progress bars — all empty, first will fill via startProgress
+      progressFillRefs.current.forEach(el => el && gsap.set(el, { width: "0%" }));
+
       // Initial entrance for slide 0
       enterContent(0, 0);
 
       gsap.fromTo(statsRef.current,
         { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, delay: 1.6, ease: "power3.out" });
-
-      // Init progress bars — all empty, first will fill via startProgress
-      progressFillRefs.current.forEach(el => el && gsap.set(el, { width: "0%" }));
 
       startProgress(0);
     },
@@ -156,7 +158,8 @@ export default function HeroSection() {
       {/* ── Background gradient layers (slide right → left) ── */}
       {SLIDES.map((s, i) => (
         <div key={i} ref={el => { bgRefs.current[i] = el; }}
-          className="absolute inset-0 pointer-events-none" style={{ background: s.bg }}>
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: s.bg, opacity: i > 0 ? 0 : 1 }}>
           <div className="absolute inset-0" style={{ backgroundImage: NOISE_BG, backgroundRepeat: "repeat", backgroundSize: "200px 200px" }} />
         </div>
       ))}
@@ -172,9 +175,10 @@ export default function HeroSection() {
         {/* Person images — bottom-anchored, animate from center upward */}
         {SLIDES.map((s, i) => (
           <div key={i} ref={el => { imageRefs.current[i] = el; }}
-            className="absolute inset-0 pointer-events-none z-20">
+            className="absolute inset-0 pointer-events-none z-20"
+            style={{ opacity: 0 }}>
             <div className="relative max-w-360 mx-auto px-4 h-full">
-              <Image src={s.image} alt="" width={715} height={954} priority={i === 0}
+              <Image src={s.image} alt="" width={s.width} height={s.height} priority={i === 0} loading={i === 0 ? undefined : "eager"}
                 className="absolute bottom-0 left-[70%] sm:left-[70%] md:left-[62%] lg:left-[55%] -translate-x-1/2 h-[65dvh] md:h-[75dvh] lg:h-[86dvh] w-auto object-contain object-bottom" />
             </div>
           </div>
@@ -182,12 +186,13 @@ export default function HeroSection() {
 
         {/* ── Tagline / body / CTA — no z-index so mix-blend-mode reaches background ── */}
         {SLIDES.map((s, i) => (
-          <div key={i} className="absolute inset-0 pointer-events-none">
+          <div key={i} ref={el => { contentRefs.current[i] = el; }}
+            className="absolute inset-0 pointer-events-none" style={{ opacity: 0 }}>
             <div className="max-w-360 relative mx-auto px-4 h-full flex flex-col justify-start  gap-4 lg:gap-6">
               <div ref={el => { hlRefs.current[i] = el; }}
                 className="uppercase font-bold leading-none tracking-normal text-[#1E1E22] whitespace-nowrap"
                 style={{ fontSize: "clamp(48px, 10vw, 180px)", mixBlendMode: "difference" }}>
-                {s.headline.split("").map((char, j) => <span key={j}>{char}</span>)}
+                {s.headline.split("").map((char, j) => <span key={j} className="inline-block">{char}</span>)}
               </div>
               <div className="flex flex-col gap-2 relative z-999 lg:gap-3">
                 <p ref={el => { taglineRefs.current[i] = el; }}
@@ -212,7 +217,7 @@ export default function HeroSection() {
           </div>
         ))}
       </div>
-      <div ref={statsRef} className="absolute left-0 right-0 z-20 bottom-14">
+      <div ref={statsRef} className="absolute left-0 right-0 z-20 bottom-14" style={{ opacity: 0 }}>
         <div className="max-w-360 mx-auto px-4 flex gap-2">
           <div className="origin-left scale-[0.62] sm:scale-75 md:scale-90 lg:scale-100">
             <EnrollmentCard accentColor={SLIDES[activeSlide].arrow} />

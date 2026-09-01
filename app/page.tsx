@@ -9,13 +9,13 @@ import FooterSection from "@/components/sections/FooterSection";
 export default function Home() {
   return (
     <main>
-      {/* <HeroSection />
-      <ProblemSection /> */}
+      <HeroSection />
+      <ProblemSection />
       <HowMeddyWorksSection />
-      {/* <MostCareSection /> */}
-      {/* <TestimonialsSection /> */}
-      {/* <PhysicianRaySection />
-      <FooterSection /> */}
+      <MostCareSection />
+      <TestimonialsSection />
+      <PhysicianRaySection />
+      <FooterSection />
     </main>
   );
 }
