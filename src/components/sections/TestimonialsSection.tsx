@@ -58,7 +58,7 @@ const SHADOW: Record<Size, string> = {
   lg: "7.74px 7.74px 9.29px rgba(0,0,0,0.26)",
 };
 
-// Exact Figma positions (% of the 1440×961 frame)
+// Exact Figma positions (% of the 1440×842 frame, 1440×961 trimmed of top/bottom whitespace)
 const TESTIMONIALS: Testimonial[] = [
   {
     name: "Maya",
@@ -72,7 +72,7 @@ const TESTIMONIALS: Testimonial[] = [
     ageColor: "#555555",
     size: "sm",
     left: "7.99%",
-    top: "17.96%",
+    top: "14.80%",
     width: "11.04%",
   },
   {
@@ -84,7 +84,7 @@ const TESTIMONIALS: Testimonial[] = [
     color: "#163B32",
     size: "md",
     left: "22.27%",
-    top: "25.49%",
+    top: "23.39%",
     width: "13.61%",
   },
   {
@@ -96,7 +96,7 @@ const TESTIMONIALS: Testimonial[] = [
     color: "#1D3A1D",
     size: "lg",
     left: "41.09%",
-    top: "28.30%",
+    top: "26.60%",
     width: "16.28%",
   },
   {
@@ -111,7 +111,7 @@ const TESTIMONIALS: Testimonial[] = [
     ageColor: "#666666",
     size: "md",
     left: "63.04%",
-    top: "24.14%",
+    top: "21.85%",
     width: "13.61%",
   },
   {
@@ -123,7 +123,7 @@ const TESTIMONIALS: Testimonial[] = [
     color: "#1A3D2B",
     size: "sm",
     left: "79.69%",
-    top: "16.44%",
+    top: "13.06%",
     width: "11.04%",
   },
   {
@@ -135,7 +135,7 @@ const TESTIMONIALS: Testimonial[] = [
     color: "#395C3F",
     size: "sm",
     left: "7.71%",
-    top: "57.54%",
+    top: "59.97%",
     width: "11.04%",
   },
   {
@@ -147,7 +147,7 @@ const TESTIMONIALS: Testimonial[] = [
     color: "#051F20",
     size: "md",
     left: "22.08%",
-    top: "64.10%",
+    top: "67.46%",
     width: "13.61%",
   },
   {
@@ -159,7 +159,7 @@ const TESTIMONIALS: Testimonial[] = [
     color: "#163B32",
     size: "lg",
     left: "40.90%",
-    top: "65.04%",
+    top: "68.53%",
     width: "16.32%",
   },
   {
@@ -171,7 +171,7 @@ const TESTIMONIALS: Testimonial[] = [
     color: "#366B4C",
     size: "md",
     left: "62.92%",
-    top: "62.23%",
+    top: "65.32%",
     width: "13.33%",
   },
   {
@@ -183,7 +183,7 @@ const TESTIMONIALS: Testimonial[] = [
     color: "#1A3D2B",
     size: "sm",
     left: "79.72%",
-    top: "55.77%",
+    top: "57.95%",
     width: "11.04%",
   },
 ];
@@ -267,18 +267,18 @@ export default function TestimonialsSection() {
           "linear-gradient(245.75deg, #051F20 -15.25%, #163B32 -0.52%, #366B4C 23.33%, #EBE4CC 55.47%, #336D4D 79.63%, #395C3F 103.78%)",
       }}
     >
-      <div className="relative max-w-360 mx-auto px-4 py-20 lg:py-28">
+      <div className="relative max-w-360 mx-auto px-5 lg:px-10 py-16">
         {/* Heading (mobile / tablet) */}
         <div data-reveal className="text-center lg:hidden">
           <h2 className="text-white max-w-93 font-bold leading-tight">
-            <span className="block" style={{ fontSize: "clamp(24px,2.22vw,32px)", letterSpacing: "0.02em" }}>
+            <span className="block text-[32px] font-bold leading-[100%] tracking-[2%] " >
               REAL PEOPLE.
             </span>
-            <span className="block mt-1 max-w-93 text-[#E7F0A3]" style={{ fontSize: "clamp(24px,2.22vw,32px)", letterSpacing: "0.02em" }}>
+            <span className="block mt-1 max-w-93 text-[#E7F0A3] text-[32px] font-bold leading-[100%] tracking-[2%]" >
               BETTER HEALTH.
             </span>
           </h2>
-          <p className="text-white  max-w-93 mt-6 mx-auto " style={{ fontSize: "clamp(14px,1.11vw,16px)", lineHeight: 1.25 }}>
+          <p className="text-white  max-w-93 mt-6 mx-auto text-[16px] font-bold leading-[100%] tracking-[2%] " >
             See how connected care can change the way you understand your health.
           </p>
         </div>
@@ -292,9 +292,9 @@ export default function TestimonialsSection() {
           ))}
         </div>
 
-        {/* Desktop: exact Figma collage (1440×961) with heading integrated */}
-        <div className="hidden lg:block relative w-full aspect-1440/961">
-          <div data-reveal className="absolute left-0 right-0 top-[4.99%] text-center">
+        {/* Desktop: exact Figma collage (1440×842) with heading integrated */}
+        <div className="hidden lg:block relative w-full aspect-1440/842">
+          <div data-reveal className="absolute left-0 right-0 top-0 text-center">
             <h2 className="text-white font-bold leading-tight">
               <span className="block" style={{ fontSize: "clamp(24px,2.22vw,32px)", letterSpacing: "0.02em" }}>
                 REAL PEOPLE.

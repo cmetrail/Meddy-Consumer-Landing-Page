@@ -33,7 +33,7 @@ export default function FooterSection() {
       <Image src="/home/footer-bg.jpg" alt="" fill className="object-cover" />
       <div className="absolute inset-0 bg-black/50" />
 
-      <div className="relative max-w-360 mx-auto px-4  pt-20 lg:pt-28">
+      <div className="relative max-w-360 mx-auto px-5 lg:px-10 py-16">
         <Pricing />
       </div>
       <FooterItems />

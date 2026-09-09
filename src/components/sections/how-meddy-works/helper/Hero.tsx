@@ -11,7 +11,7 @@ const ICONS = [
 
 export default function Hero() {
   return (
-    <div className="relative overflow-hidden" style={{ height: "var(--dvh)" }}>
+    <div className="relative overflow-hidden min-h-(--dvh)">
       {/* Curtain background */}
       <Image
         src="/home/how-it-work-bg.png"

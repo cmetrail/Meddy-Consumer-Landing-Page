@@ -56,7 +56,7 @@ export default function PhysicianRaySection() {
       {/* Photo — flush to the left viewport edge (breaks out of the centered container) */}
       <div
         data-reveal
-        className="absolute left-0 top-0 h-full w-[44%] max-w-[635px] max-xl:hidden"
+        className="absolute left-0 top-0 h-full w-[44%] max-w-158.75 max-xl:hidden"
       >
         <Image
           src="/home/physician-ray.png"
@@ -68,59 +68,64 @@ export default function PhysicianRaySection() {
         />
       </div>
 
-      <div className="relative max-w-360 mx-auto px-4 py-10 md:py-16 xl:px-0 xl:py-0">
-        <div className="relative w-full aspect-1442/942 max-xl:aspect-auto">
+      <div className="relative flex w-full flex-col min-h-(--dvh) max-w-360 mx-auto px-5 lg:px-10 py-16">
+        <div className="relative w-full flex-1 flex flex-col justify-between items-end">
           {/* Copy (right-aligned) */}
           <div
             data-reveal
-            className="absolute left-[57.28%] top-[4.99%] w-[37.31%] text-right max-xl:static max-xl:w-full max-xl:text-center"
+            className="text-right"
           >
-            <p
-              className="uppercase leading-[1.25] tracking-[0.02em] text-[#F4F4F5]"
-              style={{ fontSize: "clamp(14px,1.39vw,20px)" }}
-            >
-              Limited availability
-            </p>
-            <p
-              className="mt-[34px] font-semibold uppercase leading-[1.25] text-white"
-              style={{ fontSize: "clamp(24px,2.5vw,36px)" }}
-            >
-              500 spots.
-            </p>
-            <p
-              className="mt-[5px] font-extrabold uppercase leading-[1.26] text-white"
-              style={{ fontSize: "clamp(40px,4.44vw,64px)" }}
-            >
-              One physician.
-            </p>
-            <p
-              className="mt-[13px] font-semibold uppercase leading-[1.25] tracking-[0.02em] text-white"
-              style={{ fontSize: "clamp(16px,1.67vw,24px)" }}
-            >
-              Your data finally means something.
-            </p>
+            <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-7">
+                <p
+                  className="uppercase leading-[100%] text-[30px] text-[#F4F4F5]"
 
-            {/* Buttons */}
-            <div className="mt-[95px] flex justify-end gap-[33px] max-xl:mt-10 max-xl:justify-center max-sm:flex-col max-sm:items-stretch max-sm:gap-3">
-              <button
-                className="flex h-[50px] w-[200px] items-center justify-center rounded-none bg-[#18181B] uppercase text-white max-sm:w-full"
-                style={{ fontSize: "clamp(12px,1.11vw,16px)" }}
-              >
-                Get started
-              </button>
-              <button
-                className="flex h-[50px] w-[200px] items-center justify-center rounded-none border border-white uppercase text-white max-sm:w-full"
-                style={{ fontSize: "clamp(12px,1.11vw,16px)" }}
-              >
-                See how it works
-              </button>
+                >
+                  Limited availability
+                </p>
+                <div className="flex flex-col gap-0.5">
+                  <p
+                    className=" font-semibold uppercase lleading-[100%] text-[36px] text-white"
+
+                  >
+                    500 spots.
+                  </p>
+                  <p
+                    className="font-extrabold uppercase leading-[100%] text-[64px] text-white"
+
+                  >
+                    One physician.
+                  </p>
+                </div>
+                <p
+                  className="font-semibold uppercase leading-[100%] text-[24px] text-white"
+                  style={{ fontSize: "clamp(16px,1.67vw,24px)" }}
+                >
+                  Your data finally means something.
+                </p>
+              </div>
             </div>
-          </div>
+            {/* Buttons */}
 
+          </div>
+          <div className=" flex justify-end gap-8.25 ">
+            <button
+              className="flex h-12.5 w-50 text-base items-center justify-center rounded-none bg-[#18181B] uppercase text-white transition-colors duration-300 hover:bg-[#2B2B2F] max-sm:w-full"
+
+            >
+              Get started
+            </button>
+            <button
+              className="flex h-12.5 w-50 text-base items-center justify-center rounded-none border border-white uppercase text-white transition-colors duration-300 hover:bg-white hover:text-[#18181B] max-sm:w-full"
+
+            >
+              See how it works
+            </button>
+          </div>
           {/* Social proof card (one-physician.svg) */}
           <div
             data-reveal
-            className="absolute left-[71.22%] top-[53.18%] w-[23.31%] max-xl:static max-xl:mx-auto max-xl:mt-12 max-xl:w-full max-xl:max-w-[340px]"
+            className="max-w-85"
           >
             <Image
               src="/home/one-physician.svg"
@@ -134,23 +139,20 @@ export default function PhysicianRaySection() {
           {/* Trust badges */}
           <div
             data-reveal
-            className="absolute left-[22.05%] top-[92.46%] flex w-[73.44%] items-start gap-[25px] max-xl:static max-xl:mx-auto max-xl:mt-12 max-xl:w-full max-xl:flex-wrap max-xl:justify-center max-xl:gap-x-[25px] max-xl:gap-y-5"
+            className="flex  items-start gap-6.25 max-xl:static max-xl:mx-auto max-xl:mt-12 max-xl:w-full max-xl:flex-wrap max-xl:justify-center max-xl:gap-x-[25px] max-xl:gap-y-5"
           >
             {TRUST_BADGES.map(({ Icon, text, bold, sub }) => (
               <div key={text} className={`flex shrink-0 gap-2.5 ${sub ? "items-start" : "items-center"}`}>
                 <Icon size={24} className="shrink-0 text-white" strokeWidth={1.5} />
                 <div className="flex flex-col items-start">
                   <span
-                    className={`uppercase text-white ${bold ? "font-extrabold" : "font-medium"}`}
-                    style={{
-                      fontSize: bold ? "clamp(12px,1.11vw,16px)" : "clamp(11px,0.97vw,14px)",
-                      letterSpacing: "0.02em",
-                    }}
+                    className={`uppercase tracking-[2%] leading-[100%] text-white ${bold ? "font-extrabold text-[14px]" : "font-medium text-[16px]"}`}
+
                   >
                     {text}
                   </span>
                   {sub && (
-                    <span className="mt-[7px] flex items-center gap-1">
+                    <span className="mt-1.75 flex items-center gap-1">
                       {sub.map((s, i) => (
                         <span key={s} className="flex items-center gap-1 text-white">
                           {i > 0 && <span className="h-[5px] w-[5px] rounded-full bg-white" />}
