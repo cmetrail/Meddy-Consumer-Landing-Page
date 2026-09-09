@@ -4,11 +4,11 @@ import Hero from "./helper/Hero";
 import NutritionSection from "./helper/NutritionSection";
 import WorkoutSection from "./helper/WorkoutSection";
 import SleepSection from "./helper/SleepSection";
-import A1cSection from "./helper/A1cSection";
 import InsightsSection from "./helper/InsightsSection";
 import GraphBand from "./helper/GraphBand";
 import FitnessTrend from "./helper/FitnessTrend";
 import SleepTrend from "./helper/SleepTrend";
+import A1cTrend from "./helper/A1cTrend";
 
 export default function HowMeddyWorksSection() {
   return (
@@ -24,6 +24,7 @@ export default function HowMeddyWorksSection() {
         <WorkoutSection />
         <SleepTrend />
         <SleepSection />
+        <A1cTrend />
         <InsightsSection />
       </div>
     </section>
