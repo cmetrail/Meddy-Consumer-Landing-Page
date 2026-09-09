@@ -23,7 +23,7 @@ export default function HeroHeader() {
   );
 
   return (
-    <header ref={containerRef} className="relative flex flex-row justify-between items-center max-w-360 mx-auto px-4  py-6">
+    <header ref={containerRef} className="relative flex flex-row justify-between items-center max-w-360 mx-auto px-[clamp(16px,5.21vw,75px)] pt-[clamp(24px,4.72vw,68px)] pb-4">
 
       {/* Logo */}
       <div ref={logoRef} style={{ opacity: 0 }}>
@@ -31,18 +31,16 @@ export default function HeroHeader() {
       </div>
 
       {/* Desktop nav */}
-      <nav ref={navRef} className="hidden lg:flex items-center gap-10" style={{ opacity: 0 }}>
+      <nav ref={navRef} className="hidden lg:flex items-center gap-[clamp(24px,3.47vw,50px)]" style={{ opacity: 0 }}>
         {[
           { label: "How it works", active: true },
-          { label: "Why Meddy", active: false },
-          { label: "Physician Care", active: false },
           { label: "Pricing", active: false },
-          { label: "FAQ", active: false },
+          { label: "For Physicians", active: false },
         ].map(({ label, active }) => (
           <a key={label} href="#"
-            className={`relative font-semibold text-base uppercase leading-none tracking-[0.01em] transition-colors
+            className={`relative font-semibold uppercase leading-none tracking-[0.01em] text-[clamp(14px,1.39vw,20px)] transition-colors
               ${active
-                ? "text-white after:content-[''] after:absolute after:left-0 after:-bottom-1.75 after:w-full after:border-t-2 after:border-dashed after:border-white"
+                ? "text-white after:content-[''] after:absolute after:left-0 after:-bottom-1.75 after:w-[88px] after:border-t-2 after:border-dashed after:border-white"
                 : "text-[#C5C5C5] hover:text-white"}`}>
             {label}
           </a>

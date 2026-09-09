@@ -179,7 +179,7 @@ export default function HeroSection() {
             style={{ opacity: 0 }}>
             <div className="relative max-w-360 mx-auto px-4 h-full">
               <Image src={s.image} alt="" width={s.width} height={s.height} priority={i === 0} loading={i === 0 ? undefined : "eager"}
-                className="absolute bottom-0 left-[70%] sm:left-[70%] md:left-[62%] lg:left-[55%] -translate-x-1/2 h-[65dvh] md:h-[75dvh] lg:h-[86dvh] w-auto object-contain object-bottom" />
+                className="absolute bottom-0 left-[70%] md:left-[62%] lg:left-[55%] -translate-x-1/2 h-[65dvh] md:h-[75dvh] lg:h-[86dvh] w-auto object-contain object-bottom" />
             </div>
           </div>
         ))}
@@ -188,37 +188,36 @@ export default function HeroSection() {
         {SLIDES.map((s, i) => (
           <div key={i} ref={el => { contentRefs.current[i] = el; }}
             className="absolute inset-0 pointer-events-none" style={{ opacity: 0 }}>
-            <div className="max-w-360 relative mx-auto px-4 h-full flex flex-col justify-start  gap-4 lg:gap-6">
+            <div className="max-w-360 relative mx-auto h-full flex flex-col justify-start px-[clamp(16px,5.21vw,75px)]">
               <div ref={el => { hlRefs.current[i] = el; }}
-                className="uppercase font-bold leading-none tracking-normal text-[#1E1E22] whitespace-nowrap"
-                style={{ fontSize: "clamp(48px, 10vw, 180px)", mixBlendMode: "difference" }}>
+                className="uppercase font-bold leading-[1.261] tracking-normal text-theme-cardAlt whitespace-nowrap"
+                style={{ fontSize: "clamp(40px, 12.5vw, 180px)", mixBlendMode: "difference" }}>
                 {s.headline.split("").map((char, j) => <span key={j} className="inline-block">{char}</span>)}
               </div>
-              <div className="flex flex-col gap-2 relative z-999 lg:gap-3">
+              <div className="flex flex-col relative z-999 mt-[clamp(8px,1.11vw,16px)]">
                 <p ref={el => { taglineRefs.current[i] = el; }}
-                  className="text-white uppercase font-normal text-[22px] md:text-[28px] lg:text-[32px] leading-tight lg:leading-[40px]">{s.tagline}</p>
+                  className="text-white uppercase font-normal text-[clamp(18px,2.22vw,32px)] leading-[1.25]">{s.tagline}</p>
                 <p ref={el => { bodyRefs.current[i] = el; }}
-                  className="text-white font-normal text-[16px] lg:text-[20px] leading-[22px] lg:leading-[25px] w-[min(85vw,477px)]">{s.body}</p>
+                  className="text-white font-normal text-[clamp(14px,1.39vw,20px)] leading-[1.25] w-[min(85vw,477px)] mt-[clamp(4px,0.69vw,10px)]">{s.body}</p>
               </div>
-              <div>
+              <div className="mt-[clamp(40px,6.39vw,92px)]">
                 <button ref={el => { ctaRefs.current[i] = el; }}
-                  className="pointer-events-auto flex items-center relative z-999 w-[200px] h-[54px] lg:w-[236px] lg:h-[64px] bg-[#18181B] rounded-[40px] pl-[12px] lg:pl-[15px] pr-1">
-                  <span className="flex-1 text-[#F4F4F5] font-medium text-[20px] lg:text-[24px] leading-[30px] text-left">Get Started</span>
-                  <span className="flex items-center justify-center w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-[#F4F4F5] shrink-0">
+                  className="pointer-events-auto flex items-center relative z-999 w-[clamp(160px,16.39vw,236px)] h-[clamp(48px,4.44vw,64px)] bg-[#18181B] rounded-[clamp(32px,2.78vw,40px)] pl-[clamp(12px,1.04vw,15px)] pr-1">
+                  <span className="flex-1 text-theme-textPrimary font-medium text-[clamp(16px,1.67vw,24px)] leading-[1.25] text-left">Get Started</span>
+                  <span className="flex items-center justify-center w-[clamp(40px,3.89vw,56px)] h-[clamp(40px,3.89vw,56px)] rounded-full bg-theme-textPrimary shrink-0">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                       <path d="M7 17L17 7M17 7H7M17 7V17" stroke={s.arrow} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </span>
                 </button>
               </div>
-
             </div>
 
           </div>
         ))}
       </div>
-      <div ref={statsRef} className="absolute left-0 right-0 z-20 bottom-14" style={{ opacity: 0 }}>
-        <div className="max-w-360 mx-auto px-4 flex gap-2">
+      <div ref={statsRef} className="absolute left-0 right-0 z-20 bottom-[clamp(48px,6.88vw,99px)]" style={{ opacity: 0 }}>
+        <div className="max-w-360 mx-auto px-[clamp(16px,5.21vw,75px)] flex gap-2">
           <div className="origin-left scale-[0.62] sm:scale-75 md:scale-90 lg:scale-100">
             <EnrollmentCard accentColor={SLIDES[activeSlide].arrow} />
           </div>
@@ -227,7 +226,7 @@ export default function HeroSection() {
 
       {/* ── Progress bar indicators — bottom ── */}
       <div className="absolute bottom-5 left-0 right-0 z-40">
-        <div className="max-w-360 mx-auto px-4 flex gap-2">
+        <div className="max-w-360 mx-auto px-[clamp(16px,5.21vw,75px)] flex gap-2">
           {SLIDES.map((_, i) => (
             <div key={i} className="flex-1 h-2.25 bg-white/30 rounded-full overflow-hidden">
               <div

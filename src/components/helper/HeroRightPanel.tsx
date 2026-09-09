@@ -52,12 +52,15 @@ export default function HeroRightPanel({ iconsRef, nutritionRef, activeIndex, ne
 
   // Crossfade preview image
   useEffect(() => {
-    setImgOpacity(0);
-    const t = setTimeout(() => {
+    const fadeOut = setTimeout(() => setImgOpacity(0), 0);
+    const swap = setTimeout(() => {
       setDisplayedImage(nextImage);
       setImgOpacity(1);
     }, 300);
-    return () => clearTimeout(t);
+    return () => {
+      clearTimeout(fadeOut);
+      clearTimeout(swap);
+    };
   }, [nextImage]);
 
   return (
