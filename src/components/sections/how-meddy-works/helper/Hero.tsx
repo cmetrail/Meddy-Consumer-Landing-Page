@@ -31,7 +31,7 @@ export default function Hero() {
             How Meddy Works
           </p>
 
-          <h2 >
+          <h2 className="flex flex-col gap-2.5">
             <span
               className="block font-normal text-[#ABB1AD]"
               style={{ fontSize: "clamp(28px, 4.8vw, 64px)" }}
@@ -54,7 +54,7 @@ export default function Hero() {
 
           <p
             className="text-[#ABB1AD] font-medium"
-            style={{ fontSize: "clamp(14px, 1.25vw, 20px)" }}
+            style={{ fontSize: "clamp(14px, 1.25vw, 24px)" }}
           >
             Everything you log becomes something your doctor can act on.
           </p>

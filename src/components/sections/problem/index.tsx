@@ -10,12 +10,12 @@ import Image from "next/image";
 const HEADING = { left: "6.05%", top: "5.27%", width: "54.08%" };
 
 const IMAGES = [
-  { src: "/home/scattered-1.png", left: "3.9%", mobileLeft: "0%", top: "29.27%", mobileTop: "30%", width: "26.03%", mobileWidth: "36%", ar: 1.918 },
-  { src: "/home/scattered-2.png", left: "24.36%", mobileLeft: "26%", top: "49.44%", mobileTop: "50%", width: "25.68%", mobileWidth: "34%", ar: 1.864 },
-  { src: "/home/scattered-3.png", left: "46.49%", mobileLeft: "48%", top: "31.15%", mobileTop: "32%", width: "24.5%", mobileWidth: "32%", ar: 1.805 },
-  { src: "/home/scattered-4.png", left: "6.05%", mobileLeft: "0%", top: "72.54%", mobileTop: "73%", width: "24.77%", mobileWidth: "34%", ar: 1.945 },
-  { src: "/home/scattered-5.png", left: "41.27%", mobileLeft: "42%", top: "69.23%", mobileTop: "70%", width: "29.72%", mobileWidth: "36%", ar: 1.881 },
-  { src: "/home/scattered-6.png", left: "62.77%", mobileLeft: "60%", top: "47.55%", mobileTop: "50%", width: "28.46%", mobileWidth: "34%", ar: 2.176 },
+  { src: "/home/scattered-1.png", left: "3.9%", mobileLeft: "0%", top: "2%", mobileTop: "5%", width: "26.03%", mobileWidth: "36%", ar: 1.918 },
+  { src: "/home/scattered-2.png", left: "24.36%", mobileLeft: "26%", top: "35.5%", mobileTop: "38.65%", width: "25.68%", mobileWidth: "34%", ar: 1.864 },
+  { src: "/home/scattered-3.png", left: "46.49%", mobileLeft: "48%", top: "5.13%", mobileTop: "8.37%", width: "24.5%", mobileWidth: "32%", ar: 1.805 },
+  { src: "/home/scattered-4.png", left: "6.05%", mobileLeft: "0%", top: "73.88%", mobileTop: "77.35%", width: "24.77%", mobileWidth: "34%", ar: 1.945 },
+  { src: "/home/scattered-5.png", left: "41.27%", mobileLeft: "42%", top: "68.38%", mobileTop: "72.3%", width: "29.72%", mobileWidth: "36%", ar: 1.881 },
+  { src: "/home/scattered-6.png", left: "62.77%", mobileLeft: "60%", top: "32.38%", mobileTop: "38.65%", width: "28.46%", mobileWidth: "34%", ar: 2.176 },
 ];
 
 const BRAND = "#17925A";
@@ -47,13 +47,13 @@ function Heading() {
   return (
     <div>
       <p
-        className="uppercase font-normal text-[clamp(16px,1.95vw,28px)] leading-[1.245] mb-[clamp(8px,1.04vw,15px)]"
+        className="uppercase font-normal text-[clamp(14px,1.4vw,20px)] leading-[1.245] mb-[clamp(8px,1.04vw,15px)]"
         style={{ color: EYEBROW }}
       >
         The problem
       </p>
       <h2
-        className="font-bold uppercase text-[clamp(36px,4.69vw,67px)] leading-[1.26]"
+        className="font-bold uppercase text-[clamp(30px,3.3vw,48px)] leading-[1.26]"
         style={{ color: HEADLINE }}
       >
         <span className="block">
@@ -74,12 +74,14 @@ function Heading() {
 export default function ProblemSection() {
   return (
     <section
-      className="w-full bg-problem-gradient"
+      className="relative w-full overflow-hidden bg-problem-gradient"
+      style={{ height: "var(--dvh)" }}
     >
-      <div className="mx-auto w-full  py-10 sm:py-16   max-w-360 px-4">
-        
-        <div className="relative w-full aspect-1437/1329 max-md:aspect-3/5">
+      <div className="mx-auto h-full w-full max-w-360 px-5 lg:px-10 py-16 flex flex-col">
+        <div className="shrink-0">
           <Heading />
+        </div>
+        <div className="relative flex-1 min-h-0 w-full">
           {IMAGES.map((p) => (
             <div
               key={p.src}
