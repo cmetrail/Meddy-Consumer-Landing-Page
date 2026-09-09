@@ -68,6 +68,21 @@
   --s: clamp(0.22, 100vw / 1440px, 1);
 }
 
+/*
+ * Dynamic viewport-height token with a `vh` fallback. `dvh` isn't supported in
+ * older browsers or some embedded webviews (e.g. Responsively.app, older
+ * Safari/Firefox) — when it's missing, `100dvh` resolves to nothing and the
+ * hero collapses to a sliver. Fall back to `vh` until `dvh` is available.
+ */
+:root {
+  --dvh: 100vh;
+}
+@supports (height: 100dvh) {
+  :root {
+    --dvh: 100dvh;
+  }
+}
+
 * {
   margin: 0px !important;
   padding: 0px !important;

@@ -32,7 +32,7 @@ export default function HeroHeader() {
   );
 
   return (
-    <header ref={containerRef} className="relative flex flex-row justify-between items-center max-w-360 mx-auto pt-[calc(49px*var(--s))] px-[calc(56px*var(--s))]">
+    <header ref={containerRef} className="relative flex flex-row justify-between items-center max-w-360 mx-auto py-5 px-5 lg:px-20">
 
       {/* Logo */}
       <div ref={logoRef} style={{ opacity: 0 }}>

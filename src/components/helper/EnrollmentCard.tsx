@@ -1,7 +1,5 @@
 "use client";
 
-import { S } from "@/lib/scale";
-
 const REMAINING = 337;
 const TOTAL = 500;
 const R = 38;
@@ -11,13 +9,14 @@ const grayDash = CIRC - greenDash;
 
 export default function EnrollmentCard({ accentColor }: { accentColor?: string }) {
   return (
-    <div className="relative" style={{ width: S(378), height: S(257) }}>
+    <div className="relative" style={{ width: 378, height: 257 }}>
 
       {/* Card body SVG — organic path with concave cutout built-in */}
-      <div className="absolute" style={{ top: S(17), left: 0, zIndex: 1 }}>
-        <svg viewBox="0 0 378 240" style={{ width: S(378), height: S(240) }} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div className="absolute" style={{ top: 17, left: 0, zIndex: 1 }}>
+        <svg width="378" height="240" viewBox="0 0 378 240" fill="none" xmlns="http://www.w3.org/2000/svg">
           <foreignObject x="-20.8738" y="-20.8738" width="419.748" height="281.748">
             <div
+
               style={{ backdropFilter: "blur(10.44px)", clipPath: "url(#bgblur_card_clip)", height: "100%", width: "100%" }}
             />
           </foreignObject>
@@ -40,15 +39,15 @@ export default function EnrollmentCard({ accentColor }: { accentColor?: string }
         </svg>
 
         {/* Card content overlay */}
-        <div className="absolute inset-0 flex flex-col justify-between p-[calc(28px*var(--s))]">
-          <p className="text-[#1E1E22] leading-[1.25] tracking-[0.02em]" style={{ fontSize: S(12), maxWidth: S(186) }}>
+        <div className="absolute inset-0 flex flex-col justify-between p-7 pl-4">
+          <p className="text-[#1E1E22] leading-3.75 tracking-[0.02em]" style={{ fontSize: 12, maxWidth: 186 }}>
             Limited enrollment ensures every patient receives personalized, physician guided care without compromise.
           </p>
           <div>
-            <p className="text-[#18181B] uppercase leading-[1.25] tracking-[0.02em]" style={{ fontSize: S(12) }}>
+            <p className="text-[#18181B] uppercase leading-3.75 tracking-[0.02em]" style={{ fontSize: 11.7 }}>
               Now Accepting
             </p>
-            <p className="text-[#18181B] font-bold" style={{ fontSize: S(26.72), lineHeight: S(34) }}>
+            <p className="text-[#18181B] font-bold leading-8.5" style={{ fontSize: 26.7 }}>
               Our first 500 patients
             </p>
           </div>
@@ -56,8 +55,8 @@ export default function EnrollmentCard({ accentColor }: { accentColor?: string }
       </div>
 
       {/* Badge SVG — organic blob shape with ring overlay */}
-      <div className="absolute" style={{ width: S(174), height: S(137), top: S(-2), right: S(-4), zIndex: 2 }}>
-        <svg viewBox="0 0 174 137" style={{ width: S(174), height: S(137) }} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div className="absolute" style={{ width: 174, height: 137, top: -2, right: -4, zIndex: 2 }}>
+        <svg width="174" height="137" viewBox="0 0 174 137" fill="none" xmlns="http://www.w3.org/2000/svg">
           <foreignObject x="-41.7476" y="-41.7476" width="256.579" height="219.827">
             <div
               style={{ backdropFilter: "blur(20.87px)", clipPath: "url(#bgblur_badge_clip)", height: "100%", width: "100%" }}
@@ -78,7 +77,7 @@ export default function EnrollmentCard({ accentColor }: { accentColor?: string }
         {/* Ring + text centered over badge */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="relative flex items-center justify-center">
-            <svg viewBox="0 0 100 100" style={{ width: S(100), height: S(100) }}>
+            <svg width="100" height="100" viewBox="0 0 100 100">
               <circle cx="50" cy="50" r={R} fill="none" stroke="#D0D0D0" strokeWidth="7" />
               <circle
                 cx="50" cy="50" r={R}
@@ -91,8 +90,8 @@ export default function EnrollmentCard({ accentColor }: { accentColor?: string }
               />
             </svg>
             <div className="absolute text-center">
-              <p className="text-[#18181B] font-bold leading-none" style={{ fontSize: S(13.4) }}>{REMAINING}</p>
-              <p className="text-[#18181B] leading-none mt-0.5" style={{ fontSize: S(10) }}>Remaining</p>
+              <p className="text-[#18181B] font-bold leading-none" style={{ fontSize: 13.4 }}>{REMAINING}</p>
+              <p className="text-[#18181B] leading-none mt-0.5" style={{ fontSize: 10 }}>Remaining</p>
             </div>
           </div>
         </div>
