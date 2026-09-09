@@ -7,7 +7,7 @@ import { MealCard } from "./MealCard";
 export default function NutritionSection() {
   return (
     <div className="">
-      <div className="max-w-360 mx-auto px-4 relative">
+      <div className="max-w-360 mx-auto px-5 lg:px-10 relative">
         <GiantNumber n="01" />
         <div className="grid lg:grid-cols-2  gap-12 lg:gap-16 items-center">
           <div className="pt-24 pl-0  lg:pl-16">
@@ -23,7 +23,7 @@ export default function NutritionSection() {
               <MealCard />
             </div>
             <Image
-              src="/home/nutrition-photo.png"
+              src="/home/nutrition-photos.png"
               alt="Nutrition tracking"
               height={792}
               width={640}

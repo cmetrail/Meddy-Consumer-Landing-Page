@@ -113,7 +113,7 @@ function CalloutCard({
 
 export default function FitnessTrend() {
   return (
-    <div className="relative w-full overflow-hidden py-14 lg:py-20">
+    <div className="relative w-full overflow-hidden ">
       <style>{`
         @keyframes ft-draw {
           to { stroke-dashoffset: 0; }
@@ -141,26 +141,26 @@ export default function FitnessTrend() {
         }
       `}</style>
 
-      <div className="max-w-360 mx-auto px-6 lg:px-13">
-        <div className="mb-8">
-          <div className="flex items-center gap-[17px]">
+      <div className="max-w-360 mx-auto px-5 flex flex-col gap-12.5 lg:px-10">
+        <div className="">
+          <div className="flex items-center gap-4.25">
             <span
-              className="text-white"
-              style={{ fontSize: "clamp(14px,1.39vw,20px)", fontWeight: 500, letterSpacing: "-0.02em", lineHeight: 1.3 }}
+              className="text-white text-xl font-medium tracking-[-2%] leading-[130%]"
+
             >
               Body Weight
             </span>
-            <span className="h-[8px] w-[8px] rounded-full bg-white" />
+            <span className="h-2 w-2 rounded-full bg-white" />
             <span
-              className="text-white"
-              style={{ fontSize: "clamp(14px,1.39vw,20px)", fontWeight: 500, letterSpacing: "-0.02em", lineHeight: 1.3 }}
+              className="text-white text-xl font-medium tracking-[-2%] leading-[130%]"
+
             >
               HRZone 3 Minutes
             </span>
           </div>
           <p
-            className="mt-[2px] text-[#E7E7E7]"
-            style={{ fontSize: "clamp(11px,0.98vw,14px)", fontWeight: 500, lineHeight: 1.4 }}
+            className="mt-0.5 text-[15px] font-medium leading-[140%] text-[#E7E7E7]"
+
           >
             Fitness Trend
           </p>
@@ -287,13 +287,13 @@ export default function FitnessTrend() {
           ))}
         </div>
 
-        <div className="mt-10 flex flex-col gap-2.5">
+        <div className="flex flex-col gap-2.5">
           <div className="flex items-center gap-[9.41px]">
             <span
               className="rounded-[2.35px]"
               style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #17622B 0%, rgba(23, 98, 43, 0.5) 100%)" }}
             />
-            <span className="text-white" style={{ fontSize: "clamp(11px,0.98vw,14px)", fontWeight: 500, lineHeight: 1.4 }}>
+            <span className="text-white text-[15px] font-medium leading-[140%]" >
               Intensity
             </span>
           </div>
@@ -302,7 +302,7 @@ export default function FitnessTrend() {
               className="rounded-[2.35px]"
               style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #621717 0%, rgba(98, 23, 23, 0.5) 100%)" }}
             />
-            <span className="text-white" style={{ fontSize: "clamp(11px,0.98vw,14px)", fontWeight: 500, lineHeight: 1.4 }}>
+            <span className="text-white text-[15px] font-medium leading-[140%]" >
               Body Weight
             </span>
           </div>

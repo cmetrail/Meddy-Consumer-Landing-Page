@@ -30,7 +30,7 @@ export default function WorkoutStatsCard() {
 
         backdropFilter: "blur(14px)",
         backgroundColor: "rgba(255,255,255,0.04)",
-        border: "0.1px solid rgba(255,255,255,1)",
+        border: "0.75px solid #FFFFFF1A",
         boxShadow: "0px 0.75px 2.25px 0px #0000000D, 0px 1.5px 9px 0px #00000014",
       }}
     >

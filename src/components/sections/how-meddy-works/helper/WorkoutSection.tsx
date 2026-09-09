@@ -7,21 +7,21 @@ import WorkoutStatsCard from "./WorkoutStatsCard";
 export default function WorkoutSection() {
   return (
     <div className="">
-      <div className="max-w-360 mx-auto px-4 relative">
+      <div className="max-w-360 mx-auto px-5 lg:px-10  relative">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           <div className="relative w-full md:w-fit md:mx-auto">
-            <div className="absolute right-[0%] top-[0%] origin-top-right scale-[0.8] sm:scale-100 w-87.5" >
+            <div className="absolute right-[-2%] top-[4%] origin-top-right scale-[0.8] sm:scale-100 w-87.5" >
               <WorkoutCard />
             </div>
             <Image
               src="/home/workout-photo.png"
               alt="Workout tracking"
               height={829}
-              width={455}
+              width={633}
               priority
-              className="object-contain pl-5 w-full h-auto md:w-158.25 md:h-218.5"
+              className="object-contain  w-full h-auto md:w-158.25 md:h-218.5"
             />
-            <div className="absolute left-[0%] bottom-[0%] origin-bottom-left scale-[0.8] sm:scale-100 w-75" >
+            <div className="absolute left-[0%] bottom-[5%] origin-bottom-left scale-[0.8] sm:scale-100 w-75" >
               <WorkoutStatsCard />
             </div>
           </div>

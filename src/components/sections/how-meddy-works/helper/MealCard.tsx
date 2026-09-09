@@ -42,7 +42,7 @@ export const MealCard = ({
                 boxShadow: "0px 0.7px 2px rgba(0,0,0,0.05), 0px 1.4px 8px rgba(0,0,0,0.08)",
             } : {
                 backdropFilter: "blur(14px)",
-                border: "0.1px solid rgba(255,255,255,1)",
+                    border: "0.75px solid #FFFFFF1A",
                 boxShadow: "0px 0.75px 2.25px 0px #0000000D, 0px 1.5px 9px 0px #00000014",
             }}
         >

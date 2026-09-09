@@ -19,7 +19,7 @@ function SleepArchitectureCard() {
       style={{
         backdropFilter: "blur(14px)",
         backgroundColor: "rgba(255,255,255,0.06)",
-        border: "0.1px solid rgba(255,255,255,1)",
+        border: "0.75px solid #FFFFFF1A",
         boxShadow: "0px 0.75px 2.25px 0px #0000000D, 0px 1.5px 9px 0px #00000014",
       }}
     >
@@ -45,15 +45,15 @@ function SleepArchitectureCard() {
 function SleepScoreCard() {
   return (
     <div
-      className="flex flex-col gap-6 rounded-md p-3 overflow-hidden"
+      className="flex flex-col gap-2 rounded-md p-3 overflow-hidden"
       style={{
         backdropFilter: "blur(14px)",
         backgroundColor: "rgba(255,255,255,0.06)",
-        border: "0.1px solid rgba(255,255,255,1)",
+        border: "0.75px solid #FFFFFF1A",
         boxShadow: "0px 0.75px 2.25px 0px #0000000D, 0px 1.5px 9px 0px #00000014",
       }}
     >
-      <div className="flex flex-col items-end">
+      <div className="flex flex-col items-end gap-1">
         <span className="text-white text-[7px] font-medium">Score</span>
         <p className="text-white font-bold text-base leading-tight">93%</p>
         <span className="flex items-center gap-1 rounded-full bg-[#57E6FF] px-2 py-0.5 text-[#0C0D0F] text-[7px] font-semibold">
@@ -65,7 +65,7 @@ function SleepScoreCard() {
         </span>
       </div>
       <Image
-        src="/home/sleep-graphs.png"
+        src="/home/sleep-graph-image.png"
         alt="Sleep chart"
         width={240}
         height={140}
@@ -82,7 +82,7 @@ export default function SleepSection() {
       <div className="max-w-360 mx-auto px-4  relative">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           <div className="relative w-full md:w-fit md:mx-auto">
-            <div className="absolute right-0 top-0 origin-top-right scale-[0.8] sm:scale-100 md:right-[-18%] md:top-[2%] w-72.5">
+            <div className="absolute right-0 top-0 origin-top-right scale-[0.8] sm:scale-100 md:right-[-18%] md:top-[4%] w-72.5">
               <SleepArchitectureCard />
             </div>
             <Image
@@ -93,7 +93,7 @@ export default function SleepSection() {
               priority
               className="object-contain w-full h-auto md:w-130.5 md:h-173.75"
             />
-            <div className="absolute left-0 bottom-0 origin-bottom-left scale-[0.8] sm:scale-100  md:bottom-0 lg:bottom-[20%] w-52">
+            <div className="absolute left-[-2%] bottom-0 origin-bottom-left scale-[0.8] sm:scale-100  md:bottom-0 lg:bottom-[0%] w-52">
               <SleepScoreCard />
             </div>
           </div>
