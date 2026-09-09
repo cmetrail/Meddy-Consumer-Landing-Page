@@ -4,8 +4,17 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { S, fluid } from "@/lib/scale";
 
 gsap.registerPlugin(useGSAP);
+
+const NAV_ITEMS = [
+  { label: "How it works", active: true },
+  { label: "WHY MEDDY", active: false },
+  { label: "pHYSICIAN CARE", active: false },
+  { label: "Pricing", active: false },
+  { label: "FAQ", active: false },
+];
 
 export default function HeroHeader() {
   const containerRef = useRef<HTMLElement>(null);
@@ -23,26 +32,33 @@ export default function HeroHeader() {
   );
 
   return (
-    <header ref={containerRef} className="relative flex flex-row justify-between items-center max-w-360 mx-auto px-[clamp(16px,5.21vw,75px)] pt-[clamp(24px,4.72vw,68px)] pb-4">
+    <header ref={containerRef} className="relative flex flex-row justify-between items-center max-w-360 mx-auto pt-[calc(49px*var(--s))] px-[calc(56px*var(--s))]">
 
       {/* Logo */}
       <div ref={logoRef} style={{ opacity: 0 }}>
-        <Image src="/app-logo.png" height={45} width={69} alt="Meddy Health" />
+        <Image
+          src="/app-logo.png"
+          height={45}
+          width={69}
+          alt="Meddy Health"
+          style={{ width: S(69.5), height: S(45.3) }}
+        />
       </div>
 
       {/* Desktop nav */}
-      <nav ref={navRef} className="hidden lg:flex items-center gap-[clamp(24px,3.47vw,50px)]" style={{ opacity: 0 }}>
-        {[
-          { label: "How it works", active: true },
-          { label: "Pricing", active: false },
-          { label: "For Physicians", active: false },
-        ].map(({ label, active }) => (
+      <nav ref={navRef} className="hidden lg:flex items-center" style={{ gap: S(50), opacity: 0 }}>
+        {NAV_ITEMS.map(({ label, active }) => (
           <a key={label} href="#"
-            className={`relative font-semibold uppercase leading-none tracking-[0.01em] text-[clamp(14px,1.39vw,20px)] transition-colors
-              ${active
-                ? "text-white after:content-[''] after:absolute after:left-0 after:-bottom-1.75 after:w-[88px] after:border-t-2 after:border-dashed after:border-white"
-                : "text-[#C5C5C5] hover:text-white"}`}>
+            className={`relative font-semibold uppercase leading-[1.25] tracking-[0.01em] transition-colors
+              ${active ? "text-white" : "text-[#C5C5C5] hover:text-white"}`}
+            style={{ fontSize: fluid(20, 14) }}>
             {label}
+            {active && (
+              <span
+                className="absolute left-0 -bottom-[calc(7px*var(--s))] border-t-2 border-dashed border-white"
+                style={{ width: S(88) }}
+              />
+            )}
           </a>
         ))}
       </nav>
@@ -66,9 +82,12 @@ export default function HeroHeader() {
         ${menuOpen ? "max-h-60 py-6" : "max-h-0 py-0"}
       `}>
         <div className="flex flex-col gap-6 px-6">
-          <a href="#" className="text-white font-semibold text-lg uppercase tracking-[0.01em]">How it works</a>
-          <a href="#" className="text-[#C5C5C5] font-semibold text-lg uppercase tracking-[0.01em]">Pricing</a>
-          <a href="#" className="text-[#C5C5C5] font-semibold text-lg uppercase tracking-[0.01em]">For Physicians</a>
+          {NAV_ITEMS.map(({ label, active }) => (
+            <a key={label} href="#"
+              className={`${active ? "text-white" : "text-[#C5C5C5]"} font-semibold text-lg uppercase tracking-[0.01em]`}>
+              {label}
+            </a>
+          ))}
         </div>
       </div>
 

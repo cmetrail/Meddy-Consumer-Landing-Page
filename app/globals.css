@@ -56,6 +56,18 @@
   --color-ink: #6ee7a0;
 }
 
+/*
+ * Fluid hero scale factor. The hero is designed on a fixed 1440px canvas, so
+ * every spacing/font value in it is a `px * var(--s)` multiple. This keeps the
+ * horizontal axis (width) and vertical axis (height) locked together — the
+ * previous per-property `vw`/`dvh` clamps drifted apart when the viewport's
+ * aspect ratio didn't match 1440:1088. Clamped to 0.22 so the 180px headline
+ * can shrink to ~40px instead of overflowing on 320px screens.
+ */
+:root {
+  --s: clamp(0.22, 100vw / 1440px, 1);
+}
+
 * {
   margin: 0px !important;
   padding: 0px !important;

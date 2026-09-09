@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import HeroHeader from "@/components/helper/HeroHeader";
 import EnrollmentCard from "@/components/helper/EnrollmentCard";
+import { S, fluid } from "@/lib/scale";
 
 gsap.registerPlugin(useGSAP);
 
@@ -46,6 +47,10 @@ const BG_DURATION = 1.4;   // bg curtain slide duration
 const CONTENT_EXIT_AT = 0.55;  // when curtain edge "touches" content (s after bg starts)
 const CONTENT_ENTER_AT = CONTENT_EXIT_AT + 0.1;
 
+// TODO: temporarily disabled while the design is being finalized.
+// Set to true to restore the auto-playing carousel + entrance animations.
+const ANIMATION_ENABLED = false;
+
 export default function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
   const currentIndex = useRef(0);
@@ -57,7 +62,6 @@ export default function HeroSection() {
   const hlRefs = useRef<(HTMLDivElement | null)[]>([]); // headline container
   const taglineRefs = useRef<(HTMLParagraphElement | null)[]>([]);
   const bodyRefs = useRef<(HTMLParagraphElement | null)[]>([]);
-  const ctaRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const statsRef = useRef<HTMLDivElement>(null);
@@ -69,7 +73,6 @@ export default function HeroSection() {
     gsap.to(letters, { opacity: 0, y: -15, duration: 0.3, stagger: 0.02, ease: "power2.in" });
     gsap.to(taglineRefs.current[i], { x: 20, opacity: 0, duration: 0.3, ease: "power2.in" });
     gsap.to(bodyRefs.current[i], { x: 20, opacity: 0, duration: 0.3, delay: 0.05, ease: "power2.in" });
-    gsap.to(ctaRefs.current[i], { scale: 0.9, opacity: 0, duration: 0.25, ease: "power2.in" });
     gsap.to(imageRefs.current[i], { yPercent: 100, opacity: 0, duration: 0.9, ease: "power2.in" });
   };
 
@@ -90,9 +93,6 @@ export default function HeroSection() {
     gsap.fromTo(bodyRefs.current[i],
       { x: -50, opacity: 0 },
       { x: 0, opacity: 1, duration: 1.0, delay: d + 0.65, ease: "power2.out" });
-    gsap.fromTo(ctaRefs.current[i],
-      { scale: 0.5, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.8, delay: d + 0.8, ease: "back.out(1.4)" });
   };
 
   // ── Progress bar fill → triggers next transition on complete ─────────────
@@ -128,6 +128,18 @@ export default function HeroSection() {
 
   useGSAP(
     () => {
+      if (!ANIMATION_ENABLED) {
+        // Static (inspection) mode — freeze on slide 0, no transitions.
+        SLIDES.forEach((_, i) => {
+          gsap.set(bgRefs.current[i], { x: i === 0 ? "0%" : "100%", opacity: 1 });
+          gsap.set(imageRefs.current[i], { yPercent: i === 0 ? 0 : 100, opacity: i === 0 ? 1 : 0 });
+          gsap.set(contentRefs.current[i], { opacity: i === 0 ? 1 : 0 });
+        });
+        gsap.set(statsRef.current, { y: 0, opacity: 1 });
+        progressFillRefs.current.forEach((el, i) => el && gsap.set(el, { width: i === 0 ? "100%" : "0%" }));
+        return;
+      }
+
       // Init: all slides except first off-screen
       SLIDES.forEach((_, i) => {
         if (i === 0) return;
@@ -135,7 +147,7 @@ export default function HeroSection() {
         gsap.set(imageRefs.current[i], { yPercent: 100, opacity: 0 });
         // Hide all non-active content elements
         const letters = Array.from(hlRefs.current[i]?.children ?? []);
-        gsap.set([...letters, taglineRefs.current[i], bodyRefs.current[i], ctaRefs.current[i]], { opacity: 0 });
+        gsap.set([...letters, taglineRefs.current[i], bodyRefs.current[i]], { opacity: 0 });
       });
 
       // Init progress bars — all empty, first will fill via startProgress
@@ -153,7 +165,7 @@ export default function HeroSection() {
   );
 
   return (
-    <section ref={containerRef} className="relative h-dvh w-full overflow-hidden flex flex-col">
+    <section ref={containerRef} className="relative h-dvh w-full overflow-hidden">
 
       {/* ── Background gradient layers (slide right → left) ── */}
       {SLIDES.map((s, i) => (
@@ -165,70 +177,59 @@ export default function HeroSection() {
       ))}
 
       {/* ── Header — normal flow, sits at top ── */}
-      <div className="relative z-50 shrink-0">
+      <div className="relative z-50">
         <HeroHeader />
       </div>
 
-      {/* ── Main area — fills remaining height ── */}
-      <div className="relative flex-1 overflow-hidden">
-
-        {/* Person images — bottom-anchored, animate from center upward */}
-        {SLIDES.map((s, i) => (
-          <div key={i} ref={el => { imageRefs.current[i] = el; }}
-            className="absolute inset-0 pointer-events-none z-20"
-            style={{ opacity: 0 }}>
-            <div className="relative max-w-360 mx-auto px-4 h-full">
-              <Image src={s.image} alt="" width={s.width} height={s.height} priority={i === 0} loading={i === 0 ? undefined : "eager"}
-                className="absolute bottom-0 left-[70%] md:left-[62%] lg:left-[55%] -translate-x-1/2 h-[65dvh] md:h-[75dvh] lg:h-[86dvh] w-auto object-contain object-bottom" />
-            </div>
+      {/* Person images — bottom-anchored at 60% width, height scales with --s */}
+      {SLIDES.map((s, i) => (
+        <div key={i} ref={el => { imageRefs.current[i] = el; }}
+          className="absolute inset-0 pointer-events-none z-20"
+          style={{ opacity: 0 }}>
+          <div className="relative max-w-360 mx-auto h-full">
+            <Image src={s.image} alt="" width={s.width} height={s.height} priority={i === 0} loading={i === 0 ? undefined : "eager"}
+              className="absolute bottom-0 left-1/2 lg:left-[60%] -translate-x-1/2 w-auto object-contain object-bottom"
+              style={{ height: `min(calc(100dvh * 954 / 1088), calc(100vw * 954 / 715), 954px)`, maxHeight: "100%" }} />
           </div>
-        ))}
+        </div>
+      ))}
 
-        {/* ── Tagline / body / CTA — no z-index so mix-blend-mode reaches background ── */}
-        {SLIDES.map((s, i) => (
-          <div key={i} ref={el => { contentRefs.current[i] = el; }}
-            className="absolute inset-0 pointer-events-none" style={{ opacity: 0 }}>
-            <div className="max-w-360 relative mx-auto h-full flex flex-col justify-start px-[clamp(16px,5.21vw,75px)]">
+      {/* ── Headline / tagline / body / CTA — no z-index so mix-blend-mode reaches background ── */}
+      {SLIDES.map((s, i) => (
+        <div key={i} ref={el => { contentRefs.current[i] = el; }}
+          className="absolute inset-0 pointer-events-none" style={{ opacity: 0 }}>
+          <div className="absolute left-0 right-0" style={{ top: S(110.56) }}>
+            <div className="max-w-360 mx-auto px-[calc(56px*var(--s))]">
               <div ref={el => { hlRefs.current[i] = el; }}
                 className="uppercase font-bold leading-[1.261] tracking-normal text-theme-cardAlt whitespace-nowrap"
-                style={{ fontSize: "clamp(40px, 12.5vw, 180px)", mixBlendMode: "difference" }}>
+                style={{ fontSize: fluid(180, 36), mixBlendMode: "difference" }}>
                 {s.headline.split("").map((char, j) => <span key={j} className="inline-block">{char}</span>)}
               </div>
-              <div className="flex flex-col relative z-999 mt-[clamp(8px,1.11vw,16px)]">
+              <div className="flex flex-col relative z-999 mt-[calc(16px*var(--s))]">
                 <p ref={el => { taglineRefs.current[i] = el; }}
-                  className="text-white uppercase font-normal text-[clamp(18px,2.22vw,32px)] leading-[1.25]">{s.tagline}</p>
+                  className="text-white uppercase font-normal leading-[1.267]"
+                  style={{ fontSize: fluid(30, 18) }}>{s.tagline}</p>
                 <p ref={el => { bodyRefs.current[i] = el; }}
-                  className="text-white font-normal text-[clamp(14px,1.39vw,20px)] leading-[1.25] w-[min(85vw,477px)] mt-[clamp(4px,0.69vw,10px)]">{s.body}</p>
-              </div>
-              <div className="mt-[clamp(40px,6.39vw,92px)]">
-                <button ref={el => { ctaRefs.current[i] = el; }}
-                  className="pointer-events-auto flex items-center relative z-999 w-[clamp(160px,16.39vw,236px)] h-[clamp(48px,4.44vw,64px)] bg-[#18181B] rounded-[clamp(32px,2.78vw,40px)] pl-[clamp(12px,1.04vw,15px)] pr-1">
-                  <span className="flex-1 text-theme-textPrimary font-medium text-[clamp(16px,1.67vw,24px)] leading-[1.25] text-left">Get Started</span>
-                  <span className="flex items-center justify-center w-[clamp(40px,3.89vw,56px)] h-[clamp(40px,3.89vw,56px)] rounded-full bg-theme-textPrimary shrink-0">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <path d="M7 17L17 7M17 7H7M17 7V17" stroke={s.arrow} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                </button>
+                  className="text-white font-normal leading-[1.25] mt-[calc(30px*var(--s))]"
+                  style={{ fontSize: fluid(20, 14), width: `min(100%, max(${S(477)}, 280px))` }}>{s.body}</p>
               </div>
             </div>
+          </div>
+        </div>
+      ))}
 
-          </div>
-        ))}
-      </div>
-      <div ref={statsRef} className="absolute left-0 right-0 z-20 bottom-[clamp(48px,6.88vw,99px)]" style={{ opacity: 0 }}>
-        <div className="max-w-360 mx-auto px-[clamp(16px,5.21vw,75px)] flex gap-2">
-          <div className="origin-left scale-[0.62] sm:scale-75 md:scale-90 lg:scale-100">
-            <EnrollmentCard accentColor={SLIDES[activeSlide].arrow} />
-          </div>
+      {/* ── Enrollment card — bottom-left; sits below the text on short viewports ── */}
+      <div ref={statsRef} className="absolute left-0 right-0 z-20" style={{ top: `max(${S(520)}, calc(100dvh - ${S(397)}))`, opacity: 0 }}>
+        <div className="max-w-360 mx-auto px-[calc(56px*var(--s))] flex">
+          <EnrollmentCard accentColor={SLIDES[activeSlide].arrow} />
         </div>
       </div>
 
       {/* ── Progress bar indicators — bottom ── */}
-      <div className="absolute bottom-5 left-0 right-0 z-40">
-        <div className="max-w-360 mx-auto px-[clamp(16px,5.21vw,75px)] flex gap-2">
+      <div className="absolute left-0 right-0 z-40" style={{ bottom: S(38) }}>
+        <div className="max-w-360 mx-auto px-[calc(79px*var(--s))] flex" style={{ gap: S(10) }}>
           {SLIDES.map((_, i) => (
-            <div key={i} className="flex-1 h-2.25 bg-white/30 rounded-full overflow-hidden">
+            <div key={i} className="flex-1 bg-white/30 rounded-full overflow-hidden" style={{ height: S(9) }}>
               <div
                 ref={el => { progressFillRefs.current[i] = el; }}
                 className="h-full bg-white rounded-full"
