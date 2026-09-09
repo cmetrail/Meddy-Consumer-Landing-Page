@@ -4,8 +4,8 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import HeroHeader from "@/components/helper/HeroHeader";
-import EnrollmentCard from "@/components/helper/EnrollmentCard";
+import HeroHeader from "@/components/HeroHeader";
+import EnrollmentCard from "../helper/EnrollmentCard";
 import { fluid } from "@/lib/scale";
 
 gsap.registerPlugin(useGSAP);
