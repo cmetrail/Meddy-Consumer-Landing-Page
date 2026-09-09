@@ -49,12 +49,14 @@ const CONTENT_ENTER_AT = CONTENT_EXIT_AT + 0.1;
 
 // TODO: temporarily disabled while the design is being finalized.
 // Set to true to restore the auto-playing carousel + entrance animations.
-const ANIMATION_ENABLED = false;
+const ANIMATION_ENABLED = true;
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
   const currentIndex = useRef(0);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [accentSlide, setAccentSlide] = useState(0);
+  const [entered, setEntered] = useState(false);
 
   // Per-slide refs
   const bgRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -119,6 +121,7 @@ export default function HeroSection() {
 
           currentIndex.current = to;
           setActiveSlide(to);
+          gsap.delayedCall(BG_DURATION, () => setAccentSlide(to));
           startProgress(to);
         },
       }
@@ -151,8 +154,8 @@ export default function HeroSection() {
       // Init progress bars — all empty, first will fill via startProgress
       progressFillRefs.current.forEach(el => el && gsap.set(el, { width: "0%" }));
 
-      // Initial entrance for slide 0
-      enterContent(0, 0);
+      // Slide 0's entrance is CSS-driven (see globals.css) so it renders at
+      // first paint without waiting for hydration. GSAP only drives the carousel.
 
       startProgress(0);
     },
@@ -179,10 +182,10 @@ export default function HeroSection() {
         {/* Person images — bottom-anchored at 60% width, height scales with --s */}
         {SLIDES.map((s, i) => (
           <div key={i} ref={el => { imageRefs.current[i] = el; }}
-            className="absolute inset-0 pointer-events-none z-20">
+            className={`absolute inset-0 pointer-events-none z-20 ${i === activeSlide ? "" : "hidden"} ${i === 0 && !entered ? "anim-rise" : ""}`}>
             <div className="relative max-w-360 mx-auto px-4 h-full">
               <Image src={s.image} alt="" width={715} height={954} priority={i === 0}
-                className="absolute bottom-0 left-[70%] sm:left-[70%] md:left-[62%] lg:left-[55%] -translate-x-1/2 h-[65dvh] md:h-[75dvh] lg:h-[86dvh] w-auto object-contain object-bottom" />
+                className="absolute bottom-0 left-[70%] sm:left-[70%] md:left-[62%] lg:left-[63%]  -translate-x-1/2 h-[65dvh] md:h-[75dvh] lg:h-[86dvh] w-auto object-contain object-bottom" />
             </div>
           </div>
         ))}
@@ -190,25 +193,29 @@ export default function HeroSection() {
         {/* ── Headline / tagline / body / CTA — normal flow, left-aligned; image sits centered behind ── */}
         {SLIDES.map((s, i) => (
           <div key={i} ref={el => { contentRefs.current[i] = el; }}
-            className={`z-30 flex-1 h-full w-full ${i === activeSlide ? "" : "hidden"}`} style={{ opacity: 0 }}>
-            <div className="max-w-360 mx-auto h-full flex flex-col flex-1 justify-between px-5 lg:px-20">
-              <div className="flex-1 flex flex-col">
+            className={`z-30  flex-1 h-full w-full ${i === activeSlide ? "" : "hidden"}`}>
+            <div className="max-w-360 mx-auto h-full flex flex-col flex-1 justify-between px-5 lg:px-10">
+              <div className="flex-1 gap-8 flex flex-col">
                 <div ref={el => { hlRefs.current[i] = el; }}
-                  className="uppercase font-bold leading-[1.261] tracking-normal text-theme-cardAlt whitespace-nowrap"
-                  style={{ fontSize: fluid(180, 36), mixBlendMode: "difference" }}>
-                  {s.headline.split("").map((char, j) => <span key={j} className="inline-block">{char}</span>)}
+                  className={`uppercase font-bold leading-[100%] -ml-2 tracking-normal text-[#1E1E22] flex ${i === 0 && !entered ? "anim-fade-up" : ""}`}
+                  style={{ fontSize: fluid(180, 18), mixBlendMode: "difference", ...(i === 0 && !entered ? { animationDelay: "0.1s" } : {}) }}>
+                  {s.headline.split("").map((char, j) => <span key={j} className="inline-block p-0 m-0">{char}</span>)}
                 </div>
-                <div className="flex flex-col  gap-7.5 max-w-139.5 ">
+                <div className="flex flex-col relative z-[99999]  gap-7.5 max-w-139.5 ">
                   <p ref={el => { taglineRefs.current[i] = el; }}
-                    className="text-white uppercase font-normal text-[30px] leading-[1.267]"
+                    className={`text-white uppercase font-normal text-[30px] leading-[100%] ${i === 0 && !entered ? "anim-fade-up" : ""}`}
+                    style={i === 0 && !entered ? { animationDelay: "0.35s" } : undefined}
                   >{s.tagline}</p>
                   <p ref={el => { bodyRefs.current[i] = el; }}
-                    className="text-white font-normal leading-tight  text-xl"
+                    className={`text-white font-normal leading-[100%]  text-xl ${i === 0 && !entered ? "anim-fade-up" : ""}`}
+                    style={i === 0 && !entered ? { animationDelay: "0.45s" } : undefined}
                   >{s.body}</p>
                 </div>
               </div>
-              <div className="h-64.25 mb-40">
-                <EnrollmentCard accentColor={SLIDES[activeSlide].arrow} />
+              <div className={`h-64.25 mb-44 ${i === 0 && !entered ? "anim-fade-up" : ""}`}
+                style={i === 0 && !entered ? { animationDelay: "0.55s" } : undefined}
+                onAnimationEnd={i === 0 ? () => setEntered(true) : undefined}>
+                <EnrollmentCard accentColor={SLIDES[accentSlide].arrow} />
               </div>
             </div>
           </div>
@@ -216,16 +223,16 @@ export default function HeroSection() {
 
         {/* ── Progress bar indicators — bottom ── */}
         <div className="absolute bottom-5 left-0 right-0 z-40">
-          <div className="max-w-360 mx-auto px-5 lg:px-20  flex gap-2">
-          {SLIDES.map((_, i) => (
-            <div key={i} className="flex-1 h-2.25 bg-white/30 rounded-full overflow-hidden">
-              <div
-                ref={el => { progressFillRefs.current[i] = el; }}
-                className="h-full bg-white rounded-full"
-                style={{ width: i < activeSlide ? "100%" : "0%" }}
-              />
-            </div>
-          ))}
+          <div className="max-w-360 mx-auto px-5 lg:px-10  flex gap-2">
+            {SLIDES.map((_, i) => (
+              <div key={i} className="flex-1 h-2.25 bg-white/30 rounded-full overflow-hidden">
+                <div
+                  ref={el => { progressFillRefs.current[i] = el; }}
+                  className="h-full bg-white rounded-full"
+                  style={{ width: i < activeSlide ? "100%" : "0%" }}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>

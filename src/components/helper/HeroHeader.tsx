@@ -1,12 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { S, fluid } from "@/lib/scale";
-
-gsap.registerPlugin(useGSAP);
+import { S } from "@/lib/scale";
 
 const NAV_ITEMS = [
   { label: "How it works", active: true },
@@ -17,25 +13,13 @@ const NAV_ITEMS = [
 ];
 
 export default function HeroHeader() {
-  const containerRef = useRef<HTMLElement>(null);
-  const logoRef      = useRef<HTMLDivElement>(null);
-  const navRef       = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useGSAP(
-    () => {
-      gsap.fromTo([logoRef.current, navRef.current],
-        { y: -60, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, stagger: 0.1, ease: "power3.out" });
-    },
-    { scope: containerRef },
-  );
-
   return (
-    <header ref={containerRef} className="relative flex flex-row justify-between items-center max-w-360 mx-auto py-5 px-5 lg:px-20">
+    <header className="relative flex flex-row justify-between items-center max-w-360 mx-auto py-5 px-5 lg:px-10">
 
       {/* Logo */}
-      <div ref={logoRef} style={{ opacity: 0 }}>
+      <div className="anim-fade-down" style={{ animationDelay: "0.05s" }}>
         <Image
           src="/app-logo.png"
           height={45}
@@ -46,26 +30,24 @@ export default function HeroHeader() {
       </div>
 
       {/* Desktop nav */}
-      <nav ref={navRef} className="hidden lg:flex items-center" style={{ gap: S(50), opacity: 0 }}>
+      <nav className="anim-fade-down hidden lg:flex items-center lg:gap-12.5 gap-4" style={{ animationDelay: "0.15s" }}>
         {NAV_ITEMS.map(({ label, active }) => (
           <a key={label} href="#"
-            className={`relative font-semibold uppercase leading-[1.25] tracking-[0.01em] transition-colors
+            className={`group relative font-semibold uppercase text-xl leading-tight tracking-[0.01em] transition-colors
               ${active ? "text-white" : "text-[#C5C5C5] hover:text-white"}`}
-            style={{ fontSize: fluid(20, 14) }}>
+          >
             {label}
-            {active && (
-              <span
-                className="absolute left-0 -bottom-[calc(7px*var(--s))] border-t-2 border-dashed border-white"
-                style={{ width: S(88) }}
-              />
-            )}
+            <span
+              className={`absolute left-0 right-0 bottom-[calc(-7px*var(--s))] border-t-2 border-dashed border-white transition-opacity
+                ${active ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+            />
           </a>
         ))}
       </nav>
 
       {/* Mobile hamburger */}
       <button
-        className="lg:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10"
+        className="lg:hidden flex flex-col justify-center items-center gap-1.25 w-10 h-10"
         onClick={() => setMenuOpen(v => !v)}
         aria-label="Toggle menu"
       >

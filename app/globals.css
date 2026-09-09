@@ -149,3 +149,37 @@ html.lenis body {
     cursor: pointer;
   }
 }
+
+/*
+ * Above-the-fold entrance animations. These are CSS-driven (not GSAP) so they
+ * run at first paint, before React hydration — eliminating the "blank hero"
+ * flash on slower JS engines (Safari) where content was previously hidden with
+ * opacity:0 until GSAP ran after hydration. `backwards` fill means the `from`
+ * state only applies during any animation-delay, and once the animation ends
+ * the element returns to its natural state so GSAP can freely animate it later.
+ */
+@keyframes meddy-fade-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes meddy-fade-down {
+  from { opacity: 0; transform: translateY(-40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes meddy-rise {
+  from { opacity: 0; transform: translateY(60px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.anim-fade-up   { animation: meddy-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+.anim-fade-down { animation: meddy-fade-down 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+.anim-rise      { animation: meddy-rise 1.1s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+
+/* GPU-accelerate the entrance layers — fixes Safari's janky compositing. */
+.anim-fade-up,
+.anim-fade-down,
+.anim-rise {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
