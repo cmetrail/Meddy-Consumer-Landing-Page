@@ -38,7 +38,7 @@ export default function HeroHeader() {
           >
             {label}
             <span
-              className={`absolute left-0 right-0 bottom-[calc(-7px*var(--s))] border-t-2 border-dashed border-white transition-opacity
+              className={`absolute left-0 bottom-[calc(-7px*var(--s))] w-[60%] border-t-2 border-dashed border-white transition-opacity
                 ${active ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
             />
           </a>
