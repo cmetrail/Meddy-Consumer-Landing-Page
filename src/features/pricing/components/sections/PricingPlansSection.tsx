@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 import { CircleCheckBig, Crown } from "lucide-react";
 
@@ -212,11 +213,33 @@ export default function PricingPlansSection() {
     <section className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-[#FFE9D0] py-16">
       <Image src="/home/footer-bg.jpg" alt="" fill priority className="object-cover" />
       <div className="relative mx-auto w-full max-w-360 px-5 lg:px-10">
-        <div className="grid w-full grid-cols-1 gap-8.75 lg:grid-cols-3">
+        <motion.div
+          className="grid w-full grid-cols-1 gap-8.75 lg:grid-cols-3"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.15 } },
+          }}
+        >
           {PLANS.map((plan) => (
-            <PlanCard key={plan.name} plan={plan} />
+            <motion.div
+              key={plan.name}
+              className="h-full"
+              variants={{
+                hidden: { opacity: 0, y: 40 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+                },
+              }}
+            >
+              <PlanCard plan={plan} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
