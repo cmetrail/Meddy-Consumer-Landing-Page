@@ -2,14 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { S } from "@/lib/scale";
 
 const NAV_ITEMS = [
-  { label: "How it works", active: true },
-  { label: "WHY MEDDY", active: false },
-  { label: "pHYSICIAN CARE", active: false },
-  { label: "Pricing", active: false },
-  { label: "FAQ", active: false },
+  { label: "How it works", href: "/", active: true },
+  { label: "WHY MEDDY", href: "/", active: false },
+  { label: "pHYSICIAN CARE", href: "/", active: false },
+  { label: "Pricing", href: "/pricing", active: false },
+  { label: "FAQ", href: "/", active: false },
 ];
 
 export default function HeroHeader() {
@@ -25,14 +24,13 @@ export default function HeroHeader() {
           height={45}
           width={69}
           alt="Meddy Health"
-          style={{ width: S(69.5), height: S(45.3) }}
         />
       </div>
 
       {/* Desktop nav */}
       <nav className="anim-fade-down hidden lg:flex items-center lg:gap-12.5 gap-4" style={{ animationDelay: "0.15s" }}>
-        {NAV_ITEMS.map(({ label, active }) => (
-          <a key={label} href="#"
+        {NAV_ITEMS.map(({ label, href, active }) => (
+          <a key={label} href={href}
             className={`group relative font-semibold uppercase text-xl leading-tight tracking-[0.01em] transition-colors
               ${active ? "text-white" : "text-[#C5C5C5] hover:text-white"}`}
           >
@@ -64,8 +62,8 @@ export default function HeroHeader() {
         ${menuOpen ? "max-h-60 py-6" : "max-h-0 py-0"}
       `}>
         <div className="flex flex-col gap-6 px-6">
-          {NAV_ITEMS.map(({ label, active }) => (
-            <a key={label} href="#"
+          {NAV_ITEMS.map(({ label, href, active }) => (
+            <a key={label} href={href}
               className={`${active ? "text-white" : "text-[#C5C5C5]"} font-semibold text-lg uppercase tracking-[0.01em]`}>
               {label}
             </a>

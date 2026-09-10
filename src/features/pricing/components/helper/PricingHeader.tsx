@@ -25,7 +25,7 @@ export default function PricingHeader() {
           width={55}
           height={34}
           unoptimized
-          className="h-8.5 w-auto lg:h-[34px]"
+          className="h-[45px] w-auto"
         />
       </Link>
 
@@ -33,7 +33,7 @@ export default function PricingHeader() {
       <nav className="anim-fade-down hidden lg:flex items-center lg:gap-12.5 gap-4" style={{ animationDelay: "0.15s" }}>
         {NAV_ITEMS.map(({ label, href, active }) => (
           <Link key={label} href={href}
-            className={`group relative text-base leading-tight tracking-[0.01em] uppercase transition-colors
+            className={`group relative text-xl leading-tight tracking-[0.01em] uppercase transition-colors
               ${active ? "font-semibold text-[#2A7653]" : "font-medium text-[#6E7A72] hover:text-[#2A7653]"}`}
           >
             {label}
@@ -66,7 +66,7 @@ export default function PricingHeader() {
         <div className="flex flex-col gap-6 px-6">
           {NAV_ITEMS.map(({ label, href, active }) => (
             <Link key={label} href={href}
-              className={`${active ? "font-semibold text-[#2A7653]" : "font-medium text-[#6E7A72]"} text-base uppercase tracking-[0.01em]`}>
+              className={`${active ? "font-semibold text-[#2A7653]" : "font-medium text-[#6E7A72]"} text-lg uppercase tracking-[0.01em]`}>
               {label}
             </Link>
           ))}

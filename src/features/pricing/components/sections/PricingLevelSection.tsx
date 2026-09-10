@@ -88,40 +88,60 @@ export default function PricingLevelSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#17231D]"
-      style={{ height: "var(--dvh)" }}
+      className="relative overflow-hidden bg-[#17231D] lg:[height:var(--dvh)]"
     >
       <div className="mx-auto flex h-full w-full max-w-360 flex-col py-8 px-5 lg:px-10">
         <motion.div
-          className="flex h-full flex-col"
+          className="flex flex-col lg:h-full"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={listVariants}
         >
           <motion.h2
-            className="font-normal uppercase leading-[1.25] text-[#D5D6D6]"
-            style={{ fontSize: 48 * scale }}
+            className="font-normal uppercase leading-[130%] text-white text-[24px] md:text-[28px] lg:text-[38px]"
             variants={riseVariants}
           >
             Choose the level of care
             <br />
-            that fits your goals.
+            <i><b>that fits your goals.</b></i>
           </motion.h2>
 
-          <div className="mt-auto flex flex-row justify-between items-end gap-6">
+          {/* Mobile: vertical stack */}
+          <div className="mt-8 flex flex-col gap-10 lg:hidden">
             {TIERS.map((tier) => (
-              <motion.div
-                key={tier.name}
-                className="flex flex-col"
-                variants={riseVariants}
-              >
+              <motion.div key={tier.name} className="flex flex-col" variants={riseVariants}>
+                <div
+                  className="relative w-full overflow-hidden max-h-[60vw] sm:max-h-[50vw]"
+                  style={{ aspectRatio: `${tier.width}/${tier.height}`, clipPath: CLIP }}
+                >
+                  <Image
+                    src={tier.img}
+                    alt={tier.name}
+                    fill
+                    sizes="100vw"
+                    className="object-cover"
+                    style={{ objectPosition: tier.objectPosition }}
+                  />
+                  <span
+                    className="absolute right-4 top-4 z-10 font-semibold uppercase leading-none text-[18px]"
+                    style={{ color: tier.color }}
+                  >
+                    {tier.name}
+                  </span>
+                </div>
+                <p className="mt-3 text-[14px] font-normal leading-[1.25] text-white">{tier.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Desktop: horizontal arc */}
+          <div className="mt-auto hidden lg:flex flex-row justify-between items-end gap-6">
+            {TIERS.map((tier) => (
+              <motion.div key={tier.name} className="flex flex-col" variants={riseVariants}>
                 <div
                   className="relative"
-                  style={{
-                    width: tier.width * scale,
-                    height: tier.height * scale,
-                  }}
+                  style={{ width: tier.width * scale, height: tier.height * scale }}
                 >
                   <div className="absolute inset-0" style={{ clipPath: CLIP }}>
                     <Image
