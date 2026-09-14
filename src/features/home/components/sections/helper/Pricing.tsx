@@ -25,8 +25,8 @@ function PlanCard({
 }) {
   return (
     <div
-      className={`relative flex flex-col backdrop-blur-xl p-5 md:p-6 lg:p-8 ${highlighted
-        ? "border-[5px] border-[#17925A] bg-[#D9D9D9]/20 lg:-translate-y-16"
+      className={`relative flex h-full flex-col backdrop-blur-xl p-5 md:p-6 lg:p-8 ${highlighted
+        ? "border-[5px] border-[#17925A] bg-[#D9D9D9]/20 lg:scale-110 lg:-translate-y-6"
         : "bg-[#CDCDCD]/20"
         }`}
     >
@@ -111,8 +111,8 @@ export function Pricing() {
       </div>
 
       {/* Plans */}
-      <div className="mt-16 grid items-start gap-20 md:grid-cols-3 md:gap-4 lg:mt-36 lg:gap-6">
-        <div data-reveal>
+      <div className="mt-16 grid items-stretch gap-20 md:grid-cols-3 md:gap-4 lg:mt-36 lg:gap-10">
+        <div data-reveal className="h-full">
           <PlanCard
             name="Free"
             tagline="Track your health"
@@ -126,7 +126,7 @@ export function Pricing() {
             cta="Start for free"
           />
         </div>
-        <div data-reveal>
+        <div data-reveal className="h-full">
           <PlanCard
             name="Meddy Care"
             tagline="Track your health"
@@ -145,7 +145,7 @@ export function Pricing() {
             cta="Choose Care"
           />
         </div>
-        <div data-reveal>
+        <div data-reveal className="h-full">
           <PlanCard
             name="Complete"
             tagline="Track your health"
