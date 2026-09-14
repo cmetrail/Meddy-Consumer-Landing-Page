@@ -9,6 +9,12 @@ export default {
   important: true,
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-plus-jakarta)", "sans-serif"],
+        "dm-serif": ["var(--font-dm-serif)", "serif"],
+        inter: ["var(--font-inter)", "sans-serif"],
+        playfair: ["var(--font-playfair)", "serif"],
+      },
       colors: {
         disabled: "#BBBBBB",
         theme: {
