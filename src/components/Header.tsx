@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const NAV_ITEMS = [
   { label: "How it works", href: "/" },
-  { label: "WHY MEDDY", href: "/" },
+  { label: "WHY MEDDY", href: "/why-meddy" },
   { label: "pHYSICIAN CARE", href: "/physician-care" },
   { label: "Pricing", href: "/pricing" },
   { label: "FAQ", href: "/" },
