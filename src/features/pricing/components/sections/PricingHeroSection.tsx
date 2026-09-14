@@ -2,14 +2,14 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import PricingHeader from "../helper/PricingHeader";
+import Header from "@/components/Header";
 
 export default function PricingHeroSection() {
   return (
     <section className="relative w-full min-h-dvh pb-10 flex flex-col overflow-hidden bg-[#F1E7D5]">
       {/* Header */}
       <div className="relative z-20">
-        <PricingHeader />
+        <Header />
       </div>
 
       {/* Headline */}

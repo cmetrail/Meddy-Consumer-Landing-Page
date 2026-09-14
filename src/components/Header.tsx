@@ -12,20 +12,52 @@ const NAV_ITEMS = [
   { label: "FAQ", href: "/" },
 ];
 
-export default function PricingHeader({ active = "Pricing" }: { active?: string }) {
+type HeaderVariant = "light" | "dark";
+
+const VARIANTS = {
+  light: {
+    logo: { src: "/pricing/pricing-logo.svg", width: 55, height: 34, className: "h-[45px] w-auto", unoptimized: true },
+    linkActive: "font-semibold text-[#2A7653]",
+    linkInactive: "font-medium text-[#6E7A72] hover:text-[#2A7653]",
+    underline: "border-[#2A7653]",
+    hamburger: "bg-[#2A7653]",
+    dropdown: "bg-[#F1E7D5]/95",
+    dropdownLinkActive: "font-semibold text-[#2A7653]",
+    dropdownLinkInactive: "font-medium text-[#6E7A72]",
+  },
+  dark: {
+    logo: { src: "/app-logo.png", width: 69, height: 45, className: "h-[45px] w-auto", unoptimized: false },
+    linkActive: "text-white",
+    linkInactive: "text-[#C5C5C5] hover:text-white",
+    underline: "border-white",
+    hamburger: "bg-white",
+    dropdown: "bg-black/70",
+    dropdownLinkActive: "text-white",
+    dropdownLinkInactive: "text-[#C5C5C5]",
+  },
+} as const;
+
+export default function Header({
+  active = "Pricing",
+  variant = "light",
+}: {
+  active?: string;
+  variant?: HeaderVariant;
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const v = VARIANTS[variant];
 
   return (
     <header className="relative flex flex-row justify-between items-center max-w-360 mx-auto py-5 px-5 lg:px-10">
       {/* Logo */}
       <Link href="/" className="anim-fade-down focus:outline-none" style={{ animationDelay: "0.05s" }}>
         <Image
-          src="/pricing/pricing-logo.svg"
+          src={v.logo.src}
           alt="Meddy Health"
-          width={55}
-          height={34}
-          unoptimized
-          className="h-[45px] w-auto"
+          width={v.logo.width}
+          height={v.logo.height}
+          unoptimized={v.logo.unoptimized}
+          className={v.logo.className}
         />
       </Link>
 
@@ -36,11 +68,11 @@ export default function PricingHeader({ active = "Pricing" }: { active?: string 
           return (
             <Link key={label} href={href}
               className={`group relative text-xl leading-tight tracking-[0.01em] uppercase transition-colors
-                ${isActive ? "font-semibold text-[#2A7653]" : "font-medium text-[#6E7A72] hover:text-[#2A7653]"}`}
+                ${isActive ? v.linkActive : v.linkInactive}`}
             >
               {label}
               <span
-                className={`absolute left-0 -bottom-2 w-[60%] border-t-2 border-dashed border-[#2A7653] transition-opacity
+                className={`absolute left-0 -bottom-2 w-[60%] border-t-2 border-dashed transition-opacity ${v.underline}
                   ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
               />
             </Link>
@@ -54,15 +86,15 @@ export default function PricingHeader({ active = "Pricing" }: { active?: string 
         onClick={() => setMenuOpen(v => !v)}
         aria-label="Toggle menu"
       >
-        <span className={`block h-[2px] w-6 bg-[#2A7653] origin-center transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
-        <span className={`block h-[2px] w-6 bg-[#2A7653] transition-all duration-300 ${menuOpen ? "opacity-0 scale-x-0" : ""}`} />
-        <span className={`block h-[2px] w-6 bg-[#2A7653] origin-center transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
+        <span className={`block h-[2px] w-6 ${v.hamburger} origin-center transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
+        <span className={`block h-[2px] w-6 ${v.hamburger} transition-all duration-300 ${menuOpen ? "opacity-0 scale-x-0" : ""}`} />
+        <span className={`block h-[2px] w-6 ${v.hamburger} origin-center transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
       </button>
 
       {/* Mobile dropdown */}
       <div className={`
         lg:hidden absolute top-full left-0 right-0 z-50
-        bg-[#F1E7D5]/95 backdrop-blur-md overflow-hidden
+        ${v.dropdown} backdrop-blur-md overflow-hidden
         transition-all duration-300 ease-in-out
         ${menuOpen ? "max-h-60 py-6" : "max-h-0 py-0"}
       `}>
@@ -71,7 +103,7 @@ export default function PricingHeader({ active = "Pricing" }: { active?: string 
             const isActive = label === active;
             return (
               <Link key={label} href={href}
-                className={`${isActive ? "font-semibold text-[#2A7653]" : "font-medium text-[#6E7A72]"} text-lg uppercase tracking-[0.01em]`}>
+                className={`${isActive ? v.dropdownLinkActive : v.dropdownLinkInactive} text-lg uppercase tracking-[0.01em]`}>
                 {label}
               </Link>
             );

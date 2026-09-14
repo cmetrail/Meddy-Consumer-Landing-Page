@@ -16,7 +16,8 @@ export default function PhysicianCareFooterSection() {
         className="object-cover"
       />
 
-      <div className="relative mx-auto w-full max-w-360 px-5 lg:px-10 py-20 lg:py-28">
+
+      <div className="relative mx-auto w-full max-w-360 px-5 min-h-dvh lg:px-10 py-10">
         <div className="flex flex-col gap-16 lg:gap-24">
           <motion.div
             className="flex flex-col gap-[10px]"

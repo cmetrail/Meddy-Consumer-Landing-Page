@@ -11,10 +11,10 @@ export const PhysicianCarePage = () => {
     <main>
       <PhysicianCareHeroSection />
       <PhysicianCareSecondSection />
-      {/* <PhysicianCareThirdSection />
+      <PhysicianCareThirdSection />
       <PhysicianCareForthSection />
       <PhysicianCareFifthSection />
-      <PhysicianCareFooterSection /> */}
+      <PhysicianCareFooterSection />
     </main>
   );
 };

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import PricingHeader from "@/features/pricing/components/helper/PricingHeader";
+import Header from "@/components/Header";
 
 const AVATARS = [
   { src: "/physician-care/avatar-1.png", alt: "Patient" },
@@ -17,7 +17,7 @@ export default function PhysicianCareHeroSection() {
     <section className="relative flex h-dvh w-full flex-col overflow-hidden bg-[#F0E6D4]">
       {/* Header */}
       <div className="relative z-30">
-        <PricingHeader />
+        <Header active="pHYSICIAN CARE" />
       </div>
 
       {/* Pulse icon */}

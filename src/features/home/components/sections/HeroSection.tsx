@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import HeroHeader from "@/components/HeroHeader";
+import Header from "@/components/Header";
 import EnrollmentCard from "../helper/EnrollmentCard";
 import { fluid } from "@/lib/scale";
 
@@ -176,7 +176,7 @@ export default function HeroSection() {
       <div className="h-full w-full relative">
         {/* ── Header — normal flow, sits at top ── */}
         <div className="relative z-50">
-          <HeroHeader />
+          <Header variant="dark" active="How it works" />
         </div>
 
         {/* Person images — bottom-anchored at 60% width, height scales with --s */}
