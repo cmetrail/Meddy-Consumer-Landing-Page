@@ -51,7 +51,7 @@ export default function NutritionSection() {
             />
           </div>
           <div data-feature-image className="relative w-full md:w-fit md:mx-auto">
-            <div data-feature-card className="absolute z-10 w-62.5 right-[3%] top-[10%] origin-top-right scale-[0.8] sm:scale-100">
+            <div data-feature-card className="absolute z-[99] w-62.5 right-[3%] top-[10%] origin-top-right scale-[0.8] sm:scale-100">
               <MealCard />
             </div>
             <Image
