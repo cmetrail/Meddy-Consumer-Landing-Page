@@ -1,5 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 type FooterLink = { label: string; href: string };
 
@@ -106,10 +111,16 @@ export function FooterItems() {
         </div>
 
         <div className="mt-6 border-t border-[#E0E0E0] lg:mt-8" />
-        <p className="mt-8 text-center text-[#F4F4F5] text-[12px] leading-[150%] lg:mt-4">
+        <motion.p
+          className="mt-8 text-center text-[#F4F4F5] text-[12px] leading-[150%] lg:mt-5"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.8, ease }}
+        >
           © 2026 Meddy · Physician services available in all 50 states except: South Carolina,
           Arkansas, Rhode Island.
-        </p>
+        </motion.p>
       </div>
     </div>
   );
