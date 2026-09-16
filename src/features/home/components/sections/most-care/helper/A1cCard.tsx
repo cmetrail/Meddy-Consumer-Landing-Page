@@ -38,7 +38,7 @@ function A1cChart() {
 
       {/* Avg badge */}
       <div className="absolute left-[12%] top-[13%] rounded-[2px] bg-[#D98C0D] px-1.5 py-0.5">
-        <span className="text-[6px] font-bold text-black">Avg: 14.3%</span>
+        <span className="text-[6px] font-bold text-black">Avg: 6.2%</span>
       </div>
 
       {/* KPI tooltip */}

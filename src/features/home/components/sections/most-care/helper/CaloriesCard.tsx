@@ -13,7 +13,7 @@ export default function CaloriesCard() {
   return (
     <div
       className="relative w-full overflow-hidden rounded-[10px] shadow-[6px_8px_8px_rgba(0,0,0,0.2)]"
-      style={{ background: "linear-gradient(150deg, #1A3D2B 7.74%, #1E4A33 50%, #163322 92.26%)" }}
+      style={{ background: "linear-gradient(150deg, #1A3D2B 0%, #1E4A33 50%, #163322 100%)" }}
     >
       {/* glow */}
       <div className="absolute -top-[53px] -right-[46px] h-[168px] w-[168px] rounded-full bg-[#17925A] blur-[75px]" />

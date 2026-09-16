@@ -13,15 +13,15 @@ import SleepCard from "./helper/SleepCard";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-/* Node px → % of the 1445×1059 Figma frame (1445×1215 trimmed of top/bottom whitespace; see mostcare.md). */
+/* Node px → % of the 1332.72×1059 Figma canvas (GROUP #10580:4325). */
 const POS = {
-  meal: { left: "7.474%", top: "5.477%", width: "29.647%" },
-  workout: { left: "40.069%", top: "0%", width: "35.433%" },
-  calories: { left: "69.619%", top: "18.886%", width: "24.775%" },
-  statement: { left: "28.374%", top: "41.360%", width: "46.367%" },
-  nutrients: { left: "3.045%", top: "53.824%", width: "24.859%" },
-  a1c: { left: "27.197%", top: "64.400%", width: "30.104%" },
-  sleep: { left: "66.298%", top: "60.340%", width: "28.977%" },
+  meal: { left: "4.80%", top: "5.48%", width: "32.14%" },
+  workout: { left: "40.14%", top: "0%", width: "38.42%" },
+  calories: { left: "72.18%", top: "18.89%", width: "26.86%" },
+  statement: { left: "24.87%", top: "41.36%", width: "50.27%" },
+  nutrients: { left: "0%", top: "53.82%", width: "26.95%" },
+  a1c: { left: "26.19%", top: "64.40%", width: "32.64%" },
+  sleep: { left: "68.58%", top: "60.34%", width: "31.42%" },
 };
 
 /* Scatter-in offsets (x/y px + rotate deg) — cards fly in from different directions. */
@@ -92,7 +92,7 @@ export default function MostCareSection() {
   return (
     <section ref={sectionRef} id="why-meddy" className="relative w-full bg-[#F2EEE3] overflow-hidden">
       <div className="mx-auto w-full px-5 lg:px-10 py-16 max-w-360">
-        <div className="relative w-full grid grid-cols-1 gap-6 md:grid-cols-2 xl:block xl:aspect-1445/1059 xl:gap-0">
+        <div className="relative w-full grid grid-cols-1 gap-6 md:grid-cols-2 xl:block xl:aspect-[1332.72/1059] xl:gap-0">
           <Abs pos={POS.meal} scatter>
             <MealCard />
           </Abs>
