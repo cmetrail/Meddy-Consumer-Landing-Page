@@ -85,38 +85,104 @@ export default function Hero() {
 
   return (
     <div ref={sectionRef} className="relative overflow-hidden min-h-(--dvh)">
-      {/* Curtain background */}
-      <div ref={bgRef} className="absolute inset-0">
-        <Image
-          src="/home/how-it-work-bg.png"
-          alt=""
-          fill
-          priority
-          className="object-cover object-center"
+      {/* Curtain background — recreated with CSS (dark base + blurred green glows) */}
+      <div ref={bgRef} className="absolute inset-0 overflow-hidden bg-[#060606]">
+        <div
+          className="absolute rounded-full"
+          style={{
+            left: "-9%",
+            top: "89%",
+            width: "46%",
+            height: "28%",
+            background: "#394C31",
+            filter: "blur(163.3px)",
+          }}
         />
+        <div
+          className="absolute rounded-full"
+          style={{
+            left: "28%",
+            top: "70%",
+            width: "48%",
+            height: "67%",
+            background: "#185945",
+            filter: "blur(163.3px)",
+          }}
+        />
+        <div
+          className="absolute rounded-full"
+          style={{
+            left: "65%",
+            top: "84%",
+            width: "48%",
+            height: "46%",
+            background: "#081D01",
+            filter: "blur(163.3px)",
+          }}
+        />
+        {/* Vertical grid bars — 13 columns, white at the edges fading to transparent in the middle, overlay blend */}
+        <div className="absolute inset-0" style={{ mixBlendMode: "overlay" }}>
+          <svg
+            className="absolute inset-0 h-full w-full"
+            viewBox="0 0 1440 1057"
+            preserveAspectRatio="xMidYMid slice"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              {Array.from({ length: 13 }).map((_, i) => {
+                const x = i * 110.769;
+                return (
+                  <linearGradient
+                    key={i}
+                    id={`hero-grid-${i}`}
+                    x1={x + 133.616}
+                    y1="527.899"
+                    x2={x - 27.6923}
+                    y2="527.899"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="white" />
+                    <stop offset="0.301992" stopColor="white" stopOpacity="0" />
+                    <stop offset="1" stopColor="white" />
+                  </linearGradient>
+                );
+              })}
+            </defs>
+            {Array.from({ length: 13 }).map((_, i) => (
+              <rect
+                key={i}
+                x={i * 110.769}
+                width="110.769"
+                height="1057"
+                fill={`url(#hero-grid-${i})`}
+              />
+            ))}
+          </svg>
+        </div>
       </div>
 
       <div className="relative z-10 flex pt-16 h-full max-w-360 px-5 lg:px-10 mx-auto flex-col">
 
         {/* Text */}
-        <div className="text-center gap-2 sm:gap-5 max-w-214 mx-auto flex flex-col shrink-0">
+        <div className="text-center max-w-214 mx-auto flex flex-col shrink-0">
           <p
             data-hmw-line
-            className="uppercase tracking-[0.18em] leading-[100%] text-xl font-bold text-[#ABB1AD]"
+            className="uppercase leading-[100%] text-xl font-bold text-[#ABB1AD]"
           >
             How Meddy Works
           </p>
 
-          <h2 className="flex flex-col gap-5">
+          <h2 className="mt-[19px] flex flex-col gap-[10px]">
             <span
               data-hmw-line
-              className="block font-normal text-[50px] leading-[100%] text-[#ABB1AD]"
+              className="block font-normal text-[64px] leading-[100%] text-[#ABB1AD]"
             >
               Your health system ,
             </span>
             <span
               data-hmw-line
-              className="block font-bold text-[50px] leading-[100%] uppercase"
+              className="block font-bold text-[64px] leading-[100%] uppercase"
               style={{
                 background: "linear-gradient(90deg, #578951 0%, #2F6328 100%)",
                 WebkitBackgroundClip: "text",
@@ -130,7 +196,7 @@ export default function Hero() {
 
           <p
             data-hmw-line
-            className="text-[#ABB1AD] text-[24px] font-medium"
+            className="mt-[40px] text-[#ABB1AD] text-[24px] font-medium"
           >
             Everything you log becomes something your doctor can act on.
           </p>

@@ -13,9 +13,7 @@ type Plan = {
   name: string;
   tagline: string;
   description: string;
-  priceLabel?: string;
   price?: string;
-  featuresHeading?: string;
   features: string[];
   cta: string;
 };
@@ -24,16 +22,15 @@ const PLANS: Plan[] = [
   {
     variant: "free",
     name: "Meddy",
-    tagline: "Understand your health.",
+    tagline: "Optimize your health.",
     description:
-      "Everything you need to track nutrition, workouts, sleep, recovery, and progress in one place.",
-    priceLabel: "Free",
+      "Personalized guidance to understand your health, improve your habits, and optimize your performance.",
+    price: "$99",
     features: [
-      "AI nutrition tracking",
-      "Workout planning and logging",
-      "Weight trends",
-      "Progress dashboards",
-      "Habit and lifestyle tracking",
+      "24/7 physician messaging",
+      "Nutrition & Fitness guidance",
+      "Biomarker tracking",
+      "Personalized health adjustments",
     ],
     cta: "Join the waitlist",
   },
@@ -41,37 +38,39 @@ const PLANS: Plan[] = [
     variant: "care",
     badge: "Most popular",
     name: "Meddy Care",
-    tagline: "Add physician guidance.",
+    tagline: "Your personal physician.",
     description:
-      "For people who want medical insight, lab interpretation, and personalized recommendations.",
+      "Ongoing physician-led care with regular visits, lab testing, and personalized recommendations.",
     price: "$169",
-    featuresHeading: "Everything in Meddy, plus:",
     features: [
-      "Physician access (monthly)",
-      "Secure messaging",
-      "Phone and video appointments",
-      "Quarterly comprehensive lab testing included",
+      "24/7 physician messaging",
+      "Nutrition & Fitness guidance",
       "Biomarker tracking",
-      "Personalized adjustments",
+      "Personalized health adjustments",
+      "Monthly physician visit",
+      "Videoconferencing",
+      "Quarterly lab testing included",
     ],
     cta: "Join the waitlist",
   },
   {
     variant: "complete",
     name: "Meddy Complete",
-    tagline: "Your health team.",
+    tagline: "Your health, fully managed.",
     description:
-      "For patients who want ongoing physician support and a more comprehensive healthcare experience.",
+      "High-touch physician care with frequent visits, comprehensive testing, and health optimization.",
     price: "$249",
-    featuresHeading: "Everything in Meddy care, plus:",
     features: [
-      "Physician access (biweekly)",
-      "Secure messaging",
-      "Unlimited physician-directed lab testing as clinically appropriate",
+      "24/7 physician messaging",
+      "Nutrition & Fitness guidance",
       "Biomarker tracking",
+      "Personalized health adjustments",
+      "Videoconferencing",
       "Personalized adjustments",
+      "Biweekly physician visits",
+      "Unlimited physician-directed lab testing, as clinically appropriate",
+      "Physician built weekly fitness plan",
       "Continuous care coordination",
-      "Priority scheduling",
     ],
     cta: "Join the waitlist",
   },
@@ -161,26 +160,12 @@ function PlanCard({ plan }: { plan: Plan }) {
             </p>
         </div>
 
-        {plan.priceLabel ? (
-          <span
-            className={`text-[48px] font-semibold uppercase leading-[100%] ${PRICE_STYLES[v]}`}
-          >
-            {plan.priceLabel}
-          </span>
-        ) : (
-          <span
-            className={`text-[36px] font-semibold uppercase leading-[100%] ${PRICE_STYLES[v]}`}
-          >
-            {plan.price}{" "}
-            <span className="text-[14px] font-normal normal-case">/month</span>
-          </span>
-        )}
-
-        {plan.featuresHeading && (
-          <p className="text-[16px] font-semibold leading-[100%] text-white">
-            {plan.featuresHeading}
-          </p>
-        )}
+        <span
+          className={`text-[36px] font-semibold uppercase leading-[100%] ${PRICE_STYLES[v]}`}
+        >
+          {plan.price}{" "}
+          <span className="text-[17.77px] font-normal normal-case">/month</span>
+        </span>
 
         <ul className="flex flex-col gap-[14.81px]">
           {plan.features.map((f) => (

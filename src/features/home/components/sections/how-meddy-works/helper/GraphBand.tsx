@@ -72,7 +72,7 @@ function CalloutCard({
   value: string;
   tail?: boolean;
 }) {
-  const color = variant === "bp" ? "#17925A" : "#FFFFFF";
+  const color = variant === "bp" ? "#FFFFFF" : "#17925A";
   const isBp = variant === "bp";
   return (
     <div className={tail ? "flex flex-col items-center" : "flex flex-col items-start"}>
@@ -96,7 +96,7 @@ function CalloutCard({
             </span>
           )}
           <span
-            className={isBp ? "uppercase text-[#17925A]" : "text-white"}
+            className={isBp ? "uppercase text-white" : "text-[#17925A]"}
             style={{
               fontSize: isBp ? "clamp(12px,1.11vw,16px)" : "clamp(10px,0.97vw,14px)",
               fontWeight: 700,
@@ -318,7 +318,7 @@ export default function GraphBand() {
           <div className="flex items-center gap-[9.41px]">
             <span
               className="rounded-[2.35px]"
-              style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #17622B 0%, rgba(23, 98, 43, 0.5) 100%)" }}
+              style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.5) 100%)" }}
             />
             <span className="text-white text-[15px] font-medium leading-[140%]" >
               Blood pressure
@@ -327,7 +327,7 @@ export default function GraphBand() {
           <div className="flex items-center gap-[9.41px]">
             <span
               className="rounded-[2.35px]"
-              style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #621717 0%, rgba(98, 23, 23, 0.5) 100%)" }}
+              style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #17925A 0%, rgba(23, 146, 90, 0.31) 100%)" }}
             />
             <span className="text-white text-[15px] font-medium leading-[140%]" >
               Sodium Intake

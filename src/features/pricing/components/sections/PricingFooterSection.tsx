@@ -26,6 +26,17 @@ export default function PricingFooterSection() {
           },
         );
       });
+
+      const nav = sectionRef.current?.querySelector("[data-footer-nav]");
+      if (nav) {
+        const cols = nav.querySelectorAll<HTMLElement>("[data-footer-col]");
+        const ftl = gsap.timeline({
+          scrollTrigger: { trigger: nav, start: "top 92%", end: "top 55%", scrub: true },
+        });
+        cols.forEach((el, i) => {
+          ftl.fromTo(el, { opacity: 0, y: 40 }, { opacity: 1, y: 0, ease: "none" }, i * 0.2);
+        });
+      }
     },
     { scope: sectionRef },
   );
@@ -40,37 +51,68 @@ export default function PricingFooterSection() {
       />
 
       <div className="relative mx-auto w-full max-w-360 px-5 lg:px-10 py-10">
-        <div className="flex flex-col gap-16 lg:gap-70.25">
-          <div className="flex flex-col gap-10 lg:gap-20">
-            <div className="flex flex-col gap-4 lg:gap-4.25">
-              <h2 className="text-[28px] md:text-[36px] lg:text-[48px] xl:text-[64px] font-normal uppercase leading-none text-white">
+        <div className="flex flex-col gap-16 lg:gap-24">
+          <div className="flex flex-col gap-10 lg:gap-19.75">
+            <div className="flex flex-col gap-4 lg:gap-3.75">
+              <h2 className="text-[28px] sm:text-[36px] lg:text-[48px] font-normal uppercase leading-[100%] text-white">
                 Your health.
               </h2>
-              <div className="flex items-baseline gap-3 lg:gap-4">
-                <span className="text-[40px] md:text-[64px] lg:text-[96px] xl:text-[128px] font-medium uppercase leading-none text-white">
+              <div className="flex items-baseline gap-2 lg:gap-7.5">
+                <span className="text-[48px] sm:text-[64px] lg:text-[96px] font-medium uppercase leading-[100%] text-white">
                   Your
                 </span>
-                <span className="text-[40px] md:text-[64px] lg:text-[96px] xl:text-[128px] font-bold uppercase leading-none text-[#E7F0A3]">
+                <span className="text-[48px] sm:text-[64px] lg:text-[96px] font-bold uppercase leading-[100%] text-[#E7F0A3]">
                   pace.
                 </span>
               </div>
             </div>
 
-            <button
-              data-reveal
-              className="flex h-14 md:h-16 lg:h-20 xl:h-24 w-full max-w-[548px] items-center justify-center rounded-[10px] bg-[#17925A] text-[16px] md:text-[20px] lg:text-[28px] xl:text-[36px] font-bold uppercase leading-none text-white shadow-[10px_16px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90"
-            >
-              Join the waitlist
-            </button>
+            <ul className="flex flex-col gap-5 lg:gap-7.5">
+              <li data-reveal className="flex items-center gap-3.75">
+                <Image
+                  src="/pricing/footer/bullet-icon.svg"
+                  alt=""
+                  width={11}
+                  height={41}
+                  className="h-[41px] w-auto shrink-0"
+                />
+                <span className="text-[18px] sm:text-[20px] lg:text-[24px] font-medium italic leading-[120%] text-white">
+                  Start with Meddy.
+                </span>
+              </li>
+              <li data-reveal className="flex items-center gap-3.75">
+                <Image
+                  src="/pricing/footer/bullet-icon.svg"
+                  alt=""
+                  width={11}
+                  height={41}
+                  className="h-[41px] w-auto shrink-0"
+                />
+                <span className="text-[18px] sm:text-[20px] lg:text-[24px] italic leading-[120%] text-white">
+                  Add support when it makes sense.
+                </span>
+              </li>
+              <li data-reveal className="flex items-center gap-3.75">
+                <Image
+                  src="/pricing/footer/bullet-icon.svg"
+                  alt=""
+                  width={11}
+                  height={41}
+                  className="h-[41px] w-auto shrink-0"
+                />
+                <span className="max-w-[523px] text-[18px] sm:text-[20px] lg:text-[24px] italic leading-[120%] text-white">
+                  Build a healthier future with a system designed to grow with you.
+                </span>
+              </li>
+            </ul>
           </div>
 
-          <p
+          <button
             data-reveal
-            className="max-w-220 text-[16px] md:text-[18px] lg:text-[32px] font-normal leading-normal text-[#E5E5E5]"
+            className="flex h-[52px] sm:h-[64px] lg:h-[81px] w-full max-w-[548px] items-center justify-center rounded-[10px] bg-[#17925A] text-[18px] sm:text-[20px] lg:text-[24px] font-semibold uppercase leading-none text-white shadow-[13px_16px_4px_rgba(49,80,44,0.25)] transition-opacity hover:opacity-90"
           >
-            Start with Meddy. Add support when it makes sense. Build a healthier
-            future with a system designed to grow with you.
-          </p>
+            Join the Waitlist
+          </button>
         </div>
       </div>
 

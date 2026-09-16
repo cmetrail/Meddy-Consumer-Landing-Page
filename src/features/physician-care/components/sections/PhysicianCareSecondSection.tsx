@@ -21,7 +21,7 @@ export default function PhysicianCareSecondSection() {
 
           {/* Chart card (top-right, overlapping photo) */}
           <motion.div
-            className="absolute right-[3%] top-[4%] w-[24.8%] max-w-86"
+            className="absolute right-[3.5%] top-[4%] w-[24.8%] max-w-86"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
@@ -30,23 +30,24 @@ export default function PhysicianCareSecondSection() {
             <ChartCard />
           </motion.div>
 
-          {/* Headline + tagline (bottom-left, over photo) */}
+          {/* Headline (lower-middle, over photo) */}
           <motion.div
-            className="absolute bottom-[0%] pb-10 flex flex-col gap-20 left-[3.5%]"
+            className="absolute left-[3.5%] top-[55%]"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.8, ease }}
-        >
-          <div>
+          >
             <h2 className="font-dm-serif uppercase leading-[100%] text-[#46524B] text-[40px] sm:text-[56px] lg:text-[96px]">
               Stay ahead
             </h2>
             <p className="uppercase leading-[100%] text-[#46524B] text-[20px] sm:text-[28px] lg:text-[40px]">
               of your health
             </p>
-            </div>
-          <div>
+          </motion.div>
+
+          {/* Tagline (bottom-left, over photo) */}
+          <div className="absolute left-[3.5%] bottom-[3%]">
             <motion.p
               className="font-light uppercase italic leading-[100%] text-[#46524B] text-[14px] sm:text-[18px] lg:text-[24px]"
               initial={{ opacity: 0, y: 40 }}
@@ -55,9 +56,9 @@ export default function PhysicianCareSecondSection() {
               transition={{ duration: 0.8, delay: 0.1, ease }}
             >
               Catch changes earlier.
-          </motion.p>
+            </motion.p>
             <motion.p
-              className="font-light uppercase italic leading-[100%] text-[#46524B] text-[16px] sm:text-[20px] lg:text-[32px]"
+              className="font-normal uppercase leading-[100%] text-[#46524B] text-[16px] sm:text-[20px] lg:text-[32px]"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
@@ -65,8 +66,7 @@ export default function PhysicianCareSecondSection() {
             >
               Act sooner.
             </motion.p>
-            </div>
-          </motion.div>
+          </div>
         </div>
     </section>
   );
@@ -88,7 +88,7 @@ function ChartCard() {
           d="M9.75 212.401C9.75 212.401 30.08 196.023 52.88 193.314C72.73 190.954 74.56 201.884 94.5 203.439C120.78 205.489 130.23 179.652 154.5 189.939C189 204.564 190.09 178.296 209.25 180.938C220.12 182.438 225.75 194.813 235.88 194.813C246 194.813 271.04 184.161 283.12 188.25C308.62 196.875 303.38 215.625 303.38 215.625"
           fill="none"
           stroke="#BD3A3A"
-          strokeWidth={3.75}
+          strokeWidth={2.25}
         />
         {/* Dashed vertical line */}
         <line

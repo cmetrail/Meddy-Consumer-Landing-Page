@@ -11,6 +11,43 @@ import WorkoutStatsCard from "./WorkoutStatsCard";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+const PROFILE = [
+  { label: "Joint Stress", active: 4, color: "#F97316", value: "High" },
+  { label: "Avg Impact", active: 1, color: "#17925A", value: "Low" },
+  { label: "Spinal Load", active: 1, color: "#17925A", value: "Min" },
+  { label: "Balance", active: 1, color: "#17925A", value: "Low" },
+];
+
+function ProfileCard() {
+  return (
+    <div
+      className="flex flex-col gap-1.5 rounded-2xl p-2"
+      style={{
+        backdropFilter: "blur(14px)",
+        backgroundColor: "rgba(255,255,255,0.06)",
+        border: "0.75px solid #FFFFFF1A",
+        boxShadow: "3px 4px 4px 0px rgba(0,0,0,0.25)",
+      }}
+    >
+      {PROFILE.map((r) => (
+        <div key={r.label} className="flex items-center justify-between gap-2">
+          <span className="w-16 text-[9px] leading-[150%] text-white">{r.label}</span>
+          <div className="flex flex-row gap-0.5">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <span
+                key={i}
+                className="rounded-[1.5px]"
+                style={{ width: 6, height: 3, background: i < r.active ? r.color : "#8A8A82" }}
+              />
+            ))}
+          </div>
+          <span className="text-[9px] leading-[150%] text-[#F4F4F5]">{r.value}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function WorkoutSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -42,18 +79,26 @@ export default function WorkoutSection() {
       <div className="max-w-360 mx-auto px-5 lg:px-10  relative">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           <div data-feature-image className="relative w-full md:w-fit md:mx-auto">
-            <div data-feature-card className="absolute right-[-2%] top-[4%] origin-top-right scale-[0.8] sm:scale-100 w-87.5" >
+            <div data-feature-card className="absolute left-[48%] top-[10%] z-10 origin-top-left scale-[0.8] sm:scale-100 w-89.5" >
               <WorkoutCard />
             </div>
             <Image
               src="/home/workout-photo.png"
               alt="Workout tracking"
-              height={829}
+              height={874}
               width={633}
               priority
               className="object-contain  w-full h-auto md:w-158.25 md:h-218.5"
+              style={{ filter: "drop-shadow(11px -4px 12.3px rgba(0,0,0,0.25))" }}
             />
-            <div data-feature-card className="absolute left-[0%] bottom-[5%] origin-bottom-left scale-[0.8] sm:scale-100 w-87.5" >
+            <div
+              className="pointer-events-none absolute bottom-0 left-2.5 h-[27.6%] w-[104%]"
+              style={{ background: "linear-gradient(190deg, rgba(38,38,38,0) 51%, rgba(24,34,29,1) 90%)" }}
+            />
+            <div data-feature-card className="absolute right-[-4.3%] top-[38.2%] z-10 origin-top-right scale-[0.8] sm:scale-100 w-49" >
+              <ProfileCard />
+            </div>
+            <div data-feature-card className="absolute left-[5%] top-[74.3%] z-10 origin-top-left scale-[0.8] sm:scale-100 w-87.5" >
               <WorkoutStatsCard />
             </div>
           </div>

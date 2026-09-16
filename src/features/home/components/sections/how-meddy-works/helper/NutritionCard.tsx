@@ -5,7 +5,7 @@ const ROWS = [
   { label: "Fat", value: "18g", color: "bg-theme-textSecondary" },
   { label: "Carbs", value: "32g", color: "bg-theme-accent" },
   { label: "Fiber", value: "32g", color: "#C084FC" },
-  { label: "Saturated Fat", value: "9g", color: "#C084FC" },
+  { label: "Saturated Fat", value: "32g", color: "#C084FC" },
   { label: "Sodium", value: "32mg", color: "#C084FC" },
 ];
 

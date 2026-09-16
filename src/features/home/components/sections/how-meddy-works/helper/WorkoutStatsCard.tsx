@@ -3,7 +3,7 @@ import { TrendingDown, TrendingUp } from "lucide-react";
 import clsx from "clsx"
 function Trend({ value, direction }: { value: string; direction: "up" | "down" }) {
   return (
-    <span className={`flex items-center gap-0.5 text-[8px] font-medium ${direction === "up" ? "text-[#6EE7A0]" : "text-[#F87171]"}`}>
+    <span className={`flex items-center gap-0.5 text-[8px] font-medium ${direction === "up" ? "text-[#17925A]" : "text-[#FF546B]"}`}>
       {direction === "up" ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
       {value}
     </span>
@@ -39,7 +39,7 @@ export default function WorkoutStatsCard() {
         <p className="text-[#D8D8D8] text-[9px] mb-1">Total Duration</p>
         <div className="flex items-baseline gap-2">
           <p className="text-white font-bold text-2xl leading-tight">210 <span className="text-[#D8D8D8]">mins</span></p>
-          <span className="flex items-center gap-0.5  text-[10px] font-semibold text-[#F87171]">
+          <span className="flex items-center gap-0.5  text-[10px] font-semibold text-[#FF546B]">
             <TrendingDown size={10} />
             -2%
           </span>

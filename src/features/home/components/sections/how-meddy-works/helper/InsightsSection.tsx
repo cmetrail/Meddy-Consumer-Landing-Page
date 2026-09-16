@@ -36,7 +36,7 @@ function NetCaloriesCard() {
         <p className="text-white/70 text-[10px] mb-1">Net Calories</p>
         <div className="flex items-baseline gap-2">
           <p className="text-white font-bold text-2xl leading-tight">235 kcal</p>
-          <span className="flex items-center gap-0.5 text-[10px] font-semibold text-[#F87171]">
+          <span className="flex items-center gap-0.5 text-[10px] font-semibold text-[#FF546B]">
             <TrendingDown size={10} />−20%
           </span>
         </div>
@@ -54,7 +54,7 @@ function NetCaloriesCard() {
             <p className="text-white/60 text-[9px]">{item.label}</p>
             <div className="flex items-baseline gap-1 flex-wrap">
               <p className="text-white font-bold text-[13px] leading-tight">{item.value}</p>
-              <span className={`flex items-center gap-0.5 text-[9px] font-semibold ${item.up ? "text-[#6EE7A0]" : "text-[#F87171]"}`}>
+              <span className={`flex items-center gap-0.5 text-[9px] font-semibold ${item.up ? "text-[#1DC277]" : "text-[#FF546B]"}`}>
                 {item.up ? <TrendingUp size={9} /> : <TrendingDown size={9} />}
                 {item.trend}
               </span>
@@ -120,7 +120,7 @@ export default function InsightsSection() {
     <div ref={sectionRef} className="">
 
       <div className="max-w-360 mx-auto px-5 lg:px-10  relative">
-        <GiantNumber n="05" />
+        <GiantNumber n="04" />
         <div className="grid lg:grid-cols-2   gap-8 lg:gap-16 items-center">
           <div className="pt-24 lg:pt-40 lg:pl-14">
             <FeatureCopy
@@ -131,7 +131,7 @@ export default function InsightsSection() {
             />
           </div>
           <div data-feature-image className="relative w-full md:w-fit md:mx-auto">
-            <div data-feature-card className="absolute right-[0%] top-[0%] origin-top-right scale-[0.8] sm:scale-100 w-67">
+            <div data-feature-card className="absolute right-[0%] top-[0%] z-10 origin-top-right scale-[0.8] sm:scale-100 w-67">
               <NetCaloriesCard />
             </div>
             <Image
@@ -141,6 +141,14 @@ export default function InsightsSection() {
               width={441}
               priority
               className="object-contain w-full h-auto md:w-110.25 md:h-167.5"
+              style={{ filter: "drop-shadow(21px 16px 14.6px rgba(78,38,38,0.25))" }}
+            />
+            <div
+              className="pointer-events-none absolute bottom-0 left-0 h-[45%] w-full"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(38,38,38,0) 10%, rgba(24,34,29,1) 77%)",
+              }}
             />
             <div data-feature-card className="absolute left-[-12%] bottom-[14%] origin-bottom-left scale-[0.8] sm:scale-100 w-67">
               <A1cTrendCard />

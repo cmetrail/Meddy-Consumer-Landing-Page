@@ -16,15 +16,15 @@ type HeaderVariant = "light" | "dark";
 
 const VARIANTS = {
   light: {
-    logo: { src: "/pricing/pricing-logo.svg", width: 55, height: 34, className: "h-[45px] w-auto", unoptimized: true },
-    linkActive: "font-semibold text-[#2A7653]",
-    linkInactive: "font-medium text-[#6E7A72] hover:text-[#2A7653]",
-    underline: "border-[#2A7653]",
-    hamburger: "bg-[#2A7653]",
+    logo: { src: "/pricing/pricing-logo.svg", width: 44, height: 28, className: "h-[28px] w-auto", unoptimized: true },
+    linkActive: "font-semibold text-[#17925A]",
+    linkInactive: "font-medium text-[#6E7A72] hover:text-[#17925A]",
+    underline: "border-[#17925A]",
+    hamburger: "bg-[#17925A]",
     hamburgerPill: "bg-black/[0.03]",
     hamburgerBlur: "blur(14px)",
     dropdown: "bg-[#F1E7D5]/95",
-    dropdownLinkActive: "font-semibold text-[#2A7653]",
+    dropdownLinkActive: "font-semibold text-[#17925A]",
     dropdownLinkInactive: "font-medium text-[#6E7A72]",
   },
   dark: {
@@ -76,7 +76,7 @@ export default function Header({
             >
               {label}
               <span
-                className={`absolute left-0 -bottom-2 w-[60%] border-t-2 border-dashed transition-opacity ${v.underline}
+                className={`absolute left-0 -bottom-2 w-[64px] border-t-2 border-dashed transition-opacity ${v.underline}
                   ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
               />
             </Link>

@@ -51,7 +51,7 @@ export default function NutritionSection() {
             />
           </div>
           <div data-feature-image className="relative w-full md:w-fit md:mx-auto">
-            <div data-feature-card className="absolute w-62.5 right-[3%] top-[10%] origin-top-right scale-[0.8] sm:scale-100">
+            <div data-feature-card className="absolute z-10 w-62.5 right-[3%] top-[10%] origin-top-right scale-[0.8] sm:scale-100">
               <MealCard />
             </div>
             <Image
@@ -61,6 +61,7 @@ export default function NutritionSection() {
               width={640}
               priority
               className="object-contain w-full h-auto md:w-160 md:h-198"
+              style={{ filter: "drop-shadow(12px 16px 18px rgba(0,0,0,0.25))" }}
             />
             <div data-feature-card className="absolute w-62.5 left-0 bottom-[5%] origin-bottom-left scale-[0.8] sm:scale-100">
               <NutritionCard />

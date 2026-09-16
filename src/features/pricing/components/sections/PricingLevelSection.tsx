@@ -8,46 +8,47 @@ type Tier = {
   name: string;
   color: string;
   img: string;
-  objectPosition: string;
   width: number;
   height: number;
-  desc: string;
+  descWidth: number;
+  lead: string;
+  bold: string;
 };
 
 const TIERS: Tier[] = [
   {
     name: "Meddy",
     color: "#946540",
-    img: "/pricing/d5a6159ea20dca2273c8ef0be548a14188874d3d.jpg",
-    objectPosition: "50% 100%",
+    img: "/pricing/level-meddy.png",
     width: 367,
     height: 418,
-    desc: "For people who want a better way to understand their health.",
+    descWidth: 343,
+    lead: "For people who want ",
+    bold: "personalized guidance to improve their health.",
   },
   {
     name: "Meddy Care",
     color: "#93734E",
-    img: "/pricing/8d0b53e30ac5fddbd6d1a8994f168ce926efd648.jpg",
-    objectPosition: "50% 50%",
+    img: "/pricing/level-care.png",
     width: 404,
-    height: 550,
-    desc: "For people who want physician guidance, labs, and personalized recommendations.",
+    height: 557,
+    descWidth: 413,
+    lead: "For people who want ",
+    bold: "regular physician care with labs and personalized guidance.",
   },
   {
     name: "Meddy Complete",
     color: "#84AAA1",
-    img: "/pricing/7e86884b65dc9a18f3ffb75d18d81f5e1c4fa052.jpg",
-    objectPosition: "50% 50%",
+    img: "/pricing/level-complete.png",
     width: 464,
-    height: 805,
-    desc: "For people who want an ongoing healthcare relationship built around their data.",
+    height: 757,
+    descWidth: 464,
+    lead: "For people who want ",
+    bold: "high-touch physician care with comprehensive, continuous support.",
   },
 ];
 
-const CLIP = "polygon(0% 16.23%, 0% 100%, 100% 100%, 100% 0%, 27.55% 0%)";
-
 const CANVAS_WIDTH = 1440;
-const CANVAS_HEIGHT = 1103;
 
 const listVariants = {
   hidden: {},
@@ -71,9 +72,8 @@ export default function PricingLevelSection() {
     const measure = () => {
       const el = sectionRef.current;
       if (!el) return;
-      const { width, height } = el.getBoundingClientRect();
-      const availW = Math.min(width, CANVAS_WIDTH);
-      setScale(Math.min(1, availW / CANVAS_WIDTH, height / CANVAS_HEIGHT));
+      const { width } = el.getBoundingClientRect();
+      setScale(Math.min(1, Math.min(width, CANVAS_WIDTH) / CANVAS_WIDTH));
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -86,25 +86,22 @@ export default function PricingLevelSection() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative overflow-hidden bg-[#17231D] lg:[height:var(--dvh)]"
-    >
-      <div className="mx-auto flex h-full w-full max-w-360 flex-col py-8 px-5 lg:px-10">
+    <section ref={sectionRef} className="relative overflow-hidden bg-[#17231D]">
+      <div className="mx-auto flex w-full max-w-360 flex-col px-5 pt-12 pb-16 lg:px-10 lg:pt-[69px] lg:pb-[47px]">
         <motion.div
-          className="flex flex-col lg:h-full"
+          className="flex flex-col"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={listVariants}
         >
           <motion.h2
-            className="font-normal uppercase leading-[130%] text-white text-[24px] md:text-[28px] lg:text-[38px]"
             variants={riseVariants}
+            className="text-left font-normal uppercase leading-[115%] text-[24px] md:text-[32px] lg:text-[48px]"
           >
-            Choose the level of care
+            <span className="text-[#D5D6D6]">Choose the level of care that</span>
             <br />
-            <i><b>that fits your goals.</b></i>
+            <span className="font-bold italic text-white">fits your goals.</span>
           </motion.h2>
 
           {/* Mobile: vertical stack */}
@@ -112,8 +109,8 @@ export default function PricingLevelSection() {
             {TIERS.map((tier) => (
               <motion.div key={tier.name} className="flex flex-col" variants={riseVariants}>
                 <div
-                  className="relative w-full overflow-hidden max-h-[60vw] sm:max-h-[50vw]"
-                  style={{ aspectRatio: `${tier.width}/${tier.height}`, clipPath: CLIP }}
+                  className="relative w-full"
+                  style={{ aspectRatio: `${tier.width}/${tier.height}` }}
                 >
                   <Image
                     src={tier.img}
@@ -121,7 +118,6 @@ export default function PricingLevelSection() {
                     fill
                     sizes="100vw"
                     className="object-cover"
-                    style={{ objectPosition: tier.objectPosition }}
                   />
                   <span
                     className="absolute right-4 top-4 z-10 font-semibold uppercase leading-none text-[18px]"
@@ -130,29 +126,29 @@ export default function PricingLevelSection() {
                     {tier.name}
                   </span>
                 </div>
-                <p className="mt-3 text-[14px] font-normal leading-[1.25] text-white">{tier.desc}</p>
+                <p className="mt-3 text-[14px] font-normal leading-[1.25] text-white">
+                  {tier.lead}
+                  <b>{tier.bold}</b>
+                </p>
               </motion.div>
             ))}
           </div>
 
-          {/* Desktop: horizontal arc */}
-          <div className="mt-auto hidden lg:flex flex-row justify-between items-end gap-6">
+          {/* Desktop: horizontal, bottom-aligned */}
+          <div className="mt-8 hidden lg:-mt-[60px] lg:flex lg:flex-row lg:items-end lg:justify-between lg:gap-6">
             {TIERS.map((tier) => (
               <motion.div key={tier.name} className="flex flex-col" variants={riseVariants}>
                 <div
                   className="relative"
                   style={{ width: tier.width * scale, height: tier.height * scale }}
                 >
-                  <div className="absolute inset-0" style={{ clipPath: CLIP }}>
-                    <Image
-                      src={tier.img}
-                      alt={tier.name}
-                      fill
-                      sizes="33vw"
-                      className="object-cover"
-                      style={{ objectPosition: tier.objectPosition }}
-                    />
-                  </div>
+                  <Image
+                    src={tier.img}
+                    alt={tier.name}
+                    fill
+                    sizes="33vw"
+                    className="object-cover"
+                  />
                   <span
                     className="absolute right-4 top-4 z-10 font-semibold uppercase leading-none"
                     style={{ fontSize: 32 * scale, color: tier.color }}
@@ -162,9 +158,10 @@ export default function PricingLevelSection() {
                 </div>
                 <p
                   className="mt-4 font-normal leading-[1.25] text-white"
-                  style={{ fontSize: 20 * scale, maxWidth: tier.width * scale }}
+                  style={{ fontSize: 20 * scale, maxWidth: tier.descWidth * scale }}
                 >
-                  {tier.desc}
+                  {tier.lead}
+                  <b>{tier.bold}</b>
                 </p>
               </motion.div>
             ))}

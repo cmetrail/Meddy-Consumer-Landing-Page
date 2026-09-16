@@ -7,16 +7,28 @@ import Eyebrow from "./Eyebrow";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+const WEIGHT = {
+  medium: "font-medium",
+  semibold: "font-semibold",
+  bold: "font-bold",
+} as const;
+
 export default function FeatureCopy({
   eyebrow,
   headline,
   accent,
   sub,
+  headlineWeight = "medium",
+  headlineSize = "text-[28px] sm:text-[36px]",
+  headlineColor = "#ABB1AD",
 }: {
   eyebrow: string;
   headline: string[];
   accent: string;
   sub: string;
+  headlineWeight?: keyof typeof WEIGHT;
+  headlineSize?: string;
+  headlineColor?: string;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +58,11 @@ export default function FeatureCopy({
         <div data-feature-line>
           <Eyebrow>{eyebrow}</Eyebrow>
         </div>
-        <h3 data-feature-line className="text-[#ABB1AD] font-bold uppercase leading-[100%] tracking-[2%] text-[28px] sm:text-[36px]">
+        <h3
+          data-feature-line
+          className={`${WEIGHT[headlineWeight]} ${headlineSize} uppercase leading-[100%] tracking-[2%]`}
+          style={{ color: headlineColor }}
+        >
           {headline.map((item) => {
             return <div key={item}>{item}</div>
           })}

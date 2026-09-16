@@ -39,7 +39,7 @@ const DOTS = [
   { cx: 868.5, cy: 279.503, rOuter: 13.4999, rInner: 10.4999, large: true, filterId: "st-f2" },
 ] as const;
 
-type Variant = "accent" | "plain";
+type Variant = "accent" | "plain" | "red";
 
 const CALLS: {
   variant: Variant;
@@ -50,7 +50,7 @@ const CALLS: {
   top: string;
 }[] = [
   { variant: "plain", week: "Week 1", label: "Deep Sleep:", value: "18%", left: "4.19%", top: "20.43%" },
-  { variant: "plain", week: "Week 2", label: "Caffiene:", value: "172 mg", left: "55.67%", top: "13.00%" },
+  { variant: "red", week: "Week 2", label: "Caffiene:", value: "172 mg", left: "55.67%", top: "13.00%" },
   { variant: "plain", week: "Week 4", label: "Deep Sleep:", value: "14%", left: "81.96%", top: "54.72%" },
 ];
 
@@ -67,7 +67,7 @@ function CalloutCard({
   value: string;
   tail?: boolean;
 }) {
-  const color = variant === "accent" ? "#17925A" : "#FFFFFF";
+  const color = variant === "accent" ? "#17925A" : variant === "red" ? "#D25753" : "#FFFFFF";
   const isAccent = variant === "accent";
   return (
     <div className={tail ? "flex flex-col items-center" : "flex flex-col items-start"}>
@@ -91,7 +91,7 @@ function CalloutCard({
             </span>
           )}
           <span
-            className={isAccent ? "uppercase text-[#17925A]" : "text-white"}
+            className={isAccent ? "uppercase text-[#17925A]" : variant === "red" ? "text-[#D25753]" : "text-white"}
             style={{
               fontSize: isAccent ? "clamp(12px,1.11vw,16px)" : "clamp(10px,0.97vw,14px)",
               fontWeight: 700,
@@ -158,7 +158,7 @@ export default function SleepTrend() {
               className="text-white text-xl font-medium tracking-[-2%] leading-[130%]"
 
             >
-              Caffiene Intake
+              Caffeine Intake
             </span>
           </div>
           <p
@@ -294,7 +294,7 @@ export default function SleepTrend() {
           <div className="flex items-center gap-[9.41px]">
             <span
               className="rounded-[2.35px]"
-              style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #191762 0%, rgba(25, 23, 98, 0.5) 100%)" }}
+              style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.5) 100%)" }}
             />
             <span className="text-white text-[15px] font-medium leading-[140%]" >
               Deep Sleep
@@ -306,7 +306,7 @@ export default function SleepTrend() {
               style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #621717 0%, rgba(98, 23, 23, 0.5) 100%)" }}
             />
             <span className="text-white text-[15px] font-medium leading-[140%]" >
-              Caffiene
+              Caffeine
             </span>
           </div>
         </div>

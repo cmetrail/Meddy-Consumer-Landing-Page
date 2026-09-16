@@ -11,10 +11,10 @@ import { SleepArchitectureBar, type ISleepStage } from "./SleepArchitectureBar";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const SLEEP_STAGES: ISleepStage[] = [
-  { key: "awake", label: "Awake", shortLabel: "Awake", percentage: 10, color: "bg-[#E3F9FF]", badgeBg: "bg-[#E3F9FF]" },
+  { key: "awake", label: "Awake", shortLabel: "Awake", percentage: 20, color: "bg-[#E3F9FF]", badgeBg: "bg-[#E3F9FF]" },
   { key: "light", label: "Light", shortLabel: "Light", percentage: 30, color: "bg-[#4DC1FF]", badgeBg: "bg-[#4DC1FF]" },
-  { key: "deep", label: "Deep", shortLabel: "Deep", percentage: 28, color: "bg-[#A953FF]", badgeBg: "bg-[#A953FF]" },
-  { key: "rem", label: "REM", shortLabel: "REM", percentage: 32, color: "bg-[#FF4BA2]", badgeBg: "bg-[#FF4BA2]" },
+  { key: "deep", label: "Deep", shortLabel: "Deep", percentage: 15, color: "bg-[#A953FF]", badgeBg: "bg-[#A953FF]" },
+  { key: "rem", label: "REM", shortLabel: "REM", percentage: 35, color: "bg-[#FF4BA2]", badgeBg: "bg-[#FF4BA2]" },
 ];
 
 const DAYS = ["Week", "Mon", "Tue", "Wed", "Thu"];
@@ -125,6 +125,10 @@ export default function SleepSection() {
               priority
               className="object-contain w-full h-auto md:w-130.5 md:h-173.75"
             />
+            <div
+              className="pointer-events-none absolute bottom-0 left-0 h-[45%] w-full"
+              style={{ background: "linear-gradient(180deg, rgba(38,38,38,0) 10%, rgba(24,34,29,1) 77%)" }}
+            />
             <div data-feature-card className="absolute left-[-2%] bottom-0 origin-bottom-left scale-[0.8] sm:scale-100  md:bottom-0 lg:bottom-[0%] w-52">
               <SleepScoreCard />
             </div>
@@ -134,10 +138,13 @@ export default function SleepSection() {
             <GiantNumber n="03" className="left-0 lg:right-0" />
             <div className="flex flex-col flex-1 lg:pl-16 pt-20 lg:pt-42 justify-center">
               <FeatureCopy
-                eyebrow="Sleep Monitoring"
+                eyebrow="Sleep montoring"
                 headline={["TRACK YOUR SLEEP. SEE HOW IT AFFECTS"]}
                 accent="YOUR RECOVERY, PERFORMANCE, AND HEALTH."
                 sub="Scores your sleep. Never connects it to your training load, caloric deficit, or HRV dip."
+                headlineWeight="semibold"
+                headlineSize="text-[24px]"
+                headlineColor="#939191"
               />
             </div>
           </div>

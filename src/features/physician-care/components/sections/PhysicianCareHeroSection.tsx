@@ -20,11 +20,6 @@ export default function PhysicianCareHeroSection() {
         <Header active="pHYSICIAN CARE" />
       </div>
 
-      {/* Pulse icon */}
-      <div className="pointer-events-none absolute top-[245px] right-[60px] z-10 hidden xl:block">
-        <Image src="/physician-care/pulse.svg" alt="" width={175} height={175} />
-      </div>
-
       {/* Doctor image — pinned to the right (desktop) */}
       <motion.div
         className="absolute top-[114px] right-10 z-0 hidden lg:block"
@@ -32,7 +27,13 @@ export default function PhysicianCareHeroSection() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease, delay: 0.1 }}
       >
-        <div className="relative" style={{ width: "min(728px, 50vw)", aspectRatio: "728 / 910" }}>
+        <div
+          className="relative"
+          style={{
+            width: "min(728px, 50vw, calc((100dvh - 152px) * 728 / 910))",
+            aspectRatio: "728 / 910",
+          }}
+        >
           <Image
             src="/physician-care/doctor.png"
             alt="Meddy physician"
@@ -41,6 +42,24 @@ export default function PhysicianCareHeroSection() {
             sizes="728px"
             className="object-cover object-bottom"
           />
+          <div
+            aria-hidden
+            className="absolute left-1/2 -translate-x-1/2 border-4 border-white"
+            style={{ top: "-1.1%", width: "44.64%", height: "89.67%" }}
+          />
+          {/* Pulse icon (blurred ECG) — just right of the box */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute hidden xl:block"
+            style={{ left: "73.2%", top: "14.4%", width: "24.04%", aspectRatio: "1 / 1" }}
+          >
+            <Image
+              src="/physician-care/pulse.svg"
+              alt=""
+              fill
+              unoptimized
+            />
+          </div>
         </div>
       </motion.div>
 
@@ -57,12 +76,12 @@ export default function PhysicianCareHeroSection() {
             <h1 className="font-dm-serif text-[#46524B] uppercase leading-[100%] text-[44px] sm:text-[64px] lg:text-[100px]">
               Primary care
             </h1>
-            <p className="text-[#46524B] font-medium leading-[100%] text-[24px] sm:text-[32px] lg:text-[40px] lg:-mt-2">
+            <p className="text-[#46524B] font-medium leading-[100%] text-[24px] sm:text-[32px] lg:text-[40px] lg:-mt-2.5">
               that knows you beyond the office visit.
             </p>
           </motion.div>
 
-          <p className=" max-w-108 text-[#6E7A72] font-normal leading-[100%] text-[16px] lg:text-[20px]">
+          <p className=" max-w-108 text-[#6E7A72] font-normal leading-[140%] text-[16px] lg:text-[20px]">
             When you need more than insights, Meddy gives you direct access to
             physician guidance connected to your health data.
             </p>
@@ -76,8 +95,8 @@ export default function PhysicianCareHeroSection() {
             transition={{ duration: 0.8, ease, delay: 0.15 }}
           >
             <button
-              className="inline-flex items-center justify-center rounded-[10px] px-9.5 py-3.75 hover:opacity-80 text-[#FFFFFF] uppercase text-[18px] sm:text-[24px] leading-[30px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
-              style={{ background: "linear-gradient(91.3deg, #4D915C 0.19%, #19995F 101.69%)" }}
+              className="inline-flex items-center justify-center rounded-[10px] px-9.5 py-3.75 hover:opacity-80 text-[#FFFFFF] uppercase text-[18px] sm:text-[24px] leading-[30px] font-medium shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
+              style={{ background: "linear-gradient(130deg, #4D915C 0%, #19995F 100%)" }}
             >
               Start Physician Care
             </button>

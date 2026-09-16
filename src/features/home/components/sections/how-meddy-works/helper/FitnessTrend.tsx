@@ -50,7 +50,7 @@ const CALLS: {
   top: string;
 }[] = [
   { variant: "plain", week: "Week 1", label: "Weight:", value: "185 lb", left: "4.19%", top: "20.43%" },
-  { variant: "accent", week: "Week 12", label: "min:", value: "128", left: "56.93%", top: "13.00%" },
+  { variant: "accent", week: "Week 12", value: "HR Zone 3: 128 min", left: "56.93%", top: "13.00%" },
   { variant: "plain", week: "Week 8", label: "Weight:", value: "170 lb", left: "81.96%", top: "54.72%" },
 ];
 
@@ -158,7 +158,7 @@ export default function FitnessTrend() {
               className="text-white text-xl font-medium tracking-[-2%] leading-[130%]"
 
             >
-              HRZone 3 Minutes
+              HR Zone 3 Minutes
             </span>
           </div>
           <p
@@ -303,7 +303,7 @@ export default function FitnessTrend() {
           <div className="flex items-center gap-[9.41px]">
             <span
               className="rounded-[2.35px]"
-              style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #621717 0%, rgba(98, 23, 23, 0.5) 100%)" }}
+              style={{ width: "14.9px", height: "14.9px", background: "linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.5) 100%)" }}
             />
             <span className="text-white text-[15px] font-medium leading-[140%]" >
               Body Weight
