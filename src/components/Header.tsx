@@ -21,19 +21,23 @@ const VARIANTS = {
     linkInactive: "font-medium text-[#6E7A72] hover:text-[#2A7653]",
     underline: "border-[#2A7653]",
     hamburger: "bg-[#2A7653]",
+    hamburgerPill: "bg-black/[0.03]",
+    hamburgerBlur: "blur(14px)",
     dropdown: "bg-[#F1E7D5]/95",
     dropdownLinkActive: "font-semibold text-[#2A7653]",
     dropdownLinkInactive: "font-medium text-[#6E7A72]",
   },
   dark: {
-    logo: { src: "/app-logo.png", width: 69, height: 45, className: "h-[45px] w-auto", unoptimized: false },
+    logo: { src: "/meddy-logo-white.svg", width: 44, height: 28, className: "h-[28px] w-auto", unoptimized: true },
     linkActive: "text-white",
-    linkInactive: "text-[#C5C5C5] hover:text-white",
+    linkInactive: "text-[#E6DEDE] hover:text-white",
     underline: "border-white",
-    hamburger: "bg-white",
+    hamburger: "bg-[#F4F4F4]",
+    hamburgerPill: "bg-white/[0.02]",
+    hamburgerBlur: "blur(14px)",
     dropdown: "bg-black/70",
     dropdownLinkActive: "text-white",
-    dropdownLinkInactive: "text-[#C5C5C5]",
+    dropdownLinkInactive: "text-[#E6DEDE]",
   },
 } as const;
 
@@ -62,12 +66,12 @@ export default function Header({
       </Link>
 
       {/* Desktop nav */}
-      <nav className="anim-fade-down hidden lg:flex items-center lg:gap-12.5 gap-4" style={{ animationDelay: "0.15s" }}>
+      <nav className="anim-fade-down absolute left-1/2 -translate-x-1/2 hidden lg:flex items-center lg:gap-12.5 gap-4" style={{ animationDelay: "0.15s" }}>
         {NAV_ITEMS.map(({ label, href }) => {
           const isActive = label === active;
           return (
             <Link key={label} href={href}
-              className={`group relative text-xl leading-tight tracking-[0.01em] uppercase transition-colors
+              className={`group relative text-base leading-tight tracking-[0.01em] uppercase transition-colors
                 ${isActive ? v.linkActive : v.linkInactive}`}
             >
               {label}
@@ -80,15 +84,19 @@ export default function Header({
         })}
       </nav>
 
-      {/* Mobile hamburger */}
+      {/* Hamburger */}
       <button
-        className="lg:hidden flex flex-col justify-center items-center gap-1.25 w-10 h-10"
-        onClick={() => setMenuOpen(v => !v)}
+        className={`flex flex-col justify-center items-center rounded-[26px] h-[41px] w-[53px]  ${v.hamburgerPill}`}
+        style={{ backdropFilter: v.hamburgerBlur, WebkitBackdropFilter: v.hamburgerBlur, backgroundColor: "rgba(255,255,255,0.04)", border: "0.75px solid #FFFFFF1A", }}
+        onClick={() => {
+          if (window.matchMedia("(min-width: 1024px)").matches) return;
+          setMenuOpen(v => !v);
+        }}
         aria-label="Toggle menu"
       >
-        <span className={`block h-[2px] w-6 ${v.hamburger} origin-center transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
-        <span className={`block h-[2px] w-6 ${v.hamburger} transition-all duration-300 ${menuOpen ? "opacity-0 scale-x-0" : ""}`} />
-        <span className={`block h-[2px] w-6 ${v.hamburger} origin-center transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
+        <span className={`block h-0.75 w-[31px] rounded-[2px] ${v.hamburger} origin-center transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[6px]" : ""}`} />
+        <span className={`mt-[3px] block h-[3px] w-[21px] rounded-[2px] ${v.hamburger} transition-all duration-300 ${menuOpen ? "opacity-0 scale-x-0" : ""}`} />
+        <span className={`mt-[3px] block h-[3px] w-[11px] rounded-[2px] ${v.hamburger} origin-center transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[6px]" : ""}`} />
       </button>
 
       {/* Mobile dropdown */}
@@ -103,7 +111,7 @@ export default function Header({
             const isActive = label === active;
             return (
               <Link key={label} href={href}
-                className={`${isActive ? v.dropdownLinkActive : v.dropdownLinkInactive} text-lg uppercase tracking-[0.01em]`}>
+                className={`${isActive ? v.dropdownLinkActive : v.dropdownLinkInactive} text-base uppercase tracking-[0.01em]`}>
                 {label}
               </Link>
             );

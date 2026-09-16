@@ -21,7 +21,7 @@ export default function WorkoutSection() {
               priority
               className="object-contain  w-full h-auto md:w-158.25 md:h-218.5"
             />
-            <div className="absolute left-[0%] bottom-[5%] origin-bottom-left scale-[0.8] sm:scale-100 w-75" >
+            <div className="absolute left-[0%] bottom-[5%] origin-bottom-left scale-[0.8] sm:scale-100 w-87.5" >
               <WorkoutStatsCard />
             </div>
           </div>

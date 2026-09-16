@@ -17,15 +17,15 @@ export default function HowMeddyWorksSection() {
       <Hero />
 
       {/* ── Feature blocks ── */}
-      <div className="flex flex-col py-28 gap-36">
-        <GraphBand />
+      <div className="flex flex-col py-10 gap-36">
         <NutritionSection />
-        <FitnessTrend />
+        <GraphBand />
         <WorkoutSection />
-        <SleepTrend />
+        <FitnessTrend />
         <SleepSection />
-        <A1cTrend />
+        <SleepTrend />
         <InsightsSection />
+        <A1cTrend />
       </div>
     </section>
   );
