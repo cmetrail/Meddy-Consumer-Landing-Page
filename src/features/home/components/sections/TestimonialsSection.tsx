@@ -31,21 +31,21 @@ const FONT: Record<Size, { name: string; plan: string; age: string; quote: strin
     plan: "clamp(6px,0.63vw,9px)",
     age: "clamp(16px,1.67vw,24px)",
     quote: "clamp(7px,0.73vw,10.5px)",
-    glyph: "clamp(20px,2.08vw,30px)",
+    glyph: "clamp(32px,3.33vw,48px)",
   },
   md: {
     name: "clamp(12px,1.28vw,18.49px)",
     plan: "clamp(7px,0.77vw,11.09px)",
     age: "clamp(20px,2.05vw,29.58px)",
     quote: "clamp(9px,0.9vw,12.94px)",
-    glyph: "clamp(24px,2.5vw,36px)",
+    glyph: "clamp(40px,4.11vw,59.17px)",
   },
   lg: {
     name: "clamp(15px,1.54vw,22.12px)",
     plan: "clamp(9px,0.92vw,13.27px)",
     age: "clamp(24px,2.46vw,35.39px)",
     quote: "clamp(10px,1.08vw,15.49px)",
-    glyph: "clamp(28px,2.92vw,42px)",
+    glyph: "clamp(48px,4.92vw,70.79px)",
   },
 };
 
@@ -70,8 +70,8 @@ const TESTIMONIALS: Testimonial[] = [
     planColor: "#888888",
     ageColor: "#555555",
     size: "sm",
-    left: "7.99%",
-    top: "14.80%",
+    left: "7.71%",
+    top: "16.86%",
     width: "11.04%",
   },
   {
@@ -82,8 +82,8 @@ const TESTIMONIALS: Testimonial[] = [
     image: "/home/testimonial-sarah.jpg",
     color: "#163B32",
     size: "md",
-    left: "22.27%",
-    top: "23.39%",
+    left: "22.00%",
+    top: "23.93%",
     width: "13.61%",
   },
   {
@@ -94,8 +94,8 @@ const TESTIMONIALS: Testimonial[] = [
     image: "/home/testimonial/mack.jpg",
     color: "#1D3A1D",
     size: "lg",
-    left: "41.09%",
-    top: "26.60%",
+    left: "40.82%",
+    top: "26.56%",
     width: "16.28%",
   },
   {
@@ -109,8 +109,8 @@ const TESTIMONIALS: Testimonial[] = [
     planColor: "#666666",
     ageColor: "#666666",
     size: "md",
-    left: "63.04%",
-    top: "21.85%",
+    left: "62.76%",
+    top: "22.66%",
     width: "13.61%",
   },
   {
@@ -121,8 +121,8 @@ const TESTIMONIALS: Testimonial[] = [
     image: "/home/testimonial/ray-top.jpg",
     color: "#1A3D2B",
     size: "sm",
-    left: "79.69%",
-    top: "13.06%",
+    left: "79.41%",
+    top: "15.43%",
     width: "11.04%",
   },
   {
@@ -134,7 +134,7 @@ const TESTIMONIALS: Testimonial[] = [
     color: "#395C3F",
     size: "sm",
     left: "7.71%",
-    top: "59.97%",
+    top: "54.04%",
     width: "11.04%",
   },
   {
@@ -146,7 +146,7 @@ const TESTIMONIALS: Testimonial[] = [
     color: "#051F20",
     size: "md",
     left: "22.08%",
-    top: "67.46%",
+    top: "60.19%",
     width: "13.61%",
   },
   {
@@ -158,7 +158,7 @@ const TESTIMONIALS: Testimonial[] = [
     color: "#163B32",
     size: "lg",
     left: "40.90%",
-    top: "68.53%",
+    top: "61.07%",
     width: "16.32%",
   },
   {
@@ -170,7 +170,7 @@ const TESTIMONIALS: Testimonial[] = [
     color: "#366B4C",
     size: "md",
     left: "62.92%",
-    top: "65.32%",
+    top: "58.43%",
     width: "13.33%",
   },
   {
@@ -182,7 +182,7 @@ const TESTIMONIALS: Testimonial[] = [
     color: "#1A3D2B",
     size: "sm",
     left: "79.72%",
-    top: "57.95%",
+    top: "52.38%",
     width: "11.04%",
   },
 ];
@@ -202,7 +202,7 @@ function TestimonialCard({ t }: { t: Testimonial }) {
       <Image src={t.image} alt={`${t.name} testimonial`} fill className="object-cover" />
       <div
         className="absolute inset-0"
-        style={{ background: "linear-gradient(180deg, rgba(115,115,115,0) 26.36%, #0C0C0C 96.58%)" }}
+        style={{ background: "linear-gradient(180deg, rgba(115,115,115,0) 26%, #0C0C0C 97%)" }}
       />
 
       {/* header — name + plan (left), age (right) */}
@@ -225,12 +225,16 @@ function TestimonialCard({ t }: { t: Testimonial }) {
 
       {/* quote */}
       <div className="absolute bottom-2.5 left-2.5 right-2.5">
-        <svg viewBox="0 0 24 18" fill="none" aria-hidden="true" style={{ width: 20, height: "auto", marginBottom: 4 }}>
-          <path d="M0 18V10.8C0 7.2 1 4.2 3 1.8 5 .6 7.5 0 10.5 0v3.6C8.5 4.2 7 5.4 6 7.2 5 9 4.5 10.8 4.5 12.6H10.5V18H0ZM13.5 18V10.8c0-3.6 1-6.6 3-9 2-1.2 4.5-1.8 7.5-1.8v3.6c-2 .6-3.5 1.8-4.5 3.6-1 1.8-1.5 3.6-1.5 5.4H24V18H13.5Z" fill="#E4E4E4" />
-        </svg>
+        <span
+          aria-hidden
+          className="block select-none text-[#E4E4E4]"
+          style={{ fontSize: f.glyph, lineHeight: 0.55, letterSpacing: "0.02em" }}
+        >
+          &ldquo;
+        </span>
         <p
-          className="font-medium leading-none mt-2"
-          style={{ fontSize: f.quote, color: "#AEAEAE", letterSpacing: "0.02em" }}
+          className="font-medium text-[#AEAEAE]"
+          style={{ fontSize: f.quote, lineHeight: 1.25, letterSpacing: "0.02em" }}
         >
           {t.quote}
         </p>
@@ -374,7 +378,7 @@ export default function TestimonialsSection() {
       className="relative w-full overflow-hidden"
       style={{
         background:
-          "linear-gradient(245.75deg, #051F20 -15.25%, #163B32 -0.52%, #366B4C 23.33%, #EBE4CC 55.47%, #336D4D 79.63%, #395C3F 103.78%)",
+          "linear-gradient(225deg, #051F20 0%, #163B32 0%, #366B4C 23%, #EBE4CC 55%, #336D4D 80%, #395C3F 100%)",
       }}
     >
       <div className="relative max-w-360 mx-auto px-5 lg:px-10 py-16">
@@ -388,7 +392,7 @@ export default function TestimonialsSection() {
               BETTER HEALTH.
             </span>
           </h2>
-          <p className="text-white  max-w-93 mt-6 mx-auto text-[16px] font-bold leading-[100%] tracking-[2%] " >
+          <p className="text-white  max-w-93 mt-6 mx-auto text-[16px] font-normal leading-[100%] tracking-[2%] " >
             See how connected care can change the way you understand your health.
           </p>
         </div>
@@ -403,8 +407,8 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Desktop: infinite carousel along the curved collage (1440×842) */}
-        <div ref={desktopRef} className="hidden lg:block relative w-full aspect-1440/842 overflow-hidden">
-          <div data-reveal className="absolute left-0 right-0 top-0 z-10 text-center">
+        <div ref={desktopRef} className="hidden lg:block relative w-full aspect-1440/1024 overflow-hidden">
+          <div data-reveal className="absolute left-0 right-0 top-[4.69%] z-10 text-center">
             <h2 className="text-white font-bold leading-tight">
               <span className="block" style={{ fontSize: "clamp(24px,2.22vw,32px)", letterSpacing: "0.02em" }}>
                 REAL PEOPLE.

@@ -9,13 +9,12 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const TRUST_BADGES = [
-  { Icon: ShieldCheck, text: "Board-certified physician", bold: false },
-  { Icon: Clock, text: "First consultation free", bold: false },
-  { Icon: GlobeLock, text: "HIPAA compliant", bold: true },
+  { Icon: ShieldCheck, text: "Board-certified physician" },
+  { Icon: Clock, text: "First consultation free" },
+  { Icon: GlobeLock, boldPart: "HIPAA", text: " compliant" },
   {
     Icon: ClockCheck,
     text: "Available in 46 states except",
-    bold: false,
     sub: ["Arkansas", "Massachussetts", "New Mexico", "South Carolina"],
   },
 ];
@@ -89,13 +88,13 @@ export default function PhysicianRaySection() {
       {/* Photo — flush to the left viewport edge (breaks out of the centered container) */}
       <div
         data-reveal
-        className="absolute left-0 top-0 h-full w-[44%] max-w-158.75 max-xl:hidden"
+        className="absolute left-0 top-0 h-full w-[47.5%] max-w-[684px] max-xl:hidden"
       >
         <Image
           src="/home/physician-ray.png"
           alt="Dr. Ray, board-certified physician"
-          width={635}
-          height={951}
+          width={684}
+          height={1024}
           priority
           className="h-full w-full object-cover"
         />
@@ -112,7 +111,7 @@ export default function PhysicianRaySection() {
               <div className="flex flex-col gap-7">
                 <p
                   data-line
-                  className="uppercase leading-[100%] text-[30px] text-[#F4F4F5]"
+                  className="uppercase leading-[100%] text-[20px] tracking-[0.02em] text-[#F4F4F5]"
 
                 >
                   Limited availability
@@ -135,8 +134,7 @@ export default function PhysicianRaySection() {
                 </div>
                 <p
                   data-line
-                  className="font-semibold uppercase leading-[100%] text-[24px] text-white"
-                  style={{ fontSize: "clamp(16px,1.67vw,24px)" }}
+                  className="font-semibold uppercase leading-[100%] text-[24px] tracking-[0.02em] text-white"
                 >
                   Your data finally means something.
                 </p>
@@ -178,14 +176,12 @@ export default function PhysicianRaySection() {
             data-ray-badges
             className="flex  items-start gap-6.25 max-xl:static max-xl:mx-auto max-xl:mt-12 max-xl:w-full max-xl:flex-wrap max-xl:justify-center max-xl:gap-x-[25px] max-xl:gap-y-5"
           >
-            {TRUST_BADGES.map(({ Icon, text, bold, sub }) => (
+            {TRUST_BADGES.map(({ Icon, text, boldPart, sub }) => (
               <div key={text} className={`flex shrink-0 gap-2.5 ${sub ? "items-start" : "items-center"}`}>
                 <Icon size={24} className="shrink-0 text-white" strokeWidth={1.5} />
                 <div className="flex flex-col items-start">
-                  <span
-                    className={`uppercase tracking-[2%] leading-[100%] text-white ${bold ? "font-extrabold text-[14px]" : "font-medium text-[16px]"}`}
-
-                  >
+                  <span className="uppercase tracking-[0.02em] leading-[100%] text-white font-medium text-[14px]">
+                    {boldPart && <span className="font-extrabold text-[16px]">{boldPart}</span>}
                     {text}
                   </span>
                   {sub && (
