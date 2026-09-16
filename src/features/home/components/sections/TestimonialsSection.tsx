@@ -3,8 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -242,16 +241,126 @@ function TestimonialCard({ t }: { t: Testimonial }) {
 
 export default function TestimonialsSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const desktopRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
-        gsap.from(el, {
-          opacity: 0,
-          y: 40,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 88%", once: true },
+      gsap.utils.toArray<HTMLElement>("[data-reveal]", sectionRef.current).forEach((el) => {
+        gsap.fromTo(el, { opacity: 0, y: 40 }, {
+          opacity: 1, y: 0, ease: "none",
+          scrollTrigger: { trigger: el, start: "top 88%", end: "top 60%", scrub: true },
+        });
+      });
+
+      // Cards loop like a carousel along each row's own curve: the top row
+      // drifts left → right, the bottom row drifts right → left. As a card
+      // slides it morphs through the row's slot shapes (top/width) so it
+      // rides the same arc the static layout defines — the first card eases
+      // into the second card's position, and so on — instead of moving in a
+      // straight line. Each card exits one edge and (clipped by the section's
+      // overflow-hidden) reappears from the opposite edge, with the row's
+      // curve positions always occupied.
+      const cards = gsap.utils.toArray<HTMLElement>("[data-tm-loop]", sectionRef.current);
+      const containerWidth = desktopRef.current?.offsetWidth ?? window.innerWidth;
+
+      const cardInfos = cards.map((card) => ({
+        card,
+        leftPx: (parseFloat(card.style.left) / 100) * containerWidth,
+        topPct: parseFloat(card.style.top),
+        widthPct: parseFloat(card.style.width),
+        cardWidth: card.offsetWidth,
+      }));
+
+      // Smooth (Hermite/Catmull-Rom style) interpolation through the row's
+      // slot points: tangents are derived from each point's neighbours so
+      // the card eases through every slot on a true curve instead of
+      // bending along straight, kinked line segments.
+      type CurvePoint = { x: number; top: number; width: number };
+      const buildCurve = (points: CurvePoint[]) => {
+        const sorted = [...points].sort((a, b) => a.x - b.x);
+        const n = sorted.length;
+        const tangent = (key: "top" | "width", i: number) => {
+          const prev = sorted[Math.max(i - 1, 0)];
+          const next = sorted[Math.min(i + 1, n - 1)];
+          const dx = next.x - prev.x;
+          return dx === 0 ? 0 : (next[key] - prev[key]) / dx;
+        };
+        return (x: number) => {
+          const cx = Math.min(Math.max(x, sorted[0].x), sorted[n - 1].x);
+          for (let i = 0; i < n - 1; i++) {
+            const p0 = sorted[i];
+            const p1 = sorted[i + 1];
+            if (cx >= p0.x && cx <= p1.x) {
+              const dx = p1.x - p0.x || 1;
+              const t = (cx - p0.x) / dx;
+              const h00 = 2 * t ** 3 - 3 * t ** 2 + 1;
+              const h10 = t ** 3 - 2 * t ** 2 + t;
+              const h01 = -2 * t ** 3 + 3 * t ** 2;
+              const h11 = t ** 3 - t ** 2;
+              const hermite = (key: "top" | "width") => {
+                const m0 = tangent(key, i);
+                const m1 = tangent(key, i + 1);
+                return h00 * p0[key] + h10 * dx * m0 + h01 * p1[key] + h11 * dx * m1;
+              };
+              return { top: hermite("top"), width: hermite("width") };
+            }
+          }
+          const last = sorted[n - 1];
+          return { top: last.top, width: last.width };
+        };
+      };
+
+      const topRowCards = cardInfos.filter((c) => c.topPct < 50);
+      const bottomRowCards = cardInfos.filter((c) => c.topPct >= 50);
+      const topCurve = buildCurve(topRowCards.map((c) => ({ x: c.leftPx, top: c.topPct, width: c.widthPct })));
+      const bottomCurve = buildCurve(bottomRowCards.map((c) => ({ x: c.leftPx, top: c.topPct, width: c.widthPct })));
+
+      const clamp01 = (v: number) => Math.min(Math.max(v, 0), 1);
+      const mapRange = (v: number, inMin: number, inMax: number, outMin: number, outMax: number) =>
+        outMin + clamp01((v - inMin) / (inMax - inMin || 1)) * (outMax - outMin);
+
+      // Each row is its own independent loop: own curve, own bounds, own
+      // phase — nothing shared between the top and bottom row's timelines.
+      // The off-screen wrap buffer is now a small fixed margin (not a full
+      // card width), so cards sit closer together with far less dead gap
+      // between one leaving and the next entering. Opacity fades over that
+      // margin hide the wrap teleport instead of relying on distance alone.
+      [
+        { row: topRowCards, curve: topCurve, direction: 1 },
+        { row: bottomRowCards, curve: bottomCurve, direction: -1 },
+      ].forEach(({ row, curve, direction }) => {
+        if (row.length === 0) return;
+        const sortedRow = [...row].sort((a, b) => a.leftPx - b.leftPx);
+        const maxCardWidth = Math.max(...sortedRow.map((c) => c.cardWidth));
+        const margin = Math.max(maxCardWidth * 0.25, 48);
+        const absoluteMin = -margin;
+        const absoluteMax = containerWidth + margin;
+        const period = absoluteMax - absoluteMin;
+        const wrap = gsap.utils.wrap(absoluteMin, absoluteMax);
+        const duration = 30;
+        const step = period / sortedRow.length;
+
+        sortedRow.forEach(({ card, leftPx }, i) => {
+          const startAbsoluteX = absoluteMin + i * step;
+          const startX = startAbsoluteX - leftPx;
+          gsap.set(card, { x: startX });
+          gsap.to(card, {
+            x: `${direction > 0 ? "+=" : "-="}${period}`,
+            ease: "none",
+            duration,
+            repeat: -1,
+            modifiers: { x: (v) => `${wrap(parseFloat(v) + leftPx) - leftPx}px` },
+            onUpdate: () => {
+              const currentX = Number(gsap.getProperty(card, "x"));
+              const absoluteX = leftPx + currentX;
+              const { top, width } = curve(absoluteX);
+              card.style.top = `${top}%`;
+              card.style.width = `${width}%`;
+              const fadeIn = mapRange(absoluteX, absoluteMin, absoluteMin + margin, 0, 1);
+              const fadeOut = mapRange(absoluteX, absoluteMax - margin, absoluteMax, 1, 0);
+              card.style.opacity = `${Math.min(fadeIn, fadeOut)}`;
+            },
+          });
         });
       });
     },
@@ -261,6 +370,7 @@ export default function TestimonialsSection() {
   return (
     <section
       ref={sectionRef}
+      id="testimonials"
       className="relative w-full overflow-hidden"
       style={{
         background:
@@ -292,9 +402,9 @@ export default function TestimonialsSection() {
           ))}
         </div>
 
-        {/* Desktop: exact Figma collage (1440×842) with heading integrated */}
-        <div className="hidden lg:block relative w-full aspect-1440/842">
-          <div data-reveal className="absolute left-0 right-0 top-0 text-center">
+        {/* Desktop: infinite carousel along the curved collage (1440×842) */}
+        <div ref={desktopRef} className="hidden lg:block relative w-full aspect-1440/842 overflow-hidden">
+          <div data-reveal className="absolute left-0 right-0 top-0 z-10 text-center">
             <h2 className="text-white font-bold leading-tight">
               <span className="block" style={{ fontSize: "clamp(24px,2.22vw,32px)", letterSpacing: "0.02em" }}>
                 REAL PEOPLE.
@@ -310,7 +420,7 @@ export default function TestimonialsSection() {
           {TESTIMONIALS.map((t) => (
             <div
               key={`${t.name}-${t.age}`}
-              data-reveal
+              data-tm-loop
               className="absolute"
               style={{ left: t.left, top: t.top, width: t.width }}
             >

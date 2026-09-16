@@ -2,8 +2,7 @@
 
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 import MealCard from "./helper/MealCard";
 import WorkoutCard from "./helper/WorkoutCard";
@@ -25,18 +24,33 @@ const POS = {
   sleep: { left: "66.298%", top: "60.340%", width: "28.977%" },
 };
 
+/* Scatter-in offsets (x/y px + rotate deg) — cards fly in from different directions. */
+const SCATTER = [
+  { x: -80, y: -60, r: -8 },
+  { x: 0, y: -90, r: 6 },
+  { x: 80, y: -50, r: 10 },
+  { x: -70, y: 70, r: -10 },
+  { x: -30, y: 90, r: 6 },
+  { x: 70, y: 70, r: -6 },
+];
+
 function Abs({
   pos,
   className = "",
+  scatter = false,
+  statement = false,
   children,
 }: {
   pos: { left: string; top: string; width: string };
   className?: string;
+  scatter?: boolean;
+  statement?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <div
-      data-reveal
+      data-scatter={scatter || undefined}
+      data-statement={statement || undefined}
       className={`xl:absolute max-xl:w-full ${className}`}
       style={{ left: pos.left, top: pos.top, width: pos.width }}
     >
@@ -50,58 +64,70 @@ export default function MostCareSection() {
 
   useGSAP(
     () => {
-      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
-        gsap.from(el, {
-          opacity: 0,
-          y: 40,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 88%", once: true },
+      const root = sectionRef.current;
+      if (!root) return;
+
+      gsap.utils.toArray<HTMLElement>("[data-scatter]", root).forEach((el, i) => {
+        const s = SCATTER[i % SCATTER.length];
+        gsap.fromTo(el, { x: s.x, y: s.y, rotate: s.r, opacity: 0 }, {
+          x: 0, y: 0, rotate: 0, opacity: 1, ease: "none",
+          scrollTrigger: { trigger: el, start: "top 88%", end: "top 60%", scrub: true },
         });
       });
+
+      const statement = root.querySelector("[data-statement]");
+      if (statement) {
+        const lines = statement.querySelectorAll<HTMLElement>("[data-line]");
+        const stl = gsap.timeline({
+          scrollTrigger: { trigger: statement, start: "top 92%", end: "top 55%", scrub: true },
+        });
+        lines.forEach((el, i) => {
+          stl.fromTo(el, { opacity: 0, y: 30 }, { opacity: 1, y: 0, ease: "none" }, i * 0.15);
+        });
+      }
     },
     { scope: sectionRef },
   );
 
   return (
-    <section ref={sectionRef} className="relative w-full bg-[#F2EEE3] overflow-hidden">
+    <section ref={sectionRef} id="why-meddy" className="relative w-full bg-[#F2EEE3] overflow-hidden">
       <div className="mx-auto w-full px-5 lg:px-10 py-16 max-w-360">
         <div className="relative w-full grid grid-cols-1 gap-6 md:grid-cols-2 xl:block xl:aspect-1445/1059 xl:gap-0">
-          <Abs pos={POS.meal}>
+          <Abs pos={POS.meal} scatter>
             <MealCard />
           </Abs>
 
-          <Abs pos={POS.workout}>
+          <Abs pos={POS.workout} scatter>
             <WorkoutCard />
           </Abs>
 
-          <Abs pos={POS.calories} className="md:max-xl:col-span-2 md:max-xl:w-1/2! md:max-xl:mx-auto">
+          <Abs pos={POS.calories} scatter className="md:max-xl:col-span-2 md:max-xl:w-1/2! md:max-xl:mx-auto">
             <CaloriesCard />
           </Abs>
 
-          <Abs pos={POS.statement} className="text-center flex flex-col gap-3.75 md:max-xl:col-span-2 md:max-xl:flex md:max-xl:flex-col md:max-xl:justify-center">
-            <p className="text-[#228755] uppercase text-[20px] leading-[100%]">
+          <Abs pos={POS.statement} statement className="text-center flex flex-col gap-3.75 md:max-xl:col-span-2 md:max-xl:flex md:max-xl:flex-col md:max-xl:justify-center">
+            <p data-line className="text-[#228755] uppercase text-[20px] leading-[100%]">
               Always on-care
             </p>
             <div className="flex flex-col gap-3.75">
-              <p className="text-[#7B7B7B] font-medium text-[32px] leading-[100%]" >
+              <p data-line className="text-[#7B7B7B] font-medium text-[32px] leading-[100%]" >
                 Most care happens in 15-minute visits.
               </p>
-              <p className="text-[#363636] font-semibold uppercase text-[36px] leading-[100%]" >
+              <p data-line className="text-[#363636] font-semibold uppercase text-[36px] leading-[100%]" >
                 Meddy happens everyday
               </p>
             </div>
           </Abs>
 
-          <Abs pos={POS.nutrients} className="md:max-xl:col-span-2 md:max-xl:!w-1/2 md:max-xl:mx-auto">
+          <Abs pos={POS.nutrients} scatter className="md:max-xl:col-span-2 md:max-xl:!w-1/2 md:max-xl:mx-auto">
             <NutrientsCard />
           </Abs>
 
-          <Abs pos={POS.a1c}>
+          <Abs pos={POS.a1c} scatter>
             <A1cCard />
           </Abs>
 
-          <Abs pos={POS.sleep}>
+          <Abs pos={POS.sleep} scatter>
             <SleepCard />
           </Abs>
         </div>

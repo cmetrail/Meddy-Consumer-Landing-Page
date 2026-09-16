@@ -4,8 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { ShieldCheck, Clock, GlobeLock, ClockCheck } from "lucide-react";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -28,15 +27,48 @@ export default function PhysicianRaySection() {
 
   useGSAP(
     () => {
-      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
-        gsap.from(el, {
-          opacity: 0,
-          y: 40,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 85%", once: true },
+      const root = sectionRef.current;
+      if (!root) return;
+
+      const photo = root.querySelector("[data-reveal]");
+      if (photo) {
+        gsap.fromTo(photo, { opacity: 0 }, {
+          opacity: 1, ease: "none",
+          scrollTrigger: { trigger: photo, start: "top 95%", end: "top 60%", scrub: true },
         });
-      });
+      }
+
+      const copy = root.querySelector("[data-ray-copy]");
+      if (copy) {
+        const lines = copy.querySelectorAll<HTMLElement>("[data-line]");
+        const ctl = gsap.timeline({
+          scrollTrigger: { trigger: copy, start: "top 85%", end: "top 40%", scrub: true },
+        });
+        lines.forEach((el, i) => {
+          ctl.fromTo(el, { opacity: 0, y: 30 }, { opacity: 1, y: 0, ease: "none" }, i * 0.15);
+        });
+      }
+      const buttons = root.querySelector("[data-ray-buttons]");
+      if (buttons) {
+        gsap.fromTo(buttons, { opacity: 0, x: 40 }, {
+          opacity: 1, x: 0, ease: "none",
+          scrollTrigger: { trigger: buttons, start: "top 92%", end: "top 55%", scrub: true },
+        });
+      }
+      const social = root.querySelector("[data-ray-social]");
+      if (social) {
+        gsap.fromTo(social, { opacity: 0, y: 40 }, {
+          opacity: 1, y: 0, ease: "none",
+          scrollTrigger: { trigger: social, start: "top 92%", end: "top 55%", scrub: true },
+        });
+      }
+      const badges = root.querySelector("[data-ray-badges]");
+      if (badges) {
+        gsap.fromTo(badges, { opacity: 0, y: 20 }, {
+          opacity: 1, y: 0, ease: "none",
+          scrollTrigger: { trigger: badges, start: "top 92%", end: "top 55%", scrub: true },
+        });
+      }
     },
     { scope: sectionRef },
   );
@@ -44,6 +76,7 @@ export default function PhysicianRaySection() {
   return (
     <section
       ref={sectionRef}
+      id="physician-care"
       className="relative w-full bg-[#1D3A1D] text-white overflow-hidden"
     >
       {/* ambient glow (Figma Group 48095837 — blurred color vectors on the left) */}
@@ -72,12 +105,13 @@ export default function PhysicianRaySection() {
         <div className="relative w-full flex-1 flex flex-col justify-between items-end">
           {/* Copy (right-aligned) */}
           <div
-            data-reveal
+            data-ray-copy
             className="text-right"
           >
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-7">
                 <p
+                  data-line
                   className="uppercase leading-[100%] text-[30px] text-[#F4F4F5]"
 
                 >
@@ -85,12 +119,14 @@ export default function PhysicianRaySection() {
                 </p>
                 <div className="flex flex-col gap-0.5">
                   <p
+                    data-line
                     className=" font-semibold uppercase lleading-[100%] text-[36px] text-white"
 
                   >
                     500 spots.
                   </p>
                   <p
+                    data-line
                     className="font-extrabold uppercase leading-[100%] text-[64px] text-white"
 
                   >
@@ -98,6 +134,7 @@ export default function PhysicianRaySection() {
                   </p>
                 </div>
                 <p
+                  data-line
                   className="font-semibold uppercase leading-[100%] text-[24px] text-white"
                   style={{ fontSize: "clamp(16px,1.67vw,24px)" }}
                 >
@@ -108,7 +145,7 @@ export default function PhysicianRaySection() {
             {/* Buttons */}
 
           </div>
-          <div className=" flex justify-end gap-8.25 ">
+          <div data-ray-buttons className=" flex justify-end gap-8.25 ">
             <button
               className="flex h-12.5 w-50 text-base items-center justify-center rounded-none bg-[#18181B] uppercase text-white transition-colors duration-300 hover:bg-[#2B2B2F] max-sm:w-full"
 
@@ -124,7 +161,7 @@ export default function PhysicianRaySection() {
           </div>
           {/* Social proof card (one-physician.svg) */}
           <div
-            data-reveal
+            data-ray-social
             className="max-w-85"
           >
             <Image
@@ -138,7 +175,7 @@ export default function PhysicianRaySection() {
 
           {/* Trust badges */}
           <div
-            data-reveal
+            data-ray-badges
             className="flex  items-start gap-6.25 max-xl:static max-xl:mx-auto max-xl:mt-12 max-xl:w-full max-xl:flex-wrap max-xl:justify-center max-xl:gap-x-[25px] max-xl:gap-y-5"
           >
             {TRUST_BADGES.map(({ Icon, text, bold, sub }) => (

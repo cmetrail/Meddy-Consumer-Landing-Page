@@ -1,10 +1,15 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import FeatureCopy from "./FeatureCopy";
 import GiantNumber from "./GiantNumber";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const A1C_TREND_DATA = [
   { x: 0, a1c: 10 },
@@ -86,8 +91,33 @@ function A1cTrendCard() {
 }
 
 export default function InsightsSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const root = sectionRef.current;
+      if (!root) return;
+
+      const image = root.querySelector("[data-feature-image]");
+
+      if (image) {
+        gsap.fromTo(image, { opacity: 0, x: -40 }, {
+          opacity: 1, x: 0, ease: "none",
+          scrollTrigger: { trigger: image, start: "top 92%", end: "top 55%", scrub: true },
+        });
+      }
+      gsap.utils.toArray<HTMLElement>("[data-feature-card]", root).forEach((el) => {
+        gsap.fromTo(el, { opacity: 0, y: 24 }, {
+          opacity: 1, y: 0, ease: "none",
+          scrollTrigger: { trigger: el, start: "top 88%", end: "top 60%", scrub: true },
+        });
+      });
+    },
+    { scope: sectionRef },
+  );
+
   return (
-    <div className="">
+    <div ref={sectionRef} className="">
 
       <div className="max-w-360 mx-auto px-5 lg:px-10  relative">
         <GiantNumber n="05" />
@@ -100,8 +130,8 @@ export default function InsightsSection() {
               sub="See how changes affect your results — and which habits are driving them."
             />
           </div>
-          <div className="relative w-full md:w-fit md:mx-auto">
-            <div className="absolute right-[0%] top-[0%] origin-top-right scale-[0.8] sm:scale-100 w-67">
+          <div data-feature-image className="relative w-full md:w-fit md:mx-auto">
+            <div data-feature-card className="absolute right-[0%] top-[0%] origin-top-right scale-[0.8] sm:scale-100 w-67">
               <NetCaloriesCard />
             </div>
             <Image
@@ -112,7 +142,7 @@ export default function InsightsSection() {
               priority
               className="object-contain w-full h-auto md:w-110.25 md:h-167.5"
             />
-            <div className="absolute left-[-12%] bottom-[14%] origin-bottom-left scale-[0.8] sm:scale-100 w-67">
+            <div data-feature-card className="absolute left-[-12%] bottom-[14%] origin-bottom-left scale-[0.8] sm:scale-100 w-67">
               <A1cTrendCard />
             </div>
           </div>

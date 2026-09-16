@@ -1,5 +1,11 @@
 "use client";
 
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
 // ─── Extracted from /public/Line (3).svg (viewBox 0 0 1439 534) ──────────────
 // Single green metric line (A1c) with a dashed event marker and a dark-green
 // dose card. Crop to the data region (event card starts ~124, grid ends ~494).
@@ -151,38 +157,36 @@ function EventCard({ tail = false }: { tail?: boolean }) {
 }
 
 export default function A1cTrend() {
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: rootRef.current, start: "top 80%", once: true },
+      });
+
+      tl.fromTo("[data-graph-title]", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" })
+        .fromTo("[data-graph-chart]", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.2")
+        .to(".a1c-line", { strokeDashoffset: 0, duration: 2.2, ease: "power2.out" }, 0.2)
+        .to(".a1c-marker", { opacity: 1, duration: 0.4, ease: "power1.out" }, 1.6)
+        .to(".a1c-dot", { opacity: 1, duration: 0.4, ease: "power1.out", stagger: 0.08 }, 2.2)
+        .to(".a1c-card", { opacity: 1, duration: 0.5, ease: "power1.out", stagger: 0.08 }, 2.4);
+    },
+    { scope: rootRef },
+  );
+
   return (
-    <div className="relative w-full overflow-hidden">
+    <div ref={rootRef} className="relative w-full overflow-hidden">
       <style>{`
-        @keyframes a1c-draw {
-          to { stroke-dashoffset: 0; }
-        }
-        @keyframes a1c-fade {
-          to { opacity: 1; }
-        }
-        .a1c-line {
-          stroke-dasharray: 1;
-          stroke-dashoffset: 1;
-          animation: a1c-draw 2.2s cubic-bezier(0.4,0,0.2,1) 0.2s forwards;
-        }
-        .a1c-marker {
-          stroke-dasharray: 3 3;
-          opacity: 0;
-          animation: a1c-fade 0.4s ease 1.6s forwards;
-        }
-        .a1c-dot {
-          opacity: 0;
-          animation: a1c-fade 0.4s ease 2.2s forwards;
-        }
-        .a1c-card {
-          opacity: 0;
-          animation: a1c-fade 0.5s ease 2.4s forwards;
-        }
+        .a1c-line { stroke-dasharray: 1; stroke-dashoffset: 1; }
+        .a1c-marker { stroke-dasharray: 3 3; opacity: 0; }
+        .a1c-dot { opacity: 0; }
+        .a1c-card { opacity: 0; }
       `}</style>
 
       <div className="max-w-360 mx-auto px-5 flex flex-col gap-12.5 lg:px-10">
         {/* Title */}
-        <div className="">
+        <div data-graph-title className="">
           <div className="flex items-center gap-4.25">
             <span className="text-white text-xl font-medium tracking-[-2%] leading-[130%]">
               A1c
@@ -198,7 +202,7 @@ export default function A1cTrend() {
         </div>
 
         {/* Chart */}
-        <div className="relative w-full" style={{ aspectRatio: `${VIEW_W} / ${VIEW_H}` }}>
+        <div data-graph-chart className="relative w-full" style={{ aspectRatio: `${VIEW_W} / ${VIEW_H}` }}>
           <svg
             viewBox={`${VIEW_X} ${VIEW_Y} ${VIEW_W} ${VIEW_H}`}
             preserveAspectRatio="xMidYMid meet"

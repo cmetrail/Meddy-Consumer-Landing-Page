@@ -3,8 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { Pricing } from "./helper/Pricing";
 import { FooterItems } from "./helper/FooterItems";
 
@@ -15,21 +14,50 @@ export default function FooterSection() {
 
   useGSAP(
     () => {
-      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
-        gsap.from(el, {
-          opacity: 0,
-          y: 40,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 88%", once: true },
-        });
+      gsap.utils.toArray<HTMLElement>("[data-reveal]", sectionRef.current).forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            ease: "none",
+            scrollTrigger: { trigger: el, start: "top 92%", end: "top 55%", scrub: true },
+          },
+        );
       });
+
+      // Pricing cards slide from above as the section scrolls in.
+      gsap.utils.toArray<HTMLElement>("[data-plan-card]", sectionRef.current).forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: -80 },
+          {
+            opacity: 1,
+            y: 0,
+            ease: "none",
+            scrollTrigger: { trigger: el, start: "top 90%", end: "top 55%", scrub: true },
+          },
+        );
+      });
+
+      // Pricing header lines animate singly.
+      const head = sectionRef.current?.querySelector("[data-pricing-head]");
+      if (head) {
+        const lines = head.querySelectorAll<HTMLElement>("[data-line]");
+        const htl = gsap.timeline({
+          scrollTrigger: { trigger: head, start: "top 90%", end: "top 45%", scrub: true },
+        });
+        lines.forEach((el, i) => {
+          htl.fromTo(el, { opacity: 0, y: 40 }, { opacity: 1, y: 0, ease: "none" }, i * 0.15);
+        });
+      }
     },
     { scope: sectionRef },
   );
 
   return (
-    <section ref={sectionRef} className="relative w-full overflow-hidden text-white">
+    <section ref={sectionRef} id="pricing" className="relative w-full overflow-hidden text-white">
       <Image src="/home/footer-bg.jpg" alt="" fill className="object-cover" />
       <div className="absolute inset-0 bg-black/50" />
 

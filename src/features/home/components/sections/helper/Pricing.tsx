@@ -93,26 +93,26 @@ export function Pricing() {
   return (
     <>
       {/* Header */}
-      <div data-reveal className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div data-pricing-head className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-[#F4F4F5] mb-3.75  uppercase leading-[100%] text-[24px] font-medium" >
+          <p data-line className="text-[#F4F4F5] mb-3.75  uppercase leading-[100%] text-[24px] font-medium" >
             Pricing
           </p>
-          <p className="text-white font-semibold leading-[100%] text-[48px] " >
+          <p data-line className="text-white font-semibold leading-[100%] text-[48px] " >
             Care designed
           </p>
-          <p className="text-white font-semibold leading-[100%] text-[96px] ">
+          <p data-line className="text-white font-semibold leading-[100%] text-[96px] ">
             Around you
           </p>
         </div>
-        <p className="text-white lg:pb-4 max-w-135.5 lg:text-right tracking-[2%] leading-[100%] text-[24px]">
+        <p data-line className="text-white lg:pb-4 max-w-135.5 lg:text-right tracking-[2%] leading-[100%] text-[24px]">
           Simple transparent plans, physician-guided care that adapts to your life.
         </p>
       </div>
 
       {/* Plans */}
       <div className="mt-16 grid items-stretch gap-20 md:grid-cols-3 md:gap-4 lg:mt-36 lg:gap-10">
-        <div data-reveal className="h-full">
+        <div data-plan-card className="h-full">
           <PlanCard
             name="Free"
             tagline="Track your health"
@@ -126,7 +126,7 @@ export function Pricing() {
             cta="Start for free"
           />
         </div>
-        <div data-reveal className="h-full">
+        <div data-plan-card className="h-full">
           <PlanCard
             name="Meddy Care"
             tagline="Track your health"
@@ -145,7 +145,7 @@ export function Pricing() {
             cta="Choose Care"
           />
         </div>
-        <div data-reveal className="h-full">
+        <div data-plan-card className="h-full">
           <PlanCard
             name="Complete"
             tagline="Track your health"

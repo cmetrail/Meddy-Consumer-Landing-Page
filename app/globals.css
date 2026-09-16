@@ -190,3 +190,20 @@ html.lenis body {
   backface-visibility: hidden;
   transform: translateZ(0);
 }
+
+/*
+ * Scroll-animated elements — hidden until GSAP ScrollTrigger reveals them.
+ * Setting opacity:0 here (via SSR-rendered HTML) prevents the flash where
+ * elements are visible during hydration before useGSAP fires.
+ * GSAP uses fromTo() so it ignores this CSS value and uses its own explicit
+ * start/end states — no conflict.
+ */
+[data-problem-heading], [data-scatter],
+[data-hmw-line], [data-hmw-phone], [data-hmw-strip], [data-hmw-icon],
+[data-feature-line], [data-feature-image], [data-feature-card], [data-line],
+[data-graph-title], [data-graph-chart],
+[data-reveal],
+[data-ray-buttons], [data-ray-social], [data-ray-badges],
+[data-tm-card] {
+  opacity: 0;
+}

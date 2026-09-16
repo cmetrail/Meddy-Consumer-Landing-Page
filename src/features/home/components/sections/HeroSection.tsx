@@ -3,7 +3,8 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
+import { gsap } from "@/lib/gsap";
+import { scrollTo } from "@/lib/lenis";
 import Header from "@/components/Header";
 import EnrollmentCard from "../helper/EnrollmentCard";
 import { fluid } from "@/lib/scale";
@@ -53,10 +54,10 @@ const ANIMATION_ENABLED = true;
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
+  const headerWrapRef = useRef<HTMLDivElement>(null);
   const currentIndex = useRef(0);
   const [activeSlide, setActiveSlide] = useState(0);
   const [accentSlide, setAccentSlide] = useState(0);
-  const [entered, setEntered] = useState(false);
 
   // Per-slide refs
   const bgRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -65,6 +66,7 @@ export default function HeroSection() {
   const taglineRefs = useRef<(HTMLParagraphElement | null)[]>([]);
   const bodyRefs = useRef<(HTMLParagraphElement | null)[]>([]);
   const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const progressFillRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -74,6 +76,7 @@ export default function HeroSection() {
     gsap.to(letters, { opacity: 0, y: -15, duration: 0.3, stagger: 0.02, ease: "power2.in" });
     gsap.to(taglineRefs.current[i], { x: 20, opacity: 0, duration: 0.3, ease: "power2.in" });
     gsap.to(bodyRefs.current[i], { x: 20, opacity: 0, duration: 0.3, delay: 0.05, ease: "power2.in" });
+    gsap.to(cardRefs.current[i], { y: -20, opacity: 0, duration: 0.3, ease: "power2.in" });
     gsap.to(imageRefs.current[i], { yPercent: 100, opacity: 0, duration: 0.9, ease: "power2.in" });
   };
 
@@ -94,6 +97,9 @@ export default function HeroSection() {
     gsap.fromTo(bodyRefs.current[i],
       { x: -50, opacity: 0 },
       { x: 0, opacity: 1, duration: 1.0, delay: d + 0.65, ease: "power2.out" });
+    gsap.fromTo(cardRefs.current[i],
+      { y: 80, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.9, delay: d + 0.7, ease: "power3.out" });
   };
 
   // ── Progress bar fill → triggers next transition on complete ─────────────
@@ -148,14 +154,24 @@ export default function HeroSection() {
         gsap.set(imageRefs.current[i], { yPercent: 100, opacity: 0 });
         // Hide all non-active content elements
         const letters = Array.from(hlRefs.current[i]?.children ?? []);
-        gsap.set([...letters, taglineRefs.current[i], bodyRefs.current[i]], { opacity: 0 });
+        gsap.set([...letters, taglineRefs.current[i], bodyRefs.current[i], cardRefs.current[i]], { opacity: 0 });
       });
 
       // Init progress bars — all empty, first will fill via startProgress
       progressFillRefs.current.forEach(el => el && gsap.set(el, { width: "0%" }));
 
-      // Slide 0's entrance is CSS-driven (see globals.css) so it renders at
-      // first paint without waiting for hydration. GSAP only drives the carousel.
+      // ── Slide 0 entrance (GSAP-driven). Elements are pre-hidden in SSR via
+      // inline opacity:0 to avoid the "content flashes visible, then animates"
+      // FOUC. Each element reveals bottom → up / side → center.
+      const letters = Array.from(hlRefs.current[0]?.children ?? []);
+      const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
+      intro
+        .fromTo(headerWrapRef.current, { y: -24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 })
+        .fromTo(imageRefs.current[0], { yPercent: 50, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 1.5 }, 0.1)
+        .fromTo(letters, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.05, ease: "power2.out" }, 0.3)
+        .fromTo(taglineRefs.current[0], { x: -50, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power2.out" }, 0.5)
+        .fromTo(bodyRefs.current[0], { x: -50, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power2.out" }, 0.6)
+        .fromTo(cardRefs.current[0], { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9 }, 0.7);
 
       startProgress(0);
     },
@@ -163,7 +179,7 @@ export default function HeroSection() {
   );
 
   return (
-    <section ref={containerRef} className="relative w-full  overflow-hidden" style={{ height: "var(--dvh)" }}>
+    <section ref={containerRef} id="hero" className="relative w-full  overflow-hidden" style={{ height: "var(--dvh)" }}>
 
       {/* ── Background gradient layers (slide right → left) ── */}
       {SLIDES.map((s, i) => (
@@ -175,14 +191,15 @@ export default function HeroSection() {
       ))}
       <div className="h-full w-full relative">
         {/* ── Header — normal flow, sits at top ── */}
-        <div className="relative z-50">
+        <div ref={headerWrapRef} className="relative z-50" style={{ opacity: 0 }}>
           <Header variant="dark" active="How it works" />
         </div>
 
         {/* Person images — bottom-anchored at 60% width, height scales with --s */}
         {SLIDES.map((s, i) => (
           <div key={i} ref={el => { imageRefs.current[i] = el; }}
-            className={`absolute inset-0 pointer-events-none z-20 ${i === activeSlide ? "" : "hidden"} ${i === 0 && !entered ? "anim-rise" : ""}`}>
+            className={`absolute inset-0 pointer-events-none z-20 ${i === activeSlide ? "" : "hidden"}`}
+            style={i === 0 ? { opacity: 0 } : undefined}>
             <div className="relative max-w-360 mx-auto px-4 h-full">
               <Image src={s.image} alt="" width={715} height={954} priority={i === 0}
                 className="absolute bottom-0 left-[70%] sm:left-[70%] md:left-[62%] lg:left-[63%]  -translate-x-1/2 h-[65dvh] md:h-[75dvh] lg:h-[86dvh] w-auto object-contain object-bottom" />
@@ -197,29 +214,42 @@ export default function HeroSection() {
             <div className="max-w-360 mx-auto h-full flex flex-col flex-1 justify-between px-5 lg:px-10">
               <div className="flex-1 gap-8 flex flex-col">
                 <div ref={el => { hlRefs.current[i] = el; }}
-                  className={`uppercase font-bold leading-[100%] -ml-2 tracking-normal text-[#1E1E22] flex ${i === 0 && !entered ? "anim-fade-up" : ""}`}
-                  style={{ fontSize: fluid(180, 18), mixBlendMode: "difference", ...(i === 0 && !entered ? { animationDelay: "0.1s" } : {}) }}>
-                  {s.headline.split("").map((char, j) => <span key={j} className="inline-block p-0 m-0">{char}</span>)}
+                  className="uppercase font-bold leading-[100%] -ml-2 tracking-normal text-[#1E1E22] flex"
+                  style={{ fontSize: fluid(180, 18), mixBlendMode: "difference" }}>
+                  {s.headline.split("").map((char, j) => <span key={j} className="inline-block p-0 m-0" style={i === 0 ? { opacity: 0 } : undefined}>{char}</span>)}
                 </div>
                 <div className="flex flex-col relative z-[99999]  gap-7.5 max-w-139.5 ">
                   <p ref={el => { taglineRefs.current[i] = el; }}
-                    className={`text-white uppercase font-normal text-[30px] leading-[100%] ${i === 0 && !entered ? "anim-fade-up" : ""}`}
-                    style={i === 0 && !entered ? { animationDelay: "0.35s" } : undefined}
+                    className="text-white uppercase font-normal text-[30px] leading-[100%]"
+                    style={i === 0 ? { opacity: 0 } : undefined}
                   >{s.tagline}</p>
                   <p ref={el => { bodyRefs.current[i] = el; }}
-                    className={`text-white font-normal leading-[100%]  text-xl ${i === 0 && !entered ? "anim-fade-up" : ""}`}
-                    style={i === 0 && !entered ? { animationDelay: "0.45s" } : undefined}
+                    className="text-white font-normal leading-[100%]  text-xl"
+                    style={i === 0 ? { opacity: 0 } : undefined}
                   >{s.body}</p>
                 </div>
               </div>
-              <div className={`h-64.25 mb-44 ${i === 0 && !entered ? "anim-fade-up" : ""}`}
-                style={i === 0 && !entered ? { animationDelay: "0.55s" } : undefined}
-                onAnimationEnd={i === 0 ? () => setEntered(true) : undefined}>
+              <div ref={el => { cardRefs.current[i] = el; }}
+                className="h-64.25 mb-44"
+                style={i === 0 ? { opacity: 0 } : undefined}>
                 <EnrollmentCard accentColor={SLIDES[accentSlide].arrow} />
               </div>
             </div>
           </div>
         ))}
+
+        {/* ── Scroll cue — glide into the next section ── */}
+        <button
+          type="button"
+          aria-label="Scroll to next section"
+          onClick={() => scrollTo("#problem")}
+          className="absolute left-1/2 -translate-x-1/2 bottom-10 z-40 flex flex-col items-center gap-2 text-white/80 hover:text-white transition-colors"
+        >
+          <span className="text-[11px] uppercase tracking-[0.2em]">Scroll</span>
+          <svg className="animate-bounce" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M4 7l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
 
         {/* ── Progress bar indicators — bottom ── */}
         <div className="absolute bottom-5 left-0 right-0 z-40">

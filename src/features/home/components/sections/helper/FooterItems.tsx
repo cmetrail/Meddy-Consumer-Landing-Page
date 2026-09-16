@@ -20,7 +20,7 @@ const FOOTER_COLUMNS: string[][] = [
 
 export function FooterItems() {
   return (
-    <div data-reveal className="mt-10 w-full rounded-t-[22px] bg-white/10 backdrop-blur-xl">
+    <div className="mt-10 w-full rounded-t-[22px] bg-white/10 backdrop-blur-xl">
       <div className="mx-auto w-full max-w-360 px-5 lg:px-10 py-16 pb-4">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto] lg:gap-x-16 lg:gap-y-0">
           <div>

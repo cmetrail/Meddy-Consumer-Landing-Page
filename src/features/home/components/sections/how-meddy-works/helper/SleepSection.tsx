@@ -1,7 +1,14 @@
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import FeatureCopy from "./FeatureCopy";
 import GiantNumber from "./GiantNumber";
 import { SleepArchitectureBar, type ISleepStage } from "./SleepArchitectureBar";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const SLEEP_STAGES: ISleepStage[] = [
   { key: "awake", label: "Awake", shortLabel: "Awake", percentage: 10, color: "bg-[#E3F9FF]", badgeBg: "bg-[#E3F9FF]" },
@@ -77,12 +84,37 @@ function SleepScoreCard() {
 }
 
 export default function SleepSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const root = sectionRef.current;
+      if (!root) return;
+
+      const image = root.querySelector("[data-feature-image]");
+
+      if (image) {
+        gsap.fromTo(image, { opacity: 0, x: 40 }, {
+          opacity: 1, x: 0, ease: "none",
+          scrollTrigger: { trigger: image, start: "top 92%", end: "top 55%", scrub: true },
+        });
+      }
+      gsap.utils.toArray<HTMLElement>("[data-feature-card]", root).forEach((el) => {
+        gsap.fromTo(el, { opacity: 0, y: 24 }, {
+          opacity: 1, y: 0, ease: "none",
+          scrollTrigger: { trigger: el, start: "top 88%", end: "top 60%", scrub: true },
+        });
+      });
+    },
+    { scope: sectionRef },
+  );
+
   return (
-    <div className="">
+    <div ref={sectionRef} className="">
       <div className="max-w-360 mx-auto px-4  relative">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-          <div className="relative w-full md:w-fit md:mx-auto">
-            <div className="absolute right-0 top-0 origin-top-right scale-[0.8] sm:scale-100 md:right-[-18%] md:top-[4%] w-72.5">
+          <div data-feature-image className="relative w-full md:w-fit md:mx-auto">
+            <div data-feature-card className="absolute right-0 top-0 origin-top-right scale-[0.8] sm:scale-100 md:right-[-18%] md:top-[4%] w-72.5">
               <SleepArchitectureCard />
             </div>
             <Image
@@ -93,7 +125,7 @@ export default function SleepSection() {
               priority
               className="object-contain w-full h-auto md:w-130.5 md:h-173.75"
             />
-            <div className="absolute left-[-2%] bottom-0 origin-bottom-left scale-[0.8] sm:scale-100  md:bottom-0 lg:bottom-[0%] w-52">
+            <div data-feature-card className="absolute left-[-2%] bottom-0 origin-bottom-left scale-[0.8] sm:scale-100  md:bottom-0 lg:bottom-[0%] w-52">
               <SleepScoreCard />
             </div>
           </div>

@@ -1,5 +1,11 @@
 "use client";
 
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
 // ─── Extracted from /public/Line.svg (viewBox 0 0 1440 634) + graph.md ────────
 const W = 1440;
 const H = 634;
@@ -117,39 +123,36 @@ function CalloutCard({
 }
 
 export default function GraphBand() {
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: rootRef.current, start: "top 80%", once: true },
+      });
+
+      tl.fromTo("[data-graph-title]", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" })
+        .fromTo("[data-graph-chart]", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.2")
+        .to(".gbd-sod", { strokeDashoffset: 0, duration: 1.8, ease: "power2.out" }, 0.5)
+        .to(".gbd-bp", { strokeDashoffset: 0, duration: 2.2, ease: "power2.out" }, 0.2)
+        .to(".gbd-dot", { opacity: 1, duration: 0.4, ease: "power1.out", stagger: 0.08 }, 2.2)
+        .to(".gbd-card", { opacity: 1, duration: 0.5, ease: "power1.out", stagger: 0.08 }, 2.4);
+    },
+    { scope: rootRef },
+  );
+
   return (
-    <div className="relative w-full overflow-hidden">
-      {/* Draw-on animation keyframes */}
+    <div ref={rootRef} className="relative w-full overflow-hidden">
+      {/* Static initial states — GSAP animates these on scroll */}
       <style>{`
-        @keyframes gbd-draw {
-          to { stroke-dashoffset: 0; }
-        }
-        @keyframes gbd-fade {
-          to { opacity: 1; }
-        }
-        .gbd-bp {
-          stroke-dasharray: 1;
-          stroke-dashoffset: 1;
-          animation: gbd-draw 2.2s cubic-bezier(0.4,0,0.2,1) 0.2s forwards;
-        }
-        .gbd-sod {
-          stroke-dasharray: 1;
-          stroke-dashoffset: 1;
-          animation: gbd-draw 1.8s cubic-bezier(0.4,0,0.2,1) 0.5s forwards;
-        }
-        .gbd-dot {
-          opacity: 0;
-          animation: gbd-fade 0.4s ease 2.2s forwards;
-        }
-        .gbd-card {
-          opacity: 0;
-          animation: gbd-fade 0.5s ease 2.4s forwards;
-        }
+        .gbd-bp, .gbd-sod { stroke-dasharray: 1; stroke-dashoffset: 1; }
+        .gbd-dot { opacity: 0; }
+        .gbd-card { opacity: 0; }
       `}</style>
 
       <div className="max-w-360 mx-auto px-5 flex flex-col gap-12.5 lg:px-10">
         {/* Title (graph.md Heading) */}
-        <div className="">
+        <div data-graph-title className="">
           <div className="flex items-center gap-4.25">
             <span
               className="text-white text-xl font-medium tracking-[-2%] leading-[130%]"
@@ -174,7 +177,7 @@ export default function GraphBand() {
         </div>
 
         {/* Chart */}
-        <div className="relative w-full" style={{ aspectRatio: `${VIEW_W} / ${VIEW_H}` }}>
+        <div data-graph-chart className="relative w-full" style={{ aspectRatio: `${VIEW_W} / ${VIEW_H}` }}>
           <svg
             viewBox={`${VIEW_X} ${VIEW_Y} ${VIEW_W} ${VIEW_H}`}
             preserveAspectRatio="xMidYMid meet"
