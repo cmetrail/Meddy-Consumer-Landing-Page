@@ -22,7 +22,7 @@ export default function PricingFooterSection() {
             y: 0,
             duration: 0.9,
             ease: "power3.out",
-            scrollTrigger: { trigger: el, start: "top 88%", once: true },
+            scrollTrigger: { trigger: el, start: "top bottom", once: true },
           },
         );
       });

@@ -71,7 +71,7 @@ export default function Header({
           const isActive = label === active;
           return (
             <Link key={label} href={href}
-              className={`group relative text-base leading-tight tracking-[0.01em] uppercase transition-colors
+              className={`group relative whitespace-nowrap text-base leading-tight tracking-[0.01em] uppercase transition-colors
                 ${isActive ? v.linkActive : v.linkInactive}`}
             >
               {label}

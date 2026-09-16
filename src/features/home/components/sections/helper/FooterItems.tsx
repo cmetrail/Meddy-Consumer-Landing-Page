@@ -1,20 +1,29 @@
 import Image from "next/image";
+import Link from "next/link";
 
-const FOOTER_COLUMNS: string[][] = [
-  ["Home page", "How it works", "Why Meddy", "Sleep and recovery", "Pricing"],
+type FooterLink = { label: string; href: string };
+
+const FOOTER_COLUMNS: FooterLink[][] = [
   [
-    "Nutrition",
-    "Physician Care",
-    "Personalized\nhealth plans",
-    "Medication\nmanagement",
-    "Longevity and\npreventive health",
+    { label: "Home page", href: "/" },
+    { label: "How it works", href: "/#how-it-works" },
+    { label: "Why Meddy", href: "/why-meddy" },
+    { label: "Sleep and recovery", href: "/#how-it-works" },
+    { label: "Pricing", href: "/pricing" },
   ],
   [
-    "Labs and\nBiomarkers Tracking",
-    "Weighloss and\nMetabolic",
-    "Werables and\nHealth Data",
-    "Fitness",
-    "24/7 Primary Care",
+    { label: "Nutrition", href: "/#how-it-works" },
+    { label: "Physician Care", href: "/physician-care" },
+    { label: "Personalized\nhealth plans", href: "/physician-care" },
+    { label: "Medication\nmanagement", href: "/physician-care" },
+    { label: "Longevity and\npreventive health", href: "/physician-care" },
+  ],
+  [
+    { label: "Labs and\nBiomarkers Tracking", href: "/physician-care" },
+    { label: "Weighloss and\nMetabolic", href: "/#how-it-works" },
+    { label: "Werables and\nHealth Data", href: "/#how-it-works" },
+    { label: "Fitness", href: "/#how-it-works" },
+    { label: "24/7 Primary Care", href: "/physician-care" },
   ],
 ];
 
@@ -81,15 +90,15 @@ export function FooterItems() {
 
           <nav data-footer-nav className="flex flex-col items-start gap-10 lg:flex-row lg:items-start lg:gap-16">
             {FOOTER_COLUMNS.map((column) => (
-              <div key={column[0]} data-footer-col className="flex flex-col items-end gap-[35px]">
+              <div key={column[0].label} data-footer-col className="flex flex-col items-end gap-[35px]">
                 {column.map((link) => (
-                  <a
-                    key={link}
-                    href="#"
+                  <Link
+                    key={link.label}
+                    href={link.href}
                     className="whitespace-pre-line text-right font-medium text-white text-base leading-[1.3] hover:opacity-70"
                   >
-                    {link}
-                  </a>
+                    {link.label}
+                  </Link>
                 ))}
               </div>
             ))}
@@ -97,7 +106,7 @@ export function FooterItems() {
         </div>
 
         <div className="mt-6 border-t border-[#E0E0E0] lg:mt-8" />
-        <p data-reveal className="mt-8 text-center text-[#F4F4F5] text-[12px] leading-[150%] lg:mt-8">
+        <p className="mt-8 text-center text-[#F4F4F5] text-[12px] leading-[150%] lg:mt-4">
           © 2026 Meddy · Physician services available in all 50 states except: South Carolina,
           Arkansas, Rhode Island.
         </p>

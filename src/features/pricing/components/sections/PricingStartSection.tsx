@@ -157,11 +157,9 @@ export default function PricingStartSection() {
             viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h2 className="text-[30px] font-bold uppercase leading-[115%] text-[#46524B] sm:text-[48px] lg:text-[64px] lg:leading-[126%]">
-              <span className="block">Your health is more</span>
-              <span className="block">
-                than <span className="text-[#17925A]">Healthcare.</span>
-              </span>
+            <h2 className="max-w-218.75 text-[30px] font-bold uppercase leading-[115%] text-[#46524B] sm:text-[48px] lg:text-[64px] lg:leading-[126%]">
+              Your health is more than{" "}
+              <span className="text-[#17925A]">Healthcare.</span>
             </h2>
             <p className="text-[18px] font-medium uppercase leading-[100%] text-[#6E7A72] sm:text-[24px] lg:text-[32px]">
               Everything works together.
