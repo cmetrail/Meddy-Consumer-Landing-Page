@@ -239,7 +239,7 @@ export default function HeroSection() {
         ))}
 
         {/* ── Scroll cue — glide into the next section ── */}
-        <button
+        {/* <button
           type="button"
           aria-label="Scroll to next section"
           onClick={() => scrollTo("#problem")}
@@ -249,7 +249,7 @@ export default function HeroSection() {
           <svg className="animate-bounce" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path d="M4 7l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-        </button>
+        </button> */}
 
         {/* ── Progress bar indicators — bottom ── */}
         <div className="absolute bottom-5 left-0 right-0 z-40">

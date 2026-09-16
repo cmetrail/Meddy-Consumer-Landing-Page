@@ -52,6 +52,18 @@ export default function FooterSection() {
           htl.fromTo(el, { opacity: 0, y: 40 }, { opacity: 1, y: 0, ease: "none" }, i * 0.15);
         });
       }
+
+      // Footer nav columns reveal one-by-one.
+      const nav = sectionRef.current?.querySelector("[data-footer-nav]");
+      if (nav) {
+        const cols = nav.querySelectorAll<HTMLElement>("[data-footer-col]");
+        const ftl = gsap.timeline({
+          scrollTrigger: { trigger: nav, start: "top 92%", end: "top 55%", scrub: true },
+        });
+        cols.forEach((el, i) => {
+          ftl.fromTo(el, { opacity: 0, y: 40 }, { opacity: 1, y: 0, ease: "none" }, i * 0.2);
+        });
+      }
     },
     { scope: sectionRef },
   );

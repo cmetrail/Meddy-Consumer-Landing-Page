@@ -12,7 +12,7 @@ function Trend({ value, direction }: { value: string; direction: "up" | "down" }
 
 function StatCell({ label, value, trend, className }: { label: string; value: string; trend?: { value: string; direction: "up" | "down" }, className?: string }) {
   return (
-    <div className={clsx("rounded-xl bg-[#F8F8F8]/10 p-3 border-[0.1px] border-white flex flex-col gap-1", className)}>
+    <div className={clsx("rounded-xl bg-[#F8F8F8]/10 p-3   flex flex-col gap-1", className)}>
       <p className="text-white text-[9px] leading-[150%]">{label}</p>
       <div className="flex flex-row items-baseline gap-1.5">
         <p className="text-white whitespace-nowrap font-bold text-[13px] leading-[150%]">{value}</p>

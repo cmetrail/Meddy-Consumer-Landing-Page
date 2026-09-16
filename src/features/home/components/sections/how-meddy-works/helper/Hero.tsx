@@ -40,13 +40,14 @@ export default function Hero() {
         scrollTrigger: { trigger: sectionRef.current, start: "top 85%", end: "top 30%", scrub: true },
       });
 
+      // Phone slides up from below — triggered on the phone itself so it fades in
+      // while actually visible (the tall section trigger finished too early).
       const phone = sectionRef.current?.querySelector("[data-hmw-phone]");
       if (phone) {
-        tl.fromTo(
+        gsap.fromTo(
           phone,
           { opacity: 0, y: 120 },
-          { opacity: 1, y: 0, ease: "none" },
-          0,
+          { opacity: 1, y: 0, ease: "none", scrollTrigger: { trigger: phone, start: "top 95%", end: "top 50%", scrub: true } },
         );
       }
 

@@ -23,7 +23,7 @@ export function FooterItems() {
     <div className="mt-10 w-full rounded-t-[22px] bg-white/10 backdrop-blur-xl">
       <div className="mx-auto w-full max-w-360 px-5 lg:px-10 py-16 pb-4">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto] lg:gap-x-16 lg:gap-y-0">
-          <div>
+          <div data-reveal>
             <Image
               src="/app-logo.png"
               alt="Meddy Health"
@@ -79,9 +79,9 @@ export function FooterItems() {
             </div>
           </div>
 
-          <nav className="flex flex-col items-start gap-10 lg:flex-row lg:items-start lg:gap-16">
+          <nav data-footer-nav className="flex flex-col items-start gap-10 lg:flex-row lg:items-start lg:gap-16">
             {FOOTER_COLUMNS.map((column) => (
-              <div key={column[0]} className="flex flex-col items-end gap-[35px]">
+              <div key={column[0]} data-footer-col className="flex flex-col items-end gap-[35px]">
                 {column.map((link) => (
                   <a
                     key={link}
@@ -97,7 +97,7 @@ export function FooterItems() {
         </div>
 
         <div className="mt-6 border-t border-[#E0E0E0] lg:mt-8" />
-        <p className="mt-8 text-center text-[#F4F4F5] text-[12px] leading-[150%] lg:mt-8">
+        <p data-reveal className="mt-8 text-center text-[#F4F4F5] text-[12px] leading-[150%] lg:mt-8">
           © 2026 Meddy · Physician services available in all 50 states except: South Carolina,
           Arkansas, Rhode Island.
         </p>
