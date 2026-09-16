@@ -27,19 +27,16 @@ export default function FooterSection() {
         );
       });
 
-      // Pricing cards slide from above as the section scrolls in.
-      gsap.utils.toArray<HTMLElement>("[data-plan-card]", sectionRef.current).forEach((el) => {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: -80 },
-          {
-            opacity: 1,
-            y: 0,
-            ease: "none",
-            scrollTrigger: { trigger: el, start: "top 90%", end: "top 55%", scrub: true },
-          },
-        );
-      });
+      // Pricing cards drop in one-by-one as the section scrolls in.
+      const cards = gsap.utils.toArray<HTMLElement>("[data-plan-card]", sectionRef.current);
+      if (cards.length) {
+        const ctl = gsap.timeline({
+          scrollTrigger: { trigger: cards[0], start: "top 90%", end: "top 40%", scrub: true },
+        });
+        cards.forEach((el, i) => {
+          ctl.fromTo(el, { opacity: 0, y: -80 }, { opacity: 1, y: 0, ease: "none" }, i * 0.25);
+        });
+      }
 
       // Pricing header lines animate singly.
       const head = sectionRef.current?.querySelector("[data-pricing-head]");

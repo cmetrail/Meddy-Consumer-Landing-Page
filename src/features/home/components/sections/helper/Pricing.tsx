@@ -1,89 +1,124 @@
-import { Check, Crown } from "lucide-react";
+import { CircleCheckBig, Crown } from "lucide-react";
 
-function PlanCard({
-  name,
-  tagline,
-  price,
-  period,
-  features,
-  cta,
-  highlighted = false,
-  badge,
-  featureWeight = 400,
-  tagline2,
-}: {
-  name: string;
-  tagline: string;
+const GREEN = "#17925A";
+const LIGHT_GREEN = "#8ABE85";
+const MINT = "#B9FFB3";
+const GRAY = "#DADADA";
+const WHITE = "#FFFFFF";
+
+type PlanCardProps = {
+  eyebrow: string;
+  eyebrowColor: string;
+  title: string;
+  titleColor: string;
+  titleSize: number;
+  description: string;
+  descriptionColor: string;
+  planName?: string;
   price?: string;
   period?: string;
-  features: { text: string; highlight?: boolean }[];
-  cta: string;
-  highlighted?: boolean;
+  priceColor?: string;
+  subheader?: string;
+  subheaderSize?: number;
+  features: string[];
+  featureColor: string;
+  checkColor: string;
+  variant: "free" | "care" | "complete";
   badge?: string;
-  featureWeight?: 400 | 600;
-    tagline2: string;
-}) {
-  return (
-    <div
-      className={`relative flex h-full flex-col backdrop-blur-xl p-5 md:p-6 lg:p-8 ${highlighted
-        ? "border-[5px] border-[#17925A] bg-[#D9D9D9]/20 lg:scale-110 lg:-translate-y-6"
-        : "bg-[#CDCDCD]/20"
-        }`}
-    >
-      {badge && (
-        <span
-          className="absolute -top-10 -left-1.25 inline-flex text-[20px] leading-[100%] items-center gap-1.75 h-9.5 bg-[#17925A] px-4 py-1 text-white"
+};
 
-        >
-          <Crown size={24} /> {badge}
+function PlanCard({
+  eyebrow,
+  eyebrowColor,
+  title,
+  titleColor,
+  titleSize,
+  description,
+  descriptionColor,
+  planName,
+  price,
+  period,
+  priceColor = WHITE,
+  subheader,
+  subheaderSize = 16,
+  features,
+  featureColor,
+  checkColor,
+  variant,
+  badge,
+}: PlanCardProps) {
+  const cardClass =
+    variant === "complete"
+      ? "bg-[#17925A]"
+      : variant === "care"
+        ? "border-[3px] border-[#17925A] bg-[#CDCDCD]/20 backdrop-blur-xl"
+        : "bg-[#CDCDCD]/20 backdrop-blur-xl";
+
+  const btnClass =
+    variant === "complete"
+      ? "bg-white text-[#17925A] shadow-[0px_3px_3px_rgba(0,0,0,0.25)] hover:bg-[#F4F4F5]"
+      : variant === "care"
+        ? "bg-[#17925A] text-white shadow-[0px_3px_3px_rgba(0,0,0,0.25)] hover:bg-[#1BA867]"
+        : "border border-white text-white hover:bg-white/10";
+
+  return (
+    <div className={`relative flex h-full flex-col p-6 lg:p-7 ${cardClass}`}>
+      {badge && (
+        <span className="absolute -top-3.5 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 bg-[#17925A] px-3.5 py-1 text-[15px] font-medium leading-[100%] text-white">
+          <Crown size={22} /> {badge}
         </span>
       )}
-      <div className="flex flex-col gap-4.75">
-        <h3 className="text-white font-semibold text-[48px] leading-[100%]">{name}</h3>
-        <div className="flex flex-col gap-2.5">
-          <p className="text-white text-[24px] leading-[100%] tracking-[2%]" >{tagline}</p>
-          <p className="text-white text-[24px] leading-[100%] tracking-[2%]" >{tagline2}</p>
-        </div>
-      </div>
-      <div className="mt-5 h-px w-full bg-white lg:mt-6" />
 
-      <ul className="mt-6 flex-1 space-y-4 lg:mt-7.5 lg:space-y-3.75">
+      <p className="text-[32px] font-medium uppercase leading-[100%]" style={{ color: eyebrowColor }}>
+        {eyebrow}
+      </p>
+
+      <h3 className="mt-1 font-bold leading-[100%]" style={{ color: titleColor, fontSize: titleSize }}>
+        {title}
+      </h3>
+
+      <p className="mt-4 text-[14px] leading-[1.4]" style={{ color: descriptionColor }}>
+        {description}
+      </p>
+
+      <div className={planName ? "mt-2" : "mt-4"}>
+        {planName ? (
+          <p className="text-[48px] font-semibold uppercase leading-[100%]" style={{ color: titleColor }}>
+            {planName}
+          </p>
+        ) : (
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-[36px] font-semibold uppercase leading-[100%]" style={{ color: priceColor }}>
+              ${price}
+            </span>
+            <span className="text-[18px] font-normal leading-[100%]" style={{ color: WHITE }}>
+              {period}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {subheader && (
+        <p className="mt-5 font-semibold leading-[100%]" style={{ color: WHITE, fontSize: subheaderSize }}>
+          {subheader}
+        </p>
+      )}
+
+      <ul className={`flex flex-1 flex-col gap-[14px] ${subheader ? "mt-[22px]" : "mt-[30px]"}`}>
         {features.map((f) => (
-          <li key={f.text} className="flex items-center gap-4 lg:gap-[23px]">
-            <Check
-              size={24}
-              className={f.highlight ? "text-[#E1FF8D]" : "text-white"}
-              strokeWidth={2.5}
-            />
-            <span
-              className={`text-[20px] tracking-[2%] leading-[100%] ${f.highlight ? "text-[#E1FF8D] font-bold" : "text-white"}`}
-              style={{
-                fontWeight: f.highlight ? 700 : featureWeight,
-                letterSpacing: "0.02em",
-              }}
-            >
-              {f.text}
+          <li key={f} className="flex items-start gap-3">
+            <CircleCheckBig size={18} className="mt-[2px] shrink-0" style={{ color: checkColor }} strokeWidth={2} />
+            <span className="text-[14px] leading-[1.3]" style={{ color: featureColor }}>
+              {f}
             </span>
           </li>
         ))}
       </ul>
 
-      {price && (
-        <div className="mt-5 flex items-baseline gap-1 lg:mt-6">
-          <span className="text-white font-bold leading-[100%] text-[48px] tracking-[0.5px]">$</span>
-          <span className="text-white font-bold leading-[100%] text-[64px] tracking-[0.5px]" >{price}</span>
-          {period && <span className="text-white font-semibold leading-[100%] text-[18px] tracking-[0.5px]" >{period}</span>}
-        </div>
-      )}
-
       <button
-        className={`mt-6 w-full h-15 py-2.5 text-center text-[32px] leading-[100%] text-white transition-colors duration-200 lg:mt-8 ${highlighted
-          ? "bg-[#17925A] shadow-[3px_4px_4px_rgba(78,191,68,0.25)] hover:bg-[#1BA867]"
-          : "border border-white hover:bg-white/10"
-          }`}
-
+        className={`mt-8 flex h-[50px] w-full items-center justify-center rounded-[7px] text-[18px] font-semibold transition-colors duration-200 ${btnClass}`}
       >
-        {cta}
+        Join the waitlist
       </button>
     </div>
   );
@@ -95,69 +130,102 @@ export function Pricing() {
       {/* Header */}
       <div data-pricing-head className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p data-line className="text-[#F4F4F5] mb-3.75  uppercase leading-[100%] text-[24px] font-medium" >
+          <p data-line className="text-[#F4F4F5] mb-3.75  uppercase leading-[100%] text-[24px] font-medium">
             Pricing
           </p>
-          <p data-line className="text-white font-semibold leading-[100%] text-[48px] " >
+          <p data-line className="text-white font-semibold leading-[100%] text-[48px] ">
             Care designed
           </p>
           <p data-line className="text-white font-semibold leading-[100%] text-[96px] ">
             Around you
           </p>
         </div>
-        <p data-line className="text-white lg:pb-4 max-w-135.5 lg:text-right tracking-[2%] leading-[100%] text-[24px]">
-          Simple transparent plans, physician-guided care that adapts to your life.
+        <p
+          data-line
+          className="text-white lg:pb-4 max-w-135.5 lg:text-right tracking-[2%] leading-[100%] text-[24px] whitespace-pre-line"
+        >
+          {"Simple transparent plans,\nphysician-guided care that adapts to your life."}
         </p>
       </div>
 
       {/* Plans */}
-      <div className="mt-16 grid items-stretch gap-20 md:grid-cols-3 md:gap-4 lg:mt-36 lg:gap-10">
+      <div className="mt-16 grid items-stretch gap-20 md:grid-cols-3 md:gap-4 lg:mt-36 lg:gap-[35px]">
         <div data-plan-card className="h-full">
           <PlanCard
-            name="Free"
-            tagline="Track your health"
-            tagline2="Build better habits"
+            variant="free"
+            eyebrow="Meddy"
+            eyebrowColor={LIGHT_GREEN}
+            title="Understand your health."
+            titleColor={WHITE}
+            titleSize={20}
+            description="Everything you need to track nutrition, workouts, sleep, recovery, and progress in one place."
+            descriptionColor={GRAY}
+            planName="Free"
             features={[
-              { text: "Track your Nutrition" },
-              { text: "Workouts" },
-              { text: "Sleep" },
-              { text: "Progress in One Place" },
+              "AI nutrition tracking",
+              "Workout planning and logging",
+              "Weight trends",
+              "Progress dashboards",
+              "Habit and lifestyle tracking",
             ]}
-            cta="Start for free"
+            featureColor={GRAY}
+            checkColor={LIGHT_GREEN}
           />
         </div>
+
         <div data-plan-card className="h-full">
           <PlanCard
-            name="Meddy Care"
-            tagline="Track your health"
-            tagline2="Build better habits"
-            price="249"
-            period="/Month"
-            badge="Premium Plan"
-            highlighted
-            featureWeight={600}
-            features={[
-              { text: "UNLIMITED LABS", highlight: true },
-              { text: "Bi-weekly Physician Access" },
-              { text: "Secure Messaging" },
-              { text: "Your Health Team" },
-            ]}
-            cta="Choose Care"
-          />
-        </div>
-        <div data-plan-card className="h-full">
-          <PlanCard
-            name="Complete"
-            tagline="Track your health"
-            tagline2="Build better habits"
+            variant="care"
+            badge="Most popular"
+            eyebrow="Meddy Care"
+            eyebrowColor={LIGHT_GREEN}
+            title="Add physician guidance."
+            titleColor={WHITE}
+            titleSize={20}
+            description="For people who want medical insight, lab interpretation, and personalized recommendations."
+            descriptionColor={GRAY}
             price="169"
-            period="/Month"
+            period="/month"
+            subheader="Everything in Meddy, plus:"
             features={[
-              { text: "Add Physician Guidance" },
-              { text: "Secure Messaging" },
-              { text: "Quarterly Labs" },
+              "Physician access (monthly)",
+              "Secure messaging",
+              "Phone and video appointments",
+              "Quarterly comprehensive lab testing included",
+              "Biomarker tracking",
+              "Personalized adjustments",
             ]}
-            cta="Choose complete"
+            featureColor={WHITE}
+            checkColor={WHITE}
+          />
+        </div>
+
+        <div data-plan-card className="h-full">
+          <PlanCard
+            variant="complete"
+            eyebrow="Meddy Complete"
+            eyebrowColor={WHITE}
+            title="Your health team."
+            titleColor={MINT}
+            titleSize={17.77}
+            description="For patients who want ongoing physician support and a more comprehensive healthcare experience."
+            descriptionColor={WHITE}
+            price="249"
+            period="/month"
+            priceColor={MINT}
+            subheader="Everything in Meddy care, plus:"
+            subheaderSize={15}
+            features={[
+              "Physician access (biweekly)",
+              "Secure messaging",
+              "Unlimited physician-directed lab testing as clinically appropriate",
+              "Biomarker tracking",
+              "Personalized adjustments",
+              "Continuous care coordination",
+              "Priority scheduling",
+            ]}
+            featureColor={WHITE}
+            checkColor={WHITE}
           />
         </div>
       </div>
