@@ -53,8 +53,8 @@ export default function FeatureCopy({
   );
 
   return (
-    <div ref={rootRef} className="flex flex-col gap-20  lg:max-w-156.25 lg:gap-32.5">
-      <div className="flex flex-col gap-10 lg:gap-22.5">
+    <div ref={rootRef} className="flex flex-col gap-10  lg:max-w-156.25 lg:gap-32.5">
+      <div className="flex flex-col gap-6 lg:gap-22.5">
         <div data-feature-line>
           <Eyebrow>{eyebrow}</Eyebrow>
         </div>
@@ -69,7 +69,7 @@ export default function FeatureCopy({
           <span className="text-[#578951]">{accent}</span>
         </h3>
       </div>
-      <p data-feature-line className="text-[#ABB1AD]  max-w-xl text-[16px] sm:text-[24px] leading-[100%] tracking-[2%]" >
+      <p data-feature-line className="text-[#ABB1AD]  max-w-xl text-[16px] sm:text-[24px] leading-[1.5] lg:leading-[100%] tracking-[2%]" >
         {sub}
       </p>
     </div>

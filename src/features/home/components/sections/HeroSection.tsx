@@ -202,7 +202,7 @@ export default function HeroSection() {
             style={i === 0 ? { opacity: 0 } : undefined}>
             <div className="relative max-w-360 mx-auto px-4 h-full">
               <Image src={s.image} alt="" width={715} height={954} priority={i === 0}
-                className="absolute bottom-0 left-[70%] sm:left-[70%] md:left-[62%] lg:left-[63%]  -translate-x-1/2 h-[65dvh] md:h-[75dvh] lg:h-[86dvh] w-auto object-contain object-bottom" />
+                className="absolute bottom-0 left-1/2 lg:left-[63%]  -translate-x-1/2 h-[65dvh] md:h-[75dvh] lg:h-[86dvh] w-auto object-contain object-bottom" />
             </div>
           </div>
         ))}
@@ -220,19 +220,19 @@ export default function HeroSection() {
                 </div>
                 <div className="flex flex-col relative z-[99999]  gap-7.5 max-w-139.5 ">
                   <p ref={el => { taglineRefs.current[i] = el; }}
-                    className="text-white uppercase font-normal text-[30px] leading-[100%]"
+                    className="text-white uppercase font-normal leading-[1.4] text-[26px] sm:text-[30px] lg:text-[30px] lg:leading-[100%]"
                     style={i === 0 ? { opacity: 0 } : undefined}
                   >{s.tagline}</p>
                   <p ref={el => { bodyRefs.current[i] = el; }}
-                    className="text-white font-normal leading-[100%]  text-xl"
+                    className="text-white font-normal leading-[1.6] text-xl sm:text-xl lg:text-xl lg:leading-[100%]"
                     style={i === 0 ? { opacity: 0 } : undefined}
                   >{s.body}</p>
                 </div>
-              </div>
-              <div ref={el => { cardRefs.current[i] = el; }}
-                className="h-64.25 mb-44"
-                style={i === 0 ? { opacity: 0 } : undefined}>
-                <EnrollmentCard accentColor={SLIDES[accentSlide].arrow} />
+                <div ref={el => { cardRefs.current[i] = el; }}
+                  className="hidden lg:block lg:mt-auto lg:mb-44"
+                  style={i === 0 ? { opacity: 0 } : undefined}>
+                  <EnrollmentCard accentColor={SLIDES[accentSlide].arrow} />
+                </div>
               </div>
             </div>
           </div>

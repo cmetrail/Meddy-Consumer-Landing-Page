@@ -9,7 +9,14 @@ const grayDash = CIRC - greenDash;
 
 export default function EnrollmentCard({ accentColor }: { accentColor?: string }) {
   return (
-    <div className="relative" style={{ width: 378, height: 257 }}>
+    <div
+      className="relative w-full"
+      style={{ height: "calc(257px * min(1, calc((100vw - 2.5rem) / 382)))" }}
+    >
+      <div
+        className="absolute left-0 bottom-0 origin-bottom-left"
+        style={{ width: 378, height: 257, transform: "scale(min(1, calc((100vw - 2.5rem) / 382)))" }}
+      >
 
       {/* Card body SVG — organic path with concave cutout built-in */}
       <div className="absolute" style={{ top: 17, left: 0, zIndex: 1 }}>
@@ -92,6 +99,7 @@ export default function EnrollmentCard({ accentColor }: { accentColor?: string }
         </div>
       </div>
 
+      </div>
     </div>
   );
 }

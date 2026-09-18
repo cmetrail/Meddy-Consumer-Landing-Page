@@ -100,12 +100,12 @@ export default function PhysicianRaySection() {
         />
       </div>
 
-      <div className="relative flex w-full flex-col min-h-(--dvh) max-w-360 mx-auto px-5 lg:px-10 py-16">
-        <div className="relative w-full flex-1 flex flex-col justify-between items-end">
+      <div className="relative flex w-full flex-col lg:min-h-(--dvh) max-w-360 mx-auto px-5 lg:px-10 py-16">
+        <div className="relative w-full flex-1 flex flex-col gap-10 lg:justify-between items-start lg:items-end">
           {/* Copy (right-aligned) */}
           <div
             data-ray-copy
-            className="text-right"
+            className="text-left lg:text-right"
           >
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-7">
@@ -119,14 +119,14 @@ export default function PhysicianRaySection() {
                 <div className="flex flex-col gap-0.5">
                   <p
                     data-line
-                    className=" font-semibold uppercase lleading-[100%] text-[36px] text-white"
+                    className=" font-semibold uppercase lleading-[100%] text-[26px] sm:text-[32px] lg:text-[36px] text-white"
 
                   >
                     500 spots.
                   </p>
                   <p
                     data-line
-                    className="font-extrabold uppercase leading-[100%] text-[64px] text-white"
+                    className="font-extrabold uppercase leading-[100%] text-[34px] sm:text-[44px] lg:text-[64px] text-white"
 
                   >
                     One physician.
@@ -134,7 +134,7 @@ export default function PhysicianRaySection() {
                 </div>
                 <p
                   data-line
-                  className="font-semibold uppercase leading-[100%] text-[24px] tracking-[0.02em] text-white"
+                  className="font-semibold uppercase leading-[100%] text-[18px] sm:text-[22px] lg:text-[24px] tracking-[0.02em] text-white"
                 >
                   Your data finally means something.
                 </p>
@@ -143,15 +143,15 @@ export default function PhysicianRaySection() {
             {/* Buttons */}
 
           </div>
-          <div data-ray-buttons className=" flex justify-end gap-8.25 ">
+          <div data-ray-buttons className=" flex flex-col lg:flex-row justify-start lg:justify-end gap-8.25 ">
             <button
-              className="flex h-12.5 w-50 text-base items-center justify-center rounded-none bg-[#18181B] uppercase text-white transition-colors duration-300 hover:bg-[#2B2B2F] max-sm:w-full"
+              className="flex h-12.5 w-full lg:w-50 text-base items-center justify-center rounded-none bg-[#18181B] uppercase text-white whitespace-nowrap px-6 transition-colors duration-300 hover:bg-[#2B2B2F]"
 
             >
               Get started
             </button>
             <button
-              className="flex h-12.5 w-50 text-base items-center justify-center rounded-none border border-white uppercase text-white transition-colors duration-300 hover:bg-white hover:text-[#18181B] max-sm:w-full"
+              className="flex h-12.5 w-full lg:w-50 text-base items-center justify-center rounded-none border border-white uppercase text-white whitespace-nowrap px-6 transition-colors duration-300 hover:bg-white hover:text-[#18181B]"
 
             >
               See how it works

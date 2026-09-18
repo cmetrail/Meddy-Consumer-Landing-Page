@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
+import { X } from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "How it works", href: "/" },
@@ -49,7 +51,21 @@ export default function Header({
   variant?: HeaderVariant;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const v = VARIANTS[variant];
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "";
+      };
+    }
+  }, [menuOpen]);
 
   return (
     <header className="relative flex flex-row justify-between items-center max-w-360 mx-auto py-5 px-5 lg:px-10">
@@ -99,25 +115,46 @@ export default function Header({
         <span className={`mt-[3px] block h-[3px] w-[11px] rounded-[2px] ${v.hamburger} origin-center transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[6px]" : ""}`} />
       </button>
 
-      {/* Mobile dropdown */}
-      <div className={`
-        lg:hidden absolute top-full left-0 right-0 z-50
-        ${v.dropdown} backdrop-blur-md overflow-hidden
-        transition-all duration-300 ease-in-out
-        ${menuOpen ? "max-h-60 py-6" : "max-h-0 py-0"}
-      `}>
-        <div className="flex flex-col gap-6 px-6">
-          {NAV_ITEMS.map(({ label, href }) => {
-            const isActive = label === active;
-            return (
-              <Link key={label} href={href}
-                className={`${isActive ? v.dropdownLinkActive : v.dropdownLinkInactive} text-base uppercase tracking-[0.01em]`}>
-                {label}
+      {/* Mobile full-screen menu */}
+      {menuOpen &&
+        mounted &&
+        createPortal(
+          <div className="fixed inset-0 z-[999999] flex flex-col bg-[#17925A]">
+            <div className="mx-auto flex w-full max-w-360 items-center justify-between px-5 py-5 lg:px-10">
+              <Link href="/" onClick={() => setMenuOpen(false)} className="focus:outline-none">
+                <Image
+                  src="/meddy-logo-white.svg"
+                  alt="Meddy Health"
+                  width={44}
+                  height={28}
+                  unoptimized
+                  className="h-[28px] w-auto"
+                />
               </Link>
-            );
-          })}
-        </div>
-      </div>
+              <button
+                onClick={() => setMenuOpen(false)}
+                aria-label="Close menu"
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+              >
+                <X size={26} className="text-white" />
+              </button>
+            </div>
+
+            <nav className="flex flex-1 flex-col items-stretch justify-center gap-8 px-6">
+              {NAV_ITEMS.map(({ label, href }) => (
+                <Link
+                  key={label}
+                  href={href}
+                  onClick={() => setMenuOpen(false)}
+                  className="w-full text-center text-2xl font-semibold uppercase tracking-[0.02em] text-white transition-opacity hover:opacity-80"
+                >
+                  {label}
+                </Link>
+              ))}
+            </nav>
+          </div>,
+          document.body,
+        )}
     </header>
   );
 }

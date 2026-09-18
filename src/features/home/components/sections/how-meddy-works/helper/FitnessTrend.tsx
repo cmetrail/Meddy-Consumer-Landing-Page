@@ -49,9 +49,9 @@ const CALLS: {
   left: string;
   top: string;
 }[] = [
-  { variant: "plain", week: "Week 1", label: "Weight:", value: "185 lb", left: "4.19%", top: "20.43%" },
-  { variant: "accent", week: "Week 12", value: "HR Zone 3: 128 min", left: "56.93%", top: "13.00%" },
-  { variant: "plain", week: "Week 8", label: "Weight:", value: "170 lb", left: "81.96%", top: "54.72%" },
+  { variant: "plain", week: "Week 1", label: "Weight:", value: "185 lb", left: "8.63%", top: "41.29%" },
+  { variant: "accent", week: "Week 12", value: "HR Zone 3: 128 min", left: "61.00%", top: "37.00%" },
+  { variant: "plain", week: "Week 8", label: "Weight:", value: "170 lb", left: "86.33%", top: "75.86%" },
 ];
 
 function CalloutCard({
@@ -141,7 +141,10 @@ export default function FitnessTrend() {
       <style>{`
         .ft-thick, .ft-thin { stroke-dasharray: 1; stroke-dashoffset: 1; }
         .ft-dot { opacity: 0; }
-        .ft-card { opacity: 0; }
+        .ft-card { opacity: 0; transform: translate(-50%, -100%); transform-origin: 50% 100%; }
+        @media (max-width: 1023px) {
+          .ft-card { transform: translate(-50%, -100%) scale(0.75); }
+        }
       `}</style>
 
       <div className="max-w-360 mx-auto px-5 flex flex-col gap-12.5 lg:px-10">
@@ -169,10 +172,10 @@ export default function FitnessTrend() {
           </p>
         </div>
 
-        <div data-graph-chart className="relative w-full" style={{ aspectRatio: `${VIEW_W} / ${VIEW_H}` }}>
+        <div data-graph-chart className="relative w-full aspect-[1350/350] max-lg:aspect-[1350/560]">
           <svg
             viewBox={`${VIEW_X} ${VIEW_Y} ${VIEW_W} ${VIEW_H}`}
-            preserveAspectRatio="xMidYMid meet"
+            preserveAspectRatio="none"
             className="absolute inset-0 h-full w-full"
           >
             <defs>
@@ -276,17 +279,11 @@ export default function FitnessTrend() {
           {CALLS.map((c) => (
             <div
               key={`${c.week}-${c.value}`}
-              className="ft-card absolute hidden lg:block"
+              className="ft-card absolute"
               style={{ left: c.left, top: c.top }}
             >
               <CalloutCard variant={c.variant} week={c.week} label={c.label} value={c.value} tail />
             </div>
-          ))}
-        </div>
-
-        <div className="mt-6 grid grid-cols-2 gap-3 lg:hidden">
-          {CALLS.map((c) => (
-            <CalloutCard key={`${c.week}-${c.value}`} variant={c.variant} week={c.week} label={c.label} value={c.value} />
           ))}
         </div>
 

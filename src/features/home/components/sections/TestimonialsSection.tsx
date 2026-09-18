@@ -49,6 +49,14 @@ const FONT: Record<Size, { name: string; plan: string; age: string; quote: strin
   },
 };
 
+/* Mobile cards are much smaller (~130–180px), so bump the floor so names/plans
+   stay readable instead of clamping to 6–10px. */
+const MOBILE_FONT: Record<Size, { name: string; plan: string; age: string; quote: string; glyph: string }> = {
+  sm: { name: "13px", plan: "9px", age: "18px", quote: "9px", glyph: "24px" },
+  md: { name: "14px", plan: "10px", age: "20px", quote: "10px", glyph: "28px" },
+  lg: { name: "16px", plan: "11px", age: "22px", quote: "11px", glyph: "32px" },
+};
+
 const RADIUS: Record<Size, number> = { sm: 7.5, md: 9.245, lg: 11.06 };
 
 const SHADOW: Record<Size, string> = {
@@ -187,8 +195,8 @@ const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-function TestimonialCard({ t }: { t: Testimonial }) {
-  const f = FONT[t.size];
+function TestimonialCard({ t, mobile = false }: { t: Testimonial; mobile?: boolean }) {
+  const f = mobile ? MOBILE_FONT[t.size] : FONT[t.size];
   return (
     <div
       className="relative w-full overflow-hidden"
@@ -384,7 +392,7 @@ export default function TestimonialsSection() {
       <div className="relative max-w-360 mx-auto px-5 lg:px-10 py-16">
         {/* Heading (mobile / tablet) */}
         <div data-reveal className="text-center lg:hidden">
-          <h2 className="text-white max-w-93 font-bold leading-tight">
+          <h2 className="mx-auto text-white max-w-93 font-bold leading-tight">
             <span className="block text-[32px] font-bold leading-[100%] tracking-[2%] " >
               REAL PEOPLE.
             </span>
@@ -401,7 +409,7 @@ export default function TestimonialsSection() {
         <div className="lg:hidden mt-14 grid grid-cols-2 gap-3 justify-items-center sm:grid-cols-3 md:grid-cols-5">
           {TESTIMONIALS.map((t) => (
             <div key={`${t.name}-${t.age}`} data-reveal className="w-full max-w-35 sm:max-w-45 md:max-w-none">
-              <TestimonialCard t={t} />
+              <TestimonialCard t={t} mobile />
             </div>
           ))}
         </div>

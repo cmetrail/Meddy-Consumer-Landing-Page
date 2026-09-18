@@ -49,9 +49,9 @@ const CALLS: {
   left: string;
   top: string;
 }[] = [
-  { variant: "plain", week: "Week 1", label: "Deep Sleep:", value: "18%", left: "4.19%", top: "20.43%" },
-  { variant: "red", week: "Week 2", label: "Caffiene:", value: "172 mg", left: "55.67%", top: "13.00%" },
-  { variant: "plain", week: "Week 4", label: "Deep Sleep:", value: "14%", left: "81.96%", top: "54.72%" },
+  { variant: "plain", week: "Week 1", label: "Deep Sleep:", value: "18%", left: "8.63%", top: "41.29%" },
+  { variant: "red", week: "Week 2", label: "Caffiene:", value: "172 mg", left: "61.00%", top: "37.00%" },
+  { variant: "plain", week: "Week 4", label: "Deep Sleep:", value: "14%", left: "86.33%", top: "75.86%" },
 ];
 
 function CalloutCard({
@@ -141,7 +141,10 @@ export default function SleepTrend() {
       <style>{`
         .st-thick, .st-thin { stroke-dasharray: 1; stroke-dashoffset: 1; }
         .st-dot { opacity: 0; }
-        .st-card { opacity: 0; }
+        .st-card { opacity: 0; transform: translate(-50%, -100%); transform-origin: 50% 100%; }
+        @media (max-width: 1023px) {
+          .st-card { transform: translate(-50%, -100%) scale(0.75); }
+        }
       `}</style>
 
       <div className="max-w-360 mx-auto px-5 flex flex-col gap-12.5 lg:px-10">
@@ -169,10 +172,10 @@ export default function SleepTrend() {
           </p>
         </div>
 
-        <div data-graph-chart className="relative w-full" style={{ aspectRatio: `${VIEW_W} / ${VIEW_H}` }}>
+        <div data-graph-chart className="relative w-full aspect-[1350/350] max-lg:aspect-[1350/560]">
           <svg
             viewBox={`${VIEW_X} ${VIEW_Y} ${VIEW_W} ${VIEW_H}`}
-            preserveAspectRatio="xMidYMid meet"
+            preserveAspectRatio="none"
             className="absolute inset-0 h-full w-full"
           >
             <defs>
@@ -276,17 +279,11 @@ export default function SleepTrend() {
           {CALLS.map((c) => (
             <div
               key={`${c.week}-${c.value}`}
-              className="st-card absolute hidden lg:block"
+              className="st-card absolute"
               style={{ left: c.left, top: c.top }}
             >
               <CalloutCard variant={c.variant} week={c.week} label={c.label} value={c.value} tail />
             </div>
-          ))}
-        </div>
-
-        <div className="mt-6 grid grid-cols-2 gap-3 lg:hidden">
-          {CALLS.map((c) => (
-            <CalloutCard key={`${c.week}-${c.value}`} variant={c.variant} week={c.week} label={c.label} value={c.value} />
           ))}
         </div>
 

@@ -150,7 +150,7 @@ export default function InsightsSection() {
                   "linear-gradient(180deg, rgba(38,38,38,0) 10%, rgba(24,34,29,1) 77%)",
               }}
             />
-            <div data-feature-card className="absolute left-[-12%] bottom-[14%] origin-bottom-left scale-[0.8] sm:scale-100 w-67">
+            <div data-feature-card className="absolute left-[-4%] bottom-[14%] origin-bottom-left scale-[0.8] sm:scale-100 w-67">
               <A1cTrendCard />
             </div>
           </div>

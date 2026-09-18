@@ -19,8 +19,8 @@ const IMAGES = [
   { src: "/home/scattered-2.png", left: "8.56%", top: "32.13%", width: "21.16%", mobileLeft: "55%", mobileTop: "33%", mobileWidth: "40%", ar: 1.912 },
   { src: "/home/scattered-4.png", left: "66.87%", top: "49.61%", width: "24.57%", mobileLeft: "50%", mobileTop: "50%", mobileWidth: "42%", ar: 2.166 },
   { src: "/home/scattered-5.png", left: "52.82%", top: "31.25%", width: "21.16%", mobileLeft: "5%", mobileTop: "49%", mobileWidth: "40%", ar: 1.81 },
-  { src: "/home/scattered-6.png", left: "48.3%", top: "73.93%", width: "25.68%", mobileLeft: "30%", mobileTop: "68%", mobileWidth: "42%", ar: 1.883 },
-  { src: "/home/scattered-3.png", left: "17.88%", top: "77.64%", width: "21.43%", mobileLeft: "5%", mobileTop: "74%", mobileWidth: "38%", ar: 1.949 },
+  { src: "/home/scattered-6.png", left: "48.3%", top: "73.93%", width: "25.68%", mobileLeft: "55%", mobileTop: "68%", mobileWidth: "40%", ar: 1.883 },
+  { src: "/home/scattered-3.png", left: "17.88%", top: "77.64%", width: "21.43%", mobileLeft: "5%", mobileTop: "66%", mobileWidth: "38%", ar: 1.949 },
 ];
 
 const BRAND = "#17925A";

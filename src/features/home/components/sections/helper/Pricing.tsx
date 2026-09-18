@@ -83,12 +83,12 @@ function PlanCard({
 
       <div className={planName ? "mt-2" : "mt-4"}>
         {planName ? (
-          <p className="text-[48px] font-semibold uppercase leading-[100%]" style={{ color: titleColor }}>
+          <p className="text-[36px] lg:text-[48px] font-semibold uppercase leading-[100%]" style={{ color: titleColor }}>
             {planName}
           </p>
         ) : (
           <div className="flex items-baseline gap-1.5">
-            <span className="text-[36px] font-semibold uppercase leading-[100%]" style={{ color: priceColor }}>
+            <span className="text-[28px] lg:text-[36px] font-semibold uppercase leading-[100%]" style={{ color: priceColor }}>
               ${price}
             </span>
             <span className="text-[18px] font-normal leading-[100%]" style={{ color: WHITE }}>
@@ -130,26 +130,26 @@ export function Pricing() {
       {/* Header */}
       <div data-pricing-head className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p data-line className="text-[#F4F4F5] mb-3.75  uppercase leading-[100%] text-[24px] font-medium">
+          <p data-line className="text-[#F4F4F5] mb-3.75  uppercase leading-[100%] text-[20px] lg:text-[24px] font-medium">
             Pricing
           </p>
-          <p data-line className="text-white font-semibold leading-[100%] text-[48px] ">
+          <p data-line className="text-white font-semibold leading-[100%] text-[32px] sm:text-[40px] lg:text-[48px] ">
             Care designed
           </p>
-          <p data-line className="text-white font-semibold leading-[100%] text-[96px] ">
+          <p data-line className="text-white font-semibold leading-[100%] text-[48px] sm:text-[64px] lg:text-[96px] ">
             Around you
           </p>
         </div>
         <p
           data-line
-          className="text-white lg:pb-4 max-w-135.5 lg:text-right tracking-[2%] leading-[100%] text-[24px] whitespace-pre-line"
+          className="text-white lg:pb-4 max-w-135.5 lg:text-right tracking-[2%] leading-[1.5] lg:leading-[100%] text-[16px] sm:text-[20px] lg:text-[24px] whitespace-pre-line"
         >
           {"Simple transparent plans,\nphysician-guided care that adapts to your life."}
         </p>
       </div>
 
       {/* Plans */}
-      <div className="mt-16 grid items-stretch gap-20 md:grid-cols-3 md:gap-4 lg:mt-36 lg:gap-[35px]">
+      <div className="mt-16 grid items-stretch gap-8 md:grid-cols-3 md:gap-4 lg:mt-36 lg:gap-[35px]">
         <div data-plan-card className="h-full">
           <PlanCard
             variant="free"

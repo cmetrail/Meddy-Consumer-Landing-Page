@@ -46,14 +46,14 @@ export function FooterItems() {
               className="h-auto w-50 lg:w-89.5"
             />
 
-            <p className="max-w-174.75 text-[#F4F4F5] text-[20px] leading-[150%] mt-8">
+            <p className="max-w-174.75 text-[#F4F4F5] text-[16px] sm:text-[18px] lg:text-[20px] leading-[150%] mt-8">
               Calories, workouts, sleep, labs… Most people manage them separately. Meddy connects
               them and puts a physician in charge of what they mean.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-4.75 lg:mt-6.5">
+            <div className="mt-6 flex flex-col gap-4.75 md:flex-row md:flex-wrap lg:mt-6.5">
               <button
-                className="flex h-15 items-center gap-2.5 rounded-[9px] bg-black/20 px-4 text-left transition-opacity hover:opacity-80"
+                className="flex h-15 w-full items-center justify-center gap-2.5 rounded-[9px] bg-black/20 px-4 text-center transition-opacity hover:opacity-80 md:w-auto md:justify-start md:text-left"
                 style={{
                   backdropFilter: "blur(14px)",
                   border: "0.75px solid #FFFFFF1A",
@@ -70,7 +70,7 @@ export function FooterItems() {
                 </span>
               </button>
               <button
-                className="flex h-15 items-center gap-2.5 rounded-[9px] bg-black/20 px-4 text-left transition-opacity hover:opacity-80"
+                className="flex h-15 w-full items-center justify-center gap-2.5 rounded-[9px] bg-black/20 px-4 text-center transition-opacity hover:opacity-80 md:w-auto md:justify-start md:text-left"
                 style={{
                   backdropFilter: "blur(14px)",
                   border: "0.75px solid #FFFFFF1A",
@@ -93,14 +93,14 @@ export function FooterItems() {
             </div>
           </div>
 
-          <nav data-footer-nav className="flex flex-col items-start gap-10 lg:flex-row lg:items-start lg:gap-16">
+          <nav data-footer-nav className="grid grid-cols-1 items-start gap-8 md:grid-cols-2 lg:flex lg:flex-row lg:items-start lg:gap-16">
             {FOOTER_COLUMNS.map((column) => (
-              <div key={column[0].label} data-footer-col className="flex flex-col items-end gap-[35px]">
+              <div key={column[0].label} data-footer-col className="flex flex-col items-start gap-5 lg:items-end lg:gap-[35px]">
                 {column.map((link) => (
                   <Link
                     key={link.label}
                     href={link.href}
-                    className="whitespace-pre-line text-right font-medium text-white text-base leading-[1.3] hover:opacity-70"
+                    className="block w-full whitespace-nowrap text-left lg:w-auto lg:whitespace-pre-line lg:text-right font-medium text-white text-base leading-[1.3] hover:opacity-70"
                   >
                     {link.label}
                   </Link>

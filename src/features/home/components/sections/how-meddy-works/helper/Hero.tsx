@@ -84,7 +84,7 @@ export default function Hero() {
   );
 
   return (
-    <div ref={sectionRef} className="relative overflow-hidden min-h-(--dvh)">
+    <div ref={sectionRef} className="relative overflow-hidden lg:min-h-(--dvh)">
       {/* Curtain background — recreated with CSS (dark base + blurred green glows) */}
       <div ref={bgRef} className="absolute inset-0 overflow-hidden bg-[#060606]">
         <div
@@ -162,7 +162,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative z-10 flex pt-16 h-full max-w-360 px-5 lg:px-10 mx-auto flex-col">
+      <div className="relative z-10 flex pt-16 max-w-360 px-5 lg:px-10 mx-auto flex-col lg:h-full">
 
         {/* Text */}
         <div className="text-center max-w-214 mx-auto flex flex-col shrink-0">
@@ -176,13 +176,13 @@ export default function Hero() {
           <h2 className="mt-[19px] flex flex-col gap-[10px]">
             <span
               data-hmw-line
-              className="block font-normal text-[64px] leading-[100%] text-[#ABB1AD]"
+              className="block font-normal text-[clamp(30px,5vw,64px)] leading-[100%] text-[#ABB1AD]"
             >
               Your health system ,
             </span>
             <span
               data-hmw-line
-              className="block font-bold text-[64px] leading-[100%] uppercase"
+              className="block font-bold text-[clamp(30px,5vw,64px)] leading-[100%] uppercase"
               style={{
                 background: "linear-gradient(90deg, #578951 0%, #2F6328 100%)",
                 WebkitBackgroundClip: "text",
@@ -196,14 +196,14 @@ export default function Hero() {
 
           <p
             data-hmw-line
-            className="mt-[40px] text-[#ABB1AD] text-[24px] font-medium"
+            className="mt-[24px] lg:mt-[40px] text-[#ABB1AD] text-[18px] sm:text-[22px] lg:text-[24px] font-medium"
           >
             Everything you log becomes something your doctor can act on.
           </p>
         </div>
-        <div className="relative h-full">
+        <div className="relative lg:h-full">
         {/* Phone mockup — single image already contains both phones */}
-          <div data-hmw-phone className="flex flex-1 min-h-0 items-end justify-center px-4">
+          <div data-hmw-phone className="flex flex-1 min-h-0 items-end justify-center px-4 mt-8 lg:mt-0">
           <Image
             src="/home/iPhone-17.png"
             alt="Meddy app screens"
@@ -211,7 +211,7 @@ export default function Hero() {
             height={600}
               className="object-contain object-bottom"
             style={{
-              width: "clamp(360px, 100%, 650px)",
+              width: "min(100%, 650px)",
               height: "auto",
               maxHeight: "66dvh",
             }}
@@ -219,7 +219,7 @@ export default function Hero() {
         </div>
 
         {/* Icon strip — centered rounded shelf */}
-          <div data-hmw-strip className="absolute left-0 right-0 bottom-[8%] max-md:bottom-[8%]">
+          <div data-hmw-strip className="absolute left-0 right-0 bottom-[8%] max-md:static max-md:mb-16">
           <div
             className="mx-auto flex items-center py-3.25 bg-white/10 justify-around px-2 sm:px-6 lg:px-10"
             style={{
@@ -230,7 +230,7 @@ export default function Hero() {
             }}
           >
             {ICONS.map((src) => (
-              <div key={src} data-hmw-icon className="relative w-[129px] h-[69px]">
+              <div key={src} data-hmw-icon className="relative w-[48px] h-[30px] sm:w-[72px] sm:h-[42px] lg:w-[129px] lg:h-[69px]">
                 <Image src={src} alt="" fill className="object-contain" />
               </div>
             ))}

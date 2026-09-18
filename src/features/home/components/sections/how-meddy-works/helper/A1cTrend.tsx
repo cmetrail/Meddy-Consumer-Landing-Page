@@ -181,7 +181,10 @@ export default function A1cTrend() {
         .a1c-line { stroke-dasharray: 1; stroke-dashoffset: 1; }
         .a1c-marker { stroke-dasharray: 3 3; opacity: 0; }
         .a1c-dot { opacity: 0; }
-        .a1c-card { opacity: 0; }
+        .a1c-card { opacity: 0; transform: translate(-50%, -100%); transform-origin: 50% 100%; }
+        @media (max-width: 1023px) {
+          .a1c-card { transform: translate(-50%, -100%) scale(0.75); }
+        }
       `}</style>
 
       <div className="max-w-360 mx-auto px-5 flex flex-col gap-12.5 lg:px-10">
@@ -202,10 +205,10 @@ export default function A1cTrend() {
         </div>
 
         {/* Chart */}
-        <div data-graph-chart className="relative w-full" style={{ aspectRatio: `${VIEW_W} / ${VIEW_H}` }}>
+        <div data-graph-chart className="relative w-full aspect-[1350/410] max-lg:aspect-[1350/620]">
           <svg
             viewBox={`${VIEW_X} ${VIEW_Y} ${VIEW_W} ${VIEW_H}`}
-            preserveAspectRatio="xMidYMid meet"
+            preserveAspectRatio="none"
             className="absolute inset-0 h-full w-full"
           >
             <defs>
@@ -289,29 +292,20 @@ export default function A1cTrend() {
             ))}
           </svg>
 
-          {/* Event card — absolute, desktop only (tail tip touches marker top at y=276.003) */}
+          {/* Event card — absolute (tail tip touches marker top at y=276.003) */}
           <div
-            className="a1c-card absolute hidden lg:flex"
-            style={{ left: "53.67%", top: "44.15%", transform: "translate(-50%, -100%)" }}
+            className="a1c-card absolute flex"
+            style={{ left: "53.67%", top: "44.15%" }}
           >
             <EventCard tail />
           </div>
 
-          {/* Callout cards — absolute, desktop only */}
-          <div className="a1c-card absolute hidden lg:block" style={{ left: "7.37%", top: "36.22%" }}>
+          {/* Callout cards — absolute */}
+          <div className="a1c-card absolute" style={{ left: "10.11%", top: "51.10%" }}>
             <CalloutCard value="7.5" tail />
           </div>
-          <div className="a1c-card absolute hidden lg:block" style={{ left: "83.52%", top: "61.10%" }}>
+          <div className="a1c-card absolute" style={{ left: "86.26%", top: "76.46%" }}>
             <CalloutCard value="6.0" tail />
-          </div>
-        </div>
-
-        {/* Mobile / tablet layout */}
-        <div className="mt-6 flex flex-col gap-3 lg:hidden">
-          <EventCard />
-          <div className="grid grid-cols-2 gap-3">
-            <CalloutCard value="7.5" />
-            <CalloutCard value="6.0" />
           </div>
         </div>
       </div>

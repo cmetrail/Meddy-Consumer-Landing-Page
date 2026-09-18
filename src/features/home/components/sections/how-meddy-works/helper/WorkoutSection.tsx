@@ -79,7 +79,7 @@ export default function WorkoutSection() {
       <div className="max-w-360 mx-auto px-5 lg:px-10  relative">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           <div data-feature-image className="relative w-full md:w-fit md:mx-auto">
-            <div data-feature-card className="absolute left-[48%] top-[10%] z-10 origin-top-left scale-[0.8] sm:scale-100 w-89.5" >
+            <div data-feature-card className="absolute sm:left-[55%]  sm:top-[10%] z-10 origin-top-left scale-[0.8] sm:scale-100 w-89.5 max-md:left-[4%]" >
               <WorkoutCard />
             </div>
             <Image
@@ -95,7 +95,7 @@ export default function WorkoutSection() {
               className="pointer-events-none absolute bottom-0 left-2.5 h-[27.6%] w-[104%]"
               style={{ background: "linear-gradient(190deg, rgba(38,38,38,0) 51%, rgba(24,34,29,1) 90%)" }}
             />
-            <div data-feature-card className="absolute right-[-4.3%] top-[38.2%] z-10 origin-top-right scale-[0.8] sm:scale-100 w-49" >
+            <div data-feature-card className="absolute right-[-4.3%] top-[38.2%] z-10 origin-top-right scale-[0.8] sm:scale-100 w-49 max-md:right-[2%]" >
               <ProfileCard />
             </div>
             <div data-feature-card className="absolute left-[5%] top-[74.3%] z-10 origin-top-left scale-[0.8] sm:scale-100 w-87.5" >

@@ -52,10 +52,10 @@ const CALLS: {
   left: string;
   top: string;
 }[] = [
-    { variant: "sodium", week: "Week 1", label: "Sodium:", value: "3400 mg", left: "3.96%", top: "12.14%" },
-    { variant: "bp", week: "Week 1", value: "BP:138", left: "25.81%", top: "2.14%" },
-    { variant: "sodium", week: "Week 8", label: "Sodium:", value: "2400 mg", left: "72.63%", top: "31.57%" },
-    { variant: "bp", week: "Week 8", value: "BP:130", left: "82.85%", top: "43.00%" },
+    { variant: "sodium", week: "Week 1", label: "Sodium:", value: "3400 mg", left: "8.56%", top: "33.29%" },
+    { variant: "bp", week: "Week 1", value: "BP:138", left: "29.89%", top: "26.14%" },
+    { variant: "sodium", week: "Week 8", label: "Sodium:", value: "2400 mg", left: "77.22%", top: "52.72%" },
+    { variant: "bp", week: "Week 8", value: "BP:130", left: "86.93%", top: "67.00%" },
   ];
 
 // Outlined callout card — transparent bg, 1px border, radius 5px
@@ -147,7 +147,10 @@ export default function GraphBand() {
       <style>{`
         .gbd-bp, .gbd-sod { stroke-dasharray: 1; stroke-dashoffset: 1; }
         .gbd-dot { opacity: 0; }
-        .gbd-card { opacity: 0; }
+        .gbd-card { opacity: 0; transform: translate(-50%, -100%); transform-origin: 50% 100%; }
+        @media (max-width: 1023px) {
+          .gbd-card { transform: translate(-50%, -100%) scale(0.75); }
+        }
       `}</style>
 
       <div className="max-w-360 mx-auto px-5 flex flex-col gap-12.5 lg:px-10">
@@ -177,10 +180,10 @@ export default function GraphBand() {
         </div>
 
         {/* Chart */}
-        <div data-graph-chart className="relative w-full" style={{ aspectRatio: `${VIEW_W} / ${VIEW_H}` }}>
+        <div data-graph-chart className="relative w-full aspect-[1350/350] max-lg:aspect-[1350/560]">
           <svg
             viewBox={`${VIEW_X} ${VIEW_Y} ${VIEW_W} ${VIEW_H}`}
-            preserveAspectRatio="xMidYMid meet"
+            preserveAspectRatio="none"
             className="absolute inset-0 h-full w-full"
           >
             <defs>
@@ -298,18 +301,11 @@ export default function GraphBand() {
           {CALLS.map((c) => (
             <div
               key={`${c.week}-${c.value}`}
-              className="gbd-card absolute hidden lg:block"
+              className="gbd-card absolute"
               style={{ left: c.left, top: c.top }}
             >
               <CalloutCard variant={c.variant} week={c.week} label={c.label} value={c.value} tail />
             </div>
-          ))}
-        </div>
-
-        {/* Callout cards — flow grid, mobile/tablet */}
-        <div className="mt-6 grid grid-cols-2 gap-3 lg:hidden">
-          {CALLS.map((c) => (
-            <CalloutCard key={`${c.week}-${c.value}`} variant={c.variant} week={c.week} label={c.label} value={c.value} />
           ))}
         </div>
 
