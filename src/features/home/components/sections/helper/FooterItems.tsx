@@ -28,7 +28,7 @@ const FOOTER_COLUMNS: FooterLink[][] = [
     { label: "Weighloss and\nMetabolic", href: "/#how-it-works" },
     { label: "Werables and\nHealth Data", href: "/#how-it-works" },
     { label: "Fitness", href: "/#how-it-works" },
-    { label: "24/7 Primary Care", href: "/physician-care" },
+    { label: "24/7 Primary Care", href: "/247-care" },
   ],
 ];
 
