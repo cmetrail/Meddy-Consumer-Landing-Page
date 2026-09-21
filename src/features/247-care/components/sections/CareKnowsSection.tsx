@@ -17,7 +17,7 @@ export default function CareKnowsSection() {
         className="object-cover"
       />
 
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-360 flex-col justify-center gap-10 px-5 lg:flex-row lg:items-center lg:justify-between lg:px-[71px]">
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-360 flex-col justify-center gap-10 px-5 lg:flex-row lg:items-start lg:justify-between lg:px-[71px] lg:pt-[121px]">
         <motion.div
           className="flex flex-col"
           initial={{ opacity: 0, y: 40 }}
@@ -25,16 +25,16 @@ export default function CareKnowsSection() {
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.8, ease }}
         >
-          <h2 className="font-dm-serif italic leading-[100%] text-[#548958] text-[36px] sm:text-[52px] lg:text-[64px]">
+          <h2 className="font-dm-serif italic leading-[1.371] text-[#548958] text-[36px] sm:text-[52px] lg:text-[64px]">
             Your physician knows
           </h2>
-          <p className="font-medium leading-[110%] text-white text-[24px] sm:text-[32px] lg:text-[40px]">
+          <p className="font-medium leading-[1.26] text-white text-[24px] sm:text-[32px] lg:text-[40px]">
             what&rsquo;s happening between visits.
           </p>
         </motion.div>
 
         <motion.p
-          className="max-w-[554px] text-right text-[#F4F4F4] font-normal leading-[140%] text-[16px] lg:text-[20px]"
+          className="max-w-[554px] text-right text-[#F4F4F4] font-normal leading-[1.26] text-[16px] lg:text-[20px] lg:mt-[203px]"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}

@@ -1,8 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { FooterItems } from "@/features/home/components/sections/helper/FooterItems";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -37,6 +42,37 @@ function HeadlineWord({ children }: { children: React.ReactNode }) {
 }
 
 export default function CareAccessSection() {
+  const footerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.utils.toArray<HTMLElement>("[data-reveal]", footerRef.current).forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            ease: "none",
+            scrollTrigger: { trigger: el, start: "top 92%", end: "top 55%", scrub: true },
+          },
+        );
+      });
+
+      const nav = footerRef.current?.querySelector("[data-footer-nav]");
+      if (nav) {
+        const cols = nav.querySelectorAll<HTMLElement>("[data-footer-col]");
+        const ftl = gsap.timeline({
+          scrollTrigger: { trigger: nav, start: "top 92%", end: "top 55%", scrub: true },
+        });
+        cols.forEach((el, i) => {
+          ftl.fromTo(el, { opacity: 0, y: 40 }, { opacity: 1, y: 0, ease: "none" }, i * 0.2);
+        });
+      }
+    },
+    { scope: footerRef },
+  );
+
   return (
     <section className="w-full bg-[#FAF9F5]">
       <div className="mx-auto w-full max-w-360 px-5 pt-16 lg:px-[75px] lg:pt-24">
@@ -53,8 +89,11 @@ export default function CareAccessSection() {
           </span>
         </motion.div>
 
+        {/* Divider below -Meddy */}
+        <div className="mt-3 h-px w-full bg-[#797979]" />
+
         {/* Headline + numbered list */}
-        <div className="mt-10 flex flex-col gap-14 lg:mt-14 lg:flex-row lg:justify-between">
+        <div className="mt-10 flex flex-col gap-14 lg:mt-[98px] lg:flex-row lg:justify-between">
           <motion.div
             className="flex flex-col gap-4"
             initial={{ opacity: 0, y: 40 }}
@@ -139,7 +178,7 @@ export default function CareAccessSection() {
       </div>
 
       {/* Footer */}
-      <div className="relative w-full overflow-hidden text-white">
+      <div ref={footerRef} className="relative w-full overflow-hidden text-white">
         <Image
           src="/247-care/footer-bg-c974ec.png"
           alt=""
@@ -147,7 +186,7 @@ export default function CareAccessSection() {
           sizes="100vw"
           className="object-cover"
         />
-        <FooterItems />
+        <FooterItems noTopMargin />
       </div>
     </section>
   );

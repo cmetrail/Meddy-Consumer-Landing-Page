@@ -15,28 +15,26 @@ export default function CareHealthChangesSection() {
   return (
     <section className="w-full bg-[#FAF9F5]">
       <div
-        className="relative mx-auto w-full max-w-360 overflow-hidden rounded-[15px] px-5 pt-16 lg:px-[75px] lg:pt-24"
+        className="relative mx-auto w-full max-w-360 overflow-hidden rounded-[15px] px-5 mb-7 pt-16 lg:px-[75px] lg:pt-24"
         style={{ background: GRADIENT }}
       >
         {/* Heading + right paragraph */}
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <motion.div
-            className="flex flex-col items-center self-start"
+            className="max-w-[650px] self-start"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.8, ease }}
           >
-            <h2 className="text-center font-medium leading-[100%] text-[#6E7A72] text-[32px] sm:text-[48px] lg:text-[64px]">
-              Your health changes
-            </h2>
-            <h3 className="font-dm-serif italic leading-[100%] text-[#46524B] text-[40px] sm:text-[52px] lg:text-[64px]">
-              Your physician doesn&rsquo;t.
-            </h3>
+            <p className="text-left font-medium leading-[100%] text-[32px] sm:text-[48px] lg:text-[64px]">
+              <span className="text-[#6E7A72]">Your health changes </span>
+              <span className="font-dm-serif italic text-[#46524B]">Your physician doesn&rsquo;t.</span>
+            </p>
           </motion.div>
 
           <motion.div
-            className="flex max-w-[504px] flex-col gap-6"
+            className="flex max-w-[504px] flex-col gap-6 lg:mt-[136px]"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}

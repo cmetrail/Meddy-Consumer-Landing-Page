@@ -15,9 +15,25 @@ const CARDS = [
 export default function CareQuestionsSection() {
   return (
     <section className="relative w-full overflow-hidden bg-[#FAF9F5]">
-      <div className="mx-auto flex w-full max-w-360 flex-col px-5 py-12 lg:min-h-[1024px] lg:px-[75px] lg:pt-[130px] lg:pb-[70px]">
+      <div className="mx-auto flex w-full max-w-360 flex-col px-5 py-12 lg:min-h-[1024px] lg:px-[75px] lg:pb-[70px] lg:pt-[81px]">
+        {/* Reach us when something comes up - top center */}
+        <motion.div
+          className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-2"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.8, ease }}
+        >
+          <span className="font-dm-serif italic leading-[100%] text-[#46524B] text-[40px] sm:text-[52px] lg:text-[64px]">
+            Reach us
+          </span>
+          <span className="font-medium leading-[110%] text-[#6E7A72] text-[28px] sm:text-[38px] lg:text-[48px]">
+            when something comes up.
+          </span>
+        </motion.div>
+
         {/* Left content */}
-        <div className="relative z-10 flex max-w-[558px] flex-col gap-[80px]">
+        <div className="relative z-10 mt-10 flex max-w-[558px] flex-col gap-[80px] lg:mt-[58px]">
           {/* Heading + phone + paragraph */}
           <div className="flex flex-col gap-[50px]">
             <div className="flex flex-col gap-[50px]">
