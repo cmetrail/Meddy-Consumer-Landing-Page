@@ -142,19 +142,19 @@ function PlanCard({ plan }: { plan: Plan }) {
         <div className="flex flex-col gap-3.75">
           <div className="flex flex-col gap-1.25">
             <h3
-              className={`text-[32px] font-medium uppercase leading-[100%] ${TITLE_STYLES[v]}`}
+              className={`text-[24px] sm:text-[28px] lg:text-[32px] font-medium uppercase leading-[100%] ${TITLE_STYLES[v]}`}
             >
               {plan.name}
             </h3>
             <p
-              className={`text-[20px] font-bold leading-[100%] ${TAGLINE_STYLES[v]}`}
+              className={`text-[18px] lg:text-[20px] font-bold leading-[1.2] lg:leading-[100%] ${TAGLINE_STYLES[v]}`}
             >
               {plan.tagline}
             </p>
-           
+            
           </div>
            <p
-              className={`text-[14px] font-normal leading-[100%] ${DESC_STYLES[v]}`}
+              className={`text-[14px] font-normal leading-[1.5] lg:leading-[100%] ${DESC_STYLES[v]}`}
             >
               {plan.description}
             </p>
@@ -175,7 +175,7 @@ function PlanCard({ plan }: { plan: Plan }) {
                 className={`shrink-0 ${CHECK_STYLES[v]}`}
               />
               <span
-                className={`text-[14px] leading-[100%] ${FEATURE_STYLES[v]}`}
+                className={`text-[14px] leading-[1.4] lg:leading-[100%] ${FEATURE_STYLES[v]}`}
               >
                 {f}
               </span>

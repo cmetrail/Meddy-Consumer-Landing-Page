@@ -95,7 +95,7 @@ export default function CareHeroSection() {
       {/* Text content */}
       <div className="relative z-20 mx-auto flex w-full max-w-360 flex-1 flex-col px-5 pb-10 lg:px-[75px]">
         <motion.div
-          className="mt-8 flex max-w-[721px] flex-col lg:mt-[95px]"
+          className="mt-8 flex max-w-[721px] flex-col lg:mt-10"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease }}
@@ -115,14 +115,14 @@ export default function CareHeroSection() {
             up between appointments.
           </p>
 
-          <button className="mt-12 inline-flex w-fit items-center justify-center rounded-[10px] bg-[#17925A] px-[30px] py-[15px] font-normal leading-[1.42em] text-[#F4F4F4] text-[18px] lg:text-[20px] shadow-[1px_4px_5.4px_rgba(149,154,149,0.25)] transition-opacity hover:opacity-90 lg:mt-[118px]">
+          <button className="mt-10 inline-flex w-fit items-center justify-center rounded-[10px] bg-[#17925A] px-[30px] py-[15px] font-normal leading-[1.42em] text-[#F4F4F4] text-[18px] lg:text-[20px] shadow-[1px_4px_5.4px_rgba(149,154,149,0.25)] transition-opacity hover:opacity-90 lg:mt-12">
             Start Physician Care→
           </button>
         </motion.div>
 
         {/* Chat mockup — below CTA (desktop) */}
         <motion.div
-          className="mt-10 hidden lg:mt-[66px] lg:block"
+          className="mt-8 hidden lg:mt-10 lg:block"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease, delay: 0.2 }}

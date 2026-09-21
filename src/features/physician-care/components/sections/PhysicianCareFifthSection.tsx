@@ -34,9 +34,15 @@ export default function PhysicianCareFifthSection() {
         </defs>
       </svg>
 
+      <style>{`
+        @media (min-width: 1024px) {
+          .fifth-subtract-img { clip-path: url(#fifth-subtract-clip); }
+        }
+      `}</style>
+
       <div className="mx-auto w-full max-w-360 px-5 pb-[64px] lg:px-[75px] lg:pb-[91px]">
         <div className="relative">
-          {/* Heading — top-left, sits in the image's top-left notch */}
+          {/* Heading — top-left, sits in the image's top-left notch on desktop */}
           <motion.div
             className="relative z-10 pt-[36px] lg:pt-[91px]"
             initial={{ opacity: 0, y: 40 }}
@@ -44,43 +50,26 @@ export default function PhysicianCareFifthSection() {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.8, ease }}
           >
-            <p className="uppercase leading-[1.25] text-[#46524B] text-[24px] sm:text-[28px] lg:text-[36px]">
+            <p className="uppercase leading-[1.25] text-[#46524B] text-[18px] sm:text-[22px] lg:text-[36px]">
               Care that
             </p>
-            <h2 className="font-dm-serif uppercase leading-[1.37] text-[#46524B] text-[48px] sm:text-[64px] lg:text-[78px]">
+            <h2 className="font-dm-serif uppercase leading-[1.37] text-[#46524B] text-[34px] sm:text-[44px] lg:text-[78px]">
               Grows
               <br />
               with you
             </h2>
           </motion.div>
 
-          {/* Main image — pulled up so the heading sits in its top-left notch */}
-          <div className="relative -mt-[100px] sm:-mt-[120px] lg:-mt-[133px]">
+          {/* Main image — pulled up only on desktop so the heading sits in its notch */}
+          <div className="relative mt-0 lg:-mt-[133px]">
             <div className="relative" style={{ aspectRatio: "1317 / 917" }}>
               <Image
                 src={MAIN_IMAGE}
                 alt=""
                 fill
                 sizes="(min-width: 1440px) 1290px, 100vw"
-                className="object-cover"
-                style={{ clipPath: "url(#fifth-subtract-clip)" }}
+                className="fifth-subtract-img object-cover"
               />
-
-              {/* Tagline — bottom-right, sits in the image's bottom-right notch */}
-              <motion.div
-                className="absolute bottom-0 right-0 w-[34.4%] text-right"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.8, delay: 0.2, ease }}
-              >
-                <p className="uppercase text-[#46524B] text-[16px] sm:text-[20px] lg:text-[24px]">
-                  Your health changes.
-                </p>
-                <p className="uppercase font-semibold italic text-[#46524B] text-[24px] sm:text-[30px] lg:text-[36px]">
-                  So should your care.
-                </p>
-              </motion.div>
 
               {/* White person silhouettes blended over the photo */}
               {PEOPLE.map((p, i) => (
@@ -126,6 +115,22 @@ export default function PhysicianCareFifthSection() {
                 />
               </div>
             </div>
+
+            {/* Tagline — below image on mobile/tablet, in the bottom-right notch on desktop */}
+            <motion.div
+              className="mt-5 text-left lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[34.4%] lg:text-right"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.2, ease }}
+            >
+              <p className="uppercase text-[#46524B] text-[16px] sm:text-[20px] lg:text-[24px]">
+                Your health changes.
+              </p>
+              <p className="uppercase font-semibold italic text-[#46524B] text-[24px] sm:text-[30px] lg:text-[36px]">
+                So should your care.
+              </p>
+            </motion.div>
           </div>
         </div>
       </div>

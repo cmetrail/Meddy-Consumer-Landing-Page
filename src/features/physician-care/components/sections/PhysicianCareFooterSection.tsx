@@ -66,7 +66,7 @@ export default function PhysicianCareFooterSection() {
             <h2 className="text-[28px] md:text-[36px] lg:text-[36px] font-medium leading-[45px] text-white">
               Because <span className="italic">better care</span> begins with
             </h2>
-            <div className="font-dm-serif text-[64px] md:text-[96px] lg:text-[128px] uppercase leading-[100%] text-white">
+            <div className="font-dm-serif text-[44px] sm:text-[64px] md:text-[96px] lg:text-[128px] uppercase leading-[100%] text-white">
               knowing you.
             </div>
           </motion.div>

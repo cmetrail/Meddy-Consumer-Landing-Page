@@ -26,7 +26,7 @@ export default function PhysicianCareThirdSection() {
             <h2 className="font-dm-serif uppercase leading-[100%] text-[#46524B] text-[88px] sm:text-[132px] lg:text-[200px]">
               Care
             </h2>
-            <p className="mt-2 uppercase leading-[100%] text-[#6E7A72] text-[24px] sm:text-[32px] lg:text-[40px]">
+            <p className="mt-2 uppercase leading-[1.2] text-[#6E7A72] text-[24px] sm:text-[32px] lg:text-[40px] lg:leading-[100%]">
               That&rsquo;s <span className="italic text-[#46524B]">Unique</span> for you.
             </p>
           </motion.div>

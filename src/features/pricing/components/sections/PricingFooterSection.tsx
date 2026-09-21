@@ -54,14 +54,14 @@ export default function PricingFooterSection() {
         <div className="flex flex-col gap-16 lg:gap-24">
           <div className="flex flex-col gap-10 lg:gap-19.75">
             <div className="flex flex-col gap-4 lg:gap-3.75">
-              <h2 className="text-[28px] sm:text-[36px] lg:text-[48px] font-normal uppercase leading-[100%] text-white">
+              <h2 className="text-[28px] sm:text-[36px] lg:text-[48px] font-normal uppercase leading-[1.2] lg:leading-[100%] text-white">
                 Your health.
               </h2>
               <div className="flex items-baseline gap-2 lg:gap-7.5">
-                <span className="text-[48px] sm:text-[64px] lg:text-[96px] font-medium uppercase leading-[100%] text-white">
+                <span className="text-[40px] sm:text-[64px] lg:text-[96px] font-medium uppercase leading-[100%] text-white">
                   Your
                 </span>
-                <span className="text-[48px] sm:text-[64px] lg:text-[96px] font-bold uppercase leading-[100%] text-[#E7F0A3]">
+                <span className="text-[40px] sm:text-[64px] lg:text-[96px] font-bold uppercase leading-[100%] text-[#E7F0A3]">
                   pace.
                 </span>
               </div>

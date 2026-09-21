@@ -161,7 +161,7 @@ export default function PricingStartSection() {
               Your health is more than{" "}
               <span className="text-[#17925A]">Healthcare.</span>
             </h2>
-            <p className="text-[18px] font-medium uppercase leading-[100%] text-[#6E7A72] sm:text-[24px] lg:text-[32px]">
+            <p className="text-[18px] font-medium uppercase leading-[1.2] text-[#6E7A72] sm:text-[24px] lg:text-[32px] lg:leading-[100%]">
               Everything works together.
             </p>
           </motion.div>

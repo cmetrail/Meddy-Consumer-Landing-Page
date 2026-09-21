@@ -73,10 +73,10 @@ export default function PhysicianCareHeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease }}
           >
-            <h1 className="font-dm-serif text-[#46524B] uppercase leading-[100%] text-[44px] sm:text-[64px] lg:text-[100px]">
+            <h1 className="font-dm-serif text-[#46524B] uppercase leading-[1.05] text-[44px] sm:text-[64px] lg:text-[100px] lg:leading-[100%]">
               Primary care
             </h1>
-            <p className="text-[#46524B] font-medium leading-[100%] text-[24px] sm:text-[32px] lg:text-[40px] lg:-mt-2.5">
+            <p className="text-[#46524B] font-medium leading-[1.2] text-[24px] sm:text-[32px] lg:text-[40px] lg:leading-[100%] lg:-mt-2.5">
               that knows you beyond the office visit.
             </p>
           </motion.div>
@@ -127,14 +127,14 @@ export default function PhysicianCareHeroSection() {
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <span className="font-inter text-[#6E7A72] font-medium leading-[100%] text-[16px]">
+              <span className="font-inter text-[#6E7A72] font-medium leading-[1.3] text-[16px]">
                 Now accepting our first 500 patients
               </span>
               <div className="flex items-center gap-2.5">
                 <span className="font-playfair text-[#46524B] font-bold leading-[100%] text-[36px]">
                   327
                 </span>
-                <span className="font-inter text-[#6E7A72] font-medium leading-[100%] text-[16px]">
+                <span className="font-inter text-[#6E7A72] font-medium leading-[1.3] text-[16px]">
                   remaining spots
                 </span>
               </div>

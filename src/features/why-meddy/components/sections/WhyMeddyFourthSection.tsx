@@ -35,7 +35,7 @@ export default function WhyMeddyFourthSection() {
 
         {/* Heading */}
         <motion.h2
-          className="text-center text-[28px] font-normal leading-[120%] text-white sm:text-[64px]"
+          className="text-center text-[28px] font-normal leading-[120%] text-white sm:text-[40px] lg:text-[64px]"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -71,7 +71,7 @@ export default function WhyMeddyFourthSection() {
               />
             </div>
             <div className="rounded-t-[10px] h-[169px] bg-[#EFE9E1] flex flex-col justify-between px-5 py-3">
-              <p className="text-[10px] font-semibold leading-tight text-[#2C2C2C] sm:text-[20px]">
+              <p className="text-[13px] font-semibold leading-tight text-[#2C2C2C] sm:text-[18px] lg:text-[20px]">
                 Less<br />Fragmentation
               </p>
               <p className="font-dm-serif text-right italic text-[12px] text-[#2C2C2C]">
@@ -114,7 +114,7 @@ export default function WhyMeddyFourthSection() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, delay: 0.2, ease }}
           >
-            <p className="px-5 font-dm-serif font-bold text-[#283D32] text-[20px]">
+            <p className="px-5 font-dm-serif font-bold text-[#283D32] text-[16px] sm:text-[18px] lg:text-[20px]">
               Better Decisions
             </p>
             <div className="relative flex-1">
@@ -152,7 +152,7 @@ export default function WhyMeddyFourthSection() {
               className="object-cover object-top"
             />
             <div className="absolute inset-x-0 bottom-0 flex items-end justify-between px-5 py-3">
-              <p className="font-[Palatino_Linotype,Palatino,'Book_Antiqua',serif] text-[20px] font-bold leading-[100%] tracking-normal text-white">
+              <p className="font-[Palatino_Linotype,Palatino,'Book_Antiqua',serif] text-[14px] sm:text-[18px] lg:text-[20px] font-bold leading-[100%] tracking-normal text-white">
                 Care built<br />around how<br />you actually<br />live
               </p>
               <p className="self-end font-dm-serif italic text-[12px] text-white">
