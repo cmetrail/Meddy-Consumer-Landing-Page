@@ -7,74 +7,82 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function PhysicianCareSecondSection() {
   return (
-    <section className="relative mx-auto w-full h-dvh py-8 max-w-360 px-5 lg:px-10 bg-white">
-        <div className=" relative h-full w-full overflow-hidden rounded-[10px]">
-          {/* Full-width photo */}
-          <div className=" h-full  w-full">
-            <Image
-              src="/physician-care/7563e41f70a1b3650024dc32a5364a1454a492d9.png"
-              alt=""
-              fill
-              className="object-cover h-full w-full"
-            />
-          </div>
+    <section className="relative mx-auto w-full max-w-360 overflow-hidden bg-[#FFFFF9] px-5 py-14 lg:min-h-[1024px] lg:px-[75px] lg:py-0">
+      <div className="relative mx-auto w-full max-w-360 lg:min-h-[1024px]">
+        {/* Heading (top center) */}
+        <motion.div
+          className="flex flex-col items-center text-center lg:pt-[45px]"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.8, ease }}
+        >
+          <h2 className="font-dm-serif italic leading-[1.371] text-[#17925A] text-[48px] sm:text-[72px] lg:text-[96px]">
+            Stay ahead
+          </h2>
+          <p className="font-normal uppercase leading-[1.26] text-[#46524B] text-[24px] sm:text-[32px] lg:text-[40px]">
+            of your health
+          </p>
+        </motion.div>
 
-          {/* Chart card (top-right, overlapping photo) */}
-          <motion.div
-            className="absolute right-[3.5%] top-[4%] w-[24.8%] max-w-86"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.8, delay: 0.15, ease }}
-          >
-            <ChartCard />
-          </motion.div>
-
-          {/* Headline (lower-middle, over photo) */}
-          <motion.div
-            className="absolute left-[3.5%] top-[55%]"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.8, ease }}
-          >
-            <h2 className="font-dm-serif uppercase leading-[100%] text-[#46524B] text-[40px] sm:text-[56px] lg:text-[96px]">
-              Stay ahead
-            </h2>
-            <p className="uppercase leading-[100%] text-[#46524B] text-[20px] sm:text-[28px] lg:text-[40px]">
-              of your health
-            </p>
-          </motion.div>
-
-          {/* Tagline (bottom-left, over photo) */}
-          <div className="absolute left-[3.5%] bottom-[3%]">
-            <motion.p
-              className="font-light uppercase italic leading-[100%] text-[#46524B] text-[14px] sm:text-[18px] lg:text-[24px]"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.8, delay: 0.1, ease }}
-            >
-              Catch changes earlier.
-            </motion.p>
-            <motion.p
-              className="font-normal uppercase leading-[100%] text-[#46524B] text-[16px] sm:text-[20px] lg:text-[32px]"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.8, delay: 0.1, ease }}
-            >
-              Act sooner.
-            </motion.p>
-          </div>
+        {/* Photo (bottom center on desktop) */}
+        <div className="relative mx-auto mt-8 w-full max-w-[784px] lg:absolute lg:bottom-0 lg:left-1/2 lg:mt-0 lg:w-[784px] lg:-translate-x-1/2">
+          <Image
+            src="/physician-care/55e6878efd48e3918ab12131fee3c0b0a1839437.png"
+            alt=""
+            width={784}
+            height={784}
+            className="h-auto w-full"
+            priority
+          />
         </div>
+
+        {/* Chart card (bottom-left) */}
+        <motion.div
+          className="mx-auto mt-10 w-full max-w-[344px] lg:absolute lg:left-0 lg:top-[464px] lg:mx-0 lg:mt-0 lg:w-[344px]"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.15, ease }}
+        >
+          <ChartCard />
+        </motion.div>
+
+        {/* Tagline (bottom-right) */}
+        <motion.div
+          className="mt-6 lg:absolute lg:right-0 lg:top-[431px] lg:mt-0"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.1, ease }}
+        >
+          <div className="flex flex-col items-start gap-[10px] lg:items-end">
+            <div className="flex items-center gap-[18px]">
+              <p className="font-light uppercase italic leading-[100%] text-[#6E7A72] text-[16px] sm:text-[20px] lg:text-[24px]">
+                Catch changes earlier.
+              </p>
+              <svg width={10} height={38} viewBox="0 0 10 38" className="shrink-0">
+                <path d="M0 0L10 3.30435L10 34.6957L0 38Z" fill="#C5CEC8" />
+              </svg>
+            </div>
+            <div className="flex items-center gap-[18px]">
+              <p className="font-semibold uppercase leading-[100%] text-[#46524B] text-[20px] sm:text-[24px] lg:text-[32px]">
+                Act sooner.
+              </p>
+              <svg width={10} height={52} viewBox="0 0 10 52" className="shrink-0">
+                <path d="M0 0L10 4.52174L10 47.4783L0 52Z" fill="#17925A" />
+              </svg>
+            </div>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }
 
 function ChartCard() {
   return (
-    <div className="w-full overflow-hidden rounded-[10px] bg-white shadow-[9px_6px_8.9px_rgba(0,0,0,0.25)]">
+    <div className="w-full overflow-hidden rounded-[10px] bg-[#FFFFF9]">
       <svg viewBox="0 0 344.25 264" className="h-auto w-full" style={{ fontFamily: "var(--font-plus-jakarta)" }}>
         {/* Green curve (Earlier intervention -> Better outcomes) */}
         <path

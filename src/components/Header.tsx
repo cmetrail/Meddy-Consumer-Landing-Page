@@ -7,11 +7,11 @@ import Image from "next/image";
 import { X } from "lucide-react";
 
 const NAV_ITEMS = [
-  { label: "How it works", href: "/" },
+  { label: "How it works", href: "/#how-it-works" },
+  { label: "Physician Care", href: "/physician-care" },
   { label: "WHY MEDDY", href: "/why-meddy" },
-  { label: "pHYSICIAN CARE", href: "/physician-care" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "FAQ", href: "/" },
+  { label: "Nutrition", href: "/#how-it-works" },
+  { label: "Sleep", href: "/#how-it-works" },
 ];
 
 type HeaderVariant = "light" | "dark";
@@ -44,7 +44,7 @@ const VARIANTS = {
 } as const;
 
 export default function Header({
-  active = "Pricing",
+  active = "How it works",
   variant = "light",
 }: {
   active?: string;
@@ -100,20 +100,28 @@ export default function Header({
         })}
       </nav>
 
-      {/* Hamburger */}
-      <button
-        className={`flex flex-col justify-center items-center rounded-[26px] h-[41px] w-[53px]  ${v.hamburgerPill}`}
-        style={{ backdropFilter: v.hamburgerBlur, WebkitBackdropFilter: v.hamburgerBlur, backgroundColor: "rgba(255,255,255,0.04)", border: "0.75px solid #FFFFFF1A", }}
-        onClick={() => {
-          if (window.matchMedia("(min-width: 1024px)").matches) return;
-          setMenuOpen(v => !v);
-        }}
-        aria-label="Toggle menu"
-      >
-        <span className={`block h-0.75 w-[31px] rounded-[2px] ${v.hamburger} origin-center transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[6px]" : ""}`} />
-        <span className={`mt-[3px] block h-[3px] w-[21px] rounded-[2px] ${v.hamburger} transition-all duration-300 ${menuOpen ? "opacity-0 scale-x-0" : ""}`} />
-        <span className={`mt-[3px] block h-[3px] w-[11px] rounded-[2px] ${v.hamburger} origin-center transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[6px]" : ""}`} />
-      </button>
+      {/* CTA + hamburger */}
+      <div className="flex items-center gap-2.5">
+        <Link
+          href="/#how-it-works"
+          className="hidden sm:block rounded-[22px] bg-[#17925A] px-[19px] py-[13px] font-medium uppercase leading-[100%] text-white text-[14px] shadow-[2px_4px_4px_rgba(0,0,0,0.25)]"
+        >
+          Book Free consultation
+        </Link>
+        <button
+          className={`flex flex-col justify-center items-center rounded-[26px] h-[41px] w-[53px] ${v.hamburgerPill}`}
+          style={{ backdropFilter: v.hamburgerBlur, WebkitBackdropFilter: v.hamburgerBlur, backgroundColor: "rgba(255,255,255,0.02)", border: "1px solid #17925A" }}
+          onClick={() => {
+            if (window.matchMedia("(min-width: 1024px)").matches) return;
+            setMenuOpen(v => !v);
+          }}
+          aria-label="Toggle menu"
+        >
+          <span className={`block h-0.75 w-[31px] rounded-[2px] ${v.hamburger} origin-center transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[6px]" : ""}`} />
+          <span className={`mt-[3px] block h-[3px] w-[21px] rounded-[2px] ${v.hamburger} transition-all duration-300 ${menuOpen ? "opacity-0 scale-x-0" : ""}`} />
+          <span className={`mt-[3px] block h-[3px] w-[11px] rounded-[2px] ${v.hamburger} origin-center transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[6px]" : ""}`} />
+        </button>
+      </div>
 
       {/* Mobile full-screen menu */}
       {menuOpen &&

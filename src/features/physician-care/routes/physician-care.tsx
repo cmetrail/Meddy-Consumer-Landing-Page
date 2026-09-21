@@ -1,6 +1,9 @@
 import React from "react";
 import PhysicianCareHeroSection from "../components/sections/PhysicianCareHeroSection";
 import PhysicianCareSecondSection from "../components/sections/PhysicianCareSecondSection";
+import PhysicianCareNewThirdSection from "../components/sections/PhysicianCareNewThirdSection";
+import PhysicianCareJourneySection from "../components/sections/PhysicianCareJourneySection";
+import PhysicianCareAllIncludedSection from "../components/sections/PhysicianCareAllIncludedSection";
 import PhysicianCareThirdSection from "../components/sections/PhysicianCareThirdSection";
 import PhysicianCareForthSection from "../components/sections/PhysicianCareForthSection";
 import PhysicianCareFifthSection from "../components/sections/PhysicianCareFifthSection";
@@ -11,9 +14,9 @@ export const PhysicianCarePage = () => {
     <main>
       <PhysicianCareHeroSection />
       <PhysicianCareSecondSection />
-      <PhysicianCareThirdSection />
-      <PhysicianCareForthSection />
-      <PhysicianCareFifthSection />
+      <PhysicianCareNewThirdSection />
+      <PhysicianCareJourneySection />
+      <PhysicianCareAllIncludedSection />
       <PhysicianCareFooterSection />
     </main>
   );
