@@ -104,7 +104,7 @@ export default function Header({
       <div className="flex items-center gap-2.5">
         <Link
           href="/#how-it-works"
-          className="hidden sm:block rounded-[22px] bg-[#17925A] px-[19px] py-[13px] font-medium uppercase leading-[100%] text-white text-[14px] shadow-[2px_4px_4px_rgba(0,0,0,0.25)]"
+          className="rounded-[22px] bg-[#17925A] px-[14px] py-[10px] font-medium uppercase leading-[100%] text-white text-[12px] shadow-[2px_4px_4px_rgba(0,0,0,0.25)] whitespace-nowrap sm:px-[19px] sm:py-[13px] sm:text-[14px]"
         >
           Book Free consultation
         </Link>

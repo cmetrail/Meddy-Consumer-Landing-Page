@@ -143,7 +143,7 @@ export default function PhysicianRaySection() {
             {/* Buttons */}
 
           </div>
-          <div data-ray-buttons className=" flex flex-col lg:flex-row justify-start lg:justify-end gap-8.25 ">
+          <div data-ray-buttons className=" flex w-full  lg:w-auto flex-col lg:flex-row justify-start lg:justify-end gap-4 sm:gap-8.25 ">
             <button
               className="flex h-12.5 w-full lg:w-50 text-base items-center justify-center rounded-none bg-[#18181B] uppercase text-white whitespace-nowrap px-6 transition-colors duration-300 hover:bg-[#2B2B2F]"
 
