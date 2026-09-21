@@ -101,10 +101,10 @@ export default function CareHeroSection() {
           transition={{ duration: 0.8, ease }}
         >
           <h1 className="flex flex-col">
-            <span className="whitespace-nowrap font-dm-serif italic leading-[1] text-[#D8FFE5] text-[64px] sm:text-[96px] lg:text-[128px]">
+            <span className="whitespace-nowrap font-dm-serif italic leading-[1] text-[#D8FFE5] text-[44px] sm:text-[72px] lg:text-[128px]">
               Primary care
             </span>
-            <span className="whitespace-nowrap font-medium uppercase leading-[1] text-white text-[24px] sm:text-[36px] lg:text-[48px]">
+            <span className="whitespace-nowrap font-medium uppercase leading-[1] text-white text-[18px] sm:text-[28px] lg:text-[48px]">
               that doesn&rsquo;t clock out.
             </span>
           </h1>

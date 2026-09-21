@@ -7,7 +7,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function CareKnowsSection() {
   return (
-    <section className="relative h-dvh w-full overflow-hidden">
+    <section className="relative min-h-dvh w-full overflow-hidden">
       <Image
         src="/247-care/section4-bg.png"
         alt=""
@@ -17,7 +17,7 @@ export default function CareKnowsSection() {
         className="object-cover"
       />
 
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-360 flex-col justify-center gap-10 px-5 lg:flex-row lg:items-start lg:justify-between lg:px-[71px] lg:pt-[121px]">
+      <div className="relative z-10 mx-auto flex min-h-dvh w-full max-w-360 flex-col justify-center gap-10 px-5 lg:flex-row lg:items-start lg:justify-between lg:px-[71px] lg:pt-[121px]">
         <motion.div
           className="flex flex-col"
           initial={{ opacity: 0, y: 40 }}
@@ -34,7 +34,7 @@ export default function CareKnowsSection() {
         </motion.div>
 
         <motion.p
-          className="max-w-[554px] text-right text-[#F4F4F4] font-normal leading-[1.26] text-[16px] lg:text-[20px] lg:mt-[203px]"
+          className="max-w-[554px] text-left text-[#F4F4F4] font-normal leading-[1.26] text-[16px] lg:text-right lg:text-[20px] lg:mt-[203px]"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
