@@ -79,14 +79,17 @@ export default function CareQuestionsSection() {
           {/* Cards + footer row */}
           <div className="flex flex-col gap-[20px]">
             <motion.div
-              className="flex flex-wrap gap-5"
+              className="grid grid-cols-2 gap-5 lg:flex lg:flex-wrap"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.8, delay: 0.2, ease }}
             >
-              {CARDS.map((card) => (
-                <div key={card.label} className="flex w-[170px] flex-col items-end gap-[3px]">
+              {CARDS.map((card, i) => (
+                <div
+                  key={card.label}
+                  className={`flex flex-col items-end gap-[3px] w-full lg:w-[170px] ${i === CARDS.length - 1 ? "col-span-2 lg:col-span-1" : ""}`}
+                >
                   <div className="relative h-[241px] w-full overflow-hidden rounded-[16px]">
                     <Image
                       src={card.src}
