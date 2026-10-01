@@ -1,0 +1,37 @@
+.section { width: 100%; overflow: hidden; background: #f2eee3; color: #080b0a; }
+.canvas { position: relative; width: 100%; max-width: 1440px; aspect-ratio: 939 / 881; margin-inline: auto !important; container-type: inline-size; }
+.intro { position: absolute; top: 9.08%; left: 6.92%; right: 6.92%; }
+.heading { font-size: 2.556cqw; line-height: 1.34; font-weight: 500; letter-spacing: -0.045cqw; }
+.heading em, .tagline em { font-family: var(--font-dm-serif), Georgia, serif !important; font-style: italic; font-weight: 400; color: #009b58; }
+.description { margin-top: 1.38cqw !important; font-size: 1.065cqw; line-height: 1.35; font-weight: 400; }
+.description strong { color: #009b58; font-weight: 700; }
+.map { position: absolute; left: 7.45%; top: 24.18%; width: 87.01%; }
+.mapImage { display: block; width: 100%; height: auto; }
+.connection { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.card { position: absolute; left: 6.5%; top: 32.01%; width: 22.9%; padding: 1.7cqw 1.6cqw 1.5cqw !important; border: 1px solid #e8eee5; border-radius: 0.64cqw; background: rgb(197 219 203 / 88%); box-shadow: 0 0 0.75cqw rgb(42 71 49 / 16%); font-size: 0.958cqw; line-height: 1.3; }
+.city { color: #009b58; font-weight: 700; text-transform: uppercase; }
+.availability { margin-top: 0.53cqw !important; }
+.benefits { margin-top: 1.17cqw !important; list-style: none; letter-spacing: -0.025cqw; }
+.benefits li::before { content: "\2713"; margin-right: 0.2cqw; }
+.logo { position: absolute; left: 46.43%; top: 38.02%; width: 6.71%; aspect-ratio: 63 / 62; display: grid; place-items: center; border: 1px solid #009b58; border-radius: 1.6cqw; background: #fff; color: #17965d; }
+.logo svg { width: 65%; height: auto; }
+.closing { position: absolute; top: 85.47%; right: 6.92%; text-align: right; }
+.tagline { font-size: 2.13cqw; line-height: 1.35; letter-spacing: -0.045cqw; }
+.caption { margin-top: 1.17cqw !important; font-size: 1.065cqw; line-height: 1.4; }
+@media (max-width: 600px) {
+  .canvas { aspect-ratio: auto; min-height: calc(470px + 62cqw); }
+  .intro { top: 40px; }
+  .heading { font-size: clamp(21px, 4.6cqw, 28px); }
+  .description { margin-top: 14px !important; font-size: 12px; line-height: 1.5; }
+  .description br { display: none; }
+  .map { top: 280px; left: 2%; width: 96%; }
+  .connection { display: none; }
+  .card { top: 205px; width: 220px; padding: 14px !important; border-radius: 6px; font-size: 10px; }
+  .availability { margin-top: 5px !important; }
+  .benefits { margin-top: 10px !important; }
+  .logo { top: calc(280px + 14cqw); left: 45%; width: 9%; border-radius: 9px; }
+  .closing { top: auto; bottom: 36px; left: 6.92%; }
+  .tagline { font-size: 19px; }
+  .caption { margin-top: 12px !important; font-size: 11px; line-height: 1.5; }
+}
+
