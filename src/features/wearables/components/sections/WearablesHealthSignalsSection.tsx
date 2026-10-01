@@ -119,6 +119,7 @@ type Box = [number, number, number, number]; // left, top, width, height
 
 type DesktopCard = {
   key: string;
+  bg: string;
   title: string;
   left: string[];
   right: string[];
@@ -132,30 +133,33 @@ type DesktopCard = {
 
 const DESKTOP_CARDS: DesktopCard[] = [
   {
-    key: "sleep", title: "Sleep", left: ["Duration", "Efficiency"], right: ["Consistency", "Sleep stages"],
+    key: "sleep", bg: "#F8F8F8", title: "Sleep", left: ["Duration", "Efficiency"], right: ["Consistency", "Sleep stages"],
     pos: [81, 255], titleLeft: 30, iconLeft: 14, iconTop: 16,
     device: { src: "/wearables/apple-watch-sleep-3aed96.png", alt: "Apple Watch tracking sleep", outer: [405, 47, 186.948, 203.43], inner: [186.424, 202.949], scale: "1 -1", rot: 179.85 },
     line: { src: "line-sleep", outer: [481, 237, 100, 20] },
   },
   {
-    key: "recovery", title: "Recovery", left: ["HRV", "Readiness"], right: ["Resting heart rate"],
+    key: "recovery", bg: "#FFFBE6", title: "Recovery", left: ["HRV", "Readiness"], right: ["Resting heart rate"],
     pos: [81, 337], titleLeft: 23, iconLeft: 18, iconTop: 19,
     device: { src: "/wearables/oura-ring-recovery-720861.png", alt: "Oura Ring tracking recovery", outer: [421, 58, 199.641, 232.635], inner: [161.424, 203.998], rot: -11.77 },
     line: { src: "line-recovery", outer: [490, 227, 99.205, 34.332], inner: [97.166, 22.774], rot: 6.93 },
   },
   {
-    key: "activity", title: "Activity", left: ["Steps", "Active minutes"], right: ["Distance"],
+    key: "activity", bg: "#E6FFF2", title: "Activity", left: ["Steps", "Active minutes"], right: ["Distance"],
     pos: [81, 420], titleLeft: 23, iconLeft: 18, iconTop: 19,
     device: { src: "/wearables/smartwatch-activity-5a6c38.png", alt: "Smartwatch tracking activity", outer: [412, 48, 190.583, 215.013], inner: [172.546, 199.649], scale: "1 -1", rot: 174.6 },
     line: { src: "line-activity", outer: [484, 204.15, 103.625, 61.214], inner: [97.166, 44.035], rot: 10.64 },
   },
   {
-    key: "workouts", title: "Workouts", left: ["Workouts", "Heart Rate Intensity"], right: ["VO₂ max"],
+    key: "workouts", bg: "#E6F0FF", title: "Workouts", left: ["Workouts", "Heart Rate Intensity"], right: ["VO₂ max"],
     pos: [82, 503], titleLeft: 23, iconLeft: 18, iconTop: 19,
     device: { src: "/wearables/fitbit-workouts-449d7c.png", alt: "Fitbit tracking workouts", outer: [368, 22, 245.915, 262.237], inner: [213.657, 233.081], scale: "1 -1", rot: -171.46 },
     line: { src: "line-workouts", outer: [467, 196.76, 86.673, 57.9], inner: [80.626, 46.297], rot: 8.65 },
   },
 ];
+
+const CARD_PATH =
+  "M95.7915 20.1539L104.586 29.5543C109.124 34.4053 115.469 37.1584 122.112 37.1584H585.7C598.955 37.1584 609.7 47.9036 609.7 61.1584V262.7C609.7 275.955 598.955 286.7 585.7 286.7H31.7C18.4452 286.7 7.7 275.955 7.7 262.7V29.7C7.7 16.4452 18.4452 5.7 31.7 5.7H72.4424C79.5121 5.7 86.2221 8.81699 90.7822 14.2193L95.7915 20.1539Z";
 
 const absBox = ([l, t, w, h]: Box): React.CSSProperties => ({ left: u(l), top: u(t), width: u(w), height: u(h) });
 
@@ -178,15 +182,16 @@ function DesktopCardView({ c, z }: { c: DesktopCard; z: number }) {
   const [dl, dt, dw, dh] = c.device.outer;
   return (
     <div className="absolute" style={{ ...absBox([c.pos[0], c.pos[1], 602, 281]), zIndex: z }}>
-      <Image
-        src={`/wearables/signals/card-${c.key === "sleep" ? "sleep" : c.key}.svg`}
-        alt=""
-        width={602}
-        height={281}
-        unoptimized
-        className="absolute max-w-none"
-        style={{ left: "-1.28%", top: "-2.03%", width: "103.56%", height: "107.62%" }}
-      />
+      {/* tabbed card shape + shadow (path from Figma "Union", 602x281) */}
+      <svg
+        viewBox="7.7 5.7 602 281"
+        preserveAspectRatio="none"
+        className="absolute inset-0 size-full overflow-visible"
+        style={{ filter: `drop-shadow(${u(3)} ${u(5)} ${u(5.35)} rgba(0,0,0,0.25))` }}
+        aria-hidden
+      >
+        <path d={CARD_PATH} fill={c.bg} />
+      </svg>
       <Image
         src={`/wearables/signals/icon-${c.key}.svg`}
         alt=""
