@@ -11,8 +11,8 @@ const NAV_ITEMS = [
   { label: "Physician Care", href: "/physician-care" },
   { label: "WHY MEDDY", href: "/why-meddy" },
   { label: "Nutrition", href: "/#how-it-works" },
-  { label: "Fitness", href: "/" },
-  { label: "Sleep", href: "/#how-it-works" },
+  { label: "Fitness", href: "/fitness" },
+  { label: "Sleep", href: "/sleep" },
 ];
 
 type HeaderVariant = "light" | "dark";
