@@ -10,26 +10,26 @@ type FooterLink = { label: string; href: string };
 
 const FOOTER_COLUMNS: FooterLink[][] = [
   [
-    { label: "Home page", href: "/" },
     { label: "How it works", href: "/#how-it-works" },
     { label: "Why Meddy", href: "/why-meddy" },
-    { label: "Sleep and recovery", href: "/#how-it-works" },
+    { label: "Physician care", href: "/physician-care" },
     { label: "Pricing", href: "/pricing" },
-  ],
-  [
-    { label: "Nutrition", href: "/#how-it-works" },
-    { label: "Physician Care", href: "/physician-care" },
-    { label: "Personalized\nhealth plans", href: "/physician-care" },
-    { label: "Medication\nmanagement", href: "/medication" },
-    { label: "What we test", href: "/what-we-test" },
     { label: "Longevity and\npreventive health", href: "/physician-care" },
   ],
   [
+    { label: "Nutrition", href: "/#how-it-works" },
+    { label: "Sleep", href: "/sleep" },
+    { label: "Fitness", href: "/fitness" },
+    { label: "Medication\nmanagement", href: "/medication" },
+    { label: "What we test", href: "/what-we-test" },
+    { label: "SEO", href: "/#how-it-works" },
+  ],
+  [
     { label: "Labs and\nBiomarkers Tracking", href: "/biomarkers" },
-    { label: "Weighloss and\nMetabolic", href: "/#how-it-works" },
-    { label: "Werables and\nHealth Data", href: "/wearables" },
-    { label: "Fitness", href: "/#how-it-works" },
-    { label: "24/7 Primary Care", href: "/247-care" },
+    { label: "Weight loss and\nmetabolic", href: "/#how-it-works" },
+    { label: "Wearables and\nhealth data", href: "/wearables" },
+    { label: "Personalized\nhealth plans", href: "/physician-care" },
+    { label: "24/7 Primary care", href: "/247-care" },
   ],
 ];
 
@@ -50,7 +50,7 @@ export function FooterItems({ noTopMargin }: { noTopMargin?: boolean }) {
             />
 
             <p className="max-w-174.75 text-[#F4F4F5] text-[16px] sm:text-[18px] lg:text-[20px] leading-[150%] mt-8">
-              Calories, workouts, sleep, labs… Most people manage them separately. Meddy connects
+              Calories, workouts, sleep, labs. Most people manage them separately. Meddy connects
               them and puts a physician in charge of what they mean.
             </p>
 
@@ -103,7 +103,7 @@ export function FooterItems({ noTopMargin }: { noTopMargin?: boolean }) {
                   <Link
                     key={link.label}
                     href={link.href}
-                    className="block w-full whitespace-nowrap text-left lg:w-auto lg:whitespace-pre-line lg:text-right font-medium text-white text-base leading-[1.3] hover:opacity-70"
+                    className="block w-full whitespace-nowrap text-left lg:w-auto lg:whitespace-pre-line lg:text-right font-medium text-white text-base leading-[1.3] uppercase hover:opacity-70"
                   >
                     {link.label}
                   </Link>
@@ -114,16 +114,19 @@ export function FooterItems({ noTopMargin }: { noTopMargin?: boolean }) {
         </div>
 
         <div className="mt-6 border-t border-[#E0E0E0] lg:mt-8" />
-        <motion.p
-          className="mt-8 text-center text-[#F4F4F5] text-[12px] leading-[150%] lg:mt-5"
+        <motion.div
+          className="mt-8 flex flex-col items-center gap-2 text-center text-[#F4F4F5] text-[12px] leading-[150%] lg:mt-5"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.8, ease }}
         >
-          © 2026 Meddy · Physician services available in all 50 states except: South Carolina,
-          Arkansas, Rhode Island.
-        </motion.p>
+          <p>Meddy is a service of Meddy Health LLC.</p>
+          <p>
+            © 2026 Meddy Health LLC. All rights reserved. Privacy Policy · Terms of Use · Notice of
+            Privacy Practices · Accessibility · Contact Us
+          </p>
+        </motion.div>
       </div>
     </div>
   );
