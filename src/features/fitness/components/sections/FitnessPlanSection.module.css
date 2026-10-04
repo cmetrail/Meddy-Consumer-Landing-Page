@@ -1,0 +1,36 @@
+.diagram { perspective: 1000px; }
+.physician {
+  position: absolute;
+  inset: 0;
+  transform: translate3d(var(--physician-x, 0px), var(--physician-y, 0px), 0) rotateX(var(--physician-rx, 0deg)) rotateY(var(--physician-ry, 0deg));
+  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.particles, .glow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.particles { mix-blend-mode: screen; }
+.glow {
+  opacity: 0;
+  filter: brightness(1.7) drop-shadow(0 0 3px #9ce9c3);
+  transition: opacity 500ms ease;
+  mask-image: radial-gradient(ellipse at var(--glow-x) var(--glow-y), black 0%, transparent 65%);
+}
+.glow[data-area="0"] { --glow-x: 51%; --glow-y: 61%; }
+.glow[data-area="1"] { --glow-x: 51%; --glow-y: 53%; mask-image: radial-gradient(ellipse 48% 23% at 51% 53%, black, transparent 90%); }
+.glow[data-area="2"] { --glow-x: 52%; --glow-y: 30%; }
+.glow[data-area="3"] { --glow-x: 59%; --glow-y: 80%; mask-image: radial-gradient(ellipse 30% 18% at 59% 80%, black, transparent 90%); }
+.glow[data-lit="true"] { opacity: 0.48; animation: areaGlow 1800ms ease-out 650ms both; }
+.card { text-align: left; cursor: pointer; transition: border-color 350ms ease, box-shadow 350ms ease, background-color 350ms ease; }
+.card:hover, .card:focus-visible { border-color: #80cba6; background-color: #15221b; box-shadow: 0 0 16px #82d9ad18; outline: none; }
+.signal { position: absolute; overflow: visible; pointer-events: none; opacity: 0; transition: opacity 400ms ease; filter: drop-shadow(0 0 3px #9ce9c3); }
+.signal[data-lit="true"] { opacity: 1; }
+.signalTrack { stroke: #a5e8c5; stroke-width: 2; opacity: 0.45; }
+.signalPulse { stroke: #e0ffed; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 13 87; stroke-dashoffset: 13; }
+.signal[data-lit="true"] .signalPulse { animation: connect 1300ms cubic-bezier(0.3, 0, 0.4, 1) infinite; }
+@keyframes connect { to { stroke-dashoffset: -100; } }
+@keyframes areaGlow { 0% { opacity: 0; } 32% { opacity: 0.75; } 100% { opacity: 0.32; } }
+@media (prefers-reduced-motion: reduce) {
+  .physician { transform: none; transition: none; }
+  .particles { display: none; }
+  .glow[data-lit="true"], .signal[data-lit="true"] .signalPulse { animation: none; }
+  .signalPulse { display: none; }
+  .glow, .signal, .card { transition: none; }
+}

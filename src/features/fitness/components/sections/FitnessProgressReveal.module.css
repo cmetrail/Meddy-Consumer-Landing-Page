@@ -1,0 +1,71 @@
+.root {
+  position: relative;
+  isolation: isolate;
+}
+
+.previous {
+  position: relative;
+  /* Keep the section's z-10 copy and card below the incoming reveal. */
+  z-index: 0;
+  isolation: isolate;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: #111110;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Apply the stacked layout only after the scroll animation is initialized. */
+@media (prefers-reduced-motion: no-preference) {
+  .root[data-reveal-active] {
+    min-height: var(--reveal-track-height, 220svh);
+  }
+
+  .root[data-reveal-active] .stage {
+    position: sticky;
+    top: var(--sticky-top, 0px);
+    display: grid;
+    min-height: 100svh;
+    background: white;
+  }
+
+  .root[data-reveal-active] .previous,
+  .root[data-reveal-active] .reveal {
+    grid-area: 1 / 1;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .root[data-reveal-active] .reveal {
+    position: relative;
+    z-index: 1;
+    clip-path: inset(50% 50% round 24px);
+    will-change: clip-path;
+  }
+
+  .root[data-reveal-active] .reveal > section {
+    display: flex;
+    align-items: center;
+    min-height: 100%;
+  }
+
+  .root[data-mobile-reveal] .previous,
+  .root[data-mobile-reveal] .reveal {
+    align-items: flex-start;
+  }
+
+  .root[data-mobile-reveal] .reveal {
+    flex-direction: column;
+    padding-top: var(--reveal-offset, 0px);
+  }
+
+  .root[data-mobile-reveal] .reveal > section {
+    flex: 1;
+    min-height: 100svh;
+  }
+}

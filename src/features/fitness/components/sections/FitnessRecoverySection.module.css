@@ -1,0 +1,45 @@
+.restCard {
+  --rest-lift: 16px;
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 4%);
+}
+
+[data-recovery-raised="true"] .restCard {
+  animation: recovery-rise 750ms both;
+}
+
+@keyframes recovery-rise {
+  0% {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgb(0 0 0 / 4%);
+    animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+  60% {
+    transform: translateY(calc(var(--rest-lift) * -1.12));
+    box-shadow: 0 12px 24px rgb(0 0 0 / 16%);
+    animation-timing-function: ease-in-out;
+  }
+  80% {
+    transform: translateY(calc(var(--rest-lift) * -0.96));
+    box-shadow: 0 10px 20px rgb(0 0 0 / 14%);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: translateY(calc(var(--rest-lift) * -1));
+    box-shadow: 0 10px 22px rgb(0 0 0 / 15%);
+  }
+}
+
+@media (min-width: 768px) {
+  .restCard {
+    --rest-lift: calc(32 * var(--u));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-recovery-raised="true"] .restCard {
+    animation: none;
+    transform: translateY(calc(var(--rest-lift) * -1));
+    box-shadow: 0 10px 22px rgb(0 0 0 / 15%);
+  }
+}

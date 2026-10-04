@@ -19,8 +19,9 @@ function Copy() {
           SEE WHAT WORKOUTS ARE DOING TO YOUR BODY
         </h1>
         <p className="max-w-[543px] leading-[normal] text-[16px] md:max-w-[calc(543*var(--u))] md:text-[length:max(13px,var(--p))]">
-          Track how you train, understand where you&apos;re improving, and get a physician built
-          workout plan that adapts to your goals, preferences, and how your body responds.
+          Track how you train, understand where you&apos;re improving, and get a
+          physician built workout plan that adapts to your goals, preferences,
+          and how your body responds.
         </p>
       </div>
       <button
@@ -39,7 +40,8 @@ export default function FitnessHeroSection() {
       className="relative flex min-h-[212vw] w-full flex-col overflow-hidden  text-white md:pt-0 md:h-[calc(1028*var(--u))] md:min-h-0"
       style={
         {
-          "--u": "min(calc(min(100vw, 1440px) * 0.000694444), calc(100dvh * 0.000972763))",
+          "--u":
+            "min(calc(min(100vw, 1440px) * 0.000694444), calc(100dvh * 0.000972763))",
           "--h1": "calc(64 * var(--u))",
           "--p": "calc(20 * var(--u))",
           "--gap32": "calc(32 * var(--u))",
@@ -65,7 +67,12 @@ export default function FitnessHeroSection() {
           priority
           sizes="1200px"
           className="absolute max-w-none"
-          style={{ left: "-30.92%", top: "-8.76%", width: "201.93%", height: "130.54%" }}
+          style={{
+            left: "-30.92%",
+            top: "-8.76%",
+            width: "201.93%",
+            height: "130.54%",
+          }}
         />
       </div>
 
@@ -74,7 +81,7 @@ export default function FitnessHeroSection() {
         className="absolute inset-x-0 z-10 mx-auto hidden w-full max-w-360 px-5 md:block lg:px-10"
         style={{ top: u(500), transform: "translateY(-50%)" }}
       >
-        <div className="flex flex-col" style={{ width: u(633), gap: u(30) }}>
+        <div className="flex flex-col" style={{ width: u(933), gap: u(30) }}>
           <Copy />
         </div>
       </div>
@@ -95,7 +102,12 @@ export default function FitnessHeroSection() {
           priority
           sizes="100vw"
           className="absolute max-w-none"
-          style={{ left: "-30.92%", top: "-8.76%", width: "201.93%", height: "130.54%" }}
+          style={{
+            left: "-30.92%",
+            top: "-8.76%",
+            width: "201.93%",
+            height: "130.54%",
+          }}
         />
       </div>
     </section>

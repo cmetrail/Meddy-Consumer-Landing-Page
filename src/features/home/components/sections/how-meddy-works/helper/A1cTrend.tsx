@@ -1,6 +1,8 @@
 "use client";
 
-import { useId, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
+import Image from "next/image";
+import type { CareModel } from "@/features/physician-care/components/helper/createCareModel";
 import { DESKTOP_MOTION } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
@@ -9,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 // ─── Extracted from /public/Line (3).svg (viewBox 0 0 1439 534) ──────────────
 // Single green metric line (A1c) with a dashed event marker and a dark-green
-// dose card. Crop to the data region (event card starts ~124, grid ends ~494).
+// medication pen. Crop to the data region (event card starts ~124, grid ends ~494).
 const VIEW_Y = 95;
 const VIEW_H = 410;
 const VIEW_X = 45;
@@ -45,30 +47,7 @@ const DOTS = [
 
 // Dashed vertical event marker (semaglutide dose increase)
 const MARKER = { x: 771, y1: 276.003, y2: 495.003 };
-const REVEAL_DURATION = 0.9;
-
-// Circular transition arrow (from Line (3).svg line 36, stroke #3EAE1C)
-const ARROW_PATH =
-  "M761.207 231.796C761.108 231.895 760.982 231.962 760.845 231.99" +
-  "C760.708 232.017 760.566 232.003 760.436 231.949" +
-  "C760.307 231.896 760.197 231.805 760.119 231.689" +
-  "C760.041 231.573 760 231.436 760 231.296V228.003" +
-  "C760 227.738 759.895 227.484 759.707 227.296" +
-  "C759.52 227.108 759.265 227.003 759 227.003H753" +
-  "C752.735 227.003 752.48 226.898 752.293 226.71" +
-  "C752.105 226.523 752 226.268 752 226.003V222.003" +
-  "C752 221.738 752.105 221.484 752.293 221.296" +
-  "C752.48 221.108 752.735 221.003 753 221.003H759" +
-  "C759.265 221.003 759.52 220.898 759.707 220.71" +
-  "C759.895 220.523 760 220.268 760 220.003V216.71" +
-  "C760 216.57 760.041 216.434 760.119 216.317" +
-  "C760.197 216.201 760.307 216.11 760.436 216.057" +
-  "C760.566 216.003 760.708 215.989 760.845 216.017" +
-  "C760.982 216.044 761.108 216.111 761.207 216.21L768.147 223.15" +
-  "C768.259 223.262 768.348 223.395 768.409 223.542" +
-  "C768.469 223.688 768.501 223.845 768.501 224.004" +
-  "C768.501 224.162 768.469 224.319 768.409 224.465" +
-  "C768.348 224.612 768.259 224.745 768.147 224.857L761.207 231.796Z";
+const BEFORE_WIDTH = MARKER.x - VIEW_X;
 
 // Outlined callout card — "A1c: <value>", transparent bg, 1px white border
 function CalloutCard({
@@ -126,99 +105,44 @@ function CalloutCard({
   );
 }
 
-// Dark-green event card — "Jan 4 · Semaglutide dose increased" + dose delta
-function EventCard({ tail = false }: { tail?: boolean }) {
-  return (
-    <div
-      className={
-        tail ? "flex flex-col items-center" : "flex flex-col items-start"
-      }
-    >
-      <div className="rounded-[5px] bg-[#003B1D] px-[12px] py-[8px] text-left">
-        <span
-          className="block text-[#ADADAD]"
-          style={{
-            fontSize: "clamp(9px,0.83vw,12px)",
-            fontWeight: 500,
-            lineHeight: "15px",
-          }}
-        >
-          Jan 4
-        </span>
-        <span
-          className="block text-[#ADADAD]"
-          style={{
-            fontSize: "clamp(9px,0.83vw,12px)",
-            fontWeight: 500,
-            lineHeight: "15px",
-          }}
-        >
-          Semaglutide dose
-        </span>
-        <span
-          className="block text-[#3EAE1C]"
-          style={{
-            fontSize: "clamp(9px,0.83vw,12px)",
-            fontWeight: 500,
-            lineHeight: "15px",
-          }}
-        >
-          increased
-        </span>
-        <div className="mt-[6px] flex items-center gap-[6px]">
-          <span
-            className="text-white"
-            style={{
-              fontSize: "clamp(10px,0.97vw,14px)",
-              fontWeight: 700,
-              lineHeight: "18px",
-            }}
-          >
-            1.7 mg
-          </span>
-          <svg
-            viewBox="750 214 20 20"
-            className="h-[15px] w-[15px] shrink-0"
-            fill="none"
-          >
-            <path
-              d={ARROW_PATH}
-              stroke="#3EAE1C"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span
-            className="text-[#3EAE1C]"
-            style={{
-              fontSize: "clamp(10px,0.97vw,14px)",
-              fontWeight: 700,
-              lineHeight: "18px",
-            }}
-          >
-            2.4 mg
-          </span>
-        </div>
-      </div>
-      {tail && (
-        <span
-          style={{
-            width: 0,
-            height: 0,
-            borderLeft: "20px solid transparent",
-            borderRight: "20px solid transparent",
-            borderTop: "12px solid #003B1D",
-          }}
-        />
-      )}
-    </div>
-  );
-}
-
 export default function A1cTrend() {
   const rootRef = useRef<HTMLDivElement>(null);
   const revealId = useId();
+  const baselineId = useId();
+  const penRef = useRef<HTMLDivElement>(null);
+  const hostRef = useRef<HTMLDivElement>(null);
+  const modelRef = useRef<CareModel | null>(null);
+  const progressRef = useRef(0);
+
+  useEffect(() => {
+    let disposed = false;
+    const pen = penRef.current;
+    const observer = new IntersectionObserver(async ([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      // Keep a still poster for people who prefer reduced motion.
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      try {
+        const { createCareModel } = await import("@/features/physician-care/components/helper/createCareModel");
+        if (disposed || !hostRef.current) return;
+        const model = await createCareModel(hostRef.current);
+        if (disposed) { model.dispose(); return; }
+        modelRef.current = model;
+        model.update(progressRef.current);
+        if (pen) pen.dataset.loaded = "true";
+      } catch {
+        // The pen poster stays visible when WebGL or the asset cannot load.
+      }
+    }, { rootMargin: "300px" });
+    if (rootRef.current) observer.observe(rootRef.current);
+    return () => {
+      disposed = true;
+      observer.disconnect();
+      modelRef.current?.dispose();
+      modelRef.current = null;
+      if (pen) delete pen.dataset.loaded;
+    };
+  }, []);
 
   useGSAP(
     () => {
@@ -229,39 +153,32 @@ export default function A1cTrend() {
           defaults: { ease: "none" },
           scrollTrigger: {
             trigger: rootRef.current,
-            // Draw during the same viewport crossing as the incoming panel.
-            start: "top bottom",
-            end: "top top",
-            // Gently catch up to scrolling instead of snapping to each wheel step.
-            scrub: 1,
+            start: "top 85%",
+            end: "top 10%",
+            scrub: 0.65,
             invalidateOnRefresh: true,
+          },
+          onUpdate: () => {
+            progressRef.current = tl.progress();
+            modelRef.current?.update(progressRef.current);
           },
         });
 
-        // Reveal horizontally at a steady rate as the user scrolls.
-        tl.fromTo(
-          "[data-path-reveal]",
-          { attr: { width: 0 } },
-          { attr: { width: VIEW_W }, duration: REVEAL_DURATION },
-          0,
-        );
-        tl.fromTo(
-          ".a1c-marker",
-          { opacity: 0 },
-          { opacity: 1, duration: 0.12, ease: "sine.out" },
-          ((MARKER.x - VIEW_X) / VIEW_W) * REVEAL_DURATION,
-        );
+        // Baseline first. Pause at the treatment boundary while the pen docks.
+        tl.fromTo("[data-path-reveal]", { attr: { width: 0 } },
+          { attr: { width: BEFORE_WIDTH }, duration: 0.28 }, 0);
+        tl.fromTo("[data-before]", { opacity: 0 }, { opacity: 1, duration: 0.12 }, 0.04);
+        tl.fromTo(".a1c-pen", { opacity: 0, xPercent: 45, yPercent: -20, scale: 1.65 },
+          { opacity: 1, xPercent: 0, yPercent: 0, scale: 1, duration: 0.24, ease: "power2.out" }, 0.3);
+        tl.fromTo(".a1c-marker, [data-treatment]", { opacity: 0 },
+          { opacity: 1, duration: 0.1 }, 0.52);
+        tl.to("[data-path-reveal]", { attr: { width: VIEW_W }, duration: 0.3 }, 0.65);
+        tl.fromTo("[data-after]", { opacity: 0 }, { opacity: 1, duration: 0.12 }, 0.88);
         gsap.utils.toArray<SVGGElement>(".a1c-dot").forEach((dot, index) => {
-          tl.fromTo(dot, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "sine.out" },
-            ((DOTS[index].cx - VIEW_X) / VIEW_W) * REVEAL_DURATION);
+          const time = index === 1 ? 0.08 : index === 0 ? 0.54 : 0.9;
+          tl.fromTo(dot, { opacity: 0 }, { opacity: 1, duration: 0.08 }, time);
         });
-        gsap.utils.toArray<HTMLElement>(".a1c-card").forEach((card) => {
-          tl.fromTo(card, { opacity: 0 }, { opacity: 1, duration: 0.16, ease: "sine.out" },
-            (parseFloat(card.style.left) / 100) * REVEAL_DURATION);
-        });
-
-        // Leave a little scroll time to read the completed chart.
-        tl.to({}, { duration: 1 - REVEAL_DURATION });
+        tl.to({}, { duration: 0.12 });
       });
 
       return () => media.revert();
@@ -276,6 +193,17 @@ export default function A1cTrend() {
         .a1c-sticky { position: relative; min-height: 100svh; display: flex; align-items: center; }
         .a1c-content { width: 100%; }
         .a1c-marker { stroke-dasharray: 3 3; }
+        .a1c-pen { position: absolute; left: calc(53.78% - 70px); top: calc(44% - 195px); width: 140px; height: 190px; transform-origin: 50% 100%; pointer-events: none; }
+        .a1c-poster, .a1c-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .a1c-poster { object-fit: contain; }
+        .a1c-canvas { opacity: 0; }
+        .a1c-canvas canvas { display: block; width: 100%; height: 100%; }
+        .a1c-pen[data-loaded="true"] .a1c-poster { opacity: 0; }
+        .a1c-pen[data-loaded="true"] .a1c-canvas { opacity: 1; }
+        .a1c-treatment { position: absolute; left: 53.78%; top: 44%; transform: translate(-50%, -100%); white-space: nowrap; text-align: center; font-size: 11px; color: #bfe4b4; }
+        .a1c-phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; color: #adb9b0; font-size: 12px; }
+        .a1c-phases span:nth-child(2) { text-align: center; color: #bfe4b4; }
+        .a1c-phases span:last-child { text-align: right; color: #83d875; }
         .a1c-card { transform: translate(-50%, -100%); transform-origin: 50% 100%; }
         @media (max-width: 1023px), (pointer: coarse), (prefers-reduced-motion: reduce) {
           .a1c-scroll { min-height: 0; }
@@ -286,12 +214,15 @@ export default function A1cTrend() {
           .a1c-content [data-graph-chart] { max-height: 45svh; }
         }
         @media (max-width: 1023px) {
-          .a1c-card { transform: translate(-50%, -100%) scale(0.75); }
+          .a1c-card { transform: translate(-50%, -100%) scale(0.85); }
+          .a1c-pen { left: calc(53.78% - 48px); top: calc(44% - 145px); width: 96px; height: 136px; }
+          .a1c-treatment { font-size: 9px; }
+          .a1c-phases { font-size: 10px; gap: 6px; }
         }
       `}</style>
 
       <div className="a1c-sticky">
-      <div className="a1c-content max-w-360 mx-auto px-5 flex flex-col gap-12.5 lg:px-10">
+      <div className="a1c-content max-w-360 mx-auto px-5 flex flex-col gap-6 lg:gap-10 lg:px-10">
         {/* Title */}
         <div data-graph-title className="">
           <div className="flex items-center gap-4.25">
@@ -304,21 +235,26 @@ export default function A1cTrend() {
             </span>
           </div>
           <p className="mt-0.5 text-[15px] font-medium leading-[140%] text-[#E7E7E7]">
-            Health Insight Trend
+            Before treatment. A change in care. Progress over time.
           </p>
         </div>
 
         {/* Chart */}
         <div
           data-graph-chart
-          className="relative w-full aspect-[1350/410] max-lg:aspect-[1350/620]"
+          className="relative w-full aspect-[1350/540] max-lg:aspect-[1350/850] mt-8"
         >
           <svg
             viewBox={`${VIEW_X} ${VIEW_Y} ${VIEW_W} ${VIEW_H}`}
             preserveAspectRatio="none"
             className="absolute inset-0 h-full w-full"
+            role="img"
+            aria-label="Illustrative A1c trend: 7.5 percent before medication, semaglutide introduced, then a gradual improvement to 6.0 percent at follow-up."
           >
             <defs>
+              <clipPath id={baselineId} clipPathUnits="userSpaceOnUse">
+                <rect x={VIEW_X} y={VIEW_Y} width={BEFORE_WIDTH} height={VIEW_H} />
+              </clipPath>
               <clipPath id={revealId} clipPathUnits="userSpaceOnUse">
                 <rect
                   data-path-reveal
@@ -351,19 +287,6 @@ export default function A1cTrend() {
               ))}
 
               <radialGradient
-                id="a1c-line-grad"
-                cx="0"
-                cy="0"
-                r="1"
-                gradientTransform="matrix(-663.337 -21.2647 66.2132 -1470.75 712.532 310.058)"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#61D253" />
-                <stop offset="0.687" stopColor="#4C8935" />
-                <stop offset="0.951" stopColor="#57A832" stopOpacity="0" />
-              </radialGradient>
-
-              <radialGradient
                 id="a1c-dot-grad"
                 cx="0"
                 cy="0"
@@ -394,13 +317,17 @@ export default function A1cTrend() {
             {/* A1c line — thick, green radial gradient */}
             <path
               d={LINE_PATH}
-              stroke="url(#a1c-line-grad)"
+              stroke="#72CC60"
               strokeWidth="10.03"
               fill="none"
               strokeLinecap="round"
               clipPath={`url(#${revealId})`}
               className="a1c-line"
             />
+
+            <g clipPath={`url(#${revealId})`}>
+              <path d={LINE_PATH} stroke="#C3A078" strokeWidth="10.03" fill="none" strokeLinecap="round" clipPath={`url(#${baselineId})`} />
+            </g>
 
             {/* Dashed event marker */}
             <line
@@ -435,28 +362,34 @@ export default function A1cTrend() {
             ))}
           </svg>
 
-          {/* Event card — absolute (tail tip touches marker top at y=276.003) */}
-          <div
-            className="a1c-card absolute flex"
-            style={{ left: "53.67%", top: "44.15%" }}
-          >
-            <EventCard tail />
+          <div ref={penRef} className="a1c-pen" aria-hidden="true">
+            <Image src="/models/care-pen.webp" alt="" width={720} height={960} sizes="(max-width: 1023px) 96px, 230px" className="a1c-poster" />
+            <div ref={hostRef} className="a1c-canvas" />
           </div>
+          <div data-treatment className="a1c-treatment">Semaglutide introduced</div>
 
           {/* Callout cards — absolute */}
           <div
+            data-before
             className="a1c-card absolute"
             style={{ left: "10.11%", top: "51.10%" }}
           >
-            <CalloutCard value="7.5" tail />
+            <CalloutCard value="7.5%" tail />
           </div>
           <div
+            data-after
             className="a1c-card absolute"
             style={{ left: "86.26%", top: "76.46%" }}
           >
-            <CalloutCard value="6.0" tail />
+            <CalloutCard value="6.0%" tail />
           </div>
         </div>
+        <div className="a1c-phases">
+          <span>01 / Before treatment</span>
+          <span>02 / Medication introduced</span>
+          <span data-after>03 / Improved follow-up</span>
+        </div>
+        <p className="text-[11px] text-white/45">Illustrative trend over time. Individual results vary.</p>
       </div>
       </div>
     </div>

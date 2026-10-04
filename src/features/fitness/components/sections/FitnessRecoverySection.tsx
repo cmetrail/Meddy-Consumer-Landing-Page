@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef } from "react";
+import styles from "./FitnessRecoverySection.module.css";
 
 type DayVariant = "dark" | "light" | "white";
 
@@ -34,8 +36,39 @@ const VARIANT_CLASS: Record<DayVariant, string> = {
 const u = (n: number) => `calc(${n} * var(--u))`;
 
 export default function FitnessRecoverySection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || section.dataset.recoveryRaised === "true") return;
+
+    let inView = false;
+    const reveal = section.parentElement;
+    const start = () => {
+      // The enclosing scroll reveal is inert while the section is clipped.
+      if (!inView || section.closest("[inert]")) return;
+      section.dataset.recoveryRaised = "true";
+      intersection.disconnect();
+      visibility.disconnect();
+    };
+    const intersection = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting && entry.intersectionRatio >= 0.2;
+      start();
+    }, { threshold: 0.2 });
+    const visibility = new MutationObserver(start);
+
+    intersection.observe(section);
+    if (reveal) visibility.observe(reveal, { attributes: true, attributeFilter: ["inert"] });
+
+    return () => {
+      intersection.disconnect();
+      visibility.disconnect();
+    };
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       className="relative flex w-full flex-col justify-end overflow-hidden bg-[#171718] md:h-[calc(1025*var(--u))]"
       style={{ "--u": "min(calc(min(100vw, 1440px) * 0.000694444), calc(100dvh * 0.000975609))" } as React.CSSProperties}
     >
@@ -95,7 +128,7 @@ export default function FitnessRecoverySection() {
             {DAYS.map((d) => (
               <div
                 key={d.day}
-                className={`flex flex-col gap-2 rounded-[8px] p-6 text-[14px] backdrop-blur-[10px] md:w-[var(--cw)] md:shrink-0 md:gap-[var(--g8)] md:rounded-[var(--r8)] md:p-[var(--p32)] md:text-[length:max(11px,calc(14*var(--u)))] ${VARIANT_CLASS[d.variant]}`}
+                className={`flex flex-col gap-2 rounded-[8px] p-6 text-[14px] backdrop-blur-[10px] md:w-[var(--cw)] md:shrink-0 md:gap-[var(--g8)] md:rounded-[var(--r8)] md:p-[var(--p32)] md:text-[length:max(11px,calc(14*var(--u)))] ${VARIANT_CLASS[d.variant]} ${d.variant === "white" ? styles.restCard : ""}`}
               >
                 <div className="flex items-center justify-between gap-1">
                   <span>{d.day}</span>

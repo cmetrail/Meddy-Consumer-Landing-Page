@@ -64,7 +64,7 @@ export default function NutritionSection() {
   );
 
   return (
-    <div ref={sectionRef} className="">
+    <div id="nutrition" ref={sectionRef} className="">
       <div className="mx-auto max-w-360 px-5 pt-10 pb-10 text-center lg:px-10 lg:pt-16">
         <h2 className="text-2xl leading-snug font-medium text-[#17925A] lg:text-[30px]">
           <em

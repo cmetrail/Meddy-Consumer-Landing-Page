@@ -47,7 +47,7 @@ export default function FitnessFaqSection() {
   const [open, setOpen] = useState<number>(0);
 
   return (
-    <section className="w-full bg-[#171718]">
+    <section className="relative z-10 w-full bg-[#171718] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)]">
       <div className="mx-auto flex w-full max-w-360 flex-col gap-10 px-5 py-16 lg:flex-row lg:gap-12 lg:px-[100px] lg:py-[clamp(48px,calc((100dvh-530px)/2),120px)]">
         {/* Left title */}
         <div className="lg:w-[307px] lg:shrink-0">

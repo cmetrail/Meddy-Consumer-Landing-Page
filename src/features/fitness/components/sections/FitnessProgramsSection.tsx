@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 
-// md+: Figma node 11911:39228 (1440 wide), every size is a multiple of --u (= min(100vw,1440px)/1440)
-// so the 3-column layout scales down proportionally to tablet. Below md the cards stack.
+// Scale the section artwork and heading independently of the readable card layout.
 const u = (n: number) => `calc(${n} * var(--u))`;
 // px at md+ scale with --u (never below `min`), px below md stay fixed
 const fs = (mobile: number, design: number, min = 12) =>
@@ -14,61 +13,50 @@ const PROGRAMS = [
   {
     title: "STRENGTH",
     image: "/fitness/fitness-programs-strength.png",
-    left: ["•Sets", "• Reps", "• Weights"],
-    right: ["• Load", "• Workout Duration", "• Muscle Targets"],
-    solid: false,
+    left: ["Sets", "Reps", "Weights"],
+    right: ["Load", "Workout Duration", "Muscle Targets"],
   },
   {
     title: "CARDIO",
     image: "/fitness/fitness-programs-cardio.png",
-    left: ["•Duration", "•Distance", "• Pace", "• Incline"],
-    right: ["• Resistance", "• Cadence", "• HR Zones", "• Split Time", "• Stroke Rate"],
-    solid: true,
+    left: ["Duration", "Distance", "Pace", "Incline"],
+    right: ["Resistance", "Cadence", "HR Zones", "Split Time", "Stroke Rate"],
   },
   {
     title: "CIRCUIT TRAINING",
     image: "/fitness/fitness-programs-circuit-16ed96.png",
-    left: ["•Strength", "• Cardio"],
-    right: ["•Yoga", "•Stretch"],
-    solid: false,
+    left: ["Strength", "Cardio"],
+    right: ["Yoga", "Stretch"],
   },
 ];
 
 function ProgramCard({ program }: { program: (typeof PROGRAMS)[number] }) {
   return (
-    <div
-      className={`flex flex-col gap-4 rounded-[12px] p-4 md:gap-[var(--gap16)] md:rounded-[var(--r12)] md:p-[var(--gap16)] ${
-        program.solid ? "bg-[#515151]" : "bg-[rgba(81,81,81,0.5)] backdrop-blur-[25px]"
-      }`}
-    >
-      <div className="relative h-[200px] shrink-0 overflow-hidden rounded-[8px] bg-[#d9d9d9] sm:h-[245px] md:h-[var(--imgH)] md:rounded-[var(--r8)]">
+    <article className="group relative flex min-w-0 flex-col gap-7 overflow-hidden rounded-[28px] border border-white/20 bg-gradient-to-b from-[#435047]/95 via-[#303833]/95 to-[#202a25]/95 p-5 shadow-[0_24px_70px_rgba(0,0,0,0.32),0_2px_10px_rgba(255,255,255,0.08)_inset] backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-[#b6e7c9]/45 hover:shadow-[0_32px_80px_rgba(0,0,0,0.48),0_2px_14px_rgba(255,255,255,0.12)_inset] sm:p-6">
+      <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#d1f3dc]/70 to-transparent" />
+      <div className="relative aspect-[3/2] shrink-0 overflow-hidden rounded-2xl bg-[#d9d9d9] shadow-[0_14px_30px_rgba(0,0,0,0.28)] ring-1 ring-black/20">
         <Image
           src={program.image}
           alt={program.title}
           fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-cover"
+          sizes="(max-width: 1023px) 90vw, 30vw"
+          className="object-cover transition duration-700 group-hover:scale-105"
         />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-white/10" />
       </div>
 
-      <div className="flex flex-1 flex-col justify-between gap-6 md:gap-[var(--gap24)]">
-        <div className="flex flex-col gap-2 text-white md:gap-[var(--gap8)]">
-          <h3
-            className="font-semibold leading-[normal] text-[length:var(--m)] md:text-[length:var(--d)]"
-            style={fs(28, 36, 18)}
-          >
+      <div className="flex flex-1 flex-col justify-between gap-9">
+        <div className="flex flex-col gap-5 text-white">
+          <h3 className="text-[26px] font-semibold leading-[1.2] tracking-[-0.025em] xl:text-[28px]">
             {program.title}
           </h3>
-          <div
-            className="flex justify-between gap-3 leading-[normal] text-[length:var(--m)] md:text-[length:var(--d)]"
-            style={fs(16, 20, 12)}
-          >
-            <ul className="whitespace-nowrap">
+          <div className="grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-x-5 text-[15px] leading-relaxed text-white/85 sm:text-base lg:text-[15px] xl:text-base">
+            <ul className="list-disc space-y-2.5 pl-4 marker:text-[#9ad8b6]">
               {program.left.map((t) => (
                 <li key={t}>{t}</li>
               ))}
             </ul>
-            <ul className="whitespace-nowrap">
+            <ul className="list-disc space-y-2.5 pl-4 marker:text-[#9ad8b6]">
               {program.right.map((t) => (
                 <li key={t}>{t}</li>
               ))}
@@ -78,12 +66,12 @@ function ProgramCard({ program }: { program: (typeof PROGRAMS)[number] }) {
 
         <button
           type="button"
-          className="w-full rounded-[49px] bg-white px-5 py-3 text-center text-[16px] font-normal leading-[normal] text-[#17925A] md:py-[var(--btnY)] md:text-[length:var(--btnF)]"
+          className="min-h-12 w-full rounded-full bg-white px-5 py-3.5 text-center text-[15px] font-semibold leading-5 text-[#137447] shadow-[0_8px_20px_rgba(0,0,0,0.18)] transition duration-200 hover:bg-[#e6f4ec] hover:shadow-[0_10px_26px_rgba(0,0,0,0.28)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9ad8b6]"
         >
           Start Training
         </button>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -94,14 +82,7 @@ export default function FitnessProgramsSection() {
       style={
         {
           "--u": "calc(min(100vw, 1440px) * 0.000694444)",
-          "--gap16": u(16),
           "--gap24": u(24),
-          "--gap8": u(8),
-          "--r12": u(12),
-          "--r8": u(8),
-          "--imgH": u(246),
-          "--btnY": u(12),
-          "--btnF": `max(12px, ${u(16)})`,
         } as React.CSSProperties
       }
     >
@@ -154,7 +135,7 @@ export default function FitnessProgramsSection() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:items-stretch md:gap-[var(--gap8)]">
+        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-3 xl:gap-8">
           {PROGRAMS.map((program) => (
             <ProgramCard key={program.title} program={program} />
           ))}

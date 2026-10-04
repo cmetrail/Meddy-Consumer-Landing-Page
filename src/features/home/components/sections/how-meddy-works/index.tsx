@@ -31,7 +31,7 @@ export default function HowMeddyWorksSection() {
           <SleepSection />
           <SleepTrend />
           <InsightsSection />
-          <MedicationStorySection />
+          {/* <MedicationStorySection /> */}
           <A1cTrend />
         </SectionStack>
       </div>

@@ -1,6 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import { useRef, useState, type PointerEvent, type FocusEvent } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "@/lib/gsap";
+import FitnessPhysician from "./FitnessPhysician";
+import styles from "./FitnessPlanSection.module.css";
+
+gsap.registerPlugin(useGSAP);
 
 // lg+: Figma node 11601:4001 (1440 wide, 1029 tall) scaled by --u so the section fits one viewport:
 //   --u = min(100vw, 1440px) / 1440  vs  100dvh / 1029, whichever is smaller
@@ -49,8 +56,102 @@ const LINES = [
 const CHIP_TEXT = "rounded-[36px] border border-white/20 bg-[#232323] px-4 py-2 shadow-[0px_0px_10px_rgba(0,0,0,0.25)]";
 
 export default function FitnessPlanSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [focusedCard, setFocusedCard] = useState<number | null>(null);
+  const activeCard = hoveredCard ?? focusedCard;
+  const movePhysician = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+    event.currentTarget.style.setProperty("--physician-x", `${x * 8}px`);
+    event.currentTarget.style.setProperty("--physician-y", `${y * 6}px`);
+    event.currentTarget.style.setProperty("--physician-rx", `${-y * 2}deg`);
+    event.currentTarget.style.setProperty("--physician-ry", `${x * 2}deg`);
+  };
+  const resetPhysician = (event: PointerEvent<HTMLDivElement>) => {
+    ["--physician-x", "--physician-y", "--physician-rx", "--physician-ry"].forEach((property) => event.currentTarget.style.removeProperty(property));
+    setHoveredCard(null);
+  };
+  const cardInteraction = (index: number) => ({
+    onPointerEnter: () => setHoveredCard(index),
+    onPointerLeave: () => setHoveredCard(null),
+    onFocus: (event: FocusEvent<HTMLButtonElement>) => {
+      if (event.currentTarget.matches(":focus-visible")) setFocusedCard(index);
+    },
+    onBlur: () => setFocusedCard(null),
+  });
+
+  useGSAP(() => {
+    const media = gsap.matchMedia();
+
+    media.add({
+      desktop: "(min-width: 1024px)",
+      mobile: "(max-width: 1023px)",
+      reducedMotion: "(prefers-reduced-motion: reduce)",
+    }, (context) => {
+      if (context.conditions?.reducedMotion) return;
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const reveal = (element: Element, delay = 0) => {
+        gsap.from(element, {
+          opacity: 0, y: 24, duration: 0.8, delay, ease: "power3.out",
+          scrollTrigger: { trigger: element, start: "top 90%", once: true },
+        });
+      };
+
+      section.querySelectorAll("[data-plan-copy]").forEach((element, index) => {
+        reveal(element, index * 0.12);
+      });
+
+      if (context.conditions?.desktop) {
+        const diagram = section.querySelector("[data-plan-desktop]");
+        if (!diagram) return;
+        const timeline = gsap.timeline({
+          defaults: { ease: "power3.out" },
+          scrollTrigger: { trigger: diagram, start: "top 80%", once: true },
+        });
+
+        timeline.from(diagram.querySelector("[data-plan-image]"), {
+          opacity: 0, y: 28, scale: 0.96, duration: 1.1,
+        }, 0);
+
+        // Connect each card to its line and nearby chips, radiating out from the portrait.
+        CARDS.forEach((card, index) => {
+          const start = 0.25 + index * 0.18;
+          timeline.from(diagram.querySelector(`[data-plan-card="${index}"]`), {
+            opacity: 0, x: card.x < 600 ? 24 : -24, y: 12,
+            scale: 0.97, duration: 0.7,
+          }, start);
+          timeline.fromTo(diagram.querySelector(`[data-plan-line="${index}"]`), {
+            opacity: 0,
+            clipPath: card.x < 600 ? "inset(-10% 110% -10% -10%)" : "inset(-10% -10% -10% 110%)",
+          }, {
+            opacity: 1, clipPath: "inset(-10% -10% -10% -10%)",
+            duration: 0.85, ease: "power2.inOut",
+          }, start + 0.15);
+          timeline.from(diagram.querySelectorAll(`[data-plan-chip="${index}"]`), {
+            opacity: 0, y: 14, scale: 0.92,
+            duration: 0.6, stagger: 0.07,
+          }, start + 0.3);
+        });
+      } else {
+        // The mobile layout is taller: reveal each item only when it reaches the viewport.
+        const mobile = section.querySelector("[data-plan-mobile]");
+        if (!mobile) return;
+        mobile.querySelectorAll("[data-plan-image], [data-plan-card], [data-plan-chip]")
+          .forEach((element, index) => reveal(element, (index % 4) * 0.06));
+      }
+    });
+
+    return () => media.revert();
+  }, { scope: sectionRef });
+
   return (
     <section
+      ref={sectionRef}
       className="w-full bg-[#171718] lg:flex lg:min-h-[calc(1029*var(--u))] lg:flex-col lg:justify-end"
       style={{ "--u": "min(calc(min(100vw, 1440px) * 0.000694444), calc(100dvh * 0.000971817))" } as React.CSSProperties}
     >
@@ -59,25 +160,25 @@ export default function FitnessPlanSection() {
         style={{ ["--g48" as string]: u(48), ["--p100" as string]: u(100) }}
       >
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:gap-[var(--g48)]">
-          <h2 className="flex-1 text-[28px] font-normal leading-[normal] text-white sm:text-[36px] lg:text-[length:max(24px,var(--h))]" style={{ ["--h" as string]: u(44) }}>
+          <h2 data-plan-copy className="flex-1 text-[28px] font-normal leading-[normal] text-white sm:text-[36px] lg:text-[length:max(24px,var(--h))]" style={{ ["--h" as string]: u(44) }}>
             Your workout plan is built by a{" "}
             <em className="comprehensive-serif italic">physician</em> who sees how
             you <em className="comprehensive-serif italic">train.</em>
           </h2>
-          <p className="flex-1 text-[16px] leading-[normal] text-white lg:text-[length:max(13px,var(--p))]" style={{ ["--p" as string]: u(20) }}>
+          <p data-plan-copy className="flex-1 text-[16px] leading-[normal] text-white lg:text-[length:max(13px,var(--p))]" style={{ ["--p" as string]: u(20) }}>
             Your Meddy physician sees your workouts, progress, training load,
             injuries, cardiovascular activity, recovery, and health data and
             uses that information to build and adjust your plan.
           </p>
         </div>
 
-        <div className="relative mx-auto hidden w-full lg:block" style={{ height: u(601), maxWidth: u(1222.5), ["--p16" as string]: u(16), ["--p8" as string]: u(8) }}>
-          <div className="absolute overflow-hidden opacity-80" style={{ left: u(300.83), top: 0, width: u(601), height: u(601) }}>
-            <Image src="/fitness/plan-physician-center-new.png" alt="" fill sizes="700px" className="object-cover" />
+        <div data-plan-desktop onPointerMove={movePhysician} onPointerLeave={resetPhysician} className={`relative mx-auto hidden w-full lg:block ${styles.diagram}`} style={{ height: u(601), maxWidth: u(1222.5), ["--p16" as string]: u(16), ["--p8" as string]: u(8) }}>
+          <div data-plan-image className="absolute overflow-hidden opacity-80" style={{ left: u(300.83), top: 0, width: u(601), height: u(601) }}>
+            <FitnessPhysician src="/fitness/plan-physician-center-new.png" active={activeCard} sizes="700px" />
           </div>
 
           {LINES.map((l) => (
-            <div key={l.src} className="absolute" style={{ left: u(l.x), top: u(l.y), width: u(l.w), height: u(l.h) }}>
+            <div key={l.src} data-plan-line={l.src === "7500" ? 0 : l.src === "7502" ? 1 : l.src === "7501" ? 2 : 3} className="absolute" style={{ left: u(l.x), top: u(l.y), width: u(l.w), height: u(l.h) }}>
               <div
                 className="absolute left-1/2 top-1/2"
                 style={{ width: u(l.iw), height: u(l.ih), transform: `translate(-50%, -50%) ${l.t}` }}
@@ -95,6 +196,23 @@ export default function FitnessPlanSection() {
                     height: `${100 + 2 * l.inset[0]}%`,
                   }}
                 />
+                <svg
+                  aria-hidden="true"
+                  className={styles.signal}
+                  data-lit={activeCard === (l.src === "7500" ? 0 : l.src === "7502" ? 1 : l.src === "7501" ? 2 : 3)}
+                  viewBox={l.src === "7503" ? "0 0 159.633 126.324" : "0 0 179.667 111.167"}
+                  preserveAspectRatio="none"
+                  style={{ left: `-${l.inset[1]}%`, top: `-${l.inset[0]}%`, width: `${100 + 2 * l.inset[1]}%`, height: `${100 + 2 * l.inset[0]}%` }}
+                >
+                  {[styles.signalTrack, styles.signalPulse].map((className) => (
+                    <path key={className} className={className} fill="none" pathLength={100}
+                      d={l.src === "7503" ? "M5.33333 5.33333 L48.3818 54.5936 C61.2169 69.2804 76.7404 81.3815 94.4043 90.4594 L154.3 120.991"
+                        : l.src === "7502" ? "M5.33333 5.33333 L62.4102 21.2548 C87.2712 28.1897 109.9225 41.4223 128.173 59.6728 L174.333 105.833"
+                        : l.src === "7501" ? "M5.33333 5.33333 L41.9445 44.3799 C64.2398 68.1582 92.8668 85.069 124.453 93.1197 L174.333 105.833"
+                        : "M5.33333 5.33333 L49.464 11.4344 C90.53 17.11 127.42 39.53 151.368 73.3781 L174.333 105.833"}
+                    />
+                  ))}
+                </svg>
               </div>
             </div>
           ))}
@@ -110,10 +228,13 @@ export default function FitnessPlanSection() {
             }}
           />
 
-          {CARDS.map((c) => (
-            <div
+          {CARDS.map((c, index) => (
+            <button
               key={c.title}
-              className="absolute flex items-start border border-white/20 bg-[#111110] p-[var(--p16)] shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+              type="button"
+              {...cardInteraction(index)}
+              data-plan-card={index}
+              className={`absolute flex items-start border border-white/20 bg-[#111110] p-[var(--p16)] shadow-[0px_0px_5px_rgba(0,0,0,0.25)] ${styles.card}`}
               style={{ left: u(c.x), top: u(c.y), width: u(c.w), gap: u(8), borderRadius: u(12) }}
             >
               <Image
@@ -127,12 +248,13 @@ export default function FitnessPlanSection() {
               <span className="whitespace-nowrap leading-[normal] text-white" style={{ fontSize: `max(12px, ${u(20)})` }}>
                 {c.title}
               </span>
-            </div>
+            </button>
           ))}
 
           {CHIPS.map((ch) => (
             <div
               key={ch.text}
+              data-plan-chip={ch.x < 600 ? (ch.y < 300 ? 0 : 2) : (ch.y < 300 ? 1 : 3)}
               className="absolute whitespace-nowrap rounded-[36px] border border-white/20 bg-[#232323] px-[var(--p16)] py-[var(--p8)] shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
               style={{ left: u(ch.x), top: u(ch.y) }}
             >
@@ -143,14 +265,12 @@ export default function FitnessPlanSection() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-8 lg:hidden">
-          <div className="relative mx-auto aspect-square w-full max-w-[360px] overflow-hidden rounded-[20px] opacity-80">
-            <Image
+        <div data-plan-mobile className="flex flex-col gap-8 lg:hidden">
+          <div data-plan-image className="relative mx-auto aspect-square w-full max-w-[360px] overflow-hidden rounded-[20px] opacity-80">
+            <FitnessPhysician
               src="/fitness/plan-physician-center.png"
-              alt=""
-              fill
+              active={activeCard}
               sizes="360px"
-              className="object-cover"
             />
             <div
               className="absolute inset-x-0 bottom-0 h-[40%]"
@@ -162,10 +282,13 @@ export default function FitnessPlanSection() {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            {CARDS.map((c) => (
-              <div
+            {CARDS.map((c, index) => (
+              <button
                 key={c.title}
-                className="flex items-center gap-2 rounded-[12px] border border-white/20 bg-[#111110] p-4 shadow-[0px_0px_10px_rgba(0,0,0,0.25)]"
+                type="button"
+                {...cardInteraction(index)}
+                data-plan-card={index}
+                className={`flex items-center gap-2 rounded-[12px] border border-white/20 bg-[#111110] p-4 shadow-[0px_0px_10px_rgba(0,0,0,0.25)] ${styles.card}`}
               >
                 <Image
                   src={c.icon}
@@ -175,13 +298,13 @@ export default function FitnessPlanSection() {
                   className="h-6 w-auto shrink-0"
                 />
                 <span className="text-[15px] text-white">{c.title}</span>
-              </div>
+              </button>
             ))}
           </div>
 
           <div className="flex flex-wrap gap-2">
             {CHIPS.map((ch) => (
-              <div key={ch.text} className={CHIP_TEXT}>
+              <div key={ch.text} data-plan-chip className={CHIP_TEXT}>
                 <span className="whitespace-nowrap text-[13px] italic text-white">
                   {ch.text}
                 </span>

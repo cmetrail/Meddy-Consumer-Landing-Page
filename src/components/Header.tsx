@@ -10,7 +10,7 @@ const NAV_ITEMS = [
   { label: "How it works", href: "/#how-it-works" },
   { label: "Physician Care", href: "/physician-care" },
   { label: "WHY MEDDY", href: "/why-meddy" },
-  { label: "Nutrition", href: "/#how-it-works" },
+  { label: "Nutrition", href: "/#nutrition" },
   { label: "Fitness", href: "/fitness" },
   { label: "Sleep", href: "/sleep" },
 ];

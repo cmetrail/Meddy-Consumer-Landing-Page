@@ -18,7 +18,7 @@ export const SleepPage = () => {
       <SleepRecoveryScoreSection />
       <SleepRecoverySection />
       <SleepSamePictureSection />
-      <SleepFooterSection/>
+      <SleepFooterSection />
     </main>
   );
 };
