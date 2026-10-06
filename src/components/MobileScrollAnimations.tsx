@@ -105,6 +105,8 @@ export default function MobileScrollAnimations() {
         // Desktop animates feature images and their floating cards separately.
         // Preserve that relationship on touch devices instead of collapsing the
         // cards into the image wrapper's single reveal.
+        // FitnessPlanSection owns its portrait/card/chip sequence on mobile.
+        if (element.closest("[data-plan-mobile]")) return;
         if ((!nestedCard && element.parentElement?.closest(TARGETS)) || element.closest("#hero")) return;
         const rect = element.getBoundingClientRect();
         // Keep anything above the viewport revealed, but observe partially

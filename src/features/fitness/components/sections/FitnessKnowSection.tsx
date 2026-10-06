@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import styles from "./FitnessKnowSection.module.css";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
@@ -11,134 +12,66 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 // --u = min(100vw/1440, (100dvh - 80px)/788) so the whole section fits one screen. ----
 const u = (n: number) => `calc(${n} * var(--u))`;
 
-// Each path starts beside its label and ends at the corresponding muscle.
-// Split the original grouped SVGs so every label has an independent draw.
+// Coordinates match the supplied 504 x 561 reference canvas.
 const CONNECTORS = [
-  { label: "Shoulders", points: [[147.31, 114.23], [195.44, 113.81], [259.33, 154.89]], width: 2 },
-  { label: "Back", points: [[601.13, 90.23], [573.37, 89.81], [398.11, 213.7]], width: 2 },
-  { label: "Chest", points: [[143.97, 238.9], [184.43, 238.9], [290.51, 185.47]], width: 2 },
-  { label: "Triceps", points: [[568.33, 250.66], [538.79, 250.66], [475.02, 226.68]], width: 1 },
-  { label: "Biceps", points: [[146.48, 354.73], [179.51, 350.25], [247.53, 257.22]], width: 1 },
-  { label: "Forearms", points: [[577.53, 371.32], [547.99, 371.32], [487.24, 325.96]], width: 1 },
-  { label: "Core", points: [[169.66, 485.05], [234.22, 484.63], [358.38, 292.6]], width: 2 },
-  { label: "Legs", points: [[536.29, 481.16], [460.23, 481.16], [413.68, 521.47]], width: 1 },
-  { label: "Calves", points: [[544.12, 612.72], [468.07, 612.72], [421.21, 627.8]], width: 1 },
+  { label: "Shoulders", points: [[108, 101], [139, 101], [177, 124]], width: 1.3 },
+  { label: "Back", points: [[394, 86], [376, 86], [242, 181]], width: 1.3 },
+  { label: "Chest", points: [[106, 179], [132, 179], [197, 146]], width: 1.3 },
+  { label: "Triceps", points: [[373, 185], [354, 185], [314, 171]], width: 0.7 },
+  { label: "Biceps", points: [[108, 251], [128, 248], [162, 209]], width: 0.7 },
+  { label: "Forearms", points: [[379, 261], [360, 261], [322, 232]], width: 0.7 },
+  { label: "Core", points: [[123, 334], [163, 334], [241, 214]], width: 1.3 },
+  { label: "Legs", points: [[351, 330], [303, 330], [274, 355]], width: 0.7 },
+  { label: "Calves", points: [[357, 413], [309, 413], [280, 422]], width: 0.7 },
 ];
 
-type Chip = {
-  label: string;
-  value: string;
-  x: number; // chip left in block
-  y: number; // chip top in block
-  fillW: number;
-};
-
+type Chip = { label: string; value: number; x: number; y: number; fillW: number };
 const CHIPS: Chip[] = [
-  {
-    label: "Back",
-    value: "13",
-    x: 618,
-    y: 36,
-    fillW: 39,
-  },
-  {
-    label: "Forearms",
-    value: "9",
-    x: 596,
-    y: 321,
-    fillW: 19,
-  },
-  {
-    label: "Triceps",
-    value: "17",
-    x: 586.84,
-    y: 201,
-    fillW: 36,
-  },
-  {
-    label: "Calves",
-    value: "14",
-    x: 559,
-    y: 563,
-    fillW: 34,
-  },
-  {
-    label: "Legs",
-    value: "15",
-    x: 551.2,
-    y: 432,
-    fillW: 44,
-  },
-  {
-    label: "Shoulders",
-    value: "7",
-    x: 0,
-    y: 63,
-    fillW: 14,
-  },
-  {
-    label: "Chest",
-    value: "11",
-    x: 0,
-    y: 191,
-    fillW: 23,
-  },
-  {
-    label: "Biceps",
-    value: "7",
-    x: 7,
-    y: 305.42,
-    fillW: 15,
-  },
-  {
-    label: "Core",
-    value: "11",
-    x: 44,
-    y: 434,
-    fillW: 12,
-  },
+  { label: "Shoulders", value: 12, x: 15, y: 69, fillW: 8 },
+  { label: "Chest", value: 18, x: 15, y: 147, fillW: 12 },
+  { label: "Biceps", value: 11, x: 20, y: 226, fillW: 10 },
+  { label: "Core", value: 11, x: 31, y: 313, fillW: 15 },
+  { label: "Back", value: 22, x: 400, y: 56, fillW: 25 },
+  { label: "Triceps", value: 27, x: 387, y: 150, fillW: 33 },
+  { label: "Forearms", value: 14, x: 393, y: 231, fillW: 17 },
+  { label: "Legs", value: 25, x: 362, y: 307, fillW: 21 },
+  { label: "Calves", value: 23, x: 370, y: 388, fillW: 18 },
+];
+const d = (n: number) => `calc(${n} * var(--diagram-u))`;
+
+// Small white markers trace the muscle fibers without replacing the source artwork.
+const MUSCLE_MARKERS = [
+  [227, 65], [239, 74], [245, 89], [232, 100], [247, 108],
+  [182, 119], [193, 122], [211, 123], [223, 128], [236, 134], [244, 141], [253, 128], [268, 124], [286, 122], [299, 129],
+  [170, 139], [186, 144], [203, 146], [219, 143], [230, 150], [248, 153], [265, 146], [284, 143], [307, 148],
+  [169, 156], [178, 166], [192, 170], [211, 168], [223, 174], [245, 171], [262, 171], [279, 166], [302, 163], [314, 169],
+  [159, 175], [166, 187], [184, 190], [211, 185], [229, 191], [246, 194], [270, 185], [284, 191], [316, 188], [325, 185],
+  [154, 197], [162, 209], [178, 207], [219, 203], [234, 212], [245, 216], [264, 200], [281, 207], [316, 208], [325, 202],
+  [148, 218], [155, 232], [168, 225], [212, 220], [223, 232], [245, 236], [264, 219], [277, 229], [322, 232], [334, 224],
+  [143, 241], [150, 249], [161, 243], [210, 242], [227, 249], [243, 256], [263, 240], [276, 250], [328, 251], [339, 245],
+  [140, 258], [152, 265], [163, 258], [207, 261], [222, 268], [233, 277], [253, 269], [268, 267], [331, 266], [342, 262],
+  [197, 279], [209, 283], [219, 288], [231, 297], [254, 285], [266, 281], [277, 291], [285, 300],
+  [193, 297], [203, 308], [215, 317], [229, 311], [252, 310], [263, 303], [275, 314], [287, 314],
+  [192, 324], [201, 336], [217, 331], [230, 328], [253, 330], [266, 336], [276, 331], [290, 334],
+  [194, 347], [204, 354], [216, 352], [228, 346], [255, 350], [266, 357], [279, 353], [287, 347],
+  [195, 369], [210, 371], [225, 368], [258, 371], [272, 379], [283, 373],
+  [195, 388], [208, 399], [219, 391], [262, 391], [276, 397], [285, 387],
+  [196, 407], [207, 418], [220, 410], [262, 414], [274, 418], [286, 407],
+  [196, 430], [209, 436], [220, 429], [263, 433], [276, 440], [285, 428],
+  [200, 453], [211, 457], [218, 447], [265, 455], [275, 463], [280, 449],
+  [202, 476], [212, 486], [216, 469], [266, 477], [275, 490], [279, 469],
 ];
 
 function DesktopChip({ c }: { c: Chip }) {
   return (
-    <div
-      className="absolute bg-[#cecece] font-normal text-white"
-      data-muscle-label={c.label}
-      style={{
-        left: u(c.x),
-        top: u(c.y),
-        width: u(134),
-        height: u(110),
-        borderRadius: u(10),
-      }}
-    >
-      <span
-        className="absolute whitespace-nowrap leading-[1.2]"
-        style={{ left: u(12), top: u(16), fontSize: u(21) }}
-      >
-        {c.label}
+    <div className={styles.chip} data-muscle-label={c.label}
+      style={{ left: d(c.x), top: d(c.y) }}>
+      <span className={styles.label}>{c.label}</span>
+      <span className={styles.metric}>
+        <span className={styles.value}>{c.value}</span><span className={styles.percent}>%</span>
       </span>
-      <span
-        className="absolute flex items-baseline whitespace-nowrap leading-none"
-        style={{ right: u(12), bottom: u(24), gap: u(5) }}
-      >
-        <span style={{ fontSize: u(34) }}>{c.value}</span>
-        <span style={{ fontSize: u(21) }}>%</span>
-      </span>
-      <span
-        className="absolute bg-[#d9d9d9]"
-        style={{
-          left: u(12),
-          right: u(16),
-          bottom: u(12),
-          height: u(6),
-          borderRadius: u(10),
-        }}
-      >
-        <span
-          className="absolute right-0 top-0 h-full bg-[#f9f9f9]"
-          style={{ width: u(c.fillW), borderRadius: u(10) }}
-        />
+      <span className={styles.track}>
+        <span className={styles.fill} style={{ width: d(c.fillW) }} />
       </span>
     </div>
   );
@@ -161,7 +94,7 @@ export default function FitnessKnowSection() {
         transformOrigin: "center center",
       });
       gsap.set(diagram.querySelectorAll("[data-connector-path]"), { strokeDashoffset: 1 });
-      gsap.set(diagram.querySelectorAll("circle"), { opacity: 0 });
+      gsap.set(diagram.querySelectorAll("[data-connector-start], [data-connector-end]"), { opacity: 0 });
 
       const timeline = gsap.timeline({
         scrollTrigger: {
@@ -203,7 +136,7 @@ export default function FitnessKnowSection() {
         {
           // md+: fit one viewport — 788px block + 40px top/bottom padding, never wider than the 1440 design
           "--us":
-            "min(calc(min(100vw, 1440px) * 0.000694444), calc((100dvh - 80px) * 0.001269036))",
+            "min(calc(min(100vw, 1440px) * 0.000694444), calc((100dvh - 80px) * 0.001194698))",
           "--u": "var(--us)",
           "--p100": u(100),
         } as React.CSSProperties
@@ -239,54 +172,20 @@ export default function FitnessKnowSection() {
           </p>
         </div>
 
-        {/* Diagram: 752 x 788 design px, scaled to the column on mobile and by --us from md up */}
-        <div
-          ref={diagramRef}
-          className="relative shrink-0 [--u:calc((100vw_-_40px)*0.0013298)] md:[--u:var(--us)]"
-          style={{ width: u(752), height: u(788) }}
-        >
-          {/* body illustration (+ muscle dots overlay) */}
-          <div
-            data-muscle-body
-            className="absolute"
-            style={{
-              left: u(179.59),
-              top: 0,
-              width: u(359.23),
-              height: u(788),
-            }}
-          >
-            <Image
-              src="/fitness/fitness-know-body-e5f944.png"
-              alt="Human body, back view"
-              fill
-              sizes="360px"
-              className="object-contain"
-            />
+        {/* One proportional canvas preserves the reference at every screen width. */}
+        <div ref={diagramRef} className={styles.diagram} aria-label="Training load by muscle group">
+          <div data-muscle-body className={styles.body}>
+            <Image src="/fitness/fitness-know-body-e5f944.png" alt="Human muscle anatomy, back view"
+              fill sizes="(max-width: 767px) 45vw, 360px" className={styles.bodyImage} />
           </div>
-          <div
-            data-muscle-body
-            className="pointer-events-none absolute"
-            style={{
-              left: u(187.04),
-              top: u(5.38),
-              width: u(341.85),
-              height: u(774.34),
-            }}
-          >
-            <Image
-              src="/fitness/fitness-know-muscle-overlay.svg"
-              alt=""
-              fill
-              unoptimized
-              className="max-w-none"
-            />
-          </div>
+          <svg data-muscle-body className={styles.markers} viewBox="0 0 504 561" aria-hidden="true">
+            {MUSCLE_MARKERS.map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="1.05" fill="white" />)}
+          </svg>
 
           {/* Inline paths allow each connector to draw from card to muscle. */}
           <svg
             className="pointer-events-none absolute inset-0 h-full w-full"
-            viewBox="0 0 752 788"
+            viewBox="0 0 504 561"
             fill="none"
             aria-hidden="true"
           >
@@ -301,8 +200,8 @@ export default function FitnessKnowSection() {
                   strokeDasharray="1 1"
                   strokeDashoffset={0}
                 />
-                <circle data-connector-start cx={points[0][0]} cy={points[0][1]} r={2.5} fill="#46524B" />
-                <circle data-connector-end cx={points[2][0]} cy={points[2][1]} r={2.5} fill="#46524B" />
+                <circle data-connector-start cx={points[0][0]} cy={points[0][1]} r={1.6} fill="#46524B" />
+                <circle data-connector-end cx={points[2][0]} cy={points[2][1]} r={1.6} fill="#46524B" />
               </g>
             ))}
           </svg>

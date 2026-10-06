@@ -34,3 +34,77 @@
   .signalPulse { display: none; }
   .glow, .signal, .card { transition: none; }
 }
+
+.mobileDiagram { display: none; }
+@media (max-width: 1023px) {
+  .content {
+    --plan-mobile-u: calc((min(100vw, 480px) - 32px) / 298);
+    max-width: 480px !important;
+    margin-inline: auto !important;
+    padding: calc(56 * var(--plan-mobile-u)) calc(16 * var(--plan-mobile-u)) calc(76 * var(--plan-mobile-u)) !important;
+    gap: calc(24 * var(--plan-mobile-u)) !important;
+  }
+  .copy { gap: calc(16 * var(--plan-mobile-u)) !important; }
+  .heading {
+    flex: none !important;
+    font-size: calc(28 * var(--plan-mobile-u)) !important;
+    line-height: calc(39 * var(--plan-mobile-u)) !important;
+    letter-spacing: -.025em;
+  }
+  .physicianWord { color: #17925a; }
+  .description {
+    flex: none !important;
+    font-size: calc(13 * var(--plan-mobile-u)) !important;
+    line-height: calc(20 * var(--plan-mobile-u)) !important;
+    letter-spacing: -.01em;
+  }
+  .mobileDiagram {
+    display: block;
+    position: relative;
+    width: calc(298 * var(--plan-mobile-u));
+    height: calc(390 * var(--plan-mobile-u));
+  }
+  .mobilePortrait {
+    position: absolute;
+    left: 0;
+    top: calc(54 * var(--plan-mobile-u));
+    width: calc(298 * var(--plan-mobile-u));
+    height: calc(298 * var(--plan-mobile-u));
+    overflow: hidden;
+    opacity: .8;
+  }
+  .mobileFade {
+    position: absolute;
+    inset: 60% 0 0;
+    background: linear-gradient(180deg, transparent, #171718 80%);
+    pointer-events: none;
+  }
+  .mobileConnectors { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .mobileCard {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: calc(3 * var(--plan-mobile-u));
+    padding: calc(4 * var(--plan-mobile-u)) calc(5 * var(--plan-mobile-u)) !important;
+    border: 1px solid #ffffff20;
+    border-radius: calc(2 * var(--plan-mobile-u));
+    background: #111110;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .mobileCard span { font-size: calc(10 * var(--plan-mobile-u)); line-height: calc(13 * var(--plan-mobile-u)); }
+  .mobileIcon { width: calc(6 * var(--plan-mobile-u)); height: calc(8 * var(--plan-mobile-u)); object-fit: contain; }
+  .mobileChip {
+    position: absolute;
+    padding: calc(3 * var(--plan-mobile-u)) calc(5 * var(--plan-mobile-u)) !important;
+    border: 1px solid #ffffff0d;
+    border-radius: 999px;
+    background: #232323;
+    color: #fff;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .mobileChip span { display: block; font-size: calc(10 * var(--plan-mobile-u)); line-height: calc(12 * var(--plan-mobile-u)); }
+  .mobileItalic { font-style: italic; }
+  .mobileCard:focus-visible { outline: 2px solid #80cba6; outline-offset: 2px; }
+}

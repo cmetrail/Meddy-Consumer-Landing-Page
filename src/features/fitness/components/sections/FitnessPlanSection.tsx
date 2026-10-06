@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { useRef, useState, type PointerEvent, type FocusEvent } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import FitnessPhysician from "./FitnessPhysician";
 import styles from "./FitnessPlanSection.module.css";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 // lg+: Figma node 11601:4001 (1440 wide, 1029 tall) scaled by --u so the section fits one viewport:
 //   --u = min(100vw, 1440px) / 1440  vs  100dvh / 1029, whichever is smaller
@@ -53,7 +53,28 @@ const LINES = [
   { src: "7503", x: 772.08, y: 370.64, w: 186.753, h: 187.442, iw: 148.967, ih: 115.657, t: "rotate(-134.16deg) scaleY(-1)", inset: [4.61, 3.58] },
 ];
 
-const CHIP_TEXT = "rounded-[36px] border border-white/20 bg-[#232323] px-4 py-2 shadow-[0px_0px_10px_rgba(0,0,0,0.25)]";
+// Mobile positions are measured within the reference's 298px diagram.
+const m = (n: number) => `calc(${n} * var(--plan-mobile-u))`;
+const MOBILE_CARDS = [
+  { x: 4, y: 41 }, { x: 218, y: 47 },
+  { x: 0, y: 301 }, { x: 196, y: 332 },
+];
+const MOBILE_CHIPS: Record<string, [number, number]> = {
+  "Joint stress": [0, 16], "Spinal load": [62, 22],
+  "Balance": [30, 67], "Impact": [51, 92], "Injuries": [-6, 85],
+  "Mobility": [15, 245], "Weight loss": [40, 282], "Strength": [-6, 270],
+  "Cardiovascular fitness": [6, 329], "Session mix": [171, 26],
+  "Progress": [251, 15], "Muscle Targets": [224, 95],
+  "Muscle load": [189, 0], "Intensity": [199, 72],
+  "Exercises": [189, 307], "Equipment": [240, 300],
+  "Circuits": [199, 365], "Cardio": [246, 356],
+};
+const MOBILE_LINES = [
+  "M72 51 C88 51 92 61 101 76",
+  "M218 53 C202 51 195 58 177 66",
+  "M66 311 C82 311 91 308 108 301",
+  "M196 342 C186 337 180 335 172 328",
+];
 
 export default function FitnessPlanSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -95,55 +116,118 @@ export default function FitnessPlanSection() {
       const section = sectionRef.current;
       if (!section) return;
 
-      const reveal = (element: Element, delay = 0) => {
-        gsap.from(element, {
-          opacity: 0, y: 24, duration: 0.8, delay, ease: "power3.out",
-          scrollTrigger: { trigger: element, start: "top 90%", once: true },
-        });
-      };
-
-      section.querySelectorAll("[data-plan-copy]").forEach((element, index) => {
-        reveal(element, index * 0.12);
-      });
-
-      if (context.conditions?.desktop) {
-        const diagram = section.querySelector("[data-plan-desktop]");
-        if (!diagram) return;
-        const timeline = gsap.timeline({
-          defaults: { ease: "power3.out" },
-          scrollTrigger: { trigger: diagram, start: "top 80%", once: true },
+      // This context owns the prepared styles, timelines, and per-item triggers.
+      const ctx = gsap.context(() => {
+        const copy = Array.from(section.querySelectorAll<HTMLElement>("[data-plan-copy]"));
+        gsap.from(copy, {
+          opacity: 0, y: 30, duration: 0.95, stagger: 0.16, ease: "power3.out",
+          scrollTrigger: { trigger: copy[0], start: "top 85%", once: true },
         });
 
-        timeline.from(diagram.querySelector("[data-plan-image]"), {
-          opacity: 0, y: 28, scale: 0.96, duration: 1.1,
-        }, 0);
+        if (context.conditions?.desktop) {
+          const diagram = section.querySelector<HTMLElement>("[data-plan-desktop]");
+          if (!diagram) return;
+          const image = diagram.querySelector<HTMLElement>("[data-plan-image]");
+          if (!image) return;
+          // Read the designed opacity (80%) instead of changing the final styling.
+          const imageOpacity = Number(gsap.getProperty(image, "opacity"));
+          const branches = CARDS.map((card, index) => ({
+            left: card.x < 600,
+            line: diagram.querySelector<HTMLElement>(`[data-plan-line="${index}"]`),
+            card: diagram.querySelector<HTMLElement>(`[data-plan-card="${index}"]`),
+            chips: Array.from(diagram.querySelectorAll<HTMLElement>(`[data-plan-chip="${index}"]`)),
+          }));
+          const timeline = gsap.timeline({
+            defaults: { ease: "power3.out" },
+            scrollTrigger: { trigger: diagram, start: "top 80%", once: true },
+          });
 
-        // Connect each card to its line and nearby chips, radiating out from the portrait.
-        CARDS.forEach((card, index) => {
-          const start = 0.25 + index * 0.18;
-          timeline.from(diagram.querySelector(`[data-plan-card="${index}"]`), {
-            opacity: 0, x: card.x < 600 ? 24 : -24, y: 12,
-            scale: 0.97, duration: 0.7,
-          }, start);
-          timeline.fromTo(diagram.querySelector(`[data-plan-line="${index}"]`), {
-            opacity: 0,
-            clipPath: card.x < 600 ? "inset(-10% 110% -10% -10%)" : "inset(-10% -10% -10% 110%)",
-          }, {
-            opacity: 1, clipPath: "inset(-10% -10% -10% -10%)",
-            duration: 0.85, ease: "power2.inOut",
-          }, start + 0.15);
-          timeline.from(diagram.querySelectorAll(`[data-plan-chip="${index}"]`), {
-            opacity: 0, y: 14, scale: 0.92,
-            duration: 0.6, stagger: 0.07,
-          }, start + 0.3);
-        });
-      } else {
-        // The mobile layout is taller: reveal each item only when it reaches the viewport.
-        const mobile = section.querySelector("[data-plan-mobile]");
+          // Animate the outer portrait wrapper only; pointer tilt stays on its child.
+          timeline.fromTo(image, { opacity: 0, y: 30, scale: 0.94 }, {
+            opacity: imageOpacity, y: 0, scale: 1, duration: 1.4,
+          }, 0);
+
+          branches.forEach((branch, index) => {
+            const connectionAt = 0.5 + index * 0.16;
+            const cardAt = connectionAt + 0.95;
+            if (branch.line) {
+              // Left branches uncover right-to-left, right branches left-to-right.
+              // Clipping the outer box preserves the rotated SVGs and hover pulses.
+              timeline.fromTo(branch.line, {
+                opacity: 0,
+                clipPath: branch.left ? "inset(-10% -10% -10% 110%)" : "inset(-10% 110% -10% -10%)",
+              }, {
+                opacity: 1, clipPath: "inset(-10% -10% -10% -10%)",
+                duration: 0.95, ease: "power2.inOut",
+              }, connectionAt);
+            }
+            if (branch.card) {
+              timeline.from(branch.card, {
+                opacity: 0, x: branch.left ? -20 : 20, y: 12,
+                scale: 0.92, duration: 0.8,
+              }, cardAt);
+            }
+            timeline.from(branch.chips, {
+              opacity: 0, y: 16, scale: 0.9,
+              duration: 0.65, stagger: 0.065,
+            }, cardAt + 0.55);
+          });
+
+          // One slow, sub-percent depth settle after construction; no idle loop
+          // or competing scroll tween on the pointer-controlled physician.
+          timeline.to(image, { scale: 1.008, y: -3, duration: 2, ease: "sine.inOut" })
+            .to(image, { scale: 1, y: 0, duration: 2, ease: "sine.inOut", clearProps: "transform,opacity" });
+
+          // Keyboard users can reach a card before the scroll sequence completes.
+          const onFocus = (event: Event) => {
+            if (event.target instanceof Element && event.target.closest("[data-plan-card]")) {
+              timeline.totalProgress(1);
+            }
+          };
+          diagram.addEventListener("focusin", onFocus);
+          return () => diagram.removeEventListener("focusin", onFocus);
+        }
+
+        const mobile = section.querySelector<HTMLElement>("[data-plan-mobile]");
         if (!mobile) return;
-        mobile.querySelectorAll("[data-plan-image], [data-plan-card], [data-plan-chip]")
-          .forEach((element, index) => reveal(element, (index % 4) * 0.06));
-      }
+        const elements = Array.from(mobile.querySelectorAll<HTMLElement>("[data-plan-image], [data-plan-card], [data-plan-chip]"));
+        const items: { element: HTMLElement; timeline: gsap.core.Timeline; ready: boolean }[] = [];
+        let next = 0;
+        const advance = () => {
+          if (items[next]?.ready) items[next].timeline.play();
+        };
+
+        // Each item must enter the viewport AND follow its predecessor. A fast
+        // swipe still constructs portrait -> cards -> chips, with no scroll scrub.
+        elements.forEach((element) => {
+          const portrait = element.hasAttribute("data-plan-image");
+          const chip = element.hasAttribute("data-plan-chip");
+          const duration = portrait ? 1.2 : chip ? 0.45 : 0.65;
+          const timeline = gsap.timeline({ paused: true }).from(element, {
+            opacity: 0, y: portrait ? 30 : chip ? 14 : 12,
+            scale: portrait ? 0.94 : chip ? 0.9 : 0.92,
+            duration,
+            ease: "power3.out", clearProps: "transform,opacity",
+          }).call(() => { next++; advance(); }, [], chip ? 0.065 : duration);
+          items.push({ element, timeline, ready: false });
+        });
+        items.forEach((item, index) => {
+          ScrollTrigger.create({
+            trigger: item.element, start: "top 85%", once: true,
+            onEnter: () => { item.ready = true; if (index === next) advance(); },
+          });
+        });
+
+        const onFocus = (event: Event) => {
+          const index = items.findIndex((item) => event.target instanceof Node && item.element.contains(event.target));
+          if (index < next) return;
+          // Finish earlier entrances without leaving focus on an invisible button.
+          while (next <= index) items[next].timeline.totalProgress(1);
+        };
+        mobile.addEventListener("focusin", onFocus);
+        return () => mobile.removeEventListener("focusin", onFocus);
+      }, section);
+      return () => ctx.revert();
     });
 
     return () => media.revert();
@@ -156,16 +240,16 @@ export default function FitnessPlanSection() {
       style={{ "--u": "min(calc(min(100vw, 1440px) * 0.000694444), calc(100dvh * 0.000971817))" } as React.CSSProperties}
     >
       <div
-        className="mx-auto flex w-full max-w-360 flex-col gap-12 px-5 py-16 lg:max-w-[calc(1440*var(--u))] lg:gap-[var(--g48)] lg:px-[var(--p100)] lg:py-[var(--p100)]"
+        className={`mx-auto flex w-full max-w-360 flex-col gap-12 px-5 py-16 lg:max-w-[calc(1440*var(--u))] lg:gap-[var(--g48)] lg:px-[var(--p100)] lg:py-[var(--p100)] ${styles.content}`}
         style={{ ["--g48" as string]: u(48), ["--p100" as string]: u(100) }}
       >
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:gap-[var(--g48)]">
-          <h2 data-plan-copy className="flex-1 text-[28px] font-normal leading-[normal] text-white sm:text-[36px] lg:text-[length:max(24px,var(--h))]" style={{ ["--h" as string]: u(44) }}>
+        <div className={`flex flex-col gap-6 lg:flex-row lg:items-end lg:gap-[var(--g48)] ${styles.copy}`}>
+          <h2 data-plan-copy className={`flex-1 text-[28px] font-normal leading-[normal] text-white sm:text-[36px] lg:text-[length:max(24px,var(--h))] ${styles.heading}`} style={{ ["--h" as string]: u(44) }}>
             Your workout plan is built by a{" "}
-            <em className="comprehensive-serif italic">physician</em> who sees how
+            <em className={`comprehensive-serif italic ${styles.physicianWord}`}>physician</em> who sees how
             you <em className="comprehensive-serif italic">train.</em>
           </h2>
-          <p data-plan-copy className="flex-1 text-[16px] leading-[normal] text-white lg:text-[length:max(13px,var(--p))]" style={{ ["--p" as string]: u(20) }}>
+          <p data-plan-copy className={`flex-1 text-[16px] leading-[normal] text-white lg:text-[length:max(13px,var(--p))] ${styles.description}`} style={{ ["--p" as string]: u(20) }}>
             Your Meddy physician sees your workouts, progress, training load,
             injuries, cardiovascular activity, recovery, and health data and
             uses that information to build and adjust your plan.
@@ -265,52 +349,35 @@ export default function FitnessPlanSection() {
           ))}
         </div>
 
-        <div data-plan-mobile className="flex flex-col gap-8 lg:hidden">
-          <div data-plan-image className="relative mx-auto aspect-square w-full max-w-[360px] overflow-hidden rounded-[20px] opacity-80">
-            <FitnessPhysician
-              src="/fitness/plan-physician-center.png"
-              active={activeCard}
-              sizes="360px"
-            />
-            <div
-              className="absolute inset-x-0 bottom-0 h-[40%]"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(23,23,24,0) 0%, rgba(23,23,24,1) 80%)",
-              }}
-            />
+        <div data-plan-mobile className={styles.mobileDiagram} aria-label="Your physician considers your body, training, goals, and preferences">
+          <div data-plan-image className={styles.mobilePortrait}>
+            <FitnessPhysician src="/fitness/plan-physician-center-new.png" active={activeCard}
+              sizes="(max-width: 511px) 90vw, 448px" />
+            <div className={styles.mobileFade} />
           </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            {CARDS.map((c, index) => (
-              <button
-                key={c.title}
-                type="button"
-                {...cardInteraction(index)}
-                data-plan-card={index}
-                className={`flex items-center gap-2 rounded-[12px] border border-white/20 bg-[#111110] p-4 shadow-[0px_0px_10px_rgba(0,0,0,0.25)] ${styles.card}`}
-              >
-                <Image
-                  src={c.icon}
-                  alt=""
-                  width={Math.round(c.iconW)}
-                  height={24}
-                  className="h-6 w-auto shrink-0"
-                />
-                <span className="text-[15px] text-white">{c.title}</span>
-              </button>
+          <svg className={styles.mobileConnectors} viewBox="0 0 298 390" aria-hidden="true">
+            {MOBILE_LINES.map((path, index) => (
+              <path key={path} d={path} fill="none" stroke="#abc8b5" strokeWidth="0.65"
+                opacity={activeCard === index ? 1 : 0.7} />
             ))}
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            {CHIPS.map((ch) => (
-              <div key={ch.text} data-plan-chip className={CHIP_TEXT}>
-                <span className="whitespace-nowrap text-[13px] italic text-white">
-                  {ch.text}
-                </span>
-              </div>
+            {[[101, 76], [177, 66], [108, 301], [172, 328]].map(([x, y]) => (
+              <circle key={`${x}-${y}`} cx={x} cy={y} r="1.2" fill="#cce7d5" />
             ))}
-          </div>
+          </svg>
+          {CARDS.map((c, index) => (
+            <button key={c.title} type="button" {...cardInteraction(index)} data-plan-card={index}
+              className={`${styles.mobileCard} ${styles.card}`}
+              style={{ left: m(MOBILE_CARDS[index].x), top: m(MOBILE_CARDS[index].y) }}>
+              <Image src={c.icon} alt="" width={24} height={24} className={styles.mobileIcon} />
+              <span>{c.title}</span>
+            </button>
+          ))}
+          {CHIPS.map((ch) => (
+            <div key={ch.text} data-plan-chip className={styles.mobileChip}
+              style={{ left: m(MOBILE_CHIPS[ch.text][0]), top: m(MOBILE_CHIPS[ch.text][1]) }}>
+              <span className={ch.y < 300 ? styles.mobileItalic : undefined}>{ch.text}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
