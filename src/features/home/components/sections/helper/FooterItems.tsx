@@ -26,7 +26,7 @@ const FOOTER_COLUMNS: FooterLink[][] = [
   ],
   [
     { label: "Labs and\nBiomarkers Tracking", href: "/biomarkers" },
-    { label: "Weight loss and\nmetabolic", href: "/#how-it-works" },
+    { label: "Weight loss and\nmetabolic", href: "/weight-loss" },
     { label: "Wearables and\nhealth data", href: "/wearables" },
     { label: "Personalized\nhealth plans", href: "/physician-care" },
     { label: "24/7 Primary care", href: "/247-care" },
