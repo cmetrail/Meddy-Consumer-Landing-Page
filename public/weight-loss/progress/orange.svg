@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="813.189" height="338" viewBox="0 0 813.189 338" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Orange graph">
+<path id="Vector 7521" d="M273.334 190.745C149.58 143.522 93.2197 73.6805 7.1551 13.5V329L801.434 332.273C801.434 332.273 666.386 285.75 574.117 274.998C424.524 257.566 399.503 238.89 273.334 190.745Z" fill="url(#paint0_linear_0_8)"/>
+<g id="Line ">
+<path id="Ellipse 2044" d="M11.8838 2.5C16.929 2.50021 21.2666 6.39652 21.2666 11.5C21.2666 16.6035 16.929 20.4998 11.8838 20.5C6.83841 20.5 2.5 16.6036 2.5 11.5C2.5 6.39639 6.83841 2.5 11.8838 2.5Z" fill="#B78860" stroke="#F8F8F2" stroke-width="5"/>
+<circle id="Ellipse 2045" cx="803.189" cy="328" r="7.5" fill="#B78860" stroke="#F8F8F2" stroke-width="5"/>
+<path id="Vector 7522" d="M19.5376 16.3384C104.669 75.8006 156.651 142.774 279.065 189.434C403.866 237.004 428.616 255.458 576.587 272.681C667.855 283.305 794.444 324.737 794.444 324.737" stroke="#B78860" stroke-width="5"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_8" x1="285.773" y1="140.951" x2="202.2" y2="404.314" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FADDA8"/>
+<stop offset="0.39845" stop-color="#F8F8F2" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>
