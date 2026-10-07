@@ -1,0 +1,166 @@
+.card {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 24px;
+  border-radius: 20px;
+  padding: 16px 16px 14px !important;
+  background: rgb(255 255 255 / 10%);
+  backdrop-filter: blur(20px);
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  min-height: 62px;
+}
+
+.tab {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 62px;
+  border-radius: 999px;
+  padding: 12px !important;
+  color: white;
+  font-size: 20px;
+  font-weight: 400;
+  white-space: nowrap;
+  transition: background-color 150ms, color 150ms;
+}
+
+.tab[aria-pressed="true"] {
+  background: white;
+  color: #111110;
+}
+
+.tabIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.strength {
+  border-radius: 16px;
+  padding: 24px !important;
+  background: #09090b;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+  min-height: 446px;
+  border: 1px solid rgb(226 226 226 / 10%);
+  border-radius: 16px;
+  padding: 19px 20px 30px !important;
+  background: #111113;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.caption {
+  color: #7b7b7b;
+  font-size: 15px;
+}
+
+.unitToggle {
+  display: flex;
+  height: 31px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #232324;
+}
+
+.unitButton {
+  padding: 0 16px !important;
+  color: #7b7b7b;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.unitButton[aria-pressed="true"] {
+  background: #17925a;
+  color: white;
+}
+
+.bar {
+  display: flex;
+  gap: 1.3px;
+  height: 62px;
+  width: 100%;
+}
+
+.segment {
+  flex-basis: 0;
+  min-width: 0;
+  height: 100%;
+  border-radius: 1px;
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: 48% 52%;
+  margin-top: 5px !important;
+}
+
+.legendColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10.4px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 8px;
+  padding: 7.8px 10px !important;
+  background: #09090b;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 27px;
+  white-space: nowrap;
+}
+
+.swatch {
+  height: 15.6px;
+  width: 15.6px;
+  flex-shrink: 0;
+  border-radius: 2.6px;
+}
+
+.muscleName { color: #7b7b7b; }
+.value { color: white; margin-left: 5px !important; }
+
+.card button:focus-visible {
+  outline: 2px solid #6ee7a0 !important;
+  outline-offset: 3px;
+}
+
+@media (max-width: 639px) {
+  .card { padding: 12px !important; gap: 16px; }
+  .tabs { min-height: 48px; }
+  .tab { min-height: 48px; padding: 8px 5px !important; font-size: 13px; gap: 5px; }
+  .tabIcon { width: 18px; height: 18px; }
+  .strength { padding: 16px !important; }
+  .panel { min-height: 0; padding: 16px !important; }
+  .legend { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .legendItem { font-size: 13px; line-height: 22px; padding: 6px !important; gap: 4px; }
+  .swatch { width: 12px; height: 12px; }
+  .value { margin-left: 0 !important; }
+}
+
+@media (max-width: 359px) {
+  .strength { padding: 10px !important; }
+  .panel { padding: 10px !important; }
+  .tab { font-size: 11px; }
+  .legendItem { font-size: 11px; }
+}

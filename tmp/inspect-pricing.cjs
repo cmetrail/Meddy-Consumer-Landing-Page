@@ -1,0 +1,2 @@
+const { chromium } = require('C:/Users/User/AppData/Local/npm-cache/_npx/420ff84f11983ee5/node_modules/playwright');
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1442,height:842}});await p.goto('http://localhost:3000/pricing'); console.log(await p.locator('article').first().evaluate(el=>({class:el.className,styles:[...document.styleSheets].flatMap(sheet=>{try{return [...sheet.cssRules].filter(r=>r.selectorText && el.matches(r.selectorText)).map(r=>r.cssText)}catch{return []}})})));await b.close()})();
