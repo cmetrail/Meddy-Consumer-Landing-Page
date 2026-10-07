@@ -31,7 +31,7 @@ export default function HowItWorksSignalSection() {
       </div>
       <div
         className="pointer-events-none absolute hidden lg:block"
-        style={{ left: -141, right: -141, top: "calc(50% + 0.7px)", transform: "translateY(-50%)", aspectRatio: "1672 / 941" }}
+        style={{ left: -141, right: -141, top: "calc(50% + 0.7px)", transform: "translateY(-50%)", aspectRatio: "1672 / 941", minHeight: "100%" }}
       >
         <Image src={`${A}/bg.png`} alt="" fill priority sizes="1722px" className="object-cover" />
       </div>

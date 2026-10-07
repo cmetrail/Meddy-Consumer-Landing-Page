@@ -40,7 +40,7 @@ export default function HowItWorksFooterSection() {
 
   return (
     <section ref={sectionRef} className="relative w-full overflow-hidden bg-white lg:pt-[488px]">
-      <div className="pointer-events-none absolute inset-x-0 top-0 overflow-hidden" style={{ aspectRatio: "1440 / 1106" }}>
+      <div className="pointer-events-none absolute top-0 overflow-hidden" style={{ left: "50%", width: "max(100%, 1450px)", transform: "translateX(-50%)", aspectRatio: "1440 / 1106" }}>
         <Image
           src="/how-it-works/footer/footer-photo.png"
           alt=""

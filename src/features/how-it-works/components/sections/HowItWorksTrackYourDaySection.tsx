@@ -51,9 +51,9 @@ export default function HowItWorksTrackYourDaySection() {
         className="pointer-events-none absolute inset-x-0 opacity-60 lg:hidden"
         style={{ bottom: -4, height: 832, background: "linear-gradient(180deg, rgba(0,0,0,0) 73.742%, #030C16 100%)" }}
       />
-      {/* Desktop backdrop: 1794 x 1196 box starting 63px left of the page (no fade is visible in the frame) */}
-      <div className="pointer-events-none absolute hidden lg:block" style={{ left: -63, top: "50%", width: 1794, height: 1196, transform: "translateY(-50%)" }}>
-        <Image src="/how-it-works/track-your-day/track-day.png" alt="" fill priority sizes="1794px" className="object-cover" />
+      {/* Desktop backdrop: Figma box (1794 x 1196, 63px bleed at 1440 wide) that grows with the page; its left edge drifts right with width so the woman keeps the Figma position relative to the headline */}
+      <div className="pointer-events-none absolute hidden lg:block" style={{ left: "calc(8% - 178px)", width: "calc(100% + 354px)", top: "50%", aspectRatio: "1536 / 1024", minHeight: "100%", transform: "translateY(-50%)" }}>
+        <Image src="/how-it-works/track-your-day/track-day.png" alt="" fill priority sizes="100vw" className="object-cover" />
       </div>
 
       {/* same container as the header; on mobile the title block grows and the card sits at the bottom (322px apart in the frame) */}

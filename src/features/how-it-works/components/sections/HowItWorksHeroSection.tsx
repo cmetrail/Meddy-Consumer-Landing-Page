@@ -33,7 +33,7 @@ export default function HowItWorksHeroSection() {
       <div className="hidden lg:block">
         <div
           className="pointer-events-none absolute opacity-40 mix-blend-multiply"
-          style={{ left: -91.39, right: -91.39, top: "calc(50% + 3.5px)", transform: "translateY(-50%)", aspectRatio: "740 / 482" }}
+          style={{ left: -91.39, right: -91.39, top: "calc(50% + 3.5px)", transform: "translateY(-50%)", aspectRatio: "740 / 482", minHeight: "100%" }}
         >
           <Image src="/how-it-works/hero/pattern.png" alt="" fill priority sizes="1630px" className="object-cover" />
         </div>

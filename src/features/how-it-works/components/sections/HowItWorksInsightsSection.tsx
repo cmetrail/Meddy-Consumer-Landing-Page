@@ -95,7 +95,7 @@ export default function HowItWorksInsightsSection() {
   return (
     <section className="relative flex w-full flex-col items-center justify-center overflow-hidden bg-white">
       {/* "image 191": 1990 x 1120 box, 275px bleed each side, top-aligned */}
-      <div className="pointer-events-none absolute hidden lg:block" style={{ left: -275, right: -275, top: 0.39, aspectRatio: "1672 / 941" }}>
+      <div className="pointer-events-none absolute hidden lg:block" style={{ left: -275, right: -275, top: 0.39, aspectRatio: "1672 / 941", minHeight: "100%" }}>
         <Image src={`${A}/scene.png`} alt="" fill priority sizes="1990px" className="object-cover" />
       </div>
       {/* mobile: 1650 x 928 box centred 150px right of the middle, plus the dark fade */}

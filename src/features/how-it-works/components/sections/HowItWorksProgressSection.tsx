@@ -39,7 +39,7 @@ export default function HowItWorksProgressSection() {
         </div>
       </div>
       {/* desktop photo: 1791 x 1008 box (175px bleed each side), mirrored, centred */}
-      <div className="pointer-events-none absolute hidden lg:block" style={{ left: -175, right: -176, top: "calc(50% + 0.24px)", transform: "translateY(-50%)", aspectRatio: "1672 / 941" }}>
+      <div className="pointer-events-none absolute hidden lg:block" style={{ left: -175, right: -176, top: "calc(50% + 0.24px)", transform: "translateY(-50%)", aspectRatio: "1672 / 941", minHeight: "100%" }}>
         <div className="absolute inset-0" style={{ transform: "scaleX(-1)" }}>
           <Image src={`${A}/scene.png`} alt="" fill priority sizes="1791px" className="object-cover" />
         </div>
