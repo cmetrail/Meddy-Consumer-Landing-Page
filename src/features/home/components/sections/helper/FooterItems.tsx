@@ -10,7 +10,7 @@ type FooterLink = { label: string; href: string };
 
 const FOOTER_COLUMNS: FooterLink[][] = [
   [
-    { label: "How it works", href: "/#how-it-works" },
+    { label: "How it works", href: "/how-it-works" },
     { label: "Why Meddy", href: "/why-meddy" },
     { label: "Physician care", href: "/physician-care" },
     { label: "Pricing", href: "/pricing" },
