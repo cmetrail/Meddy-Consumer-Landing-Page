@@ -1,0 +1,63 @@
+.carousel { display: none; }
+
+@media (max-width: 1023px) {
+  .section { --level-unit: min(1.4px, 100vw / 408); }
+  @layer utilities {
+    .content { padding: calc(55 * var(--level-unit)) 0 calc(86 * var(--level-unit)) !important; }
+    .heading {
+      padding-left: calc(21 * var(--level-unit)) !important;
+      font-size: calc(32 * var(--level-unit)) !important;
+    }
+    .heading > span:last-child {
+      margin-top: calc(12 * var(--level-unit)) !important;
+      padding-left: calc(56 * var(--level-unit)) !important;
+    }
+  }
+  .carousel {
+    display: flex;
+    align-items: flex-end;
+    gap: calc(14 * var(--level-unit));
+    width: 100%;
+    margin-top: calc(54 * var(--level-unit)) !important;
+    padding: 0 calc(21 * var(--level-unit)) !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: calc(21 * var(--level-unit));
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .carousel::-webkit-scrollbar { display: none; }
+  .slide {
+    flex: 0 0 calc(var(--tier-width) * var(--level-unit));
+    min-width: 0;
+    padding-top: calc((570 - var(--tier-height)) * var(--level-unit)) !important;
+    scroll-snap-align: start;
+  }
+  .slide:focus-visible { outline: 2px solid #8abe85; outline-offset: -2px; }
+  .slide:last-child {
+    margin-right: max(0px, calc(100vw - (var(--tier-width) + 42) * var(--level-unit))) !important;
+  }
+  .photo {
+    position: relative;
+    width: 100%;
+    height: calc(var(--tier-height) * var(--level-unit));
+  }
+  .label {
+    position: absolute;
+    top: calc(20 * var(--level-unit));
+    right: calc(21 * var(--level-unit));
+    z-index: 1;
+    font-size: calc(28 * var(--level-unit));
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .description {
+    min-height: calc(48 * var(--level-unit));
+    margin-top: calc(8 * var(--level-unit)) !important;
+    font-size: calc(16 * var(--level-unit));
+    font-weight: 400;
+    line-height: calc(24 * var(--level-unit));
+    color: #fff;
+  }
+}

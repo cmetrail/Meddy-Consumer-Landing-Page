@@ -1,0 +1,77 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: min(1200px, calc(100% - 40px));
+  margin-inline: auto !important;
+  padding-block: 22px 77px !important;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.headingGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.heading {
+  color: #46524b;
+  font-size: clamp(30px, 4.45vw, 64px);
+  font-weight: 500;
+  line-height: 1.26;
+  letter-spacing: 0;
+}
+
+.healthcare {
+  color: #17925a;
+  font-family: "Times New Roman", Times, serif !important;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.subtitle {
+  color: #6e7a72;
+  font-size: clamp(20px, 2.23vw, 32px);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.description {
+  color: #6e7a72;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.collage {
+  position: relative;
+  width: 100%;
+  margin-top: 64px !important;
+}
+
+@media (max-width: 639px) {
+  .container {
+    padding-block: 32px 40px !important;
+  }
+
+  .heading {
+    letter-spacing: -0.6px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+
+  .collage {
+    margin-top: 40px !important;
+  }
+}
