@@ -7,7 +7,7 @@ import Image from "next/image";
 import { X } from "lucide-react";
 
 const NAV_ITEMS = [
-  { label: "How it works", href: "/#how-it-works" },
+  { label: "How it works", href: "/how-it-works" },
   { label: "Physician Care", href: "/physician-care" },
   { label: "WHY MEDDY", href: "/why-meddy" },
   { label: "Nutrition", href: "/#nutrition" },
