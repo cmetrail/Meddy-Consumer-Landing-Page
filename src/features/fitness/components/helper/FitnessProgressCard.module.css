@@ -42,6 +42,10 @@
   flex-shrink: 0;
 }
 
+.tab:first-child .tabIcon {
+  transform: rotate(45deg);
+}
+
 .strength {
   border-radius: 16px;
   padding: 24px !important;
@@ -124,8 +128,8 @@
   border-radius: 8px;
   padding: 7.8px 10px !important;
   background: #09090b;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 400;
   line-height: 27px;
   white-space: nowrap;
 }
@@ -145,6 +149,51 @@
   outline-offset: 3px;
 }
 
+.cardio {
+  display: flex;
+  flex-direction: column;
+  min-height: 492px;
+  border-radius: 16px;
+  padding: 24px !important;
+  color: white;
+  font-weight: 400;
+  background: #111113;
+}
+
+.cardioTitle { font-size: 24px; line-height: 36px; }
+.durationLabel { font-size: 20px; line-height: 30px; }
+.durationValue { font-size: 40px; font-weight: 600; line-height: 60px; }
+
+.cardioStats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 29px !important;
+}
+
+.cardioStat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-height: 114px;
+  border-radius: 8px;
+  padding: 20px 24px !important;
+  background: #232324;
+}
+
+.statLabel { font-size: 16px; line-height: 24px; }
+.statValueRow { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.statValue { font-size: 30px; line-height: 45px; }
+.statDelta { font-size: 20px; line-height: 30px; }
+.zones { margin-top: 20px !important; }
+.zonesTitle { display: block; font-size: 16px; line-height: 24px; }
+.zoneBar { display: flex; width: 100%; height: 98px; }
+.zoneSegment { flex-basis: 0; min-width: 0; border-right: 1px solid #111113; }
+.zoneSegment:last-child { border-right: 0; }
+.zonePercentages { display: flex; margin-top: 8px !important; font-size: 20px; line-height: 30px; }
+.zonePercentages span { flex-basis: 0; min-width: 0; }
+
 @media (max-width: 639px) {
   .card { padding: 12px !important; gap: 16px; }
   .tabs { min-height: 48px; }
@@ -156,11 +205,28 @@
   .legendItem { font-size: 13px; line-height: 22px; padding: 6px !important; gap: 4px; }
   .swatch { width: 12px; height: 12px; }
   .value { margin-left: 0 !important; }
+  .cardio { min-height: 0; padding: 16px !important; }
+  .cardioTitle { font-size: 18px; line-height: 28px; }
+  .durationLabel { font-size: 16px; line-height: 26px; }
+  .durationValue { font-size: 32px; line-height: 48px; }
+  .cardioStats { margin-top: 20px !important; }
+  .cardioStat { min-height: 96px; padding: 12px !important; }
+  .statLabel { font-size: 13px; }
+  .statValue { font-size: 20px; line-height: 32px; }
+  .statDelta { font-size: 13px; line-height: 22px; }
+  .statValueRow { gap: 4px; }
+  .zonePercentages { font-size: 14px; line-height: 24px; }
 }
 
 @media (max-width: 359px) {
   .strength { padding: 10px !important; }
   .panel { padding: 10px !important; }
-  .tab { font-size: 11px; }
+  .tab { font-size: 10px; gap: 3px; padding: 8px 2px !important; }
+  .tabIcon { width: 16px; height: 16px; }
   .legendItem { font-size: 11px; }
+  .cardio { padding: 12px !important; }
+  .cardioStat { padding: 8px !important; }
+  .statValue { font-size: 16px; }
+  .statDelta { font-size: 11px; }
+  .zonePercentages { font-size: 12px; }
 }

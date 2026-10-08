@@ -2,67 +2,89 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Dumbbell, Activity, Heart, NotebookPen } from "lucide-react";
+import { Dumbbell, Heart, NotebookPen } from "lucide-react";
+import styles from "./FitnessProgressCard.module.css";
+
+function RunningIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="15" cy="4" r="2" />
+      <path d="m5 9 4-2 4 2-3 5 4 3 2 5M13 9l3 3 4-3M10 14l-3 4H3" />
+    </svg>
+  );
+}
 
 const TABS = [
   { label: "Strength", icon: Dumbbell },
-  { label: "Cardio", icon: Activity },
+  { label: "Cardio", icon: RunningIcon },
   { label: "Intensity", icon: Heart },
   { label: "HR Zone", icon: NotebookPen },
 ];
 
 /* ---------- Strength ---------- */
 const STRENGTH_GROUPS = [
-  { label: "Chest", value: 110, color: "#E09A2A", width: "24%" },
-  { label: "Back", value: 50, color: "#148BD5", width: "18.39%" },
-  { label: "Legs", value: 100, color: "#C084FC", width: "30.19%" },
-  { label: "Arms", value: 120, color: "#6EE7A0", width: "13.22%" },
-  { label: "Shoulders", value: 100, color: "#FF7043", width: "13.22%" },
+  { label: "Chest", load: 110, percent: 22, color: "#E09A2A", width: 24 },
+  { label: "Back", load: 50, percent: 10, color: "#148BD5", width: 18.4 },
+  { label: "Legs", load: 100, percent: 20, color: "#C084FC", width: 22.8 },
+  { label: "Arms", load: 120, percent: 15, color: "#6EE7A0", width: 11.5 },
+  { label: "Shoulders", load: 100, percent: 13, color: "#FF7043", width: 7.8 },
+  { label: "Biceps", load: 40, percent: 8, color: "#FFFFFF", width: 6.5 },
+  { label: "Triceps", load: 35, percent: 7, color: "#8A8A8A", width: 6.3 },
+  { label: "Calves", load: 15, percent: 3, color: "#820DE8", width: 1.7 },
+  { label: "Forearms", load: 10, percent: 2, color: "#17925A", width: 1.5 },
 ];
 
 function StrengthContent() {
+  const [unit, setUnit] = useState<"percent" | "load">("percent");
+
   return (
-    <div className="flex flex-col justify-center rounded-[16px] bg-[#09090B] p-6 lg:min-h-[494px]">
-      <div className="flex flex-col gap-5 rounded-[15.6px] border border-[#E2E2E2]/10 bg-[#111113] p-5">
-        <div className="flex items-center justify-between">
-          <span className="text-[15px] text-[#7B7B7B]">Cumulative</span>
-          <div className="flex h-[31px] items-stretch overflow-hidden rounded-[20px] border border-[#E2E2E2]">
+    <div className={styles.strength}>
+      <div className={styles.panel}>
+        <div className={styles.panelHeader}>
+          <span className={styles.caption}>Cumulative</span>
+          <div className={styles.unitToggle} role="group" aria-label="Strength units">
             <button
               type="button"
-              className="flex items-center rounded-l-[20px] bg-[#17925A] px-4 text-[15px] font-bold text-white"
+              aria-label="Percentage"
+              aria-pressed={unit === "percent"}
+              onClick={() => setUnit("percent")}
+              className={styles.unitButton}
             >
               %
             </button>
             <button
               type="button"
-              className="flex items-center rounded-r-[20px] bg-[#232324] px-4 text-[15px] font-bold text-[#7B7B7B]"
+              aria-pressed={unit === "load"}
+              onClick={() => setUnit("load")}
+              className={styles.unitButton}
             >
               Load
             </button>
           </div>
         </div>
 
-        <div className="flex h-[62px] w-full gap-[1.3px]">
-          {STRENGTH_GROUPS.map((g) => (
+        <div className={styles.bar} role="img" aria-label="Cumulative muscle group distribution">
+          {STRENGTH_GROUPS.map((group) => (
             <div
-              key={g.label}
-              className="h-full rounded-[1.3px]"
-              style={{ width: g.width, background: g.color }}
+              key={group.label}
+              className={styles.segment}
+              style={{ flexGrow: group.width, background: group.color }}
             />
           ))}
         </div>
 
-        <div className="flex flex-col items-start gap-[10.4px]">
-          {STRENGTH_GROUPS.map((g) => (
-            <div
-              key={g.label}
-              className="flex items-center gap-2 rounded-[7.8px] bg-[#09090B] px-[10px] py-[7.8px]"
-            >
-              <span className="h-[15.6px] w-[15.6px] rounded-[2.6px]" style={{ background: g.color }} />
-              <span className="text-[18px] font-medium text-[#7B7B7B]">{g.label}</span>
-              <span className="text-[18px] font-medium text-white">
-                {g.value} <span className="text-[#7B7B7B]">lbs</span>
-              </span>
+        <div className={styles.legend}>
+          {[STRENGTH_GROUPS.slice(0, 5), STRENGTH_GROUPS.slice(5)].map((column, index) => (
+            <div key={index} className={styles.legendColumn}>
+              {column.map((group) => (
+                <div key={group.label} className={styles.legendItem}>
+                  <span className={styles.swatch} style={{ background: group.color }} />
+                  <span className={styles.muscleName}>{group.label}</span>
+                  <span className={styles.value}>
+                    {unit === "percent" ? `${group.percent}%` : `${group.load} lbs`}
+                  </span>
+                </div>
+              ))}
             </div>
           ))}
         </div>
@@ -73,64 +95,48 @@ function StrengthContent() {
 
 /* ---------- Cardio ---------- */
 const HR_ZONES = [
-  { label: "Zone 1", pct: "25%", color: "#D69D43", width: "30.04%" , mw: "26.5%" },
-  { label: "Zone 2", pct: "20%", color: "#4089CF", width: "13.37%" , mw: "10.1%" },
-  { label: "Zone 3", pct: "35%", color: "#B786F5", width: "36.43%" , mw: "41.6%" },
-  { label: "Zone 4", pct: "10%", color: "#ED7950", width: "10.08%" , mw: "10.2%" },
-  { label: "Zone 5", pct: "10%", color: "#8EE4A6", width: "9.30%" , mw: "10.2%" },
+  { label: "Zone 1", pct: "25%", color: "#D69D43", width: 30.04 },
+  { label: "Zone 2", pct: "20%", color: "#4089CF", width: 13.37 },
+  { label: "Zone 3", pct: "35%", color: "#B786F5", width: 36.43 },
+  { label: "Zone 4", pct: "10%", color: "#ED7950", width: 10.08 },
+  { label: "Zone 5", pct: "10%", color: "#8EE4A6", width: 9.30 },
 ];
 
 function CardioContent() {
   return (
-    <div className="flex flex-col rounded-[16px] bg-[#111113] p-6">
-      <div className="flex flex-col gap-4 sm:gap-6">
-        <span className="text-[16px] text-white sm:text-[24px]">Cardiovascular Training</span>
+    <div className={styles.cardio}>
+      <span className={styles.cardioTitle}>Cardiovascular Training</span>
+      <span className={styles.durationLabel}>Total Duration</span>
+      <span className={styles.durationValue}>210 mins</span>
 
-        <div className="flex flex-col gap-2">
-          <span className="text-[14px] text-white sm:text-[20px]">Total Duration</span>
-          <span className="text-[28px] font-semibold leading-none text-white sm:text-[40px]">210 mins</span>
+      <div className={styles.cardioStats}>
+        <div className={styles.cardioStat}>
+          <span className={styles.statLabel}>Session Days</span>
+          <div className={styles.statValueRow}>
+            <span className={styles.statValue}>3</span>
+            <span className={styles.statDelta}>+2</span>
+          </div>
         </div>
-
-        <div className="flex flex-col gap-8">
-          <div className="grid grid-cols-2 gap-[10px]">
-            <div className="flex h-[114px] flex-col justify-center gap-2 rounded-lg bg-[#232324] p-4 sm:justify-between sm:gap-0 sm:p-6">
-              <span className="text-[16px] text-white">Session Days</span>
-              <div className="flex items-center gap-2">
-                <span className="text-[16px] leading-none text-white sm:text-[30px]">3</span>
-                <span className="text-[14px] text-white sm:text-[20px]">+1</span>
-              </div>
-            </div>
-            <div className="flex h-[114px] flex-col justify-center gap-2 rounded-lg bg-[#232324] p-4 sm:justify-between sm:gap-0 sm:p-6">
-              <span className="text-[16px] text-white">Average HR</span>
-              <div className="flex items-center gap-2">
-                <span className="text-[16px] leading-none text-white sm:text-[30px]">142 bpm</span>
-                <span className="text-[14px] text-white sm:text-[20px]">+3%</span>
-              </div>
-            </div>
+        <div className={styles.cardioStat}>
+          <span className={styles.statLabel}>Average HR</span>
+          <div className={styles.statValueRow}>
+            <span className={styles.statValue}>142 bpm</span>
+            <span className={styles.statDelta}>+3%</span>
           </div>
+        </div>
+      </div>
 
-          <div className="flex flex-col gap-2">
-            <div className="flex w-full gap-px">
-              {HR_ZONES.map((z) => (
-                <div key={z.label} className="h-[98px] w-[var(--mw)] sm:w-[var(--w)]" style={{ ["--mw" as string]: z.mw, ["--w" as string]: z.width, background: z.color }} />
-              ))}
-            </div>
-            <div className="flex w-full text-[12px] text-white sm:text-[20px]">
-              {HR_ZONES.map((z, i) => (
-                <span key={z.label} className="w-[var(--mw)] shrink-0 whitespace-nowrap sm:w-[var(--w)]" style={{ ["--mw" as string]: z.mw, ["--w" as string]: z.width }}>
-                  {z.pct}
-                 
-                </span>
-              ))}
-            </div>
-            <div className="hidden w-full text-[16px] text-white opacity-60 sm:flex">
-              {HR_ZONES.map((z) => (
-                <span key={z.label} className="shrink-0 whitespace-nowrap" style={{ width: z.width }}>
-                  {z.label}
-                </span>
-              ))}
-            </div>
-          </div>
+      <div className={styles.zones}>
+        <span className={styles.zonesTitle}>HR Zones</span>
+        <div className={styles.zoneBar} role="img" aria-label="Heart rate zones: Zone 1 25%, Zone 2 20%, Zone 3 35%, Zone 4 10%, Zone 5 10%">
+          {HR_ZONES.map((zone) => (
+            <div key={zone.label} className={styles.zoneSegment} style={{ flexGrow: zone.width, background: zone.color }} />
+          ))}
+        </div>
+        <div className={styles.zonePercentages}>
+          {HR_ZONES.map((zone) => (
+            <span key={zone.label} style={{ flexGrow: zone.width }}>{zone.pct}</span>
+          ))}
         </div>
       </div>
     </div>
@@ -327,11 +333,11 @@ function HRZoneContent() {
 }
 
 export default function FitnessProgressCard() {
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
 
   return (
-    <div className={`flex w-full flex-col gap-6 rounded-[20px] px-2 py-4 backdrop-blur-[20px] sm:px-4 sm:py-8 ${active === 0 ? "bg-white/10" : "bg-white/20"}`}>
-      <div className="flex items-center overflow-x-auto [scrollbar-width:none] sm:overflow-visible">
+    <div className={styles.card}>
+      <div className={styles.tabs} role="group" aria-label="Training category">
         {TABS.map((tab, i) => {
           const Icon = tab.icon;
           const isActive = i === active;
@@ -340,11 +346,10 @@ export default function FitnessProgressCard() {
               key={tab.label}
               type="button"
               onClick={() => setActive(i)}
-              className={`flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full p-2 text-[14px] sm:flex-1 sm:px-4 sm:py-3 lg:px-3 lg:py-4 transition-colors sm:text-[20px] ${
-                isActive ? "bg-white text-[#111110]" : "text-white"
-              }`}
+              aria-pressed={isActive}
+              className={styles.tab}
             >
-              <Icon className="h-6 w-6" />
+              <Icon className={styles.tabIcon} />
               {tab.label}
             </button>
           );

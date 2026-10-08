@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useRef } from "react";
+import TrendOrbs from "./TrendOrbs";
 import { DESKTOP_MOTION } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
@@ -32,8 +33,8 @@ const GYS = [
 ];
 
 const FILTERS = [
-  { id: "st-f0", x: 145.4, y: 278.403, s: 32.2 },
-  { id: "st-f1", x: 1194.4, y: 399.403, s: 32.2 },
+  { id: "st-f0", x: 147.2001, y: 280.20335, s: 28.5998 },
+  { id: "st-f1", x: 1196.2001, y: 401.20335, s: 28.5998 },
   { id: "st-f2", x: 845.4, y: 256.403, s: 46.2 },
 ];
 
@@ -41,16 +42,16 @@ const DOTS = [
   {
     cx: 161.5,
     cy: 294.503,
-    rOuter: 6.4999,
-    rInner: 5.05548,
+    rOuter: 5.77304,
+    rInner: 4.49014,
     large: false,
     filterId: "st-f0",
   },
   {
     cx: 1210.5,
     cy: 415.503,
-    rOuter: 6.4999,
-    rInner: 5.05548,
+    rOuter: 5.77304,
+    rInner: 4.49014,
     large: false,
     filterId: "st-f1",
   },
@@ -117,7 +118,7 @@ function CalloutCard({
     variant === "accent"
       ? "#17925A"
       : variant === "red"
-        ? "#D25753"
+        ? "#61D253"
         : "#FFFFFF";
   const isAccent = variant === "accent";
   return (
@@ -158,7 +159,7 @@ function CalloutCard({
               isAccent
                 ? "uppercase text-[#17925A]"
                 : variant === "red"
-                  ? "text-[#D25753]"
+                  ? "text-[#61D253]"
                   : "text-white"
             }
             style={{
@@ -201,9 +202,9 @@ export default function SleepTrend() {
           defaults: { ease: "none" },
           scrollTrigger: {
             trigger: rootRef.current,
-            // Draw during the same viewport crossing as the incoming panel.
-            start: "top bottom",
-            end: "top top",
+            // Wait until the chart is in view before drawing.
+            start: "top 15%",
+            end: () => `+=${window.innerHeight * 0.8}`,
             // Gently catch up to scrolling instead of snapping to each wheel step.
             scrub: 1,
             invalidateOnRefresh: true,
@@ -242,6 +243,10 @@ export default function SleepTrend() {
         .st-scroll { min-height: 100svh; }
         .st-sticky { position: relative; min-height: 100svh; display: flex; align-items: center; }
         .st-content { width: 100%; }
+        @media (min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+          .st-scroll { min-height: 180svh; }
+          .st-sticky { position: sticky; top: 0; }
+        }
         .st-card { transform: translate(-50%, -100%); transform-origin: 50% 100%; }
         @media (max-width: 1023px), (pointer: coarse), (prefers-reduced-motion: reduce) {
           .st-scroll { min-height: 0; }
@@ -310,7 +315,7 @@ export default function SleepTrend() {
                       in2="bg"
                       result="shape"
                     />
-                    <feGaussianBlur stdDeviation="4.8" result="blur" />
+                    <feGaussianBlur stdDeviation={f.id === "st-f2" ? 4.8 : 4.26323} result="blur" />
                   </filter>
                 ))}
 
@@ -335,9 +340,9 @@ export default function SleepTrend() {
                   gradientTransform="matrix(-663.337 27.7703 66.2132 1920.71 721.142 415.243)"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stopColor="#D25753" />
-                  <stop offset="0.687" stopColor="#893F35" />
-                  <stop offset="0.951" stopColor="#A83232" stopOpacity="0" />
+                  <stop stopColor="#61D253" />
+                  <stop offset="0.687" stopColor="#4C8935" />
+                  <stop offset="0.951" stopColor="#57A832" stopOpacity="0" />
                 </radialGradient>
 
                 <radialGradient
@@ -346,10 +351,10 @@ export default function SleepTrend() {
                   cy="0"
                   r="1"
                   gradientUnits="userSpaceOnUse"
-                  gradientTransform="translate(5.05548 5.05551) rotate(87.3975) scale(6.18534 6.18529)"
+                  gradientTransform="translate(4.49014 4.49018) rotate(87.3975) scale(5.49366 5.49362)"
                 >
-                  <stop offset="0.016" stopColor="#6886AD" />
-                  <stop offset="1" stopColor="#191762" />
+                  <stop stopColor="white" />
+                  <stop offset="0.984486" stopColor="#ABADAF" />
                 </radialGradient>
                 <radialGradient
                   id="st-large-dot"
@@ -359,8 +364,8 @@ export default function SleepTrend() {
                   gradientUnits="userSpaceOnUse"
                   gradientTransform="translate(10.4999 10.5) rotate(87.3975) scale(12.8466 12.8465)"
                 >
-                  <stop offset="0.016" stopColor="#AD6868" />
-                  <stop offset="1" stopColor="#621717" />
+                  <stop offset="0.016" stopColor="#61D253" />
+                  <stop offset="1" stopColor="#17622B" />
                 </radialGradient>
               </defs>
 
@@ -405,12 +410,13 @@ export default function SleepTrend() {
                     cy={d.cy}
                     rx={d.rOuter}
                     ry={d.rOuter}
-                    fill={d.large ? "#C27B55" : "#5577C2"}
+                    fill={d.large ? "#61D253" : "#A2AFCA"}
                     filter={`url(#${d.filterId})`}
                   />
                   <ellipse
-                    cx={d.cx}
-                    cy={d.cy}
+                    cx={d.large ? d.cx : d.rInner}
+                    cy={d.large ? d.cy : d.rInner}
+                    transform={d.large ? undefined : `translate(${d.cx - d.rInner} ${d.cy - d.rInner})`}
                     rx={d.rInner}
                     ry={d.rInner}
                     fill={d.large ? "url(#st-large-dot)" : "url(#st-small-dot)"}
@@ -418,6 +424,7 @@ export default function SleepTrend() {
                 </g>
               ))}
             </svg>
+            <TrendOrbs />
 
             {CALLS.map((c) => (
               <div
@@ -458,7 +465,7 @@ export default function SleepTrend() {
                   width: "14.9px",
                   height: "14.9px",
                   background:
-                    "linear-gradient(180deg, #621717 0%, rgba(98, 23, 23, 0.5) 100%)",
+                    "linear-gradient(180deg, #61D253 0%, rgba(97, 210, 83, 0.5) 100%)",
                 }}
               />
               <span className="text-white text-[15px] font-medium leading-[140%]">

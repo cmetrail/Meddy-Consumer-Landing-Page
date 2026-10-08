@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useRef } from "react";
+import TrendOrbs from "./TrendOrbs";
 import { DESKTOP_MOTION } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
@@ -15,17 +16,17 @@ const VIEW_H = 350;
 const VIEW_X = 45;
 const VIEW_W = 1350;
 
-// Exact bezier paths from Line.svg
+// Supplied SVG paths, fitted to the existing chart coordinate system.
+const PATH_TRANSFORM = "translate(50 250) scale(1.3 1.12)";
 const SOD_PATH =
-  "M54.5 278.279C97.1397 229.928 176.5 269.781 302.607 327.218" +
-  "C472.839 404.752 562.591 319.052 606.415 295.79" +
-  "C792 197.28 1177.88 324.951 1319.5 494.784";
-
+  "M0.324219 0.303711C34.5813 36.8754 111.993 55.5424 216.518 19.8247" +
+  "C368.575 -32.1354 391.468 45.204 458.269 93.792" +
+  "C525.071 142.38 575.957 150.353 745.83 119.55" +
+  "C887.878 93.792 905.2 121.796 981.422 216.36";
 const BP_PATH =
-  "M50.1953 240.521C94.6903 281.697 195.238 302.714 331 262.499" +
-  "C528.5 203.997 558.235 291.074 645 345.78" +
-  "C731.765 400.485 797.86 409.462 1018.5 374.78" +
-  "C1203 345.78 1225.5 377.31 1324.5 483.78";
+  "M3.53906 23.6771C36.3677 -19.2669 97.4679 16.1296 194.559 67.1436" +
+  "C325.621 136.007 394.723 59.8904 428.463 39.2297" +
+  "C571.346 -48.2641 868.435 65.1303 977.473 215.971";
 
 // Grid line y-coords from Line.svg (x spans 119.213 → 1389.803)
 const GX1 = 119.213;
@@ -39,7 +40,7 @@ const GYS = [
 const DOTS = [
   {
     cx: 448.5,
-    cy: 241.503,
+    cy: 356.476088,
     rOuter: 13.5,
     rInner: 10.5,
     green: true,
@@ -47,7 +48,7 @@ const DOTS = [
   },
   {
     cx: 160.5,
-    cy: 266.503,
+    cy: 292.036188,
     rOuter: 6.5,
     rInner: 5.055,
     green: false,
@@ -55,7 +56,7 @@ const DOTS = [
   },
   {
     cx: 1087.5,
-    cy: 334.503,
+    cy: 375.421467,
     rOuter: 6.5,
     rInner: 5.055,
     green: false,
@@ -63,7 +64,7 @@ const DOTS = [
   },
   {
     cx: 1218.5,
-    cy: 384.503,
+    cy: 402.737281,
     rOuter: 13.5,
     rInner: 10.5,
     green: true,
@@ -81,6 +82,7 @@ const CALLS: {
   value: string;
   left: string;
   top: string;
+  dotIndex: number;
 }[] = [
   {
     variant: "sodium",
@@ -88,14 +90,16 @@ const CALLS: {
     label: "Sodium:",
     value: "3400 mg",
     left: "8.56%",
-    top: "33.29%",
+    top: "40.581768%",
+    dotIndex: 1,
   },
   {
     variant: "bp",
     week: "Week 1",
     value: "BP:138",
     left: "29.89%",
-    top: "26.14%",
+    top: "58.993168%",
+    dotIndex: 0,
   },
   {
     variant: "sodium",
@@ -103,14 +107,16 @@ const CALLS: {
     label: "Sodium:",
     value: "2400 mg",
     left: "77.22%",
-    top: "52.72%",
+    top: "64.406133%",
+    dotIndex: 2,
   },
   {
     variant: "bp",
     week: "Week 8",
     value: "BP:130",
     left: "86.93%",
-    top: "67.00%",
+    top: "72.210652%",
+    dotIndex: 3,
   },
 ];
 
@@ -205,9 +211,9 @@ export default function GraphBand() {
           defaults: { ease: "none" },
           scrollTrigger: {
             trigger: rootRef.current,
-            // Draw during the same viewport crossing as the incoming panel.
-            start: "top bottom",
-            end: "top top",
+            // Wait until the chart is in view before drawing.
+            start: "top 15%",
+            end: () => `+=${window.innerHeight * 0.8}`,
             // Gently catch up to scrolling instead of snapping to each wheel step.
             scrub: 1,
             invalidateOnRefresh: true,
@@ -226,7 +232,7 @@ export default function GraphBand() {
           tl.fromTo(
             dot,
             { opacity: 0 },
-            { opacity: 1, duration: 0.12, ease: "sine.out" },
+            { opacity: 1, duration: 0.08, ease: "sine.out" },
             (DOTS[index].cx - VIEW_X) / VIEW_W,
           );
         });
@@ -234,8 +240,9 @@ export default function GraphBand() {
           tl.fromTo(
             card,
             { opacity: 0 },
-            { opacity: 1, duration: 0.16, ease: "sine.out" },
-            parseFloat(CALLS[index].left) / 100,
+            { opacity: 1, duration: 0.08, ease: "sine.out" },
+            // Match the marker's actual SVG x coordinate and the moving orb.
+            (DOTS[CALLS[index].dotIndex].cx - VIEW_X) / VIEW_W,
           );
         });
 
@@ -254,6 +261,10 @@ export default function GraphBand() {
         .gbd-scroll { min-height: 100svh; }
         .gbd-sticky { position: relative; min-height: 100svh; display: flex; align-items: center; }
         .gbd-content { width: 100%; }
+        @media (min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+          .gbd-scroll { min-height: 180svh; }
+          .gbd-sticky { position: sticky; top: 0; }
+        }
         .gbd-card { transform: translate(-50%, -100%); transform-origin: 50% 100%; }
         @media (max-width: 1023px), (pointer: coarse), (prefers-reduced-motion: reduce) {
           .gbd-scroll { min-height: 0; }
@@ -308,10 +319,10 @@ export default function GraphBand() {
                 </clipPath>
                 {/* Blur/glow filters for dots — exact from Line.svg */}
                 {[
-                  { id: "gbd-f0", x: 425.4, y: 218.403, s: 46.2 },
-                  { id: "gbd-f1", x: 144.4, y: 250.403, s: 32.2 },
-                  { id: "gbd-f2", x: 1071.4, y: 318.403, s: 32.2 },
-                  { id: "gbd-f3", x: 1195.4, y: 361.403, s: 46.2 },
+                  { id: "gbd-f0", x: 425.4, y: 333.376088, s: 46.2 },
+                  { id: "gbd-f1", x: 144.4, y: 275.936188, s: 32.2 },
+                  { id: "gbd-f2", x: 1071.4, y: 359.321467, s: 32.2 },
+                  { id: "gbd-f3", x: 1195.4, y: 379.637281, s: 46.2 },
                 ].map((f) => (
                   <filter
                     key={f.id}
@@ -340,12 +351,12 @@ export default function GraphBand() {
                   cx="0"
                   cy="0"
                   r="1"
-                  gradientTransform="matrix(-663.127 26.3921 -93.5053 -2452.47 699.205 270.867)"
+                  gradientTransform="matrix(-510.43 -20.9789 50.9503 -1450.98 510.754 34.117)"
                   gradientUnits="userSpaceOnUse"
                 >
                   <stop stopColor="white" />
-                  <stop offset="0.812" stopColor="white" />
-                  <stop offset="0.951" stopColor="white" stopOpacity="0" />
+                  <stop offset="0.68711" stopColor="white" />
+                  <stop offset="0.951034" stopColor="white" stopOpacity="0" />
                 </radialGradient>
 
                 {/* Radial gradient — BP line (bright green → dark green → transparent) */}
@@ -354,12 +365,12 @@ export default function GraphBand() {
                   cx="0"
                   cy="0"
                   r="1"
-                  gradientTransform="matrix(-662.976 -23.6202 66.1771 -1633.67 713.171 278.591)"
+                  gradientTransform="matrix(-510.547 23.4408 -71.9905 -2178.22 499.903 17.0936)"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stopColor="#61D253" />
-                  <stop offset="0.687" stopColor="#4C8935" />
-                  <stop offset="0.951" stopColor="#57A832" stopOpacity="0" />
+                  <stop stopColor="#17925A" />
+                  <stop offset="0.812332" stopColor="#377B3F" />
+                  <stop offset="0.951034" stopColor="#17925A" stopOpacity="0" />
                 </radialGradient>
 
                 {/* Dot fill gradients */}
@@ -403,26 +414,36 @@ export default function GraphBand() {
               </g>
 
               {/* Sodium line — thin, white radial gradient */}
+              <g clipPath={`url(#${revealId})`}>
               <path
+                data-trend-path
+                transform={PATH_TRANSFORM}
+                pathLength="1"
+                strokeDasharray="1 1"
                 d={SOD_PATH}
-                clipPath={`url(#${revealId})`}
                 stroke="url(#gbd-sod-grad)"
-                strokeWidth="1.003"
+                strokeWidth="0.888174"
                 fill="none"
                 strokeLinecap="round"
                 className="gbd-sod"
               />
+              </g>
 
               {/* BP line — thick, green radial gradient */}
+              <g clipPath={`url(#${revealId})`}>
               <path
+                data-trend-path
+                transform={PATH_TRANSFORM}
+                pathLength="1"
+                strokeDasharray="1 1"
                 d={BP_PATH}
-                clipPath={`url(#${revealId})`}
                 stroke="url(#gbd-bp-grad)"
-                strokeWidth="10.03"
+                strokeWidth="8.90838"
                 fill="none"
                 strokeLinecap="round"
                 className="gbd-bp"
               />
+              </g>
 
               {/* Dots — fade in after lines finish drawing */}
               {DOTS.map((d) => (
@@ -445,6 +466,7 @@ export default function GraphBand() {
                 </g>
               ))}
             </svg>
+            <TrendOrbs />
 
             {/* Outlined callout cards — absolute, desktop only */}
             {CALLS.map((c) => (

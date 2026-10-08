@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useRef } from "react";
+import TrendOrbs from "./TrendOrbs";
 import { DESKTOP_MOTION } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
@@ -189,9 +190,9 @@ export default function FitnessTrend() {
           defaults: { ease: "none" },
           scrollTrigger: {
             trigger: rootRef.current,
-            // Draw during the same viewport crossing as the incoming panel.
-            start: "top bottom",
-            end: "top top",
+            // Wait until the chart is in view before drawing.
+            start: "top 15%",
+            end: () => `+=${window.innerHeight * 0.8}`,
             // Gently catch up to scrolling instead of snapping to each wheel step.
             scrub: 1,
             invalidateOnRefresh: true,
@@ -230,6 +231,10 @@ export default function FitnessTrend() {
         .ft-scroll { min-height: 100svh; }
         .ft-sticky { position: relative; min-height: 100svh; display: flex; align-items: center; }
         .ft-content { width: 100%; }
+        @media (min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+          .ft-scroll { min-height: 180svh; }
+          .ft-sticky { position: sticky; top: 0; }
+        }
         .ft-card { transform: translate(-50%, -100%); transform-origin: 50% 100%; }
         @media (max-width: 1023px), (pointer: coarse), (prefers-reduced-motion: reduce) {
           .ft-scroll { min-height: 0; }
@@ -400,6 +405,7 @@ export default function FitnessTrend() {
                 </g>
               ))}
             </svg>
+            <TrendOrbs />
 
             {CALLS.map((c) => (
               <div

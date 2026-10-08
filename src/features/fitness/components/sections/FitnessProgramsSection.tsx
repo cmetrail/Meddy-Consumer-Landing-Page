@@ -65,7 +65,7 @@ export default function FitnessProgramsSection() {
             Meddy understands how you trained and how<br className={styles.desktopBreak} /> your body was challenged.
           </p>
         </header>
-        <div className={styles.cards} data-lenis-prevent-wheel>
+        <div className={styles.cards}>
           {PROGRAMS.map((program) => <ProgramCard key={program.title} program={program} />)}
         </div>
       </div>

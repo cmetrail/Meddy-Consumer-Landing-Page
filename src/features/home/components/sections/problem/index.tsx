@@ -16,12 +16,66 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 const HEADING = { left: "6.05%", top: "6.84%", width: "54.08%" };
 
 const IMAGES = [
-  { src: "/home/scattered-1.png", left: "33.68%", top: "51.76%", width: "22.2%", mobileLeft: "5%", mobileTop: "32%", mobileWidth: "40%", ar: 1.865 },
-  { src: "/home/scattered-2.png", left: "8.56%", top: "32.13%", width: "21.16%", mobileLeft: "55%", mobileTop: "33%", mobileWidth: "40%", ar: 1.912 },
-  { src: "/home/scattered-4.png", left: "66.87%", top: "49.61%", width: "24.57%", mobileLeft: "50%", mobileTop: "50%", mobileWidth: "42%", ar: 2.166 },
-  { src: "/home/scattered-5.png", left: "52.82%", top: "31.25%", width: "21.16%", mobileLeft: "5%", mobileTop: "49%", mobileWidth: "40%", ar: 1.81 },
-  { src: "/home/scattered-6.png", left: "48.3%", top: "73.93%", width: "25.68%", mobileLeft: "55%", mobileTop: "68%", mobileWidth: "40%", ar: 1.883 },
-  { src: "/home/scattered-3.png", left: "17.88%", top: "77.64%", width: "21.43%", mobileLeft: "5%", mobileTop: "66%", mobileWidth: "38%", ar: 1.949 },
+  {
+    src: "/home/scattered-1.png",
+    left: "33.68%",
+    top: "51.76%",
+    width: "22.2%",
+    mobileLeft: "5%",
+    mobileTop: "32%",
+    mobileWidth: "40%",
+    ar: 1.865,
+  },
+  {
+    src: "/home/scattered-2.png",
+    left: "8.56%",
+    top: "32.13%",
+    width: "21.16%",
+    mobileLeft: "55%",
+    mobileTop: "33%",
+    mobileWidth: "40%",
+    ar: 1.912,
+  },
+  {
+    src: "/home/scattered-4.png",
+    left: "66.87%",
+    top: "49.61%",
+    width: "24.57%",
+    mobileLeft: "50%",
+    mobileTop: "50%",
+    mobileWidth: "42%",
+    ar: 2.166,
+  },
+  {
+    src: "/home/scattered-5.png",
+    left: "52.82%",
+    top: "31.25%",
+    width: "21.16%",
+    mobileLeft: "5%",
+    mobileTop: "49%",
+    mobileWidth: "40%",
+    ar: 1.81,
+  },
+  {
+    src: "/home/watch.png",
+    left: "48.3%",
+    top: "73.93%",
+    width: "25.68%",
+    mobileLeft: "55%",
+    mobileTop: "68%",
+    mobileWidth: "40%",
+    ar: 1.883,
+  },
+  {
+    src: "/home/scattered-3.png",
+    left: "17.88%",
+    top: "77.64%",
+    width: "21.43%",
+    mobileLeft: "5%",
+    mobileTop: "66%",
+    mobileWidth: "38%",
+    ar: 1.949,
+  },
 ];
 
 const BRAND = "#17925A";
@@ -49,8 +103,6 @@ function StraightUnderline() {
   );
 }
 
-
-
 function Heading() {
   return (
     <div data-problem-heading>
@@ -65,7 +117,11 @@ function Heading() {
         style={{ color: HEADLINE }}
       >
         <span className="block pb-[clamp(4px,0.5vw,7px)]">
-          Your <span className="relative inline-block">health<StraightUnderline /></span>
+          Your{" "}
+          <span className="relative inline-block">
+            health
+            <StraightUnderline />
+          </span>
         </span>
         <span
           className="block w-fit ml-[35%] mt-[clamp(6px,0.83vw,12px)] pb-[clamp(14px,1.9vw,27px)] origin-left"
@@ -86,71 +142,81 @@ export default function ProblemSection() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useGSAP(
-    () => desktopMotion(() => {
-      const root = sectionRef.current;
-      if (!root) return;
+    () =>
+      desktopMotion(() => {
+        const root = sectionRef.current;
+        if (!root) return;
 
-      const photos = gsap.utils.toArray<HTMLElement>("[data-scatter]", root);
+        const photos = gsap.utils.toArray<HTMLElement>("[data-scatter]", root);
 
-      /* Idle float — started when the entrance finishes, killed when the section
+        /* Idle float — started when the entrance finishes, killed when the section
          is scrolled back out so the entrance can replay cleanly. */
-      let floats: gsap.core.Tween[] = [];
-      const startFloat = () => {
-        killFloat();
+        let floats: gsap.core.Tween[] = [];
+        const startFloat = () => {
+          killFloat();
+          photos.forEach((el, i) => {
+            floats.push(
+              gsap.to(el, {
+                y: "+=12",
+                duration: 2.2 + (i % 3) * 0.5,
+                yoyo: true,
+                repeat: -1,
+                ease: "sine.inOut",
+                delay: (i % 4) * 0.35,
+              }),
+            );
+          });
+        };
+        const killFloat = () => {
+          floats.forEach((t) => t.kill());
+          floats = [];
+        };
+
+        /* Plays forward on enter, reverses when scrolled back out — so it replays
+         every time you come back to the section. */
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: root,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+            onLeaveBack: killFloat,
+            onLeave: killFloat,
+            onEnterBack: () => {
+              if (tl.progress() === 1) startFloat();
+            },
+          },
+        });
+
         photos.forEach((el, i) => {
-          floats.push(
-            gsap.to(el, {
-              y: "+=12",
-              duration: 2.2 + (i % 3) * 0.5,
-              yoyo: true,
-              repeat: -1,
-              ease: "sine.inOut",
-              delay: (i % 4) * 0.35,
-            }),
+          const d = DIRECTIONS[i % DIRECTIONS.length];
+          tl.fromTo(
+            el,
+            { x: d.x, y: d.y, rotate: d.r, opacity: 0 },
+            {
+              x: 0,
+              y: 0,
+              rotate: 0,
+              opacity: 1,
+              duration: 1.1,
+              ease: "power3.out",
+            },
+            0.1 + i * 0.09,
           );
         });
-      };
-      const killFloat = () => {
-        floats.forEach((t) => t.kill());
-        floats = [];
-      };
 
-      /* Plays forward on enter, reverses when scrolled back out — so it replays
-         every time you come back to the section. */
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: root,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-          onLeaveBack: killFloat,
-          onLeave: killFloat,
-          onEnterBack: () => { if (tl.progress() === 1) startFloat(); },
-        },
-      });
-
-      photos.forEach((el, i) => {
-        const d = DIRECTIONS[i % DIRECTIONS.length];
+        const settled = 0.1 + photos.length * 0.09 + 1.1;
         tl.fromTo(
-          el,
-          { x: d.x, y: d.y, rotate: d.r, opacity: 0 },
-          { x: 0, y: 0, rotate: 0, opacity: 1, duration: 1.1, ease: "power3.out" },
-          0.1 + i * 0.09,
+          "[data-problem-heading]",
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+          settled,
         );
-      });
 
-      const settled = 0.1 + photos.length * 0.09 + 1.1;
-      tl.fromTo(
-        "[data-problem-heading]",
-        { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-        settled,
-      );
-
-      tl.eventCallback("onComplete", () => {
-        if (tl.scrollTrigger?.isActive) startFloat();
-      });
-      return killFloat;
-    }),
+        tl.eventCallback("onComplete", () => {
+          if (tl.scrollTrigger?.isActive) startFloat();
+        });
+        return killFloat;
+      }),
     { scope: sectionRef },
   );
 
@@ -173,9 +239,25 @@ export default function ProblemSection() {
             key={p.src}
             data-scatter
             className="absolute overflow-hidden w-(--img-w) max-md:w-(--img-w-md) max-md:left-(--img-left-md) max-md:top-(--img-top-md)"
-            style={{ left: p.left, top: p.top, aspectRatio: p.ar, "--img-w": p.width, "--img-w-md": p.mobileWidth, "--img-left-md": p.mobileLeft, "--img-top-md": p.mobileTop } as CSSProperties}
+            style={
+              {
+                left: p.left,
+                top: p.top,
+                aspectRatio: p.ar,
+                "--img-w": p.width,
+                "--img-w-md": p.mobileWidth,
+                "--img-left-md": p.mobileLeft,
+                "--img-top-md": p.mobileTop,
+              } as CSSProperties
+            }
           >
-            <Image src={p.src} alt="" fill sizes="500px" className="object-cover" />
+            <Image
+              src={p.src}
+              alt=""
+              fill
+              sizes="500px"
+              className="object-cover"
+            />
           </div>
         ))}
       </div>
