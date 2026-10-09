@@ -17,7 +17,7 @@ const FOOTER_COLUMNS: FooterLink[][] = [
     { label: "Longevity and\npreventive health", href: "/longevity" },
   ],
   [
-    { label: "Nutrition", href: "/#nutrition" },
+    { label: "Nutrition", href: "/nutrition" },
     { label: "Sleep", href: "/sleep" },
     { label: "Fitness", href: "/fitness" },
     { label: "Medication\nmanagement", href: "/medication" },
