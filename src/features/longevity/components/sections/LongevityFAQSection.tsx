@@ -112,7 +112,7 @@ export default function LongevityFAQSection() {
             return (
               <div key={f.q} className={`flex w-full flex-col items-start ${isOpen ? "gap-[30px] lg:gap-4" : "gap-[30px]"}`}>
                 <div className="w-full">
-                  <button type="button" onClick={() => toggle(i)} aria-expanded={isOpen} className="flex w-full cursor-pointer items-center justify-between gap-4 text-left">
+                  <button type="button" onClick={() => toggle(i)} aria-expanded={isOpen} className="flex w-full cursor-pointer items-center justify-between text-left">
                     <span className="min-w-px flex-1 text-[16px] font-normal leading-[1.5] text-[#f5f5f5] lg:text-[20px]">{f.q}</span>
                     <Icon open={isOpen} />
                   </button>
