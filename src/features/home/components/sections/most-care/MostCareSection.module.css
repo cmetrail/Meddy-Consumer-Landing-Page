@@ -1,0 +1,119 @@
+.section { width: 100%; overflow: hidden; background: #f2eee3; color: #111110; }
+.canvas { position: relative; width: 100%; max-width: 1440px; aspect-ratio: 1440 / 1128; margin-inline: auto !important; container-type: inline-size; }
+/* Scale the reference canvas as a unit so photos, overlays, and type stay aligned. */
+.stage { position: absolute; width: 1440px; height: 1128px; transform: scale(calc(100cqw / 1440px)); transform-origin: top left; }
+.stage > div { position: absolute; }
+.cardMotion { position: relative; width: 100%; height: 100%; }
+.photo { object-fit: cover; border-radius: 7px; }
+.meal { left: 120px; top: 116px; width: 334px; height: 257px; }
+.mealPhoto { position: absolute; width: 209px; height: 257px; }
+.mealPanel { position: absolute; left: 141px; top: 119px; width: 193px; height: 120px; border: 1px solid #e2e2e2; border-radius: 10px; background: white; box-shadow: 0 2px 5px #0000000c; overflow: hidden; }
+.mealHeader { height: 40px; padding: 8px !important; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; }
+.mealHeader p { font-size: 8px; line-height: 12px; font-weight: 600; }
+.mealHeader span { display: block; color: #17925a; font-size: 6px; line-height: 9px; }
+.mealAvatars { display: flex; align-items: center; }
+.mealAvatars > img { width: 18px; height: 18px; object-fit: cover; border-radius: 50%; border: 1px solid white; }
+.mealAvatars > img + img { margin-left: -5px !important; }
+.chevron { width: 18px; height: 18px; margin-left: 4px !important; border-radius: 6px; background: #daeee3; display: grid; place-items: center; color: #17925a; transform: rotate(45deg); }
+.chevron svg { transform: rotate(-45deg); }
+.mealRow { display: flex; align-items: center; gap: 5px; height: 40px; padding: 5px 8px !important; border-bottom: 1px solid #eee; }
+.mealThumbnail { width: 27px; height: 27px; border-radius: 6px; object-fit: cover; }
+.mealDescription { flex: 1; }
+.mealDescription p { font-size: 7px; line-height: 12px; }
+.macros { display: flex; gap: 5px; }
+.macros span { font-size: 5px; display: flex; align-items: center; gap: 2px; }
+.mealCalories { text-align: right; }
+.mealCalories p { font-size: 9px; line-height: 12px; }
+.mealCalories span { display: block; font-size: 6px; color: #888; }
+.workout { left: 522px; top: 73px; width: 396px; height: 258px; }
+.workoutPhoto { position: absolute; top: 9px; width: 240px; height: 249px; }
+.loadPanel { position: absolute; left: 231px; top: 0; width: 165px; height: 156px; padding: 7px !important; border-radius: 5px; background: #fff; box-shadow: 0 8px 28px #00000024; }
+.loadHeader { display: flex; justify-content: space-between; align-items: center; color: #888; font-size: 5px; height: 10px; }
+.loadHeader > div { display: flex; border-radius: 4px; overflow: hidden; background: #f8f8f8; }
+.loadHeader > div > * { padding: 2px 6px !important; }
+.loadHeader strong { background: #17925a; color: #fff; font-weight: 600; }
+.loadBar { display: flex; height: 22px; gap: 1px; margin-top: 8px !important; }
+.loadLegend { display: grid; grid-template-columns: max-content max-content; gap: 4px; margin-top: 10px !important; }
+.loadLegend > div { display: flex; align-items: center; gap: 3px; height: 15px; padding: 2px 4px !important; border-radius: 3px; background: #f8f8f8; color: #777; font-size: 6px; }
+.loadLegend i { width: 5px; height: 5px; }
+.loadLegend b { font-weight: 400; color: #555; }
+.calories { left: 1034px; top: 203px; width: 286px; height: 162px; }
+.calories .cardMotion { overflow: hidden; border-radius: 8px; color: #fff; background: radial-gradient(ellipse at 95% 0%, #177648 0%, transparent 70%), linear-gradient(120deg, #193d2b, #214433); box-shadow: 4px 6px 5px #00000026; }
+.calorieHeader { height: 86px; padding: 20px 19px 12px !important; display: flex; justify-content: space-between; }
+.calorieHeader p { color: #6ee7a0; font-size: 8px; text-transform: uppercase; line-height: 12px; }
+.calorieTotal { font-size: 40px; line-height: 43px; letter-spacing: -1.3px; font-weight: 400; }
+.calorieTotal span { font-size: 9px; letter-spacing: 0; margin-left: 3px !important; }
+.flame { width: 31px; height: 31px; display: grid; place-items: center; border-radius: 9px; background: #17925a33; color: #00d48c; }
+.calorieStats { display: grid; grid-template-columns: repeat(3, 1fr); height: 76px; border-top: 1px solid #ffffff08; }
+.calorieStats > div { padding: 18px 19px !important; border-right: 1px solid #ffffff08; }
+.calorieStats > div:last-child { background: #ffffff04; }
+.calorieStats p { display: flex; align-items: center; gap: 4px; font-size: 8px; line-height: 13px; }
+.calorieStats span { display: block; font-size: 15px; line-height: 23px; }
+.statement { left: 360px; top: 452px; width: 720px; text-align: center; }
+.eyebrow { color: #17925a; font-size: 20px; line-height: 28px; }
+.statement h2 { margin-top: 15px !important; color: #7b7b7b; font-size: 32px; line-height: 42px; font-weight: 500; }
+.everyday { margin-top: 14px !important; color: #17925a; font-family: "Times New Roman", Times, serif !important; font-size: 33px; line-height: 42px; font-weight: 700; font-style: italic; }
+.nutrients { left: 120px; top: 556px; width: 240px; height: 129px; }
+.nutrientsPanel { height: 100%; padding: 11px 10px !important; background: #fff; border: 1px solid #e2e2e2; border-radius: 8px; box-shadow: 2px 3px 5px #00000026; }
+.nutrientsPanel > p { font-size: 11px; line-height: 16px; font-weight: 500; }
+.nutrientBars { display: grid; grid-template-columns: 96px 67px 50px; gap: 3px; margin-top: 27px !important; }
+.nutrientBars > div { position: relative; border-left: 1px solid currentColor; padding-left: 3px !important; }
+.nutrientBars span { display: block; width: max-content; padding: 2px 3px !important; color: white; font-size: 8px; font-weight: 700; line-height: 12px; }
+.nutrientBars > div:nth-child(2) span { margin-left: 8px !important; }
+.nutrientBars > div:nth-child(3) span { margin-left: 14px !important; }
+.nutrientTicks { height: 27px; margin-top: 5px !important; background: repeating-linear-gradient(to right, currentColor 0 1px, transparent 1px 5px); }
+.nutrientBars p { color: #111; font-size: 9px; line-height: 14px; }
+.a1c { left: 580px; top: 668px; width: 280px; height: 243px; }
+.a1cPhoto { position: absolute; left: 111px; width: 169px; height: 243px; }
+.a1cPanel { position: absolute; left: 0; top: 118px; width: 138px; height: 120px; padding: 5px !important; background: #fff; border-radius: 4px; }
+.a1cPanel > p { font-size: 5px; color: #777; line-height: 9px; }
+.a1cPanel svg { display: block; width: 100%; height: 101px; }
+.sleep { left: 1042px; top: 575px; width: 278px; height: 246px; }
+.sleepPhoto { position: absolute; width: 194px; height: 220px; }
+.sleepPanel { position: absolute; left: 161px; top: 74px; width: 117px; height: 172px; padding: 5px !important; border-radius: 7px; background: #fff; }
+.sleepPanel > p { font-size: 4.5px; color: #777; line-height: 9px; }
+.sleepLabel { display: block; margin-top: 3px !important; font-size: 4px; color: #888; line-height: 7px; }
+.sleepPanel > strong { display: block; font-size: 10px; font-weight: 500; line-height: 14px; }
+.sleepPanel svg { display: block; width: 100%; height: 64px; }
+.sleepRange { display: flex; justify-content: space-between; font-size: 3px; line-height: 8px; }
+.sleepLegend { display: flex; flex-direction: column; gap: 3px; margin-top: 3px !important; }
+.sleepLegend > div { display: flex; align-items: center; gap: 3px; border-radius: 3px; background: #f5f5f2; padding: 2px 3px !important; height: 10px; font-size: 3.5px; color: #777; }
+.sleepLegend i { width: 4px; height: 4px; border-radius: 1px; }
+.sleepLegend span:nth-child(2) { flex: 1; color: #555; }
+.connection { left: 120px; top: 975px; width: 410px; padding-left: 15px !important; }
+.connection::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #17925a; clip-path: polygon(0 0, 100% 8%, 100% 92%, 0 100%); }
+.connection p { color: #7b7b7b; font-size: 14px; line-height: 21px; font-weight: 400; }
+.connection em { color: #17925a; font-family: "Times New Roman", Times, serif !important; font-size: 15px; font-weight: 700; }
+.sleepScorePanel { display: none; }
+@media (max-width: 767px) {
+  /* Mobile uses its own reference canvas; scale is separate from reveal transforms. */
+  .canvas { aspect-ratio: 282 / 729; }
+  .stage { width: 282px; height: 729px; transform: scale(calc(100cqw / 282px)); }
+  .meal, .workout, .calories, .nutrients, .a1c, .sleep { transform-origin: top left; }
+  .workout { left: 40px; top: 39px; scale: .5; }
+  .workoutPhoto { top: 6px; width: 182px; height: 188px; }
+  .loadPanel { left: 166px; width: 170px; box-shadow: none; }
+  .meal { left: 17px; top: 158px; scale: .37; }
+  .mealPanel { left: 105px; top: 135px; scale: 1.176; transform-origin: top left; }
+  .calories { left: 152px; top: 140px; scale: .385; }
+  .statement { left: 17px; top: 296px; width: 247px; }
+  .eyebrow { font-size: 14px; line-height: 23px; }
+  .statement h2 { margin-top: 0 !important; font-size: 17px; line-height: 25px; }
+  .everyday { margin-top: 8px !important; font-size: 18px; line-height: 25px; }
+  .a1c { left: 18px; top: 434px; scale: .425; }
+  .a1cPhoto { left: 85px; }
+  .a1cPanel { top: 202px; scale: 1.26; transform-origin: top left; }
+  .nutrients { left: 146px; top: 438px; scale: .49; }
+  .sleep { left: 147px; top: 517px; scale: .41; }
+  .sleepPanel { display: none; }
+  .sleepScorePanel { display: block; position: absolute; left: 110px; top: 156px; width: 170px; height: 152px; padding: 8px !important; border-radius: 7px; background: #fff; text-align: right; }
+  .sleepScorePanel > span { display: block; color: #8a8a82; font-size: 6px; line-height: 9px; }
+  .sleepScorePanel strong { display: block; font-size: 13px; line-height: 17px; }
+  .sleepScorePanel > b { display: inline-block; background: #57e6ff; border-radius: 8px; padding: 2px 5px !important; font-size: 5px; line-height: 8px; }
+  .sleepScorePanel svg { display: block; width: 100%; height: 86px; margin-top: 7px !important; }
+  .connection { left: 14px; top: 651px; width: 255px; padding-left: 10px !important; }
+  .connection::before { width: 3px; }
+  .connection p { font-size: 9.5px; line-height: 15px; }
+  .connection em { font-size: 10px; }
+  .connectionBreak { display: none; }
+}

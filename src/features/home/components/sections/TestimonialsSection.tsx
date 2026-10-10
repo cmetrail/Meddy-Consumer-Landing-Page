@@ -5,6 +5,7 @@ import Image from "next/image";
 import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import styles from "./TestimonialsSection.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -200,7 +201,7 @@ function TestimonialCard({ t, mobile = false }: { t: Testimonial; mobile?: boole
   const f = mobile ? MOBILE_FONT[t.size] : FONT[t.size];
   return (
     <div
-      className="relative w-full overflow-hidden"
+      className={`relative w-full overflow-hidden ${mobile ? styles.mobileCard : ""}`}
       style={{
         aspectRatio: "159/179.25",
         borderRadius: RADIUS[t.size],
@@ -208,41 +209,41 @@ function TestimonialCard({ t, mobile = false }: { t: Testimonial; mobile?: boole
         filter: `drop-shadow(${SHADOW[t.size]})`,
       }}
     >
-      <Image src={t.image} alt={`${t.name} testimonial`} fill className="object-cover" />
+      <Image src={t.image} alt={`${t.name} testimonial`} fill sizes="(max-width: 1023px) 44vw, 17vw" className="object-cover" />
       <div
         className="absolute inset-0"
         style={{ background: "linear-gradient(180deg, rgba(115,115,115,0) 26%, #0C0C0C 97%)" }}
       />
 
       {/* header — name + plan (left), age (right) */}
-      <div className="absolute left-2.5 right-2.5 top-2 flex items-start  justify-between gap-2">
+      <div className={`absolute left-2.5 right-2.5 top-2 flex items-start justify-between gap-2 ${styles.cardHeader}`}>
         <div className="flex flex-col">
           <span
-            className="font-medium uppercase leading-none"
+            className={`font-medium uppercase leading-none ${styles.cardName}`}
             style={{ fontSize: f.name, color: t.nameColor ?? "#FAFAFA", letterSpacing: "0.02em" }}
           >
             {t.name}
           </span>
-          <span className="mt-1 leading-none" style={{ fontSize: f.plan, color: t.planColor ?? "#E0D6D6", letterSpacing: "0.02em" }}>
+          <span className={`mt-1 leading-none ${styles.cardPlan}`} style={{ fontSize: f.plan, color: t.planColor ?? "#E0D6D6", letterSpacing: "0.02em" }}>
             {t.plan}
           </span>
         </div>
-        <span className="font-semibold leading-none" style={{ fontSize: f.age, color: t.ageColor ?? "#E0D6D6", letterSpacing: "0.02em" }}>
+        <span className={`font-semibold leading-none ${styles.cardAge}`} style={{ fontSize: f.age, color: t.ageColor ?? "#E0D6D6", letterSpacing: "0.02em" }}>
           {t.age}
         </span>
       </div>
 
       {/* quote */}
-      <div className="absolute bottom-2.5 left-2.5 right-2.5">
+      <div className={`absolute bottom-2.5 left-2.5 right-2.5 ${styles.cardQuote}`}>
         <span
           aria-hidden
-          className="block select-none text-[#E4E4E4]"
+          className={`block select-none text-[#E4E4E4] ${styles.cardGlyph}`}
           style={{ fontSize: f.glyph, lineHeight: 0.55, letterSpacing: "0.02em" }}
         >
           &ldquo;
         </span>
         <p
-          className="font-medium text-[#AEAEAE]"
+          className={`font-medium text-[#AEAEAE] ${styles.cardText}`}
           style={{ fontSize: f.quote, lineHeight: 1.25, letterSpacing: "0.02em" }}
         >
           {t.quote}
@@ -255,6 +256,46 @@ function TestimonialCard({ t, mobile = false }: { t: Testimonial; mobile?: boole
 export default function TestimonialsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const desktopRef = useRef<HTMLDivElement>(null);
+  const mobileRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const media = gsap.matchMedia();
+    media.add("(max-width: 1023px) and (prefers-reduced-motion: no-preference)", () => {
+      const collage = mobileRef.current;
+      if (!collage) return;
+      const cards = Array.from(collage.querySelectorAll<HTMLElement>("[data-mobile-tm]"));
+      const wrap = gsap.utils.wrap(-45, 110);
+      const loops = cards.map((card) => {
+        const initialLeft = parseFloat(getComputedStyle(card).left) / collage.clientWidth * 100;
+        const bottomRow = card.dataset.mobileTm === "bottom";
+        const position = { left: initialLeft };
+        return gsap.to(position, {
+          left: initialLeft + (bottomRow ? -155 : 155),
+          duration: 20,
+          repeat: -1,
+          ease: "none",
+          onUpdate: () => {
+            const left = wrap(position.left);
+            // Follow the reference's arc: cards grow and dip into the center slot.
+            const distance = Math.min(Math.abs(left - 28.2) / 50, 1);
+            const curve = (Math.cos(distance * Math.PI) + 1) / 2;
+            card.style.left = `${left}%`;
+            card.style.top = `${(bottomRow ? 49.74 : 0) + curve * 13.8}%`;
+            card.style.width = `${36.88 + curve * 6.74}%`;
+          },
+        });
+      });
+      return () => {
+        loops.forEach(loop => loop.kill());
+        cards.forEach(card => {
+          card.style.removeProperty("left");
+          card.style.removeProperty("top");
+          card.style.removeProperty("width");
+        });
+      };
+    });
+    return () => media.revert();
+  }, { scope: sectionRef });
 
   useGSAP(
     () => desktopMotion(() => {
@@ -391,13 +432,35 @@ export default function TestimonialsSection() {
     <section
       ref={sectionRef}
       id="testimonials"
-      className="relative w-full overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(225deg, #051F20 0%, #163B32 0%, #366B4C 23%, #EBE4CC 55%, #336D4D 80%, #395C3F 100%)",
-      }}
+      className={`relative w-full overflow-hidden ${styles.section}`}
     >
-      <div className="relative max-w-360 mx-auto px-5 lg:px-10 py-16">
+      <div className={styles.mobileCanvas}>
+        <div data-reveal className={styles.mobileHeading}>
+          <h2>
+            <span>REAL PEOPLE.</span>
+            <span>BETTER HEALTH.</span>
+          </h2>
+          <p>See how connected care can change the way you understand your health.</p>
+        </div>
+        <div ref={mobileRef} className={styles.mobileCollage}>
+          {[0, 1, 2, 6, 7, 8].map((index) => {
+            const t = TESTIMONIALS[index];
+            const quote = index === 7
+              ? "I learned which habits were actually helping me."
+              : index === 8
+                ? "My plan changed as my health improved."
+                : t.quote;
+            return (
+              <div key={`${t.name}-${t.age}`} data-mobile-tm={index < 3 ? "top" : "bottom"} className={styles.collageSlot}>
+                <div>
+                  <TestimonialCard t={{ ...t, quote }} mobile />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="hidden lg:block relative max-w-360 mx-auto px-5 lg:px-10 py-16">
         {/* Heading (mobile / tablet) */}
         <div data-reveal className="text-center lg:hidden">
           <h2 className="mx-auto text-white max-w-93 font-bold leading-tight">

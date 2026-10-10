@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+
 import Hero from "./helper/Hero";
 import NutritionSection from "./helper/NutritionSection";
 import WorkoutSection from "./helper/WorkoutSection";
@@ -13,6 +15,7 @@ import SectionStack from "./SectionStack";
 import MedicationStorySection from "@/features/physician-care/components/sections/MedicationStorySection";
 
 export default function HowMeddyWorksSection() {
+  const carePenDestinationRef = useRef<HTMLDivElement>(null);
   return (
     <section
       id="how-it-works"
@@ -31,8 +34,10 @@ export default function HowMeddyWorksSection() {
           <SleepSection />
           <SleepTrend />
           <InsightsSection />
-          {/* <MedicationStorySection /> */}
-          <A1cTrend />
+          <div data-care-journey>
+            <MedicationStorySection penDestinationRef={carePenDestinationRef} />
+            <A1cTrend sharedPen penDestinationRef={carePenDestinationRef} />
+          </div>
         </SectionStack>
       </div>
     </section>

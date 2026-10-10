@@ -3,6 +3,7 @@
   color: #f6f5e9;
   padding: 100px max(24px, calc((100vw - 1280px) / 2)) 32px !important;
   position: relative;
+  z-index: 1;
 }
 .intro {
   border-bottom: 1px solid #d8e8d023;
@@ -180,6 +181,13 @@
   left: 16%;
   transform: rotate(24deg);
   border-color: #c0d5ac12;
+}
+.modelLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  transform-origin: center;
 }
 .canvas,
 .poster {
@@ -443,7 +451,7 @@
     left: -10px;
   }
 }
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
   .section {
     padding: 64px 24px 24px !important;
   }
@@ -462,10 +470,9 @@
     gap: 0;
   }
   .visual {
-    order: -1;
     position: relative;
     top: auto;
-    height: 520px;
+    height: clamp(360px, 65svh, 520px);
     min-height: 0;
     max-height: none;
     width: 100%;
@@ -584,16 +591,60 @@
   .visualFooter > div {
     display: none;
   }
+  /* Keep the moving pen clear of overlapping side cards on small screens. */
+  .visual[data-stage] .kpiCard,
+  .visual[data-stage] .habitsCard {
+    display: none;
+  }
+  .supportCard {
+    left: 0;
+    right: 0;
+    bottom: 12%;
+    padding: 16px !important;
+  }
+  .modelShadow {
+    filter: blur(10px);
+  }
 }
 @media (max-width: 420px) {
   .section {
     padding-inline: 20px !important;
   }
   .visual {
-    height: 470px;
+    height: clamp(340px, 60svh, 440px);
   }
   .physicianCard {
     top: 16%;
+  }
+}
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .journey {
+    margin-top: 24px !important;
+  }
+  /* Keep one pen above the chapters, then let its layer travel into the chart. */
+  .visual {
+    order: -1;
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    flex-shrink: 0;
+    height: clamp(180px, 34svh, 300px);
+    max-width: none;
+    margin: 0 auto !important;
+    background: #17231d;
+  }
+  .visual::before {
+    inset: 0;
+  }
+  .chapter {
+    min-height: calc(100svh - clamp(180px, 34svh, 300px));
+  }
+  .visualLabel {
+    top: 4%;
+  }
+  .card,
+  .visualFooter {
+    display: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {

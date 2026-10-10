@@ -14,7 +14,7 @@ const ICONS = [
   "/home/scattered-3.png",
   "/home/scattered-4.png",
   "/home/scattered-5.png",
-  "/home/scattered-6.png",
+  "/home/watch.png",
 ];
 
 export default function Hero() {
@@ -22,107 +22,108 @@ export default function Hero() {
   const bgRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
-    () => desktopMotion(() => {
-      // 1. Moving gradient background — slow settle while the section scrolls in.
-      if (bgRef.current) {
-        gsap.fromTo(
-          bgRef.current,
-          { scale: 1.15 },
-          {
-            scale: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true,
+    () =>
+      desktopMotion(() => {
+        // 1. Moving gradient background — slow settle while the section scrolls in.
+        if (bgRef.current) {
+          gsap.fromTo(
+            bgRef.current,
+            { scale: 1.15 },
+            {
+              scale: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true,
+              },
             },
-          },
-        );
-      }
+          );
+        }
 
-      // 2–4. Entrance: phones slide from below → each text line appears singly → nav bar pops up.
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 85%",
-          end: "top 30%",
-          scrub: true,
-        },
-      });
-
-      // Phone slides up from below — triggered on the phone itself so it fades in
-      // while actually visible (the tall section trigger finished too early).
-      const phone = sectionRef.current?.querySelector("[data-hmw-phone]");
-      if (phone) {
-        gsap.fromTo(
-          phone,
-          { opacity: 0, y: 120 },
-          {
-            opacity: 1,
-            y: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: phone,
-              start: "top 95%",
-              end: "top 50%",
-              scrub: true,
-            },
-          },
-        );
-      }
-
-      const lines = gsap.utils.toArray<HTMLElement>(
-        "[data-hmw-line]",
-        sectionRef.current,
-      );
-      lines.forEach((el, i) => {
-        tl.fromTo(
-          el,
-          { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, ease: "none" },
-          0.3 + i * 0.15,
-        );
-      });
-
-      tl.fromTo(
-        "[data-hmw-strip]",
-        { opacity: 0, scale: 0.8 },
-        { opacity: 1, scale: 1, ease: "none" },
-        0.3 + lines.length * 0.15,
-      );
-
-      // 5. On scroll — illustrations drop one-by-one from above into the nav bar.
-      const strip = sectionRef.current?.querySelector("[data-hmw-strip]");
-      const icons = gsap.utils.toArray<HTMLElement>(
-        "[data-hmw-icon]",
-        sectionRef.current,
-      );
-      if (strip) {
-        const drop = gsap.timeline({
+        // 2–4. Entrance: phones slide from below → each text line appears singly → nav bar pops up.
+        const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: strip,
-            start: "top 95%",
-            end: "top 45%",
-            scrub: 0.5,
+            trigger: sectionRef.current,
+            start: "top 85%",
+            end: "top 30%",
+            scrub: true,
           },
         });
-        icons.forEach((el, i) => {
-          drop.fromTo(
-            el,
-            { opacity: 0, y: -70, scale: 0.6 },
+
+        // Phone slides up from below — triggered on the phone itself so it fades in
+        // while actually visible (the tall section trigger finished too early).
+        const phone = sectionRef.current?.querySelector("[data-hmw-phone]");
+        if (phone) {
+          gsap.fromTo(
+            phone,
+            { opacity: 0, y: 120 },
             {
               opacity: 1,
               y: 0,
-              scale: 1,
-              duration: 0.6,
-              ease: "back.out(1.7)",
+              ease: "none",
+              scrollTrigger: {
+                trigger: phone,
+                start: "top 95%",
+                end: "top 50%",
+                scrub: true,
+              },
             },
-            i * 0.15,
+          );
+        }
+
+        const lines = gsap.utils.toArray<HTMLElement>(
+          "[data-hmw-line]",
+          sectionRef.current,
+        );
+        lines.forEach((el, i) => {
+          tl.fromTo(
+            el,
+            { opacity: 0, y: 40 },
+            { opacity: 1, y: 0, ease: "none" },
+            0.3 + i * 0.15,
           );
         });
-      }
-    }),
+
+        tl.fromTo(
+          "[data-hmw-strip]",
+          { opacity: 0, scale: 0.8 },
+          { opacity: 1, scale: 1, ease: "none" },
+          0.3 + lines.length * 0.15,
+        );
+
+        // 5. On scroll — illustrations drop one-by-one from above into the nav bar.
+        const strip = sectionRef.current?.querySelector("[data-hmw-strip]");
+        const icons = gsap.utils.toArray<HTMLElement>(
+          "[data-hmw-icon]",
+          sectionRef.current,
+        );
+        if (strip) {
+          const drop = gsap.timeline({
+            scrollTrigger: {
+              trigger: strip,
+              start: "top 95%",
+              end: "top 45%",
+              scrub: 0.5,
+            },
+          });
+          icons.forEach((el, i) => {
+            drop.fromTo(
+              el,
+              { opacity: 0, y: -70, scale: 0.6 },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 0.6,
+                ease: "back.out(1.7)",
+              },
+              i * 0.15,
+            );
+          });
+        }
+      }),
     { scope: sectionRef },
   );
 
@@ -210,38 +211,35 @@ export default function Hero() {
 
       <div className="relative z-10 flex pt-16 max-w-360 px-5 lg:px-10 mx-auto flex-col lg:h-full">
         {/* Text */}
-        <div className="text-center max-w-214 mx-auto flex flex-col shrink-0">
+        <div className="text-center max-w-214 mx-auto flex flex-col shrink-0 gap-6 sm:gap-8">
           <p
             data-hmw-line
-            className="uppercase leading-[100%] text-xl font-bold text-[#ABB1AD]"
+            className="leading-[1.4] text-[18px] sm:text-[20px] font-normal text-[#ABB1AD]"
           >
-            How Meddy Works
+            How Meddy works
           </p>
 
-          <h2 className="mt-[19px] flex flex-col gap-[10px]">
+          <h2 className="flex flex-col gap-5 sm:gap-7">
             <span
               data-hmw-line
-              className="block font-normal text-[clamp(30px,5vw,64px)] leading-[100%] text-[#ABB1AD]"
+              className="block font-normal text-[clamp(30px,5.5vw,56px)] leading-[1.2] text-[#ABB1AD]"
             >
               Your health system
             </span>
             <span
               data-hmw-line
-              className="block font-bold text-[clamp(30px,5vw,64px)] leading-[100%] uppercase"
+              className="block font-bold italic text-[clamp(36px,7.7vw,72px)] leading-[1.15] text-[#119660]"
               style={{
-                background: "linear-gradient(90deg, #578951 0%, #2F6328 100%)",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                color: "transparent",
+                fontFamily: "Georgia, 'Times New Roman', serif",
               }}
             >
-              All in one place.
+              all in one place.
             </span>
           </h2>
 
           <p
             data-hmw-line
-            className="mt-[24px] lg:mt-[40px] text-[#ABB1AD] text-[18px] sm:text-[22px] lg:text-[24px] font-medium"
+            className="text-[#ABB1AD] text-[clamp(16px,2.75vw,24px)] leading-[1.5] font-normal"
           >
             Everything you log becomes something your doctor can act on.
           </p>
@@ -253,15 +251,15 @@ export default function Hero() {
             className="flex flex-1 min-h-0 items-end justify-center px-4 mt-8 lg:mt-0"
           >
             <Image
-              src="/home/iPhone-17.png"
+              src="/home/phone.png"
               alt="Meddy app screens"
               width={800}
               height={600}
               className="object-contain object-bottom"
               style={{
-                width: "min(100%, 650px)",
+                width: "min(100%, 800px)",
                 height: "auto",
-                maxHeight: "66dvh",
+                maxHeight: "80dvh",
               }}
             />
           </div>

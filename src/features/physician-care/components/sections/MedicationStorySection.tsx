@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowDown,
   ArrowUpRight,
   Check,
   Heart,
@@ -14,7 +13,7 @@ import {
   Stethoscope,
 } from "lucide-react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-import { DESKTOP_MOTION } from "@/lib/motion";
+import { SCROLL_MOTION } from "@/lib/motion";
 import type { CareModel } from "../helper/createCareModel";
 import styles from "./MedicationStorySection.module.css";
 
@@ -42,11 +41,14 @@ const chapters = [
   },
 ];
 
-export default function MedicationStorySection() {
+export default function MedicationStorySection({ penDestinationRef }: {
+  penDestinationRef?: RefObject<HTMLDivElement | null>;
+}) {
   const sectionRef = useRef<HTMLElement>(null);
   const journeyRef = useRef<HTMLDivElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
+  const modelLayerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current!;
@@ -56,16 +58,67 @@ export default function MedicationStorySection() {
     const media = gsap.matchMedia();
 
     media.add(
-      DESKTOP_MOTION,
-      () => {
+      {
+        motion: SCROLL_MOTION,
+        compact: "(max-width: 1023px)",
+        touch: "(pointer: coarse)",
+      },
+      (context) => {
+        if (!context.conditions?.motion) return;
+        const compact = context.conditions.compact;
+        const scrub = compact || context.conditions.touch ? 0.35 : 0.65;
         let disposed = false;
         let model: CareModel | undefined;
         let progress = 0;
         let started = false;
+        const sharedJourney = section.closest("[data-care-journey]");
+        const target = penDestinationRef?.current ?? sharedJourney
+          ?.querySelector<HTMLElement>("[data-care-pen-target]");
+        const chart = target?.closest(".a1c-scroll");
+        const layer = modelLayerRef.current!;
+        const travel = { progress: 0 };
+        // Keep the same canvas and pose throughout the handoff. Measure the
+        // untransformed visual so refreshes and reverse scrolling stay stable.
+        const positionModel = () => {
+          if (!target) return;
+          const from = visual.getBoundingClientRect();
+          const to = target.getBoundingClientRect();
+          if (!from.height || !to.height) return;
+          const p = travel.progress;
+          gsap.set(layer, {
+            x: (to.left + to.width / 2 - from.left - from.width / 2) * p,
+            y: (to.top + to.height / 2 - from.top - from.height / 2) * p,
+            scale: 1 + (to.height / from.height - 1) * p,
+          });
+        };
+        const handoff = target ? gsap.to(travel, {
+          progress: 1,
+          ease: "power2.inOut",
+          onUpdate: positionModel,
+          scrollTrigger: {
+            trigger: compact ? chart : journey,
+            start: compact ? "top 90%" : "bottom bottom",
+            endTrigger: chart,
+            end: "top 45%",
+            scrub,
+            invalidateOnRefresh: true,
+            onRefresh: positionModel,
+          },
+        }) : undefined;
+        // The source is sticky on phones. Keep tracking its live position even
+        // after the travel tween ends, until both sections have left the screen.
+        const alignment = target && sharedJourney ? ScrollTrigger.create({
+          trigger: sharedJourney,
+          start: "top bottom",
+          end: "bottom top",
+          onUpdate: positionModel,
+          onRefresh: positionModel,
+        }) : undefined;
+        if (target) target.dataset.sharedPen = "true";
         const trigger = ScrollTrigger.create({
           trigger: journey,
-          start: "top 15%",
-          end: "bottom 85%",
+          start: compact ? "top 85%" : "top 15%",
+          end: compact ? "bottom bottom" : "bottom 85%",
           onUpdate: (self) => {
             progress = self.progress;
             visual.dataset.stage = String(
@@ -100,10 +153,15 @@ export default function MedicationStorySection() {
           },
           { rootMargin: "300px" },
         );
-        observer.observe(section);
+        observer.observe(compact ? visual : section);
         return () => {
           disposed = true;
           observer.disconnect();
+          handoff?.scrollTrigger?.kill();
+          handoff?.kill();
+          alignment?.kill();
+          gsap.set(layer, { clearProps: "transform" });
+          if (target) delete target.dataset.sharedPen;
           trigger.kill();
           model?.dispose();
           delete visual.dataset.loaded;
@@ -112,7 +170,7 @@ export default function MedicationStorySection() {
       },
     );
     return () => media.revert();
-  }, []);
+  }, [penDestinationRef]);
 
   return (
     <section
@@ -177,15 +235,17 @@ export default function MedicationStorySection() {
             PHYSICIAN-GUIDED. PERSON-CENTERED.
           </span>
           <div className={styles.modelShadow} />
-          <Image
-            src="/models/care-pen.webp"
-            alt=""
-            width={720}
-            height={960}
-            sizes="(max-width: 900px) 80vw, 40vw"
-            className={styles.poster}
-          />
-          <div ref={canvasRef} className={styles.canvas} />
+          <div ref={modelLayerRef} className={styles.modelLayer}>
+            <Image
+              src="/models/care-pen.webp"
+              alt=""
+              width={720}
+              height={960}
+              sizes="(max-width: 900px) 80vw, 40vw"
+              className={styles.poster}
+            />
+            <div ref={canvasRef} className={styles.canvas} />
+          </div>
 
           <div className={`${styles.card} ${styles.physicianCard}`}>
             <span className={styles.iconCircle}>

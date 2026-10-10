@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, type RefObject } from "react";
 import Image from "next/image";
 import type { CareModel } from "@/features/physician-care/components/helper/createCareModel";
-import { DESKTOP_MOTION } from "@/lib/motion";
+import { SCROLL_MOTION } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
@@ -105,16 +105,21 @@ function CalloutCard({
   );
 }
 
-export default function A1cTrend() {
+export default function A1cTrend({ sharedPen = false, penDestinationRef }: {
+  sharedPen?: boolean;
+  penDestinationRef?: RefObject<HTMLDivElement | null>;
+}) {
   const rootRef = useRef<HTMLDivElement>(null);
   const revealId = useId();
   const baselineId = useId();
-  const penRef = useRef<HTMLDivElement>(null);
+  const localPenRef = useRef<HTMLDivElement>(null);
+  const penRef = penDestinationRef ?? localPenRef;
   const hostRef = useRef<HTMLDivElement>(null);
   const modelRef = useRef<CareModel | null>(null);
   const progressRef = useRef(0);
 
   useEffect(() => {
+    if (sharedPen) return;
     let disposed = false;
     const pen = penRef.current;
     const observer = new IntersectionObserver(async ([entry]) => {
@@ -122,6 +127,7 @@ export default function A1cTrend() {
       observer.disconnect();
       // Keep a still poster for people who prefer reduced motion.
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      // The connected journey owns one moving canvas at every viewport size.
       try {
         const { createCareModel } = await import("@/features/physician-care/components/helper/createCareModel");
         if (disposed || !hostRef.current) return;
@@ -142,20 +148,25 @@ export default function A1cTrend() {
       modelRef.current = null;
       if (pen) delete pen.dataset.loaded;
     };
-  }, []);
+  }, [sharedPen, penRef]);
 
   useGSAP(
     () => {
       const media = gsap.matchMedia();
 
-      media.add(DESKTOP_MOTION, () => {
+      media.add({
+        motion: SCROLL_MOTION,
+        compact: "(max-width: 1023px)",
+        touch: "(pointer: coarse)",
+      }, (context) => {
+        if (!context.conditions?.motion) return;
         const tl = gsap.timeline({
           defaults: { ease: "none" },
           scrollTrigger: {
             trigger: rootRef.current,
             start: "top 85%",
             end: "top 10%",
-            scrub: 0.65,
+            scrub: context.conditions.compact || context.conditions.touch ? 0.35 : 0.65,
             invalidateOnRefresh: true,
           },
           onUpdate: () => {
@@ -168,7 +179,7 @@ export default function A1cTrend() {
         tl.fromTo("[data-path-reveal]", { attr: { width: 0 } },
           { attr: { width: BEFORE_WIDTH }, duration: 0.28 }, 0);
         tl.fromTo("[data-before]", { opacity: 0 }, { opacity: 1, duration: 0.12 }, 0.04);
-        tl.fromTo(".a1c-pen", { opacity: 0, xPercent: 45, yPercent: -20, scale: 1.65 },
+        if (!sharedPen) tl.fromTo(".a1c-pen", { opacity: 0, xPercent: 45, yPercent: -20, scale: 1.65 },
           { opacity: 1, xPercent: 0, yPercent: 0, scale: 1, duration: 0.24, ease: "power2.out" }, 0.3);
         tl.fromTo(".a1c-marker, [data-treatment]", { opacity: 0 },
           { opacity: 1, duration: 0.1 }, 0.52);
@@ -183,11 +194,11 @@ export default function A1cTrend() {
 
       return () => media.revert();
     },
-    { scope: rootRef },
+    { scope: rootRef, dependencies: [sharedPen], revertOnUpdate: true },
   );
 
   return (
-    <div ref={rootRef} data-mobile-reveal="card" className="a1c-scroll relative w-full">
+    <div ref={rootRef} className="a1c-scroll relative w-full">
       <style>{`
         .a1c-scroll { min-height: 100svh; }
         .a1c-sticky { position: relative; min-height: 100svh; display: flex; align-items: center; }
@@ -200,6 +211,7 @@ export default function A1cTrend() {
         .a1c-canvas canvas { display: block; width: 100%; height: 100%; }
         .a1c-pen[data-loaded="true"] .a1c-poster { opacity: 0; }
         .a1c-pen[data-loaded="true"] .a1c-canvas { opacity: 1; }
+        .a1c-pen[data-shared-pen="true"] { visibility: hidden; }
         .a1c-treatment { position: absolute; left: 53.78%; top: 44%; transform: translate(-50%, -100%); white-space: nowrap; text-align: center; font-size: 11px; color: #bfe4b4; }
         .a1c-phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; color: #adb9b0; font-size: 12px; }
         .a1c-phases span:nth-child(2) { text-align: center; color: #bfe4b4; }
@@ -215,9 +227,10 @@ export default function A1cTrend() {
         }
         @media (max-width: 1023px) {
           .a1c-card { transform: translate(-50%, -100%) scale(0.85); }
-          .a1c-pen { left: calc(53.78% - 48px); top: calc(44% - 145px); width: 96px; height: 136px; }
+          .a1c-pen { --pen-height: clamp(84px, 26vw, 136px); left: 53.78%; top: calc(44% - var(--pen-height) - 22px); width: clamp(64px, 19vw, 96px); height: var(--pen-height); margin-left: calc(clamp(64px, 19vw, 96px) / -2); }
+          .a1c-content [data-graph-chart] { min-height: 220px; }
           .a1c-treatment { font-size: 9px; }
-          .a1c-phases { font-size: 10px; gap: 6px; }
+          .a1c-phases { font-size: 10px; line-height: 1.5; gap: 8px; }
         }
       `}</style>
 
@@ -362,9 +375,11 @@ export default function A1cTrend() {
             ))}
           </svg>
 
-          <div ref={penRef} className="a1c-pen" aria-hidden="true">
-            <Image src="/models/care-pen.webp" alt="" width={720} height={960} sizes="(max-width: 1023px) 96px, 230px" className="a1c-poster" />
-            <div ref={hostRef} className="a1c-canvas" />
+          <div ref={penRef} data-care-pen-target className="a1c-pen" aria-hidden="true">
+            {!sharedPen && <>
+              <Image src="/models/care-pen.webp" alt="" width={720} height={960} sizes="(max-width: 1023px) 96px, 230px" className="a1c-poster" />
+              <div ref={hostRef} className="a1c-canvas" />
+            </>}
           </div>
           <div data-treatment className="a1c-treatment">Semaglutide introduced</div>
 

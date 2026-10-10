@@ -1,6 +1,6 @@
 import { CircleCheckBig, Crown } from "lucide-react";
+import styles from "./Pricing.module.css";
 
-const GREEN = "#17925A";
 const LIGHT_GREEN = "#8ABE85";
 const MINT = "#B9FFB3";
 const GRAY = "#DADADA";
@@ -62,35 +62,35 @@ function PlanCard({
         : "border border-white text-white hover:bg-white/10";
 
   return (
-    <div className={`relative flex h-full flex-col p-6 lg:p-7 ${cardClass}`}>
+    <div className={`${styles.card} ${styles[variant]} relative flex h-full flex-col p-6 lg:p-7 ${cardClass}`}>
       {badge && (
-        <span className="absolute -top-3.5 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 bg-[#17925A] px-3.5 py-1 text-[15px] font-medium leading-[100%] text-white">
+        <span className={`${styles.badge} absolute -top-3.5 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 bg-[#17925A] px-3.5 py-1 text-[15px] font-medium leading-[100%] text-white`}>
           <Crown size={22} /> {badge}
         </span>
       )}
 
       <p
-        className="text-[32px] font-medium uppercase leading-[100%]"
+        className={`${styles.name} text-[32px] font-medium uppercase leading-[100%]`}
         style={{ color: eyebrowColor }}
       >
         {eyebrow}
       </p>
 
       <h3
-        className="mt-1 font-bold leading-[100%]"
+        className={`${styles.tagline} mt-1 font-bold leading-[100%]`}
         style={{ color: titleColor, fontSize: titleSize }}
       >
         {title}
       </h3>
 
       <p
-        className="mt-4 text-[14px] leading-[1.4]"
+        className={`${styles.description} mt-4 text-[14px] leading-[1.4]`}
         style={{ color: descriptionColor }}
       >
         {description}
       </p>
 
-      <div className={planName ? "mt-2" : "mt-4"}>
+      <div className={`${styles.price} ${planName ? "mt-2" : "mt-4"}`}>
         {planName ? (
           <p
             className="text-[36px] lg:text-[48px] font-semibold uppercase leading-[100%]"
@@ -126,7 +126,7 @@ function PlanCard({
       )}
 
       <ul
-        className={`flex flex-1 flex-col gap-[14px] ${subheader ? "mt-[22px]" : "mt-[30px]"}`}
+        className={`${styles.features} flex flex-1 flex-col gap-[14px] ${subheader ? "mt-[22px]" : "mt-[30px]"}`}
       >
         {features.map((f) => (
           <li key={f} className="flex items-start gap-3">
@@ -147,7 +147,7 @@ function PlanCard({
       </ul>
 
       <button
-        className={`mt-8 flex h-[50px] w-full items-center justify-center rounded-[7px] text-[18px] font-semibold transition-colors duration-200 ${btnClass}`}
+        className={`${styles.button} mt-8 flex h-[50px] w-full items-center justify-center rounded-[7px] text-[18px] font-semibold transition-colors duration-200 ${btnClass}`}
       >
         Book Your Free Consultation
       </button>
@@ -161,7 +161,7 @@ export function Pricing() {
       {/* Header */}
       <div
         data-pricing-head
-        className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"
+        className={`${styles.heading} flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between`}
       >
         <div>
           <p
@@ -188,13 +188,13 @@ export function Pricing() {
           className="text-white lg:pb-4 max-w-135.5 lg:text-right tracking-[2%] leading-[1.5] lg:leading-[100%] text-[16px] sm:text-[20px] lg:text-[24px] whitespace-pre-line"
         >
           {
-            "Simple transparent plans,\nphysician-guided care that adapts to your life."
+            "Simple, transparent plans,\nphysician-guided care that adapts to your life."
           }
         </p>
       </div>
 
       {/* Plans */}
-      <div className="mt-16 grid items-stretch gap-8 md:grid-cols-3 md:gap-4 lg:mt-36 lg:gap-[35px]">
+      <div className={`${styles.plans} mt-16 grid items-stretch gap-8 md:grid-cols-3 md:gap-4 lg:mt-36 lg:gap-[35px]`} role="region" aria-label="Pricing plans" tabIndex={0}>
         <div data-plan-card className="h-full">
           <PlanCard
             variant="free"

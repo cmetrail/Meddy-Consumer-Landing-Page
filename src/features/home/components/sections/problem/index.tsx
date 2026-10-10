@@ -7,78 +7,94 @@ import Image from "next/image";
 import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import styles from "./ProblemSection.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-/* Figma #10580:2137 — "Section 2 (The Problem)". Frame is 1437×1024.
-   Heading GROUP #10580:2140 at (87,70) 777×222. 6 Photoroom photos
-   placed absolutely inside the full frame. Node px → % of 1437×1024. */
-const HEADING = { left: "6.05%", top: "6.84%", width: "54.08%" };
+/* Positions follow the supplied 1440×960 reference. */
+const HEADING = { left: "40px", top: "1.25%", width: "54.08%" };
 
 const IMAGES = [
   {
     src: "/home/scattered-1.png",
-    left: "33.68%",
-    top: "51.76%",
-    width: "22.2%",
-    mobileLeft: "5%",
-    mobileTop: "32%",
-    mobileWidth: "40%",
+    label: "Nutrition",
+    labelLeft: "2cqw",
+    labelTop: "-4.45cqw",
+    left: "31.53%",
+    top: "49.27%",
+    width: "20%",
+    mobileLeft: "14.4%",
+    mobileTop: "53.55%",
+    mobileWidth: "33.75%",
     ar: 1.865,
   },
   {
     src: "/home/scattered-2.png",
-    left: "8.56%",
-    top: "32.13%",
-    width: "21.16%",
-    mobileLeft: "55%",
-    mobileTop: "33%",
-    mobileWidth: "40%",
+    label: "Workouts",
+    labelLeft: "0.35cqw",
+    labelTop: "-1.8cqw",
+    left: "8.68%",
+    top: "29.58%",
+    width: "18.75%",
+    mobileLeft: "10.67%",
+    mobileTop: "32.15%",
+    mobileWidth: "31.76%",
     ar: 1.912,
   },
   {
     src: "/home/scattered-4.png",
-    left: "66.87%",
-    top: "49.61%",
-    width: "24.57%",
-    mobileLeft: "50%",
-    mobileTop: "50%",
-    mobileWidth: "42%",
+    label: "Heart health",
+    labelLeft: "11.05cqw",
+    labelTop: "-3.96cqw",
+    left: "61.81%",
+    top: "46.88%",
+    width: "21.67%",
+    mobileLeft: "56.82%",
+    mobileTop: "60.52%",
+    mobileWidth: "36.23%",
     ar: 2.166,
   },
   {
     src: "/home/scattered-5.png",
-    left: "52.82%",
-    top: "31.25%",
-    width: "21.16%",
-    mobileLeft: "5%",
-    mobileTop: "49%",
-    mobileWidth: "40%",
+    label: "Labs",
+    labelLeft: "14.72cqw",
+    labelTop: "-0.9cqw",
+    left: "49.58%",
+    top: "29.17%",
+    width: "18.06%",
+    mobileLeft: "55.83%",
+    mobileTop: "38.3%",
+    mobileWidth: "38.46%",
     ar: 1.81,
   },
   {
     src: "/home/watch.png",
-    left: "48.3%",
-    top: "73.93%",
-    width: "25.68%",
-    mobileLeft: "55%",
-    mobileTop: "68%",
-    mobileWidth: "40%",
-    ar: 1.883,
+    label: "Wearables",
+    labelLeft: "2.01cqw",
+    labelTop: "-1.95cqw",
+    left: "51.39%",
+    top: "67.6%",
+    width: "21.53%",
+    mobileLeft: "48.14%",
+    mobileTop: "75.65%",
+    mobileWidth: "43.67%",
+    ar: 1.5,
   },
   {
     src: "/home/scattered-3.png",
-    left: "17.88%",
-    top: "77.64%",
-    width: "21.43%",
-    mobileLeft: "5%",
-    mobileTop: "66%",
-    mobileWidth: "38%",
+    label: "Sleep",
+    labelLeft: "1.95cqw",
+    labelTop: "-3.75cqw",
+    left: "17.22%",
+    top: "73.85%",
+    width: "18.96%",
+    mobileLeft: "5.96%",
+    mobileTop: "72.58%",
+    mobileWidth: "35.24%",
     ar: 1.949,
   },
 ];
 
-const BRAND = "#17925A";
 const HEADLINE = "#18181B";
 const EYEBROW = "#1E1E22";
 
@@ -98,7 +114,7 @@ function StraightUnderline() {
   return (
     <span
       aria-hidden
-      className="absolute left-0 w-full h-[4px] bg-theme-accent -bottom-[4px] rounded-full"
+      className={styles.underline}
     />
   );
 }
@@ -107,16 +123,16 @@ function Heading() {
   return (
     <div data-problem-heading>
       <p
-        className="uppercase font-normal text-[clamp(16px,1.95vw,28px)] leading-[1.245] mb-[clamp(10px,1.04vw,15px)]"
+        className={styles.eyebrow}
         style={{ color: EYEBROW }}
       >
         The problem
       </p>
       <h2
-        className="font-bold uppercase text-[clamp(26px,3.47vw,50px)] leading-[1.26]"
+        className={styles.headline}
         style={{ color: HEADLINE }}
       >
-        <span className="block pb-[clamp(4px,0.5vw,7px)]">
+        <span className={styles.firstLine}>
           Your{" "}
           <span className="relative inline-block">
             health
@@ -124,7 +140,7 @@ function Heading() {
           </span>
         </span>
         <span
-          className="block w-fit ml-[35%] mt-[clamp(6px,0.83vw,12px)] pb-[clamp(14px,1.9vw,27px)] origin-left"
+          className={styles.secondLine}
           style={{ transform: "rotate(-4.22deg)" }}
         >
           is{" "}
@@ -204,12 +220,11 @@ export default function ProblemSection() {
           );
         });
 
-        const settled = 0.1 + photos.length * 0.09 + 1.1;
         tl.fromTo(
           "[data-problem-heading]",
           { opacity: 0, y: 24 },
           { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-          settled,
+          0,
         );
 
         tl.eventCallback("onComplete", () => {
@@ -224,12 +239,13 @@ export default function ProblemSection() {
     <section
       ref={sectionRef}
       id="problem"
-      className="relative w-full overflow-hidden bg-problem-gradient"
+      className={styles.section}
+      aria-label="The problem: your health is scattered"
     >
-      <div className="relative mx-auto h-(--dvh) w-full max-w-360 lg:h-auto lg:aspect-[1437/1024]">
+      <div className={styles.canvas}>
         <div
-          className="absolute z-10 max-md:left-[5%] max-md:top-[5%] max-md:w-[90%]"
-          style={{ left: HEADING.left, top: HEADING.top, width: HEADING.width }}
+          className={styles.heading}
+          style={{ "--heading-left": HEADING.left, "--heading-top": HEADING.top, "--heading-width": HEADING.width } as CSSProperties}
         >
           <Heading />
         </div>
@@ -238,25 +254,29 @@ export default function ProblemSection() {
           <div
             key={p.src}
             data-scatter
-            className="absolute overflow-hidden w-(--img-w) max-md:w-(--img-w-md) max-md:left-(--img-left-md) max-md:top-(--img-top-md)"
+            data-category={p.label}
+            className={styles.item}
             style={
               {
-                left: p.left,
-                top: p.top,
+                "--img-left": p.left,
+                "--img-top": p.top,
                 aspectRatio: p.ar,
                 "--img-w": p.width,
                 "--img-w-md": p.mobileWidth,
                 "--img-left-md": p.mobileLeft,
                 "--img-top-md": p.mobileTop,
+                "--label-left": p.labelLeft,
+                "--label-top": p.labelTop,
               } as CSSProperties
             }
           >
+            <span className={styles.label}>{p.label}</span>
             <Image
               src={p.src}
               alt=""
               fill
-              sizes="500px"
-              className="object-cover"
+              sizes="(max-width: 767px) 42vw, (max-width: 1440px) 22vw, 320px"
+              className="object-contain"
             />
           </div>
         ))}

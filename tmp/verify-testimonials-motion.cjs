@@ -1,0 +1,45 @@
+const { chromium } = require('C:/Users/User/AppData/Local/npm-cache/_npx/420ff84f11983ee5/node_modules/playwright');
+(async () => {
+  const browser = await chromium.launch();
+  for (const width of [282, 390, 540, 768, 1023]) {
+    const page = await browser.newPage({ viewport: { width, height: 1000 }, isMobile: true, hasTouch: true });
+    const errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto('http://localhost:3000', { waitUntil: 'networkidle' });
+    const sampleOffscreen = () => page.locator('[data-mobile-tm]').evaluateAll(cards => cards.map(card => card.style.left));
+    const initialOffscreen = await sampleOffscreen();
+    await page.waitForTimeout(250);
+    if (JSON.stringify(initialOffscreen) === JSON.stringify(await sampleOffscreen())) throw new Error('Animation is waiting for visibility');
+    await page.locator('#testimonials').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(100);
+    const sample = () => page.locator('[data-mobile-tm]').evaluateAll(cards => cards.map(card => ({ left: parseFloat(getComputedStyle(card).left), top: parseFloat(getComputedStyle(card).top), width: card.getBoundingClientRect().width })));
+    const before = await sample();
+    const visibleImmediately = await page.locator('[data-mobile-tm] > div').evaluateAll(cards => cards.every(card => getComputedStyle(card).opacity === '1' && !card.hasAttribute('data-mobile-motion')));
+    if (!visibleImmediately) throw new Error('Cards have a reveal delay');
+    await page.waitForTimeout(250);
+    const after = await sample();
+    if (after[2].left <= before[2].left || after[4].left >= before[4].left) throw new Error('Rows did not move in opposite directions');
+    if (after[2].top === before[2].top || after[2].width === before[2].width) throw new Error('Cards did not follow the curve');
+    await page.locator('#testimonials').screenshot({ path: `tmp/testimonials-moving-${width}.png` });
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await page.waitForTimeout(500);
+    const paused = await sample();
+    await page.waitForTimeout(500);
+    const still = await sample();
+    if (JSON.stringify(paused) === JSON.stringify(still)) throw new Error('Animation is waiting for visibility');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.waitForFunction(() => [...document.querySelectorAll('[data-mobile-tm]')].every(card => !card.style.left && !card.style.top && !card.style.width));
+    const reset = await page.locator('[data-mobile-tm]').evaluateAll(cards => cards.every(card => !card.style.left && !card.style.top && !card.style.width));
+    if (!reset) throw new Error('Reduced motion did not restore static layout');
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.locator('#testimonials').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
+    const restarted = await sample();
+    await page.waitForTimeout(500);
+    if (JSON.stringify(restarted) === JSON.stringify(await sample())) throw new Error('Animation did not restart');
+    if (errors.length) throw new Error(errors.join('\n'));
+    console.log(JSON.stringify({ width, visibleImmediately, movementWithin250ms: true, oppositeDirections: true, curvedMovement: true, runsWithoutVisibilityGate: true, reducedMotion: true, restart: true, errors }));
+    await page.close();
+  }
+  await browser.close();
+})().catch(error => { console.error(error); process.exit(1); });

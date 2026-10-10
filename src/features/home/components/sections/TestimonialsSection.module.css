@@ -1,0 +1,103 @@
+.section {
+  background: linear-gradient(225deg, #163b32 0%, #366b4c 23%, #ebe4cc 55%, #336d4d 80%, #395c3f 100%);
+}
+
+.mobileCanvas {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .section {
+    background: linear-gradient(100deg, #c1bda2 0%, #8e9c7f 31%, #366b4c 69%, #163b32 100%);
+  }
+
+  /* The reference is a 282px canvas; scale its collage as one composition. */
+  .mobileCanvas {
+    display: block;
+    width: 100%;
+    max-width: 440px;
+    margin-inline: auto !important;
+    padding-top: min(15.6vw, 68.64px) !important;
+    padding-bottom: min(7.8vw, 34.32px) !important;
+    container-type: inline-size;
+  }
+
+  .mobileHeading {
+    text-align: center;
+    color: #fafafa;
+  }
+
+  .mobileHeading h2 {
+    font-size: 8.51cqw;
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+
+  .mobileHeading h2 span {
+    display: block;
+  }
+
+  .mobileHeading h2 span + span {
+    color: #ffd600;
+    margin-top: 2.48cqw !important;
+  }
+
+  .mobileHeading p {
+    max-width: 87.2%;
+    margin: 5.32cqw auto 0 !important;
+    font-size: 4.25cqw;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .mobileCollage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 282 / 384;
+    margin-top: 8.51cqw !important;
+    clip-path: inset(-5% 0);
+  }
+
+  .collageSlot {
+    position: absolute;
+    width: 36.88%;
+  }
+
+  .collageSlot:nth-child(1) { left: -15.6%; top: 0; }
+  .collageSlot:nth-child(2) { left: 78.72%; top: 0; }
+  .collageSlot:nth-child(3) { left: 28.01%; top: 13.8%; width: 43.62%; }
+  .collageSlot:nth-child(4) { left: -15.6%; top: 49.74%; }
+  .collageSlot:nth-child(5) { left: 28.37%; top: 63.54%; width: 43.62%; }
+  .collageSlot:nth-child(6) { left: 79.08%; top: 49.74%; }
+
+  .mobileCard {
+    border-radius: 1.77cqw !important;
+    filter: drop-shadow(1.06cqw 1.06cqw 1.24cqw rgb(0 0 0 / 26%)) !important;
+  }
+
+  .collageSlot:nth-child(5) img { object-position: center top; }
+
+  .cardHeader {
+    left: 2.13cqw;
+    right: 2.48cqw;
+    top: 2.48cqw;
+    gap: 1.42cqw;
+  }
+
+  .cardName { font-size: 3.55cqw !important; font-weight: 400; }
+  .cardPlan { font-size: 2.48cqw !important; margin-top: 0.71cqw !important; font-weight: 400; }
+  .cardAge { font-size: 5.32cqw !important; font-weight: 500; }
+  .cardQuote { left: 2.13cqw; right: 2.13cqw; bottom: 2.48cqw; }
+  .cardGlyph { font-size: 8.51cqw !important; }
+  .cardText { font-size: 2.84cqw !important; font-weight: 400; }
+
+  .collageSlot:nth-child(3) .cardName,
+  .collageSlot:nth-child(5) .cardName { font-size: 3.9cqw !important; }
+  .collageSlot:nth-child(3) .cardPlan,
+  .collageSlot:nth-child(5) .cardPlan { font-size: 2.84cqw !important; }
+  .collageSlot:nth-child(3) .cardAge,
+  .collageSlot:nth-child(5) .cardAge { font-size: 6.38cqw !important; }
+  .collageSlot:nth-child(3) .cardText,
+  .collageSlot:nth-child(5) .cardText { font-size: 3.05cqw !important; }
+}

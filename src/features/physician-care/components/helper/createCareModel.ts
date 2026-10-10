@@ -6,7 +6,8 @@ export type CareModel = { update: (progress: number) => void; dispose: () => voi
 /** Render on scroll/resize only; there is no idle animation loop. */
 export async function createCareModel(host: HTMLElement): Promise<CareModel> {
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+  const touchOrCompact = window.matchMedia("(max-width: 1023px), (pointer: coarse)").matches;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, touchOrCompact ? 1.25 : 1.75));
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -50,7 +51,9 @@ export async function createCareModel(host: HTMLElement): Promise<CareModel> {
     renderer.render(scene, camera);
   };
   const resize = () => {
-    const { width, height } = host.getBoundingClientRect();
+    // CSS scales the canvas during docking; size the buffer from its layout box.
+    const width = host.clientWidth;
+    const height = host.clientHeight;
     if (!width || !height) return;
     renderer.setSize(width, height);
     camera.aspect = width / height;

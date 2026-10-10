@@ -1,0 +1,114 @@
+.section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 92% 14%, #d0e2ca 0%, transparent 47%),
+    radial-gradient(ellipse at 0% 100%, #f0e6cf 0%, transparent 42%), #f6f4ed;
+}
+
+.canvas {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  aspect-ratio: 3 / 2;
+  margin-inline: auto !important;
+  container-type: inline-size;
+}
+
+.heading {
+  position: absolute;
+  z-index: 1;
+  left: var(--heading-left);
+  top: var(--heading-top);
+  width: var(--heading-width);
+}
+
+.eyebrow {
+  font-size: 2.22cqw;
+  line-height: 1.25;
+  font-weight: 400;
+  margin-bottom: 1.4cqw !important;
+}
+
+.headline {
+  font-size: 3.33cqw;
+  line-height: 1.26;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+}
+
+.firstLine { display: block; }
+
+.secondLine {
+  display: block;
+  width: max-content;
+  margin-left: 40.8% !important;
+  margin-top: 2cqw !important;
+  transform-origin: left;
+}
+
+.underline {
+  position: absolute;
+  left: 0;
+  bottom: -0.35cqw;
+  width: calc(100% + 4.2cqw);
+  height: 0.26cqw;
+  border-radius: 999px;
+  background: #17925a;
+}
+
+.item {
+  position: absolute;
+  left: var(--img-left);
+  top: var(--img-top);
+  width: var(--img-w);
+}
+
+.label {
+  position: absolute;
+  left: var(--label-left);
+  top: var(--label-top);
+  z-index: 1;
+  width: max-content;
+  padding: 0.83cqw 2.36cqw !important;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: linear-gradient(125deg, rgba(214, 212, 205, 0.58), rgba(206, 204, 197, 0.38));
+  box-shadow: inset 0 2px 8px rgba(125, 122, 110, 0.04);
+  color: #565656;
+  font-size: 1.39cqw;
+  line-height: 1.3;
+  font-weight: 400;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+}
+
+@media (max-width: 1023px) {
+  .heading { left: 20px; }
+}
+
+@media (max-width: 767px) {
+  .section { background: #f7f7f2; }
+  .canvas { aspect-ratio: 403 / 846; }
+  .heading { left: 20px; top: 8%; width: calc(100% - 40px); }
+  .eyebrow { font-size: 4.96cqw; text-transform: uppercase; margin-bottom: 4.9cqw !important; }
+  .headline { font-size: 6.45cqw; letter-spacing: -0.035em; }
+  .secondLine { margin-left: 32.75cqw !important; margin-top: 5cqw !important; }
+  .underline { bottom: 0.5cqw; height: 0.5cqw; width: calc(100% + 5cqw); }
+  .secondLine .underline { left: -5.3cqw; bottom: -1.1cqw; width: calc(100% + 17cqw); }
+  .item { left: var(--img-left-md); top: var(--img-top-md); width: var(--img-w-md); }
+  .label {
+    left: 0;
+    top: -4cqw;
+    padding: 1.35cqw 3cqw !important;
+    font-size: 2.98cqw;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+  .item[data-category="Labs"] .label { left: 23cqw; top: -1.25cqw; }
+  .item[data-category="Nutrition"] .label { left: 3cqw; top: -5.2cqw; }
+  .item[data-category="Heart health"] .label { left: 10.4cqw; top: -6.2cqw; }
+  .item[data-category="Sleep"] .label { left: 4.5cqw; top: -4.2cqw; }
+  .item[data-category="Wearables"] .label { left: 5.7cqw; top: 25.3cqw; }
+}

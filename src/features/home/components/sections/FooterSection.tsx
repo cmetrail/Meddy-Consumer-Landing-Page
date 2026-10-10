@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { Pricing } from "./helper/Pricing";
 import { FooterItems } from "./helper/FooterItems";
+import styles from "./helper/Pricing.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -67,14 +68,14 @@ export default function FooterSection() {
   );
 
   return (
-    <section ref={sectionRef} id="pricing" className="relative w-full overflow-hidden text-white">
-      <Image src="/home/footer-bg.jpg" alt="" fill className="object-cover" />
-      <div className="absolute inset-0 bg-black/50" />
+    <section ref={sectionRef} id="pricing" className={`${styles.section} relative w-full overflow-hidden text-white`}>
+      <Image src="/home/footer-bg.jpg" alt="" fill className={`${styles.background} object-cover`} />
+      <div className={`${styles.overlay} absolute inset-0 bg-black/50`} />
 
-      <div className="relative max-w-360 mx-auto px-5 lg:px-10 py-16">
+      <div className={`${styles.content} relative max-w-360 mx-auto px-5 lg:px-10 py-16`}>
         <Pricing />
       </div>
-      <FooterItems />
+      <FooterItems mobileReference />
     </section>
   );
 }
