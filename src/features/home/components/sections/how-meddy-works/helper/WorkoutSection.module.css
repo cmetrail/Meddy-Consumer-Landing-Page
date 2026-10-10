@@ -1,0 +1,72 @@
+.section { background: #17231d; overflow: hidden; }
+.content { position: relative; display: grid; grid-template-columns: 1fr 1fr; max-width: 1440px; min-height: 632px; margin: 0 auto !important; }
+.visual { position: relative; width: 580px; height: 632px; justify-self: center; }
+.photo { position: absolute; left: 52px; top: 53px; width: 400px; height: auto; filter: drop-shadow(11px -4px 12.3px rgb(0 0 0 / 25%)); }
+.summaryCard { position: absolute; top: 79px; left: 285px; width: 358px; scale: .625; transform-origin: top left; z-index: 2; }
+.summaryCard > div { padding: 12px !important; }
+.summaryCard > div > div > div:first-child:not(:last-child) { margin: 0 12px !important; opacity: .55; }
+.summaryCard img { width: 16px; height: 16px; }
+.summaryCard p { font-weight: 400 !important; }
+.summaryCard > div > div > div:last-child { gap: 3px !important; }
+.summaryCard > div > div > div:last-child > div { font-size: 20px; }
+.summaryCard > div { border-color: #ffffff66 !important; }
+.profile { position: absolute; top: 261px; left: 344px; width: 138px; scale: .65; transform-origin: top left; z-index: 2; }
+.profileCard { display: flex; flex-direction: column; gap: 5px; padding: 12px !important; border-radius: 15px; border-color: #ffffff66 !important; }
+.profileRow { display: flex; align-items: center; justify-content: space-between; gap: 3px; }
+.profileLabel { font-size: 9px; line-height: 1.5; white-space: nowrap; color: white; }
+.statsCard { position: absolute; top: 462px; left: 111px; width: 395px; scale: .506; transform-origin: top left; z-index: 2; }
+.statsCard > div { padding: 16px !important; border-color: #ffffff66 !important; }
+.statsCard > div > div:not(:first-child) > div { padding: 12px !important; border: .75px solid #ffffff66; }
+.statsCard p { font-weight: 400 !important; }
+.statsCard > div > div:first-child > div > p { font-size: 32px !important; }
+.statsCard > div > div:not(:first-child) > div > div > p { font-size: 17px !important; }
+.copy { padding: 178px 0 0 10px !important; color: #abb1ad; }
+.copy h3 { font-size: 58px; font-weight: 500; line-height: 1.25; letter-spacing: -1.1px; }
+.headline { margin-top: 28px !important; font-size: 32px; font-weight: 500; line-height: 1.5; }
+.accent { color: #17925a; font-family: var(--font-dm-serif), Georgia, serif; font-weight: 400; }
+.description { margin-top: 50px !important; font-size: 20px; line-height: 1.5; }
+
+@media (min-width: 1024px) {
+  .section {
+    --workout-scale: clamp(1, min(calc(100vw / 1024px), calc(100svh / 632px)), 1.6);
+  }
+  .content { max-width: 1440px; min-height: max(632px, 100svh); padding-inline: 40px !important; }
+  .visual { width: 480px; zoom: var(--workout-scale); justify-self: start; margin-left: -111px !important; }
+  .photo { width: 418px; }
+  .copy { min-width: 0; padding: calc(178px * var(--workout-scale)) 0 32px 10px !important; }
+  .copy h3 { font-size: calc(58px * var(--workout-scale)); }
+  .headline { margin-top: calc(28px * var(--workout-scale)) !important; font-size: calc(32px * var(--workout-scale)); }
+  .description { margin-top: calc(50px * var(--workout-scale)) !important; font-size: calc(20px * var(--workout-scale)); }
+  .desktopBreak { display: none; }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .copy { padding-left: 0 !important; }
+  .copy h3 { font-size: 48px; }
+  .headline { font-size: 28px; }
+  .desktopBreak { display: none; }
+}
+
+@media (max-width: 1023px) {
+  .content { display: flex; flex-direction: column; padding: 36px 20px 0 !important; }
+  .copy { order: -1; padding: 0 !important; }
+  .copy h3 { font-size: clamp(36px, 5.7vw, 48px); }
+  .headline { margin-top: 24px !important; font-size: 28px; }
+  .description { margin-top: 28px !important; font-size: 17px; max-width: 600px; }
+  .desktopBreak { display: none; }
+  .visual { width: 580px; margin: 28px auto 0 !important; align-self: center; }
+}
+
+@media (max-width: 599px) {
+  .content { padding-inline: 16px !important; }
+  .visual { width: 358px; height: 390px; }
+  .photo { left: 32px; top: 33px; width: 247px; }
+  .summaryCard { left: 176px; top: 49px; scale: .386; }
+  .profile { left: 212px; top: 161px; scale: .401; }
+  .statsCard { left: 69px; top: 285px; scale: .312; }
+}
+
+@media (max-width: 359px) {
+  .headline { font-size: 25px; }
+  .visual { margin-left: -35px !important; margin-right: -35px !important; align-self: auto; }
+}

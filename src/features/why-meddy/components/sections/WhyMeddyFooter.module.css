@@ -1,0 +1,63 @@
+@layer utilities {
+.section {
+  --unit: min(1px, calc(100vw / 1440));
+  width: 100% !important;
+  overflow: hidden !important;
+  color: #f4f4f5 !important;
+}
+.photo { position: relative !important; aspect-ratio: 642 / 379 !important; }
+.image { object-fit: fill !important; object-position: center !important; }
+.footer { position: relative !important; overflow: hidden !important; background: #344450 !important; }
+.footerImage { object-fit: fill !important; height: 200% !important; top: -100% !important; }
+.glass {
+  position: relative !important;
+  border-radius: 0 !important;
+  background: rgb(100 100 100 / 15%) !important;
+  backdrop-filter: blur(calc(40 * var(--unit))) !important;
+  -webkit-backdrop-filter: blur(calc(40 * var(--unit))) !important;
+  min-height: calc(742 * var(--unit)) !important;
+}
+.glass [data-footer-inner] {
+  max-width: calc(1212 * var(--unit)) !important;
+  margin-inline: auto !important;
+  padding: calc(120 * var(--unit)) 0 calc(50 * var(--unit)) !important;
+}
+.glass [data-footer-grid] { grid-template-columns: calc(440 * var(--unit)) minmax(0, 1fr) !important; gap: calc(120 * var(--unit)) !important; }
+.glass [data-footer-brand], .glass [data-footer-col] { opacity: 1 !important; transform: none !important; }
+.glass [data-footer-brand] > img { width: calc(358 * var(--unit)) !important; height: calc(215 * var(--unit)) !important; }
+.glass [data-footer-brand] > p {
+  max-width: calc(380 * var(--unit)) !important;
+  margin-top: calc(28 * var(--unit)) !important;
+  font-size: calc(16 * var(--unit)) !important;
+  line-height: 1.5 !important;
+}
+.glass [data-footer-stores] { flex-direction: row !important; flex-wrap: nowrap !important; gap: calc(20 * var(--unit)) !important; margin-top: calc(40 * var(--unit)) !important; }
+.glass [data-footer-stores] button {
+  width: calc(180 * var(--unit)) !important; height: calc(60 * var(--unit)) !important;
+  padding: 0 calc(10 * var(--unit)) !important;
+  gap: calc(10 * var(--unit)) !important; border-radius: calc(9 * var(--unit)) !important;
+  justify-content: flex-start !important; text-align: left !important;
+}
+.glass [data-footer-stores] button > img { width: calc(32 * var(--unit)) !important; height: calc(36 * var(--unit)) !important; }
+.glass [data-footer-stores] button > span { gap: calc(4 * var(--unit)) !important; white-space: nowrap !important; }
+.glass [data-footer-stores] button > span > span:first-child { font-size: calc(13.5 * var(--unit)) !important; line-height: 1 !important; }
+.glass [data-footer-stores] button > span > span:last-child { font-size: calc(24 * var(--unit)) !important; line-height: 1 !important; letter-spacing: calc(-0.7 * var(--unit)) !important; }
+.glass [data-footer-stores] button > span > img { width: calc(111 * var(--unit)) !important; height: auto !important; }
+.glass [data-footer-nav] { display: grid !important; grid-template-columns: 1fr 0.85fr 1.35fr !important; gap: calc(60 * var(--unit)) !important; }
+.glass [data-footer-col] { align-items: flex-end !important; gap: calc(35 * var(--unit)) !important; }
+.glass [data-footer-col] a { width: auto !important; white-space: pre-line !important; text-align: right !important; font-size: calc(16 * var(--unit)) !important; font-weight: 400 !important; line-height: 1.5 !important; }
+.glass [data-footer-divider] { margin-top: calc(24 * var(--unit)) !important; border-color: rgb(224 224 224 / 75%) !important; }
+.glass [data-footer-legal] { margin-top: calc(32 * var(--unit)) !important; gap: calc(10 * var(--unit)) !important; font-size: calc(14 * var(--unit)) !important; line-height: 1.5 !important; }
+
+@media (max-width: 479px) {
+  .section { --unit: 0.7px; }
+  .glass [data-footer-inner] { width: 100% !important; padding: 36px 24px 24px !important; }
+  .glass [data-footer-grid] { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .glass [data-footer-brand] > p { max-width: 300px !important; font-size: 12px !important; }
+  .glass [data-footer-nav] { gap: 16px !important; }
+  .glass [data-footer-col] { align-items: flex-start !important; gap: 18px !important; }
+  .glass [data-footer-col] a { text-align: left !important; font-size: 10px !important; }
+  .glass [data-footer-legal] { font-size: 9px !important; }
+}
+
+}

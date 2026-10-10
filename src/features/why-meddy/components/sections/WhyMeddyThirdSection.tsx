@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import styles from "./WhyMeddyThirdSection.module.css";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -139,22 +140,22 @@ const itemVariants = {
 
 export default function WhyMeddyThirdSection() {
   return (
-    <section className="flex min-h-dvh w-full items-center bg-[radial-gradient(84.22%_84.22%_at_50%_50%,#5A8972_0%,#17231D_100%)] py-10">
-      <div className="mx-auto grid w-full max-w-360 grid-cols-1 items-center justify-center gap-10 px-5 lg:grid-cols-2 lg:px-10">
-        {/* Left: heading + paragraph */}
-        <div className="mx-auto flex w-full max-w-5xl flex-col justify-center gap-10 lg:gap-20">
+    <section className={`${styles.section} relative w-full overflow-hidden bg-[radial-gradient(84.22%_84.22%_at_50%_50%,#5A8972_0%,#20352B_100%)] pt-8! pb-12! md:pt-10! md:pb-20!`}>
+      <div className={`${styles.inner} mx-auto! flex w-full max-w-360 flex-col items-center gap-8 px-5! lg:px-10!`}>
+        {/* Centered heading and supporting copy */}
+        <div className={`${styles.text} flex w-full max-w-[1240px] flex-col items-center gap-4 text-center`}>
           <motion.h2
-            className="text-[32px] font-semibold leading-[100%] text-white sm:text-[48px] lg:text-[64px]"
+            className="text-[clamp(32px,4.52vw,64px)] leading-[1.45] font-medium text-white"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.8, ease }}
           >
-            We built <span className="font-normal italic text-[#8CDDA8]">Meddy</span> to give physicians the{" "}
-            <span className="font-normal italic text-[#8CDDA8]">complete picture.</span>
+            We built <em className="font-dm-serif! font-normal text-[#8CDDA8] italic">Meddy</em> to give physicians the{" "}
+            <em className={`${styles.emphasis} block font-dm-serif! font-normal text-[#8CDDA8] italic`}>complete picture.</em>
           </motion.h2>
           <motion.p
-            className="text-lg font-normal leading-snug text-white lg:text-xl"
+            className="max-w-[1200px] text-[clamp(14px,1.45vw,20px)] leading-[1.5] font-normal text-white"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
@@ -166,8 +167,8 @@ export default function WhyMeddyThirdSection() {
           </motion.p>
         </div>
 
-        {/* Right: M collage */}
-        <div className="flex items-center justify-center">
+        {/* Photo collage forming the Meddy mark */}
+        <div className={`${styles.desktopCollage} w-full max-w-[1000px] sm:w-[74%]`}>
           <motion.div
             className="relative w-full"
             style={{ aspectRatio: "1290 / 858" }}
@@ -193,12 +194,27 @@ export default function WhyMeddyThirdSection() {
                   src={img.src}
                   alt=""
                   fill
-                  sizes="30vw"
+                  sizes="(min-width: 1440px) 330px, (min-width: 640px) 25vw, 33vw"
                   className="object-cover"
                 />
               </motion.div>
             ))}
           </motion.div>
+        </div>
+        <div className={styles.mobileCollage} role="img" aria-label="Physician care, movement, sleep, nutrition, and health wearables connected around the Meddy mark">
+          {[
+            ["care", "/why-meddy/meddy/Rectangle%2018171.png"],
+            ["doctor", "/physician-care/doctor.png"],
+            ["physician", "/medication/orbital-physician-body.png"],
+            ["movement", "/biomarkers/cause-effect-bg.png"],
+            ["wellbeing", "/home/a1c-card.jpg"],
+            ["sleep", "/sleep/sleep-quality-image.png"],
+            ["nutrition", "/biomarkers/physician-led/adjusts-plan.png"],
+            ["watch", "/wearables/smartwatch-activity-5a6c38.png"],
+          ].map(([name, src]) => (
+            <div key={name} className={styles[name]}><Image src={src} alt="" fill unoptimized sizes="(max-width: 767px) 33vw, 1px" /></div>
+          ))}
+          <div className={styles.rings}><span /><span /></div>
         </div>
       </div>
     </section>

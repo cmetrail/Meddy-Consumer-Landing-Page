@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import clsx from "clsx";
 function Trend({
@@ -42,7 +41,7 @@ function StatCell({
     >
       <p className="text-white text-[9px] leading-[150%]">{label}</p>
       <div className="flex flex-row items-baseline gap-1.5">
-        <p className="text-white whitespace-nowrap font-bold text-[13px] leading-[150%]">
+        <p className="text-white whitespace-nowrap font-normal text-[17px] leading-[150%]">
           {value}
         </p>
         {trend && <Trend value={trend.value} direction={trend.direction} />}
@@ -67,7 +66,7 @@ export default function WorkoutStatsCard() {
       <div>
         <p className="text-[#D8D8D8] text-[9px] mb-1">Total Duration</p>
         <div className="flex items-baseline gap-2">
-          <p className="text-white font-bold text-2xl leading-tight">
+          <p className="text-white font-normal text-[32px] leading-tight">
             210 <span className="text-[#D8D8D8]">mins</span>
           </p>
           <span className="flex items-center gap-0.5  text-[10px] font-semibold text-[#FF546B]">

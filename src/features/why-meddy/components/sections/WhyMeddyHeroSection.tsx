@@ -2,35 +2,38 @@
 
 import Image from "next/image";
 import Header from "@/components/Header";
+import styles from "./WhyMeddyHeroSection.module.css";
 
 export default function WhyMeddyHeroSection() {
   return (
-    <section className="relative w-full overflow-hidden" style={{ height: "var(--dvh)" }}>
+    <section className={`${styles.hero} relative flex min-h-[max(720px,var(--dvh))] w-full flex-col gap-8 overflow-hidden md:min-h-[max(780px,var(--dvh))] md:gap-12`}>
       <Image
         src="/why-meddy/hero.jpg"
         alt=""
         fill
         priority
-        sizes="100vw"
-        className="object-cover"
+        sizes="(max-width: 767px) 180vh, 100vw"
+        className={`${styles.photo} object-cover`}
       />
 
-      <div className="absolute inset-0 bg-black/20" />
+      <div className={`${styles.shade} absolute inset-0 bg-black/20`} />
 
-      <div className="relative z-10">
+      <div className={`${styles.navigation} relative z-20`}>
         <Header variant="dark" active="WHY MEDDY" />
       </div>
-      <div className="mx-auto relative z-50 flex w-full max-w-360 pt-16 sm:pt-24 lg:pt-28 px-5 lg:px-10">
-        <div className="flex flex-col gap-10 sm:gap-20 w-full">
-          <h1 className="text-white leading-[100%] max-w-133 mr-auto self-start text-[48px] sm:text-[64px]">
-            <span className="font-dm-serif">Healthcare wasn&apos;t designed</span> 
-            <span className="font-semibold text-[#8CDDA8]"> to see everyday life.</span>
-          </h1>
-           <h1 className="text-white leading-[1.5] max-w-92 sm:self-end text-[20px]">
-           Most medical decisions are made from occasional appointments and a handful of lab results—even though your health is shaped by what happens between visits.
-          </h1>
-          </div>
-        </div>
+      <div className={`${styles.content} relative z-10 mx-auto! min-h-[640px] w-full max-w-360 flex-1 md:min-h-[740px]`}>
+        <h1 className="absolute top-0 left-5 font-sans text-[clamp(32px,7.5vw,56px)] leading-[1.4] font-normal tracking-[-0.02em] text-white md:text-[clamp(48px,7.5vw,108px)] md:leading-[1.45] lg:left-10">
+          <span className="block whitespace-nowrap">Healthcare</span>{" "}
+          <span className="block whitespace-nowrap">wasn&apos;t designed</span>{" "}
+          <span className="block whitespace-nowrap">
+            to <em className="font-dm-serif! font-normal text-[#8CDDA8] italic">see everyday</em>
+          </span>{" "}
+          <em className="block whitespace-nowrap font-dm-serif! font-normal text-[#8CDDA8] italic">life.</em>
+        </h1>
+        <p className="absolute right-[5%] bottom-[8%] w-[90%] max-w-[374px] text-[18px] leading-[1.5] font-normal text-white md:right-[8.333333%] md:bottom-[12.3%] md:w-[374px] md:text-[20px]">
+          Most medical decisions are made from occasional appointments and a handful of lab results even though your health is shaped by what happens between visits.
+        </p>
+      </div>
     </section>
   );
 }

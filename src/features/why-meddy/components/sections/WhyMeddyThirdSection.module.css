@@ -1,0 +1,40 @@
+.mobileCollage { display: none; }
+
+@layer utilities {
+  @media (max-width: 767px) {
+    .section { min-height: calc(100vw * 500 / 235) !important; padding: 0 !important; }
+    .inner { padding: 15.5vw 5% 0 !important; gap: 0 !important; }
+    .text { align-items: flex-start !important; gap: 5vw !important; text-align: left !important; }
+    .text h2 { width: 100% !important; font-size: 8.1vw !important; font-weight: 400 !important; line-height: 1.46 !important; }
+    .emphasis { display: inline !important; }
+    .text p { font-size: 4.1vw !important; line-height: 1.46 !important; }
+    .desktopCollage { display: none !important; }
+    .mobileCollage {
+      display: block !important;
+      position: absolute !important;
+      top: 48.4% !important;
+      left: 5% !important;
+      width: 90% !important;
+      aspect-ratio: 214 / 219 !important;
+    }
+    .mobileCollage > div { position: absolute !important; overflow: hidden !important; }
+    .mobileCollage img { object-fit: cover !important; }
+    .care { left: 0; top: 0; width: 32%; height: 31%; }
+    .doctor { left: 33.5%; top: 0; width: 32%; height: 42%; background: #bfd6d4; clip-path: polygon(0 0,100% 0,100% 83%,76% 100%,76% 72%,31% 72%,10% 100%,10% 86%,0 86%); }
+    .doctor img { object-position: center top !important; }
+    .physician { left: 67%; top: 0; width: 33%; height: 30%; background: #052c24; }
+    .physician img { object-position: center top !important; }
+    .movement { left: 0; top: 32%; width: 24.5%; height: 31.5%; }
+    .movement img { object-position: 53% center !important; }
+    .wellbeing { left: 78%; top: 31.5%; width: 22%; height: 29%; }
+    .wellbeing img { object-position: 57% center !important; }
+    .sleep { left: 26%; top: 51%; width: 23%; height: 49%; clip-path: polygon(0 23%,60% 23%,100% 0,100% 100%,0 100%); }
+    .sleep img { object-position: 30% center !important; }
+    .nutrition { left: 50.5%; top: 51%; width: 32%; height: 49%; clip-path: polygon(0 23%,35% 23%,48% 0,48% 23%,100% 23%,100% 100%,0 100%); }
+    .watch { left: 84%; top: 61.5%; width: 16%; height: 38.5%; }
+    .rings { left: 0; top: 65%; width: 24.5%; height: 35%; background: linear-gradient(140deg,#acd9e0,#d9f0db); }
+    .rings span { position: absolute; width: 62%; height: 44%; left: 19%; border: 2px solid #235763; border-radius: 50%; transform: rotate(30deg); box-shadow: inset 1px 1px 2px white,1px 1px 2px rgb(0 0 0 / 20%); }
+    .rings span:first-child { top: 19%; border-color: #25647b; }
+    .rings span:last-child { top: 36%; border-color: #608570; transform: rotate(-25deg); }
+  }
+}

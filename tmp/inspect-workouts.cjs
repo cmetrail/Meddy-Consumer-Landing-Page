@@ -1,0 +1,2 @@
+const {chromium}=require('C:/Users/User/AppData/Local/npm-cache/_npx/420ff84f11983ee5/node_modules/playwright');
+(async()=>{const b=await chromium.launch();const p=await b.newPage({reducedMotion:'reduce'});await p.goto('http://localhost:3000');console.log(await p.locator('#workouts p').evaluateAll(es=>es.map(e=>({text:e.textContent,font:getComputedStyle(e).fontSize,weight:getComputedStyle(e).fontWeight}))));await b.close()})()

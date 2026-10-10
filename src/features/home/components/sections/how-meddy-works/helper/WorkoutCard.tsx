@@ -10,12 +10,12 @@ const STATS = [
   {
     icon: "/home/workout.svg",
     value: "14 / 15",
-    label: "Exercises done",
+    label: "Workouts done",
     valueSuffix: null,
   },
   {
     icon: "/home/workout-burned.svg",
-    value: "800",
+    value: "500",
     label: "Calories Burned",
     valueSuffix: "Kcal",
   },
@@ -39,7 +39,7 @@ export default function WorkoutCard() {
           <div className="flex flex-col gap-1 flex-1">
             <Image src={stat.icon} alt="" width={22} height={22} />
             <div className="flex items-baseline gap-1 mt-1 whitespace-nowrap">
-              <p className="text-white font-bold leading-tight">{stat.value}</p>
+              <p className="text-white font-normal leading-tight">{stat.value}</p>
               {stat.valueSuffix && (
                 <span className="text-white font-normal ">
                   {stat.valueSuffix}

@@ -1,0 +1,54 @@
+.section {
+  background: #17231d;
+  overflow: hidden;
+  padding-top: 116px !important;
+}
+
+.intro { padding: 0 24px !important; text-align: center; }
+.title { color: #fff; font-size: 40px; font-weight: 500; line-height: 1.3; }
+.accent { color: #17925a; font-family: var(--font-dm-serif), Georgia, serif; font-weight: 400; }
+.summary { max-width: 740px; margin: 20px auto 0 !important; font-size: 20px; line-height: 1.5; color: #fff; }
+.content { position: relative; display: grid; grid-template-columns: 1.3fr 1fr; max-width: 1440px; margin: 48px auto 0 !important; padding-inline: 40px !important; min-height: 623px; }
+.copy { padding-top: 137px !important; color: #abb1ad; }
+.copy h3 { font-size: 58px; font-weight: 500; line-height: 1.25; letter-spacing: -1.1px; white-space: nowrap; }
+.headline { margin-top: 28px !important; font-size: 32px; font-weight: 500; line-height: 1.5; }
+.description { max-width: 540px; margin-top: 45px !important; font-size: 20px; line-height: 1.5; }
+.visual { position: relative; width: 480px; height: 623px; justify-self: end; margin-right: 80px !important; }
+.photo { position: absolute; top: 64px; right: 0; width: 440px; height: 560px; }
+.mealCard { position: absolute; top: 0; right: 24px; width: 269px; transform: scale(.706); transform-origin: top right; z-index: 2; }
+.nutrients { position: absolute; top: 265px; left: -4px; width: 250px; transform: scale(.712); transform-origin: top left; z-index: 2; }
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .content { grid-template-columns: 1.2fr 1fr; }
+  .copy h3 { font-size: 42px; }
+  .headline { font-size: 28px; }
+  .visual { width: 400px; margin-right: 0 !important; }
+  .photo { width: 400px; }
+  .nutrients { left: -12px; }
+}
+
+@media (max-width: 1023px) {
+  .section { padding-top: 56px !important; }
+  .title { font-size: clamp(26px, 4vw, 36px); }
+  .summary { font-size: 17px; max-width: 620px; }
+  .content { display: flex; flex-direction: column; margin: 48px auto 0 !important; padding: 0 20px !important; }
+  .copy { padding-top: 0 !important; }
+  .copy h3 { white-space: normal; font-size: clamp(32px, 5.7vw, 48px); }
+  .headline { margin-top: 24px !important; font-size: 28px; }
+  .desktopBreak { display: none; }
+  .description { margin-top: 28px !important; font-size: 17px; }
+  .visual { margin: 36px auto 0 !important; width: min(480px, 100%); height: auto; aspect-ratio: 480 / 623; }
+  .photo { width: 92%; height: auto; top: 10%; }
+  .mealCard { right: 0; transform: scale(.65); }
+  .nutrients { top: 43%; left: 0; transform: scale(.65); }
+}
+
+@media (max-width: 540px) {
+  .content { padding-inline: 16px !important; }
+}
+
+@media (max-width: 399px) {
+  .headline { font-size: 25px; }
+  .mealCard, .nutrients { transform: scale(.55); }
+}
+

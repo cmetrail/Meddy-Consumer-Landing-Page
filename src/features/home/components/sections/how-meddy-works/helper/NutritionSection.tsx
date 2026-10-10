@@ -5,8 +5,7 @@ import Image from "next/image";
 import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-import FeatureCopy from "./FeatureCopy";
-import GiantNumber from "./GiantNumber";
+import styles from "./NutritionSection.module.css";
 import NutritionCard from "./NutritionCard";
 import { MealCard } from "./MealCard";
 
@@ -64,65 +63,65 @@ export default function NutritionSection() {
   );
 
   return (
-    <div id="nutrition" ref={sectionRef} className="">
-      <div className="mx-auto max-w-360 px-5 pt-10 pb-10 text-center lg:px-10 lg:pt-16">
-        <h2 className="text-2xl leading-snug font-medium text-[#17925A] lg:text-[30px]">
+    <div id="nutrition" ref={sectionRef} className={styles.section}>
+      <div className={styles.intro}>
+        <h2 className={styles.title}>
           <em
-            className="font-normal text-white"
+            className={styles.accent}
             style={{ fontFamily: "var(--font-dm-serif), Georgia, serif" }}
           >
             Meddy
           </em>{" "}
           connects your everyday health with your{" "}
           <em
-            className="font-normal text-white"
+            className={styles.accent}
             style={{ fontFamily: "var(--font-dm-serif), Georgia, serif" }}
           >
             medical care.
           </em>
         </h2>
-        <p className="mx-auto mt-4 max-w-[620px] text-base leading-[1.25] text-white lg:text-[18px]">
+        <p className={styles.summary}>
           Your nutrition, workouts, sleep, weight, wearable data, medications,
           and lab results can come together in one place.
         </p>
       </div>
-      <div className="max-w-360 mx-auto px-5 lg:px-10 relative">
-        <GiantNumber n="01" />
-        <div className="grid lg:grid-cols-2  gap-12 lg:gap-16 items-center">
-          <div className="pt-24 pl-0  lg:pl-16">
-            <FeatureCopy
-              eyebrow="Nutrition Intelligence"
-              headline={["Eat smarter,", "and give your doctor"]}
-              accent="something to work with."
-              sub="Log meals in seconds. Every entry feeds the nutrition picture your physician uses to guide your care."
-            />
+      <div className={styles.content}>
+          <div className={styles.copy}>
+            <h3>Nutrition Intelligence</h3>
+            <p className={styles.headline}>
+              Eat smarter,<br />
+              and give your doctor <em className={styles.accent}>something to<br className={styles.desktopBreak} /> work with.</em>
+            </p>
+            <p className={styles.description}>
+              Log meals in seconds. Every entry feeds the nutrition
+              picture your physician uses to guide your care.
+            </p>
           </div>
           <div
             data-feature-image
-            className="relative w-full md:w-fit md:mx-auto"
+            className={styles.visual}
           >
             <div
               data-feature-card
-              className="absolute z-[99] w-62.5 right-[3%] top-[10%] origin-top-right scale-[0.8] sm:scale-100"
+              className={styles.mealCard}
             >
-              <MealCard />
+              <MealCard nutrition />
             </div>
             <Image
               src="/home/nutrition-photos.png"
-              alt="Nutrition tracking"
+              alt="Hands holding a bowl of fresh salad"
               height={792}
               width={640}
-              className="object-contain w-full h-auto md:w-160 md:h-198"
-              style={{ filter: "drop-shadow(12px 16px 18px rgba(0,0,0,0.25))" }}
+              className={styles.photo}
+              sizes="(min-width: 1024px) 440px, (min-width: 600px) 440px, 100vw"
             />
             <div
               data-feature-card
-              className="absolute w-62.5 left-0 bottom-[5%] origin-bottom-left scale-[0.8] sm:scale-100"
+              className={styles.nutrients}
             >
               <NutritionCard />
             </div>
           </div>
-        </div>
       </div>
     </div>
   );

@@ -28,9 +28,11 @@ const MEALS = [
 export const MealCard = ({
     variant = "dark",
     className = "w-67.25 rounded-2xl",
+    nutrition = false,
 }: {
     variant?: "dark" | "light";
     className?: string;
+    nutrition?: boolean;
 }) => {
     const light = variant === "light";
 
@@ -55,16 +57,16 @@ export const MealCard = ({
             >
                 <div>
                     <p className={clsx("text-[10px] font-bold leading-[150%]", light ? "text-[#111110]" : "text-white")}>Breakfast</p>
-                    <p className={clsx("text-[9px] font-semibold leading-[150%]", light ? "text-[#17925A]" : "text-theme-accent")}>580 kcal</p>
+                    <p className={clsx("text-[9px] font-semibold leading-[150%]", light ? "text-[#17925A]" : "text-theme-accent")}>{nutrition ? 454 : 580} kcal</p>
                 </div>
                 <div className="flex items-center gap-2">
                     {/* Overlapping food thumbnails */}
                     <div className="flex -space-x-2">
-                        <div className={clsx("h-7 w-7 rounded-full overflow-hidden border-2", light ? "border-white" : "border-white/20")}>
+                        {!nutrition && <div className={clsx("h-7 w-7 rounded-full overflow-hidden border-2", light ? "border-white" : "border-white/20")}>
                             <Image src="/home/meal1.png" alt="" width={24} height={24} className="object-cover w-full h-full" />
-                        </div>
+                        </div>}
                         <div className={clsx("h-7 w-7 rounded-full overflow-hidden border-2", light ? "border-white" : "border-white/20")}>
-                            <Image src="/home/meal2.png" alt="" width={24} height={24} className="object-cover w-full h-full" />
+                            <Image src={nutrition ? "/home/meal1.png" : "/home/meal2.png"} alt="" width={24} height={24} className="object-cover w-full h-full" />
                         </div>
                     </div>
                     {/* Chevron button */}
@@ -79,7 +81,7 @@ export const MealCard = ({
 
             {/* Meal rows */}
             <div className="flex flex-col">
-                {MEALS.map((meal) => (
+                {(nutrition ? [{ name: "Side Salad", kcal: 454, img: "/home/meal1.png", macros: [{ icon: "/home/carbs.svg", value: "40g" }, { icon: "/home/meat.svg", value: "18g" }, { icon: "/home/water.svg", value: "20g" }] }] : MEALS).map((meal) => (
                     <div
                         key={meal.name}
                         className={clsx(

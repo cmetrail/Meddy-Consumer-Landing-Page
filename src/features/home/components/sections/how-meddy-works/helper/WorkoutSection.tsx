@@ -5,8 +5,7 @@ import Image from "next/image";
 import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-import FeatureCopy from "./FeatureCopy";
-import GiantNumber from "./GiantNumber";
+import styles from "./WorkoutSection.module.css";
 import WorkoutCard from "./WorkoutCard";
 import WorkoutStatsCard from "./WorkoutStatsCard";
 
@@ -22,7 +21,7 @@ const PROFILE = [
 function ProfileCard() {
   return (
     <div
-      className="mobile-glass-card flex flex-col gap-1.5 rounded-2xl p-2"
+      className={styles.profileCard}
       style={{
         backdropFilter: "blur(14px)",
         backgroundColor: "rgba(255,255,255,0.06)",
@@ -31,14 +30,14 @@ function ProfileCard() {
       }}
     >
       {PROFILE.map((r) => (
-        <div key={r.label} className="flex items-center justify-between gap-2">
-          <span className="w-16 text-[9px] leading-[150%] text-white">{r.label}</span>
+        <div key={r.label} className={styles.profileRow}>
+          <span className={styles.profileLabel}>{r.label}</span>
           <div className="flex flex-row gap-0.5">
             {[0, 1, 2, 3, 4].map((i) => (
               <span
                 key={i}
                 className="rounded-[1.5px]"
-                style={{ width: 6, height: 3, background: i < r.active ? r.color : "#8A8A82" }}
+                style={{ width: 4, height: 3, background: i < r.active ? r.color : "#8A8A82" }}
               />
             ))}
           </div>
@@ -76,43 +75,37 @@ export default function WorkoutSection() {
   );
 
   return (
-    <div ref={sectionRef} className="">
-      <div className="max-w-360 mx-auto px-5 lg:px-10  relative">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-          <div data-feature-image data-mobile-direction="from-right" className="relative w-full md:w-fit md:mx-auto">
-            <div data-feature-card className="absolute sm:left-[55%] sm:top-[10%] z-10 origin-top-left scale-[0.8] max-md:scale-[0.62] sm:scale-100 w-89.5 max-md:left-[4%]" >
-              <WorkoutCard />
-            </div>
-            <Image
-              src="/home/workout-photo.png"
-              alt="Workout tracking"
-              height={874}
-              width={633}
-              className="object-contain  w-full h-auto md:w-158.25 md:h-218.5"
-              style={{ filter: "drop-shadow(11px -4px 12.3px rgba(0,0,0,0.25))" }}
-            />
-            <div
-              className="pointer-events-none absolute bottom-0 left-2.5 h-[27.6%] w-[104%]"
-              style={{ background: "linear-gradient(190deg, rgba(38,38,38,0) 51%, rgba(24,34,29,1) 90%)" }}
-            />
-            <div data-feature-card className="absolute right-[-4.3%] top-[38.2%] z-10 origin-top-right scale-[0.8] max-md:scale-[0.62] sm:scale-100 w-49 max-md:right-[2%]" >
-              <ProfileCard />
-            </div>
-            <div data-feature-card className="absolute left-[5%] top-[74.3%] z-10 origin-top-left scale-[0.8] max-md:scale-[0.6] sm:scale-100 w-[395px]" >
-              <WorkoutStatsCard />
-            </div>
+    <div id="workouts" ref={sectionRef} className={styles.section}>
+      <div className={styles.content}>
+        <div data-feature-image data-mobile-direction="from-right" className={styles.visual}>
+          <Image
+            src="/home/workout-photo.png"
+            alt="Runner wearing earbuds and a fitness watch"
+            height={874}
+            width={633}
+            className={styles.photo}
+            sizes="(min-width: 1024px) 400px, (min-width: 540px) 400px, 100vw"
+          />
+          <div data-feature-card className={styles.summaryCard}>
+            <WorkoutCard />
           </div>
-          <div className="flex flex-row  relative ">
-            <GiantNumber n="02" className="left-0 lg:right-0" />
-            <div className="flex flex-col flex-1 lg:pl-16 py-20 lg:pt-24 justify-center">
-              <FeatureCopy
-                eyebrow="Workouts"
-                headline={["Train with a plan your"]}
-                accent="doctor can actually see."
-                sub="Save workouts and track progress — so your physician knows what's working, not just what you weigh."
-              />
-            </div>
+          <div data-feature-card className={styles.profile}>
+            <ProfileCard />
           </div>
+          <div data-feature-card className={styles.statsCard}>
+            <WorkoutStatsCard />
+          </div>
+        </div>
+        <div className={styles.copy}>
+          <h3>Workouts</h3>
+          <p className={styles.headline}>
+            Train with a plan your<br />
+            <em className={styles.accent}>doctor can actually see.</em>
+          </p>
+          <p className={styles.description}>
+            Save workouts and track progress &mdash; so your physician knows<br className={styles.desktopBreak} />
+            {" "}what&apos;s working, not just what you weigh.
+          </p>
         </div>
       </div>
     </div>

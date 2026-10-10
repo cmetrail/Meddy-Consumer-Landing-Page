@@ -1,63 +1,34 @@
-"use client";
+﻿"use client";
 
 import { useRef } from "react";
 import Image from "next/image";
 import { TrendingDown, TrendingUp } from "lucide-react";
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-import FeatureCopy from "./FeatureCopy";
-import GiantNumber from "./GiantNumber";
+import styles from "./InsightsSection.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const A1C_TREND_DATA = [
-  { x: 0, a1c: 10 },
-  { x: 30, a1c: 15 },
-  { x: 60, a1c: 30 },
-  { x: 90, a1c: 20 },
-  { x: 120, a1c: 40 },
-  { x: 150, a1c: 45 },
-  { x: 200, a1c: 60 },
-];
-
 function NetCaloriesCard() {
   return (
-    <div
-      className="mobile-glass-card flex flex-col gap-3 rounded-2xl p-3"
-      style={{
-        backdropFilter: "blur(14px)",
-        backgroundColor: "rgba(255,255,255,0.06)",
-        border: "0.75px solid #FFFFFF1A",
-        boxShadow: "0px 0.75px 2.25px 0px #0000000D, 0px 1.5px 9px 0px #00000014",
-      }}
-    >
-      <div>
-        <p className="text-white/70 text-[10px] mb-1">Net Calories</p>
-        <div className="flex items-baseline gap-2">
-          <p className="text-white font-bold text-2xl leading-tight">235 kcal</p>
-          <span className="flex items-center gap-0.5 text-[10px] font-semibold text-[#FF546B]">
-            <TrendingDown size={10} />−20%
-          </span>
-        </div>
+    <div className={`${styles.glassCard} ${styles.caloriesCard}`}>
+      <p className={styles.cardLabel}>Net Calories</p>
+      <div className={styles.netValue}>
+        <p>1130 <span>kcal</span></p>
+        <span className={styles.down}><TrendingDown size={9} /> −15%</span>
       </div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className={styles.calorieDetails}>
         {[
-          { label: "Calories Intake", value: "235 kcal", trend: "+20%", up: true },
-          { label: "Calories Burn", value: "235 kcal", trend: "−20%", up: false },
+          { label: "Calories Intake", value: "1980", trend: "+20%", up: true },
+          { label: "Calories Burn", value: "850", trend: "−8%", up: false },
         ].map((item) => (
-          <div
-            key={item.label}
-            className="flex flex-col gap-1 rounded-xl p-2"
-            style={{ backgroundColor: "rgba(255,255,255,0.10)" }}
-          >
-            <p className="text-white/60 text-[9px]">{item.label}</p>
-            <div className="flex items-baseline gap-1 flex-wrap">
-              <p className="text-white font-bold text-[13px] leading-tight">{item.value}</p>
-              <span className={`flex items-center gap-0.5 text-[9px] font-semibold ${item.up ? "text-[#1DC277]" : "text-[#FF546B]"}`}>
-                {item.up ? <TrendingUp size={9} /> : <TrendingDown size={9} />}
-                {item.trend}
+          <div key={item.label}>
+            <p className={styles.cardLabel}>{item.label}</p>
+            <div className={styles.detailValue}>
+              <p>{item.value} <span>kcal</span></p>
+              <span className={item.up ? styles.up : styles.down}>
+                {item.up ? <TrendingUp size={8} /> : <TrendingDown size={8} />}{item.trend}
               </span>
             </div>
           </div>
@@ -69,92 +40,64 @@ function NetCaloriesCard() {
 
 function A1cTrendCard() {
   return (
-    <div
-      className="mobile-glass-card flex flex-col rounded-2xl p-3"
-      style={{
-        backdropFilter: "blur(14px)",
-        backgroundColor: "rgba(255,255,255,0.06)",
-        border: "0.75px solid #FFFFFF1A",
-        boxShadow: "0px 0.75px 2.25px 0px #0000000D, 0px 1.5px 9px 0px #00000014",
-      }}
-    >
-      <p className="text-white text-[10px]">A1c Trend</p>
-      <Image
-        src="/home/a1c-trend.png"
-        alt="Sleep chart"
-        width={240}
-        height={120}
-        className="w-full rounded-lg object-cover"
-      />
+    <div className={`${styles.glassCard} ${styles.trendCard}`}>
+      <p className={styles.chartTitle}>A1c Trend</p>
+      <svg viewBox="0 0 244 194" className={styles.chart} role="img" aria-label="A1c decreasing from 8.2% to 5.2% over twelve months, with an average of 6.6%.">
+        {Array.from({ length: 9 }, (_, i) => (
+          <g key={i}>
+            <text x="0" y={12 + i * 20}>{16 - i * 2}%</text>
+            <line x1="27" x2="237" y1={8 + i * 20} y2={8 + i * 20} stroke="#ffffff55" strokeWidth="0.6" />
+          </g>
+        ))}
+        <line x1="27" x2="237" y1="104" y2="104" stroke="#e6a316" strokeDasharray="4 3" strokeWidth="1" />
+        <path d="M29 87 L47 92 L64 94 L82 99 L99 103 L117 105 L135 109 L153 111 L171 113 L189 115 L207 117 L237 119" fill="none" stroke="#f5af11" strokeWidth="2" />
+        {[[29,87], [64,94], [82,99], [99,103], [163,112], [197,116]].map(([cx, cy]) => <circle key={cx} cx={cx} cy={cy} r="2.3" fill="#ffbf23" />)}
+        <rect x="27" y="98" width="47" height="16" rx="3" fill="#e9a611" />
+        <text x="33" y="109" className={styles.average}>Avg: 6.6%</text>
+        <rect x="174" y="73" width="72" height="32" rx="6" fill="#f7f7f7" />
+        <text x="181" y="85">KPI</text>
+        <circle cx="183" cy="95" r="3" fill="#e6a316" />
+        <text x="190" y="98" className={styles.average}>A1c: 6.2%</text>
+        {"JFMAMJJASOND".split("").map((month, i) => (
+          <g key={i}>
+            <line x1={33 + i * 18} x2={33 + i * 18} y1="174" y2="180" stroke="#ffffff66" strokeWidth="0.6" />
+            <text x={33 + i * 18} y="190" textAnchor="middle">{month}</text>
+          </g>
+        ))}
+      </svg>
     </div>
   );
 }
 
 export default function InsightsSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => desktopMotion(() => {
-      const root = sectionRef.current;
-      if (!root) return;
-
-      const image = root.querySelector("[data-feature-image]");
-
-      if (image) {
-        gsap.fromTo(image, { opacity: 0, x: -40 }, {
-          opacity: 1, x: 0, ease: "none",
-          scrollTrigger: { trigger: image, start: "top 92%", end: "top 55%", scrub: true },
-        });
-      }
-      gsap.utils.toArray<HTMLElement>("[data-feature-card]", root).forEach((el) => {
-        gsap.fromTo(el, { opacity: 0, y: 24 }, {
-          opacity: 1, y: 0, ease: "none",
-          scrollTrigger: { trigger: el, start: "top 88%", end: "top 60%", scrub: true },
-        });
+  const sectionRef = useRef<HTMLElement>(null);
+  useGSAP(() => desktopMotion(() => {
+    const root = sectionRef.current;
+    if (!root) return;
+    gsap.utils.toArray<HTMLElement>("[data-feature-image], [data-feature-line], [data-feature-card]", root).forEach((el) => {
+      gsap.fromTo(el, { opacity: 0, y: 24 }, {
+        opacity: 1, y: 0, ease: "none",
+        scrollTrigger: { trigger: el, start: "top 92%", end: "top 60%", scrub: true },
       });
-    }),
-    { scope: sectionRef },
-  );
+    });
+  }), { scope: sectionRef });
 
   return (
-    <div ref={sectionRef} className="">
-
-      <div className="max-w-360 mx-auto px-5 lg:px-10  relative">
-        <GiantNumber n="04" />
-        <div className="grid lg:grid-cols-2   gap-8 lg:gap-16 items-center">
-          <div className="pt-24 lg:pt-40 lg:pl-14">
-            <FeatureCopy
-              eyebrow="Health Insights"
-              headline={["Know what's actually"]}
-              accent="moving your health."
-              sub="See how changes affect your results — and which habits are driving them."
-            />
-          </div>
-          <div data-feature-image className="relative w-full md:w-fit md:mx-auto">
-            <div data-feature-card className="absolute right-[0%] top-[0%] z-10 origin-top-right scale-[0.8] max-md:scale-[0.62] sm:scale-100 w-67">
-              <NetCaloriesCard />
-            </div>
-            <Image
-              src="/home/heart.png"
-              alt="Health insights"
-              height={670}
-              width={441}
-              className="object-contain w-full h-auto md:w-110.25 md:h-167.5"
-              style={{ filter: "drop-shadow(21px 16px 14.6px rgba(78,38,38,0.25))" }}
-            />
-            <div
-              className="pointer-events-none absolute bottom-0 left-0 h-[45%] w-full"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(38,38,38,0) 10%, rgba(24,34,29,1) 77%)",
-              }}
-            />
-            <div data-feature-card className="absolute left-[-4%] bottom-[14%] origin-bottom-left scale-[0.8] max-md:scale-[0.62] sm:scale-100 w-67">
-              <A1cTrendCard />
-            </div>
-          </div>
+    <section ref={sectionRef} id="health-insights" className={styles.section} aria-labelledby="health-insights-title">
+      <div className={styles.content}>
+        <span className={styles.number} aria-hidden="true">04</span>
+        <div data-feature-image className={styles.visual}>
+          <Image src="/home/heart.png" alt="Anatomical heart illustrating health insights" width={441} height={670} sizes="(max-width: 599px) 80vw, 441px" className={styles.heart} />
+          <div data-feature-card className={styles.calories}><NetCaloriesCard /></div>
+          <div data-feature-card className={styles.trend}><A1cTrendCard /></div>
+        </div>
+        <div className={styles.copy}>
+          <h3 data-feature-line id="health-insights-title">Health Insights</h3>
+          <p data-feature-line className={styles.headline}>Know what&apos;s actually</p>
+          <p data-feature-line className={styles.accent}>moving your health.</p>
+          <p data-feature-line className={styles.description}>See how changes affect your results — and which habits are driving them.</p>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
