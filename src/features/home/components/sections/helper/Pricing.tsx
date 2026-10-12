@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CircleCheckBig, Crown } from "lucide-react";
 import styles from "./Pricing.module.css";
 
@@ -146,11 +147,12 @@ function PlanCard({
         ))}
       </ul>
 
-      <button
+      <Link
+        href="/book-consultation"
         className={`${styles.button} mt-8 flex h-[50px] w-full items-center justify-center rounded-[7px] text-[18px] font-semibold transition-colors duration-200 ${btnClass}`}
       >
         Book Your Free Consultation
-      </button>
+      </Link>
     </div>
   );
 }

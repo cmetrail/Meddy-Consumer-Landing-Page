@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 
 // Figma: desktop node 12659:29891 (1440 x 1073, #F5F5F0): 579 x 833 rounded photo with five green blocks on the left, "FAQ" +
@@ -165,9 +166,9 @@ export default function NutritionFaqSection() {
                 </div>
               );
             })}
-            <button type="button" className="mt-0 w-fit rounded-[35px] bg-[#17925a] px-5 py-3 text-[16px] font-normal leading-[normal] text-white lg:hidden">
+            <Link href="/book-consultation" className="mt-0 w-fit rounded-[35px] bg-[#17925a] px-5 py-3 text-[16px] font-normal leading-[normal] text-white lg:hidden">
               Book With Dr. Aggarwal
-            </button>
+            </Link>
           </motion.div>
         </div>
       </div>

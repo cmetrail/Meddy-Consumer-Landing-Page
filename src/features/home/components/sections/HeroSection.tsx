@@ -327,7 +327,7 @@ export default function HeroSection() {
                 {i === 0 ? <>That actually knows your <em>habits</em></> : i === 1 ? <><em>Eat for your health,</em> not someone else&apos;s</> : i === 2 ? <>Exercise with <em>purpose.</em></> : i === 3 ? <>Better sleep. <em>Better health.</em></> : s.tagline}
               </p>
               <p ref={(el) => { bodyRefs.current[i] = el; }} className={styles.body}>{s.body}</p>
-              <Link ref={(el) => { ctaRefs.current[i] = el; }} href="/#how-it-works" className={styles.consultation}>Book Free Consultation</Link>
+              <Link ref={(el) => { ctaRefs.current[i] = el; }} href="/book-consultation" className={styles.consultation}>Book Free Consultation</Link>
               <div ref={(el) => { cardRefs.current[i] = el; }} className={styles.card}>
                 <EnrollmentCard />
               </div>

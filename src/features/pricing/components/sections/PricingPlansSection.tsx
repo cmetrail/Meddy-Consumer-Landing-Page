@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 import { CircleCheckBig, Crown } from "lucide-react";
@@ -184,11 +185,12 @@ function PlanCard({ plan }: { plan: Plan }) {
         </ul>
       </div>
 
-      <button
+      <Link
+        href="/book-consultation"
         className={`w-full rounded-[7.4px] py-[7.4px] h-12.25 text-center text-[17.77px] font-semibold leading-[100%] transition-colors duration-200 ${BUTTON_STYLES[v]}`}
       >
         {plan.cta}
-      </button>
+      </Link>
     </div>
   );
 }
