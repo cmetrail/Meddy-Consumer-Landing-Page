@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { CircleCheckBig, Crown } from "lucide-react";
-import Link from "next/link";
 import styles from "./Pricing.module.css";
 
 const LIGHT_GREEN = "#8ABE85";
