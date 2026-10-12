@@ -103,7 +103,7 @@ export default function WeightLossHeroSection() {
             </p>
 
             <Link
-              href="/#how-it-works"
+              href="/book-consultation"
               className="inline-flex w-fit items-center justify-center rounded-[49px] bg-white px-[var(--px)] py-[var(--py)] text-[16px] font-normal leading-[normal] text-[#17925A] transition-opacity hover:opacity-90 lg:px-6 lg:py-4 lg:text-[20px]"
               style={{ ["--px" as string]: m(20), ["--py" as string]: m(12) } as React.CSSProperties}
             >
