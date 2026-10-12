@@ -1,0 +1,9 @@
+.page {
+  --section-gutter: max(20px, calc((100vw - 1440px) / 2 + 20px));
+}
+
+@media (min-width: 1024px) {
+  .page {
+    --section-gutter: max(40px, calc((100vw - 1440px) / 2 + 40px));
+  }
+}

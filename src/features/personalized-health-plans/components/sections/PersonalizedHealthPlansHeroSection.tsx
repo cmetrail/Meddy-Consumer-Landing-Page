@@ -109,7 +109,7 @@ export default function PersonalizedHealthPlansHeroSection() {
       style={{ background: "linear-gradient(126.08deg, rgb(78, 121, 89) 3.1626%, rgb(74, 153, 144) 104.37%)" }}
     >
       <div className="relative z-30">
-        <Header variant="dark" active="Personalized Health Plans" />
+        <Header variant="dark" />
       </div>
 
       {/* same container as the header: text, portrait and the card all share its edges. No z-index here so the soft-light

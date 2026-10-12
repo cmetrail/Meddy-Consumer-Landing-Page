@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import Image from "next/image";
+import { useLayoutEffect, useRef } from "react";
 import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
@@ -13,6 +12,20 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function FooterSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const sceneRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const scene = sceneRef.current;
+    const section = sectionRef.current;
+    if (!scene || !section) return;
+    const updateBackground = () => {
+      section.style.setProperty("--pricing-scene-height", `${scene.offsetHeight}px`);
+    };
+    updateBackground();
+    const observer = new ResizeObserver(updateBackground);
+    observer.observe(scene);
+    return () => observer.disconnect();
+  }, []);
 
   useGSAP(
     () => desktopMotion(() => {
@@ -69,11 +82,13 @@ export default function FooterSection() {
 
   return (
     <section ref={sectionRef} id="pricing" className={`${styles.section} relative w-full overflow-hidden text-white`}>
-      <Image src="/home/footer-bg.jpg" alt="" fill className={`${styles.background} object-cover`} />
+      <div className={styles.backdrop} aria-hidden="true" />
       <div className={`${styles.overlay} absolute inset-0 bg-black/50`} />
 
-      <div className={`${styles.content} relative max-w-360 mx-auto px-5 lg:px-10 py-16`}>
-        <Pricing />
+      <div ref={sceneRef} className={styles.scene}>
+        <div className={`${styles.content} relative max-w-360 mx-auto px-5 lg:px-10 py-16`}>
+          <Pricing />
+        </div>
       </div>
       <FooterItems mobileReference />
     </section>

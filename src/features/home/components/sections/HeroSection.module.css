@@ -42,16 +42,25 @@
 .sleep .enrollment { background: rgba(255,255,255,.2); }
 .sleepPerson { height: 92%; left: 67%; bottom: -8.5%; }
 @media (min-width: 1024px) and (max-height: 850px) {
-  .hero { min-height: 900px; }
-  .content { top: 17%; }
-  .headline { font-size: min(12.4vw, 150px); }
-  .copy { margin-top: 20px !important; }
-  .card { margin-top: 28px !important; }
-  .consultation { margin-top: 24px !important; }
+  /* Fit short desktop/tablet viewports without stretching the card artwork. */
+  .hero { min-height: 740px; }
+  .content { top: clamp(90px, 12vh, 102px); }
+  .headline { font-size: min(12.4vw, 16vh); }
+  .copy { margin-top: 14px !important; }
+  .tagline { font-size: 24px; }
+  .body { min-height: 72px; font-size: 16px; }
+  .card { margin-top: 20px !important; width: 320px; }
+  .consultation { margin-top: 20px !important; padding: 12px 24px !important; font-size: 18px; }
+  .enrollment { padding: 16px !important; }
+  .enrollmentTitle { font-size: 13px; }
+  .spots span { font-size: 48px; }
+  .spots em { font-size: 12px; }
+  .ring { width: 64px; height: 66px; }
+  .patients { margin-top: 12px !important; }
+  .avatar, .patientCount { width: 26px; height: 26px; }
 }
 @media (min-width: 1024px) and (max-width: 1279px) {
-  .body { min-height: 120px; }
-  .tagline { font-size: 26px; }
+  .tagline { white-space: normal; height: auto; min-height: 2.8em; width: 100%; }
 }
 @media (max-width: 1023px) {
   .hero { min-height: 920px; }

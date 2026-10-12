@@ -26,7 +26,7 @@ const SLIDES = [
   },
   {
     bg: "radial-gradient(49.4% 83.3% at 53.93% 56.81%, #E6B27D 0%, #B48037 100%)",
-    image: "/women.png",
+    image: "/womenn.png",
     rightImage: "/right-nutrition.png",
     arrow: "#B48037",
     width: 835,
@@ -64,8 +64,8 @@ const NOISE_BG =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.25'/%3E%3C/svg%3E\")";
 
 // ─── Timing constants ────────────────────────────────────────────────────────
-const BG_DURATION = 1.4;   // bg curtain slide duration
-const CONTENT_EXIT_AT = 0.55;  // when curtain edge "touches" content (s after bg starts)
+const BG_DURATION = 1.4; // bg curtain slide duration
+const CONTENT_EXIT_AT = 0.55; // when curtain edge "touches" content (s after bg starts)
 const CONTENT_ENTER_AT = CONTENT_EXIT_AT + 0.1;
 
 // Use the same curtain, text, and image sequence at every viewport size.
@@ -90,37 +90,97 @@ export default function HeroSection() {
 
   // ── Exit a slide's content ────────────────────────────────────────────────
   const exitContent = (i: number) => {
-    const letters = Array.from(hlRefs.current[i]?.querySelectorAll("[data-hero-letter]") ?? []);
-    gsap.to(hlRefs.current[i]?.children ?? [], { opacity: 0, duration: 0.3, ease: "power2.in" });
-    gsap.to(contentRefs.current[i], { autoAlpha: 0, duration: 0.1, delay: 0.5 });
-    gsap.to(letters, { opacity: 0, y: -15, duration: 0.3, stagger: 0.02, ease: "power2.in" });
-    gsap.to(taglineRefs.current[i], { x: 20, opacity: 0, duration: 0.3, ease: "power2.in" });
-    gsap.to([bodyRefs.current[i], ctaRefs.current[i]], { x: 20, opacity: 0, duration: 0.3, delay: 0.05, ease: "power2.in" });
-    gsap.to(cardRefs.current[i], { y: -20, opacity: 0, duration: 0.3, ease: "power2.in" });
-    gsap.to(imageRefs.current[i], { yPercent: 100, opacity: 0, duration: 0.9, ease: "power2.in" });
+    const letters = Array.from(
+      hlRefs.current[i]?.querySelectorAll("[data-hero-letter]") ?? [],
+    );
+    gsap.to(hlRefs.current[i]?.children ?? [], {
+      opacity: 0,
+      duration: 0.3,
+      ease: "power2.in",
+    });
+    gsap.to(contentRefs.current[i], {
+      autoAlpha: 0,
+      duration: 0.1,
+      delay: 0.5,
+    });
+    gsap.to(letters, {
+      opacity: 0,
+      y: -15,
+      duration: 0.3,
+      stagger: 0.02,
+      ease: "power2.in",
+    });
+    gsap.to(taglineRefs.current[i], {
+      x: 20,
+      opacity: 0,
+      duration: 0.3,
+      ease: "power2.in",
+    });
+    gsap.to([bodyRefs.current[i], ctaRefs.current[i]], {
+      x: 20,
+      opacity: 0,
+      duration: 0.3,
+      delay: 0.05,
+      ease: "power2.in",
+    });
+    gsap.to(cardRefs.current[i], {
+      y: -20,
+      opacity: 0,
+      duration: 0.3,
+      ease: "power2.in",
+    });
+    gsap.to(imageRefs.current[i], {
+      yPercent: 100,
+      opacity: 0,
+      duration: 0.9,
+      ease: "power2.in",
+    });
   };
 
   // ── Enter a slide's content ───────────────────────────────────────────────
   const enterContent = (i: number, baseDelay = 0) => {
     const d = baseDelay;
     gsap.set(contentRefs.current[i], { autoAlpha: 1 });
-    gsap.fromTo(hlRefs.current[i]?.children ?? [], { opacity: 0 }, { opacity: 1, duration: 0.8, delay: d + 0.3, ease: "power2.out" });
-    const letters = Array.from(hlRefs.current[i]?.querySelectorAll("[data-hero-letter]") ?? []);
-    gsap.fromTo(imageRefs.current[i],
+    gsap.fromTo(
+      hlRefs.current[i]?.children ?? [],
+      { opacity: 0 },
+      { opacity: 1, duration: 0.8, delay: d + 0.3, ease: "power2.out" },
+    );
+    const letters = Array.from(
+      hlRefs.current[i]?.querySelectorAll("[data-hero-letter]") ?? [],
+    );
+    gsap.fromTo(
+      imageRefs.current[i],
       { yPercent: 50, opacity: 0 },
-      { yPercent: 0, opacity: 1, duration: 1.8, delay: d, ease: "power3.out" });
-    gsap.fromTo(letters,
+      { yPercent: 0, opacity: 1, duration: 1.8, delay: d, ease: "power3.out" },
+    );
+    gsap.fromTo(
+      letters,
       { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.8, stagger: 0.05, delay: d + 0.3, ease: "power2.out" });
-    gsap.fromTo(taglineRefs.current[i],
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.05,
+        delay: d + 0.3,
+        ease: "power2.out",
+      },
+    );
+    gsap.fromTo(
+      taglineRefs.current[i],
       { x: -50, opacity: 0 },
-      { x: 0, opacity: 1, duration: 1.0, delay: d + 0.5, ease: "power2.out" });
-    gsap.fromTo([bodyRefs.current[i], ctaRefs.current[i]],
+      { x: 0, opacity: 1, duration: 1.0, delay: d + 0.5, ease: "power2.out" },
+    );
+    gsap.fromTo(
+      [bodyRefs.current[i], ctaRefs.current[i]],
       { x: -50, opacity: 0 },
-      { x: 0, opacity: 1, duration: 1.0, delay: d + 0.65, ease: "power2.out" });
-    gsap.fromTo(cardRefs.current[i],
+      { x: 0, opacity: 1, duration: 1.0, delay: d + 0.65, ease: "power2.out" },
+    );
+    gsap.fromTo(
+      cardRefs.current[i],
       { y: 16, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.9, delay: d + 0.7, ease: "power3.out" });
+      { y: 0, opacity: 1, duration: 0.9, delay: d + 0.7, ease: "power3.out" },
+    );
   };
 
   // ── Progress bar fill → triggers next transition on complete ─────────────
@@ -128,10 +188,12 @@ export default function HeroSection() {
     const fill = progressFillRefs.current[from];
     if (!fill) return;
     // Load the next image during the reading interval, before its entrance.
-    const nextImage = imageRefs.current[(from + 1) % SLIDES.length]?.querySelector("img");
+    const nextImage =
+      imageRefs.current[(from + 1) % SLIDES.length]?.querySelector("img");
     if (nextImage) nextImage.loading = "eager";
 
-    gsap.fromTo(fill,
+    gsap.fromTo(
+      fill,
       { scaleX: 0 },
       {
         scaleX: 1,
@@ -143,92 +205,192 @@ export default function HeroSection() {
           gsap.set(bgRefs.current[to], { x: "100%", opacity: 1 });
           gsap.set(imageRefs.current[to], { yPercent: 100, opacity: 0 });
 
-          gsap.to(bgRefs.current[from], { x: "-100%", duration: BG_DURATION, ease: "power2.inOut" });
-          gsap.to(bgRefs.current[to], { x: "0%", duration: BG_DURATION, ease: "power2.inOut" });
+          gsap.to(bgRefs.current[from], {
+            x: "-100%",
+            duration: BG_DURATION,
+            ease: "power2.inOut",
+          });
+          gsap.to(bgRefs.current[to], {
+            x: "0%",
+            duration: BG_DURATION,
+            ease: "power2.inOut",
+          });
 
-          gsap.delayedCall(CONTENT_EXIT_AT, context.add("exitSlide", () => exitContent(from)));
-          gsap.delayedCall(CONTENT_ENTER_AT, context.add("enterSlide", () => enterContent(to)));
+          gsap.delayedCall(
+            CONTENT_EXIT_AT,
+            context.add("exitSlide", () => exitContent(from)),
+          );
+          gsap.delayedCall(
+            CONTENT_ENTER_AT,
+            context.add("enterSlide", () => enterContent(to)),
+          );
 
           currentIndex.current = to;
           startProgress(to, context);
         }) as gsap.Callback,
-      }
+      },
     );
   };
 
   useGSAP(
     () => {
       const media = gsap.matchMedia();
-      media.add({ reduced: "(prefers-reduced-motion: reduce)", all: "all" }, (context) => {
-        currentIndex.current = 0;
-        if (!ANIMATION_ENABLED || context.conditions?.reduced) {
-          gsap.set(headerWrapRef.current, { opacity: 1, y: 0 });
-          gsap.set([...(hlRefs.current[0]?.querySelectorAll("[data-hero-letter]") ?? []), taglineRefs.current[0], bodyRefs.current[0], ctaRefs.current[0], cardRefs.current[0]], { opacity: 1, x: 0, y: 0 });
-          gsap.set(hlRefs.current[0]?.children ?? [], { opacity: 1 });
-          // Honor reduced motion with a readable, static first slide.
+      media.add(
+        { reduced: "(prefers-reduced-motion: reduce)", all: "all" },
+        (context) => {
+          currentIndex.current = 0;
+          if (!ANIMATION_ENABLED || context.conditions?.reduced) {
+            gsap.set(headerWrapRef.current, { opacity: 1, y: 0 });
+            gsap.set(
+              [
+                ...(hlRefs.current[0]?.querySelectorAll("[data-hero-letter]") ??
+                  []),
+                taglineRefs.current[0],
+                bodyRefs.current[0],
+                ctaRefs.current[0],
+                cardRefs.current[0],
+              ],
+              { opacity: 1, x: 0, y: 0 },
+            );
+            gsap.set(hlRefs.current[0]?.children ?? [], { opacity: 1 });
+            // Honor reduced motion with a readable, static first slide.
+            SLIDES.forEach((_, i) => {
+              gsap.set(bgRefs.current[i], {
+                x: i === 0 ? "0%" : "100%",
+                opacity: 1,
+              });
+              gsap.set(imageRefs.current[i], {
+                yPercent: i === 0 ? 0 : 100,
+                opacity: i === 0 ? 1 : 0,
+              });
+              gsap.set(contentRefs.current[i], { autoAlpha: i === 0 ? 1 : 0 });
+            });
+            progressFillRefs.current.forEach(
+              (el, i) => el && gsap.set(el, { scaleX: i === 0 ? 1 : 0 }),
+            );
+            return;
+          }
+
+          // Init: all slides except first off-screen
           SLIDES.forEach((_, i) => {
-            gsap.set(bgRefs.current[i], { x: i === 0 ? "0%" : "100%", opacity: 1 });
-            gsap.set(imageRefs.current[i], { yPercent: i === 0 ? 0 : 100, opacity: i === 0 ? 1 : 0 });
-            gsap.set(contentRefs.current[i], { autoAlpha: i === 0 ? 1 : 0 });
+            if (i === 0) return;
+            gsap.set(bgRefs.current[i], { x: "100%", opacity: 1 });
+            gsap.set(imageRefs.current[i], { yPercent: 100, opacity: 0 });
+            // Hide all non-active content elements
+            const letters = Array.from(
+              hlRefs.current[i]?.querySelectorAll("[data-hero-letter]") ?? [],
+            );
+            gsap.set(contentRefs.current[i], { autoAlpha: 0 });
+            gsap.set(
+              [
+                ...(hlRefs.current[i]?.children ?? []),
+                ...letters,
+                taglineRefs.current[i],
+                bodyRefs.current[i],
+                ctaRefs.current[i],
+                cardRefs.current[i],
+              ],
+              { opacity: 0 },
+            );
           });
-          progressFillRefs.current.forEach((el, i) => el && gsap.set(el, { scaleX: i === 0 ? 1 : 0 }));
-          return;
-        }
 
-        // Init: all slides except first off-screen
-        SLIDES.forEach((_, i) => {
-          if (i === 0) return;
-          gsap.set(bgRefs.current[i], { x: "100%", opacity: 1 });
-          gsap.set(imageRefs.current[i], { yPercent: 100, opacity: 0 });
-          // Hide all non-active content elements
-          const letters = Array.from(hlRefs.current[i]?.querySelectorAll("[data-hero-letter]") ?? []);
-          gsap.set(contentRefs.current[i], { autoAlpha: 0 });
-          gsap.set([...(hlRefs.current[i]?.children ?? []), ...letters, taglineRefs.current[i], bodyRefs.current[i], ctaRefs.current[i], cardRefs.current[i]], { opacity: 0 });
-        });
+          // Init progress bars — all empty, first will fill via startProgress
+          progressFillRefs.current.forEach(
+            (el) => el && gsap.set(el, { scaleX: 0 }),
+          );
 
-        // Init progress bars — all empty, first will fill via startProgress
-        progressFillRefs.current.forEach(el => el && gsap.set(el, { scaleX: 0 }));
+          // Use the same first-slide entrance on desktop and mobile.
+          const letters = Array.from(
+            hlRefs.current[0]?.querySelectorAll("[data-hero-letter]") ?? [],
+          );
+          const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
+          intro
+            .fromTo(
+              headerWrapRef.current,
+              { y: -24, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.7 },
+            )
+            .fromTo(
+              imageRefs.current[0],
+              { yPercent: 50, opacity: 0 },
+              { yPercent: 0, opacity: 1, duration: 1.5 },
+              0.1,
+            )
+            .fromTo(
+              hlRefs.current[0]?.children ?? [],
+              { opacity: 0 },
+              { opacity: 1, duration: 0.8, ease: "power2.out" },
+              0.3,
+            )
+            .fromTo(
+              letters,
+              { opacity: 0, y: 30 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.05,
+                ease: "power2.out",
+              },
+              0.3,
+            )
+            .fromTo(
+              taglineRefs.current[0],
+              { x: -50, opacity: 0 },
+              { x: 0, opacity: 1, duration: 1.0, ease: "power2.out" },
+              0.5,
+            )
+            .fromTo(
+              [bodyRefs.current[0], ctaRefs.current[0]],
+              { x: -50, opacity: 0 },
+              { x: 0, opacity: 1, duration: 1.0, ease: "power2.out" },
+              0.6,
+            )
+            .fromTo(
+              cardRefs.current[0],
+              { y: 16, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.9 },
+              0.7,
+            );
 
-        // Use the same first-slide entrance on desktop and mobile.
-        const letters = Array.from(hlRefs.current[0]?.querySelectorAll("[data-hero-letter]") ?? []);
-        const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
-        intro
-          .fromTo(headerWrapRef.current, { y: -24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 })
-          .fromTo(imageRefs.current[0], { yPercent: 50, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 1.5 }, 0.1)
-          .fromTo(hlRefs.current[0]?.children ?? [], { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.out" }, 0.3)
-          .fromTo(letters, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.05, ease: "power2.out" }, 0.3)
-          .fromTo(taglineRefs.current[0], { x: -50, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power2.out" }, 0.5)
-          .fromTo([bodyRefs.current[0], ctaRefs.current[0]], { x: -50, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power2.out" }, 0.6)
-          .fromTo(cardRefs.current[0], { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9 }, 0.7);
+          startProgress(0, context);
 
-        startProgress(0, context);
-
-        // Pause the entire sequence, including delayed callbacks and the intro,
-        // without changing the relative timing of its individual animations.
-        let inView = false;
-        const syncPlayback = () => {
-          const roots = new Set<gsap.core.Animation>();
-          context.getTweens().forEach((tween: gsap.core.Tween) => {
-            let animation: gsap.core.Animation = tween;
-            while (animation.parent && animation.parent !== gsap.globalTimeline) {
-              animation = animation.parent;
-            }
-            if (animation.parent === gsap.globalTimeline) roots.add(animation);
-          });
-          roots.forEach((animation) => animation.paused(!inView || document.hidden));
-        };
-        syncPlayback();
-        const observer = new IntersectionObserver(([entry]) => {
-          inView = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+          // Pause the entire sequence, including delayed callbacks and the intro,
+          // without changing the relative timing of its individual animations.
+          let inView = false;
+          const syncPlayback = () => {
+            const roots = new Set<gsap.core.Animation>();
+            context.getTweens().forEach((tween: gsap.core.Tween) => {
+              let animation: gsap.core.Animation = tween;
+              while (
+                animation.parent &&
+                animation.parent !== gsap.globalTimeline
+              ) {
+                animation = animation.parent;
+              }
+              if (animation.parent === gsap.globalTimeline)
+                roots.add(animation);
+            });
+            roots.forEach((animation) =>
+              animation.paused(!inView || document.hidden),
+            );
+          };
           syncPlayback();
-        }, { threshold: [0, 0.25] });
-        observer.observe(containerRef.current!);
-        document.addEventListener("visibilitychange", syncPlayback);
-        return () => {
-          observer.disconnect();
-          document.removeEventListener("visibilitychange", syncPlayback);
-        };
-      });
+          const observer = new IntersectionObserver(
+            ([entry]) => {
+              inView = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+              syncPlayback();
+            },
+            { threshold: [0, 0.25] },
+          );
+          observer.observe(containerRef.current!);
+          document.addEventListener("visibilitychange", syncPlayback);
+          return () => {
+            observer.disconnect();
+            document.removeEventListener("visibilitychange", syncPlayback);
+          };
+        },
+      );
       return () => media.revert();
     },
     { scope: containerRef },
@@ -263,11 +425,8 @@ export default function HeroSection() {
       ))}
       <div className="h-full w-full relative">
         {/* ── Header — normal flow, sits at top ── */}
-        <div
-          ref={headerWrapRef}
-          className="relative z-50"
-        >
-          <Header variant="dark" active="How it works" />
+        <div ref={headerWrapRef} className="relative z-50">
+          <Header variant="dark" />
         </div>
 
         {/* Person images — bottom-anchored at 60% width, height scales with --s */}
@@ -302,33 +461,92 @@ export default function HeroSection() {
               contentRefs.current[i] = el;
             }}
             className={`${styles.content} ${i === 1 ? styles.nutrition : i === 2 ? styles.fitness : i === 3 ? styles.sleep : ""}`}
-            style={{ opacity: i === 0 ? 1 : 0, visibility: i === 0 ? "visible" : "hidden" }}
+            style={{
+              opacity: i === 0 ? 1 : 0,
+              visibility: i === 0 ? "visible" : "hidden",
+            }}
           >
             <div
-              ref={(el) => { hlRefs.current[i] = el; }}
+              ref={(el) => {
+                hlRefs.current[i] = el;
+              }}
               className={styles.headline}
               role="heading"
               aria-level={1}
               aria-label="Primary care"
             >
               <span className={styles.primaryWord} aria-hidden="true">
-                {s.headline.slice(0, 7).split("").map((char, j) => (
-                  <span key={j} data-hero-letter>{char}</span>
-                ))}
+                {s.headline
+                  .slice(0, 7)
+                  .split("")
+                  .map((char, j) => (
+                    <span key={j} data-hero-letter>
+                      {char}
+                    </span>
+                  ))}
               </span>
               <span className={styles.careWord} aria-hidden="true">
-                {s.headline.slice(7).split("").map((char, j) => (
-                  <span key={j} data-hero-letter>{j === 0 ? "\u00a0" : ""}{char}</span>
-                ))}
+                {s.headline
+                  .slice(7)
+                  .split("")
+                  .map((char, j) => (
+                    <span key={j} data-hero-letter>
+                      {j === 0 ? "\u00a0" : ""}
+                      {char}
+                    </span>
+                  ))}
               </span>
             </div>
             <div className={styles.copy}>
-              <p ref={(el) => { taglineRefs.current[i] = el; }} className={styles.tagline}>
-                {i === 0 ? <>That actually knows your <em>habits</em></> : i === 1 ? <><em>Eat for your health,</em> not someone else&apos;s</> : i === 2 ? <>Exercise with <em>purpose.</em></> : i === 3 ? <>Better sleep. <em>Better health.</em></> : s.tagline}
+              <p
+                ref={(el) => {
+                  taglineRefs.current[i] = el;
+                }}
+                className={styles.tagline}
+              >
+                {i === 0 ? (
+                  <>
+                    That actually knows your <em>habits</em>
+                  </>
+                ) : i === 1 ? (
+                  <>
+                    <em>Eat for your health,</em> not someone else&apos;s
+                  </>
+                ) : i === 2 ? (
+                  <>
+                    Exercise with <em>purpose.</em>
+                  </>
+                ) : i === 3 ? (
+                  <>
+                    Better sleep. <em>Better health.</em>
+                  </>
+                ) : (
+                  s.tagline
+                )}
               </p>
-              <p ref={(el) => { bodyRefs.current[i] = el; }} className={styles.body}>{s.body}</p>
-              <Link ref={(el) => { ctaRefs.current[i] = el; }} href="/#how-it-works" className={styles.consultation}>Book Free Consultation</Link>
-              <div ref={(el) => { cardRefs.current[i] = el; }} className={styles.card}>
+              <p
+                ref={(el) => {
+                  bodyRefs.current[i] = el;
+                }}
+                className={styles.body}
+              >
+                {s.body}
+              </p>
+              <Link
+                ref={(el) => {
+                  ctaRefs.current[i] = el;
+                }}
+                href="/#how-it-works"
+                className={styles.consultation}
+              >
+                Book Free Consultation
+              </Link>
+              <div
+                ref={(el) => {
+                  cardRefs.current[i] = el;
+                }}
+                className={styles.card}
+              >
                 <EnrollmentCard />
               </div>
             </div>
@@ -352,10 +570,7 @@ export default function HeroSection() {
         <div className={styles.progress}>
           <div className="flex w-full gap-1">
             {SLIDES.map((_, i) => (
-              <div
-                key={i}
-                className={styles.progressTrack}
-              >
+              <div key={i} className={styles.progressTrack}>
                 <div
                   ref={(el) => {
                     progressFillRefs.current[i] = el;

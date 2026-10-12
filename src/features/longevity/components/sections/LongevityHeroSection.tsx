@@ -105,7 +105,7 @@ export default function LongevityHeroSection() {
   return (
     <section className="relative flex min-h-dvh w-full flex-col overflow-hidden bg-[#FFF8E4] lg:min-h-[1096px]">
       <div className="relative z-30">
-        <Header variant="light" active="Longevity" />
+        <Header variant="light" />
       </div>
 
       {/* Mobile */}

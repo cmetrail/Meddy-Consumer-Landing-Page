@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import styles from "./PricingLevelSection.module.css";
 
 type Tier = {
   name: string;
@@ -38,8 +39,8 @@ const TIERS: Tier[] = [
   },
   {
     name: "Meddy Complete",
-    color: "#84AAA1",
-    img: "/pricing/level-complete.png",
+    color: "#93734E",
+    img: "/pricing/third.png",
     width: 464,
     height: 757,
     descWidth: 464,
@@ -86,8 +87,8 @@ export default function PricingLevelSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-[#17231D]">
-      <div className="mx-auto flex w-full max-w-360 flex-col px-5 pt-12 pb-16 lg:px-10 lg:pt-[69px] lg:pb-[47px]">
+    <section ref={sectionRef} className={`${styles.section} relative overflow-hidden bg-[#17231D]`} aria-label="Care that grows with your goals">
+      <div className={`${styles.content} mx-auto flex w-full max-w-360 flex-col px-5 pt-12 pb-16 lg:px-10 lg:pt-[69px] lg:pb-[47px]`}>
         <motion.div
           className="flex flex-col"
           initial="hidden"
@@ -97,40 +98,44 @@ export default function PricingLevelSection() {
         >
           <motion.h2
             variants={riseVariants}
-            className="text-left font-normal uppercase leading-[115%] text-[24px] md:text-[32px] lg:text-[48px]"
+            className={`${styles.heading} text-left font-normal leading-[115%] text-[24px] md:text-[32px] lg:text-[48px]`}
           >
-            <span className="text-[#D5D6D6]">Choose the level of care that</span>
-            <br />
-            <span className="font-bold italic text-white">fits your goals.</span>
+            <span className="text-[#D5D6D6]">Care that grows</span>
+            <span
+              className="mt-3 block pl-8 font-bold italic text-white md:pl-12 lg:mt-5 lg:pl-20"
+              style={{ fontFamily: '"Times New Roman", Times, serif' }}
+            >
+              With your goals.
+            </span>
           </motion.h2>
 
-          {/* Mobile: vertical stack */}
-          <div className="mt-8 flex flex-col gap-10 lg:hidden">
+          {/* Mobile: swipe between the bottom-aligned tiers. */}
+          <div className={styles.carousel}>
             {TIERS.map((tier) => (
-              <motion.div key={tier.name} className="flex flex-col" variants={riseVariants}>
+              <article key={tier.name} className={styles.slide} aria-label={tier.name} tabIndex={0}
+                style={{ "--tier-width": tier.width * 0.9, "--tier-height": Math.min(570, tier.height * 0.9) } as CSSProperties}>
                 <div
-                  className="relative w-full"
-                  style={{ aspectRatio: `${tier.width}/${tier.height}` }}
+                  className={styles.photo}
                 >
                   <Image
                     src={tier.img}
                     alt={tier.name}
                     fill
-                    sizes="100vw"
+                    sizes="(max-width: 1023px) 90vw, 33vw"
                     className="object-cover"
+                    style={tier.img === "/pricing/third.png" ? { clipPath: "polygon(28% 0, 100% 0, 100% 100%, 0 100%, 0 16%)" } : undefined}
                   />
                   <span
-                    className="absolute right-4 top-4 z-10 font-semibold uppercase leading-none text-[18px]"
+                    className={styles.label}
                     style={{ color: tier.color }}
                   >
                     {tier.name}
                   </span>
                 </div>
-                <p className="mt-3 text-[14px] font-normal leading-[1.25] text-white">
-                  {tier.lead}
-                  <b>{tier.bold}</b>
+                <p className={styles.description}>
+                  {tier.lead}{tier.bold}
                 </p>
-              </motion.div>
+              </article>
             ))}
           </div>
 
@@ -148,6 +153,7 @@ export default function PricingLevelSection() {
                     fill
                     sizes="33vw"
                     className="object-cover"
+                    style={tier.img === "/pricing/third.png" ? { clipPath: "polygon(28% 0, 100% 0, 100% 100%, 0 100%, 0 16%)" } : undefined}
                   />
                   <span
                     className="absolute right-4 top-4 z-10 font-semibold uppercase leading-none"

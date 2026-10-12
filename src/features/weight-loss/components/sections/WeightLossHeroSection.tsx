@@ -70,7 +70,7 @@ export default function WeightLossHeroSection() {
 
       {/* Header: same spacing as the other pages */}
       <div className="relative z-30">
-        <Header variant="dark" active="Weight Loss" />
+        <Header variant="dark" />
       </div>
 
       {/* Content: vertically centred between the nav and the 120px bottom padding */}

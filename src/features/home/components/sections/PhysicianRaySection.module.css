@@ -16,34 +16,34 @@
 .portrait {
   position: absolute;
   left: -25.2cqh;
-  bottom: -5.4%;
+  bottom: -6.4%;
   width: 103cqh;
 }
 
 .doctor { display: block; width: 100%; height: auto; }
-.copy { position: absolute; top: 11.6%; right: 8.4%; text-align: right; }
+.copy { position: absolute; top: 11.2%; right: 8.4%; text-align: right; }
 .eyebrow { font-size: min(1.35cqw, 1.79cqh); line-height: 1.4; text-transform: uppercase; font-weight: 400; }
 .spots { margin-top: 3.58cqh !important; font-size: min(3.04cqw, 4.03cqh); line-height: 1.4; font-weight: 400; }
 .heading {
   margin-top: min(1.55cqw, 2.06cqh) !important;
   font-family: var(--font-dm-serif), Georgia, serif !important;
-  font-size: min(7.08cqw, 9.39cqh);
+  font-size: min(7.44cqw, 9.86cqh);
   font-style: italic;
   font-weight: 400;
   letter-spacing: -.015em;
   line-height: 1.15;
 }
-.tagline { margin-top: 3.18cqh !important; font-size: min(2.2cqw, 2.92cqh); line-height: 1.4; font-weight: 400; }
+.tagline { margin-top: 2.7cqh !important; font-size: min(2.3cqw, 3.04cqh); line-height: 1.4; font-weight: 400; }
 .buttons { position: absolute; top: 45%; right: 8.4%; display: flex; gap: 1.33cqh; }
 .primaryButton, .secondaryButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1.06cqh 1.86cqh !important;
+  padding: min(1.11cqw, 1.48cqh) min(1.667cqw, 2.22cqh) !important;
   border-radius: 999px;
   border: 1px solid transparent;
-  font-size: min(1.08cqw, 1.43cqh);
-  line-height: 1.2;
+  font-size: min(1.39cqw, 1.85cqh);
+  line-height: 1.25;
   white-space: nowrap;
   transition: background 180ms, color 180ms;
 }
@@ -52,25 +52,40 @@
 .secondaryButton { border-color: #17925a; color: #fff; }
 .secondaryButton:hover { background: #17925a; }
 .primaryButton:focus-visible, .secondaryButton:focus-visible { outline: 2px solid white; outline-offset: 4px; }
-.social { position: absolute; top: 53.4%; right: 8.4%; width: min(23.6cqw, 31.3cqh); }
+.social { position: absolute; top: 54.5%; right: 8.4%; width: min(23.3cqw, 30.9cqh); container-type: inline-size; }
 .enrollment { display: block; width: 100%; height: auto; }
-.badges { position: absolute; top: 82.6%; right: 8.4%; display: grid; grid-template-columns: auto auto; gap: 2.19cqh 2.26cqh; }
+.availabilityPanel { position: absolute; left: 2.44%; right: .24%; bottom: 0; height: 58%; padding: 4cqw !important; border-radius: 5cqw; background: linear-gradient(110deg, #baf3aa, #15975e); color: #116b45; }
+.availabilityTitle { font-size: 5cqw; line-height: 1.4; text-transform: uppercase; font-weight: 400; transform: translateY(2cqw); }
+.availabilityFooter { display: flex; align-items: flex-end; justify-content: space-between; }
+.availabilityCount { display: flex; align-items: baseline; gap: 3cqw; white-space: nowrap; transform: translateY(4cqw); }
+.availabilityCount strong { font-size: 12cqw; line-height: 1.2; font-weight: 400; }
+.availabilityCount span { font-size: 4cqw; line-height: 1.4; text-transform: uppercase; }
+.availabilityRing { width: 22cqw; height: 22cqw; flex-shrink: 0; }
+.badges { position: absolute; top: 83.5%; right: 8.4%; display: grid; grid-template-columns: auto auto; gap: 2.19cqh 2.26cqh; }
 .badge { display: flex; align-items: center; gap: .93cqh; font-size: min(.95cqw, 1.26cqh); line-height: 1.4; white-space: nowrap; font-weight: 400; color: #dbe7d6; }
 .badge svg { flex-shrink: 0; width: min(1.55cqw, 2.06cqh); height: min(1.55cqw, 2.06cqh); }
 .badge strong { font-weight: 400; }
 
-@media (max-width: 540px) {
-  .canvas { height: max(820px, 100svh); container-type: inline-size; background: radial-gradient(ellipse at 22% 78%, #abc58d 0%, #4b7044 30%, #154426 65%, #1c3922 100%); }
-  .copy { top: 40px; left: 20px; right: 20px; text-align: center; }
-  .eyebrow { font-size: 10px; letter-spacing: .06em; }
-  .spots { margin-top: 16px !important; font-size: 22px; }
-  .heading { margin-top: 8px !important; font-size: clamp(36px, 10cqw, 52px); }
-  .tagline { margin-top: 14px !important; font-size: clamp(12px, 3.5cqw, 17px); }
-  .buttons { top: 224px; right: 20px; left: 20px; justify-content: center; gap: 8px; }
-  .primaryButton, .secondaryButton { padding: 10px 12px !important; font-size: 10px; }
-  .portrait { width: 115%; left: -33%; bottom: 0; }
-  .social { top: 340px; width: 150px; right: 16px; }
-  .badges { top: 285px; right: 16px; left: 16px; justify-content: center; gap: 10px 12px; }
-  .badge { font-size: 8px; gap: 5px; }
-  .badge svg { width: 12px; height: 12px; }
+@media (max-width: 767px) {
+  .canvas {
+    --ray-unit: min(calc(100vw / 282), 1.5603px);
+    max-width: 440px;
+    height: calc(604 * var(--ray-unit));
+    container-type: inline-size;
+    background: radial-gradient(ellipse at 30% 83%, #abc58d 0%, #66845a 24%, #305634 48%, #153d25 68%, #193822 100%);
+  }
+  .copy { top: calc(46 * var(--ray-unit)); left: calc(16 * var(--ray-unit)); right: calc(12 * var(--ray-unit)); text-align: right; }
+  .eyebrow { font-size: calc(10 * var(--ray-unit)); line-height: 1.4; letter-spacing: 0; }
+  .spots { margin-top: calc(12 * var(--ray-unit)) !important; font-size: calc(14 * var(--ray-unit)); line-height: 1.4; text-transform: uppercase; }
+  .heading { margin-top: calc(8 * var(--ray-unit)) !important; font-size: calc(22 * var(--ray-unit)); line-height: 1.2; }
+  .tagline { margin-top: calc(16 * var(--ray-unit)) !important; font-size: calc(14 * var(--ray-unit)); line-height: 1.4; }
+  .buttons { top: calc(196 * var(--ray-unit)); right: calc(12 * var(--ray-unit)); left: auto; flex-direction: column; align-items: flex-end; gap: calc(6 * var(--ray-unit)); }
+  .primaryButton, .secondaryButton { height: calc(32 * var(--ray-unit)); padding: calc(7 * var(--ray-unit)) calc(12 * var(--ray-unit)) !important; font-size: calc(11.5 * var(--ray-unit)); font-weight: 400; }
+  .primaryButton { width: calc(155 * var(--ray-unit)); }
+  .secondaryButton { width: calc(122 * var(--ray-unit)); }
+  .portrait { width: calc(300 * var(--ray-unit)); left: calc(-26 * var(--ray-unit)); bottom: calc(-44 * var(--ray-unit)); }
+  .social { display: none; }
+  .badges { top: calc(294 * var(--ray-unit)); right: calc(12 * var(--ray-unit)); left: calc(16 * var(--ray-unit)); grid-template-columns: auto auto; justify-content: space-between; gap: calc(12 * var(--ray-unit)) calc(12 * var(--ray-unit)); }
+  .badge { font-size: calc(7.8 * var(--ray-unit)); gap: calc(7 * var(--ray-unit)); }
+  .badge svg { width: calc(16 * var(--ray-unit)); height: calc(16 * var(--ray-unit)); }
 }

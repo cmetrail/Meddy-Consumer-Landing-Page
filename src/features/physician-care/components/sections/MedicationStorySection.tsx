@@ -6,11 +6,13 @@ import Link from "next/link";
 import {
   ArrowUpRight,
   Check,
-  Heart,
+  Dumbbell,
+  HeartPulse,
   Leaf,
   MessageCircle,
   Moon,
   Stethoscope,
+  Utensils,
 } from "lucide-react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { SCROLL_MOTION } from "@/lib/motion";
@@ -41,7 +43,9 @@ const chapters = [
   },
 ];
 
-export default function MedicationStorySection({ penDestinationRef }: {
+export default function MedicationStorySection({
+  penDestinationRef,
+}: {
   penDestinationRef?: RefObject<HTMLDivElement | null>;
 }) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -72,8 +76,9 @@ export default function MedicationStorySection({ penDestinationRef }: {
         let progress = 0;
         let started = false;
         const sharedJourney = section.closest("[data-care-journey]");
-        const target = penDestinationRef?.current ?? sharedJourney
-          ?.querySelector<HTMLElement>("[data-care-pen-target]");
+        const target =
+          penDestinationRef?.current ??
+          sharedJourney?.querySelector<HTMLElement>("[data-care-pen-target]");
         const chart = target?.closest(".a1c-scroll");
         const layer = modelLayerRef.current!;
         const travel = { progress: 0 };
@@ -91,29 +96,34 @@ export default function MedicationStorySection({ penDestinationRef }: {
             scale: 1 + (to.height / from.height - 1) * p,
           });
         };
-        const handoff = target ? gsap.to(travel, {
-          progress: 1,
-          ease: "power2.inOut",
-          onUpdate: positionModel,
-          scrollTrigger: {
-            trigger: compact ? chart : journey,
-            start: compact ? "top 90%" : "bottom bottom",
-            endTrigger: chart,
-            end: "top 45%",
-            scrub,
-            invalidateOnRefresh: true,
-            onRefresh: positionModel,
-          },
-        }) : undefined;
+        const handoff = target
+          ? gsap.to(travel, {
+              progress: 1,
+              ease: "power2.inOut",
+              onUpdate: positionModel,
+              scrollTrigger: {
+                trigger: compact ? chart : journey,
+                start: compact ? "top 90%" : "bottom bottom",
+                endTrigger: chart,
+                end: "top 45%",
+                scrub,
+                invalidateOnRefresh: true,
+                onRefresh: positionModel,
+              },
+            })
+          : undefined;
         // The source is sticky on phones. Keep tracking its live position even
         // after the travel tween ends, until both sections have left the screen.
-        const alignment = target && sharedJourney ? ScrollTrigger.create({
-          trigger: sharedJourney,
-          start: "top bottom",
-          end: "bottom top",
-          onUpdate: positionModel,
-          onRefresh: positionModel,
-        }) : undefined;
+        const alignment =
+          target && sharedJourney
+            ? ScrollTrigger.create({
+                trigger: sharedJourney,
+                start: "top bottom",
+                end: "bottom top",
+                onUpdate: positionModel,
+                onRefresh: positionModel,
+              })
+            : undefined;
         if (target) target.dataset.sharedPen = "true";
         const trigger = ScrollTrigger.create({
           trigger: journey,
@@ -187,14 +197,15 @@ export default function MedicationStorySection({ penDestinationRef }: {
           id="medication-story-heading"
           className="text-[#ABB1AD] font-bold uppercase  tracking-[2%] leading-[100%] text-[26px] sm:text-[36px] lg:text-[48px]"
         >
-          One part of a <br />
-          <span className="text-[#578951]">more personal plan.</span>
+          Every medication change
+          <br />
+          <span className="text-[#578951]"> tells a story.</span>
         </h2>
         <div className={styles.introBottom}>
           <p>
-            Medication has a place.
+            From medication to daily habits, Meddy tracks what happens next.
             {/* <br /> */}
-            You stay at the center.
+            Care that sees the connections.{" "}
           </p>
         </div>
       </div>
@@ -202,7 +213,11 @@ export default function MedicationStorySection({ penDestinationRef }: {
       <div ref={journeyRef} className={styles.journey}>
         <div className={styles.chapters}>
           {chapters.map((chapter, index) => (
-            <article key={chapter.label} data-mobile-reveal className={styles.chapter}>
+            <article
+              key={chapter.label}
+              data-mobile-reveal
+              className={styles.chapter}
+            >
               <div className={styles.chapterMeta}>
                 <span>0{index + 1}</span>
                 <p>{chapter.label}</p>
@@ -254,36 +269,28 @@ export default function MedicationStorySection({ penDestinationRef }: {
             <div>
               <small>MEDICATION INITIATED</small>
               <strong>
-                First pen use
+                First use
                 <br />
                 signals day one.
               </strong>
             </div>
             <span className={styles.statusDot} />
           </div>
-          <div className={`${styles.card} ${styles.kpiCard}`}>
-            <div className={styles.kpiHeading}>
-              <span className={styles.kpiPulse} />
-              <small>CONNECTED KPI SIGNAL</small>
-            </div>
-            <strong>Initiation rate</strong>
-            <div className={styles.kpiValue}>Trackable</div>
-            <p>
-              First-use data can support timely outreach and clearer
-              time-to-therapy reporting.
-            </p>
-          </div>
+
           <div className={`${styles.card} ${styles.habitsCard}`}>
             <small>THE EVERYDAY FOUNDATIONS</small>
             <div>
               <span>
-                <Leaf size={16} /> Nutrition
+                <Utensils size={16} /> Nutrition
               </span>
               <span>
-                <Heart size={16} /> Movement
+                <Dumbbell size={16} /> WorkOut
               </span>
               <span>
                 <Moon size={16} /> Sleep
+              </span>
+              <span>
+                <HeartPulse size={16} /> Recovery
               </span>
             </div>
           </div>

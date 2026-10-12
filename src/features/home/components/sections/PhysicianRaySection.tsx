@@ -54,7 +54,7 @@ export default function PhysicianRaySection() {
             alt="Dr. Ray, board-certified physician"
             width={1254}
             height={1254}
-            sizes="(max-width: 540px) 115vw, 103vh"
+            sizes="(max-width: 767px) min(106vw, 468px), 103vh"
             className={styles.doctor}
           />
         </div>
@@ -74,12 +74,22 @@ export default function PhysicianRaySection() {
         <div data-ray-social className={styles.social}>
           <Image
             src="/home/one-physician.svg"
-            alt="Now accepting our first 500 patients. 337 remaining spots."
+            alt=""
             width={337}
             height={268}
             sizes="(max-width: 540px) 150px, 31vh"
             className={styles.enrollment}
           />
+          <div className={styles.availabilityPanel}>
+            <p className={styles.availabilityTitle}>Now accepting our first 500 patients</p>
+            <div className={styles.availabilityFooter}>
+              <p className={styles.availabilityCount}><strong>337</strong><span>remaining spot</span></p>
+              <svg className={styles.availabilityRing} viewBox="0 0 44 44" role="img" aria-label="337 of 500 spots remaining">
+                <circle cx="22" cy="22" r="18" fill="none" stroke="#b9d1c0" strokeWidth="5" />
+                <circle cx="22" cy="22" r="18" fill="none" stroke="#f4f4ef" strokeWidth="5" strokeLinecap="round" strokeDasharray="76.2 113.1" transform="rotate(-90 22 22)" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         <div data-ray-badges className={styles.badges}>

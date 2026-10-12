@@ -6,10 +6,11 @@ import HowItWorksPhysicianPlanSection from "../components/sections/HowItWorksPhy
 import HowItWorksInsightsSection from "../components/sections/HowItWorksInsightsSection";
 import HowItWorksProgressSection from "../components/sections/HowItWorksProgressSection";
 import HowItWorksFooterSection from "../components/sections/HowItWorksFooterSection";
+import styles from "./how-it-works.module.css";
 
 export const HowItWorksPage = () => {
   return (
-    <main>
+    <main className={styles.page}>
       <HowItWorksHeroSection />
       <HowItWorksTrackYourDaySection />
       <HowItWorksSignalSection />

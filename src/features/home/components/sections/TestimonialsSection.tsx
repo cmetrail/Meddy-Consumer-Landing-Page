@@ -269,20 +269,27 @@ export default function TestimonialsSection() {
         const initialLeft = parseFloat(getComputedStyle(card).left) / collage.clientWidth * 100;
         const bottomRow = card.dataset.mobileTm === "bottom";
         const position = { left: initialLeft };
+        const renderPosition = () => {
+          const left = wrap(position.left);
+          // Follow the reference's arc: cards grow and dip into the center slot.
+          const distance = Math.min(Math.abs(left - 28.2) / 50, 1);
+          const curve = (Math.cos(distance * Math.PI) + 1) / 2;
+          const width = 36.88 + curve * 6.74;
+          const fadeIn = gsap.utils.clamp(0, 1, (left + width) / (width + 12));
+          const fadeOut = gsap.utils.clamp(0, 1, (100 - left) / (width + 12));
+          const opacity = Math.min(fadeIn, fadeOut);
+          card.style.left = `${left}%`;
+          card.style.top = `${(bottomRow ? 49.74 : 0) + curve * 13.8}%`;
+          card.style.width = `${width}%`;
+          card.style.opacity = `${opacity * opacity * (3 - 2 * opacity)}`;
+        };
+        renderPosition();
         return gsap.to(position, {
           left: initialLeft + (bottomRow ? -155 : 155),
           duration: 20,
           repeat: -1,
           ease: "none",
-          onUpdate: () => {
-            const left = wrap(position.left);
-            // Follow the reference's arc: cards grow and dip into the center slot.
-            const distance = Math.min(Math.abs(left - 28.2) / 50, 1);
-            const curve = (Math.cos(distance * Math.PI) + 1) / 2;
-            card.style.left = `${left}%`;
-            card.style.top = `${(bottomRow ? 49.74 : 0) + curve * 13.8}%`;
-            card.style.width = `${36.88 + curve * 6.74}%`;
-          },
+          onUpdate: renderPosition,
         });
       });
       return () => {
@@ -291,6 +298,7 @@ export default function TestimonialsSection() {
           card.style.removeProperty("left");
           card.style.removeProperty("top");
           card.style.removeProperty("width");
+          card.style.removeProperty("opacity");
         });
       };
     });
@@ -398,7 +406,19 @@ export default function TestimonialsSection() {
         sortedRow.forEach(({ card, leftPx }, i) => {
           const startAbsoluteX = absoluteMin + i * step;
           const startX = startAbsoluteX - leftPx;
+          const renderPosition = (absoluteX: number) => {
+            const { top, width } = curve(absoluteX);
+            const cardWidth = width / 100 * containerWidth;
+            const fadeDistance = Math.max(cardWidth * .6, 80);
+            const fadeIn = mapRange(absoluteX, absoluteMin, fadeDistance, 0, 1);
+            const fadeOut = mapRange(absoluteX, containerWidth - cardWidth - fadeDistance, containerWidth, 1, 0);
+            const opacity = Math.min(fadeIn, fadeOut);
+            card.style.top = `${top}%`;
+            card.style.width = `${width}%`;
+            card.style.opacity = `${opacity * opacity * (3 - 2 * opacity)}`;
+          };
           gsap.set(card, { x: startX });
+          renderPosition(startAbsoluteX);
           loops.push(gsap.to(card, {
             paused: true,
             x: `${direction > 0 ? "+=" : "-="}${period}`,
@@ -409,12 +429,7 @@ export default function TestimonialsSection() {
             onUpdate: () => {
               const currentX = Number(gsap.getProperty(card, "x"));
               const absoluteX = leftPx + currentX;
-              const { top, width } = curve(absoluteX);
-              card.style.top = `${top}%`;
-              card.style.width = `${width}%`;
-              const fadeIn = mapRange(absoluteX, absoluteMin, absoluteMin + margin, 0, 1);
-              const fadeOut = mapRange(absoluteX, absoluteMax - margin, absoluteMax, 1, 0);
-              card.style.opacity = `${Math.min(fadeIn, fadeOut)}`;
+              renderPosition(absoluteX);
             },
           }));
         });
@@ -423,7 +438,14 @@ export default function TestimonialsSection() {
         loops.forEach((loop) => loop.paused(!entry.isIntersecting));
       });
       if (desktopRef.current) observer.observe(desktopRef.current);
-      return () => observer.disconnect();
+      return () => {
+        observer.disconnect();
+        cardInfos.forEach(({ card, topPct, widthPct }) => {
+          card.style.top = `${topPct}%`;
+          card.style.width = `${widthPct}%`;
+          card.style.removeProperty("opacity");
+        });
+      };
     }),
     { scope: sectionRef },
   );
@@ -486,7 +508,7 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Desktop: infinite carousel along the curved collage (1440×842) */}
-        <div ref={desktopRef} className="hidden lg:block relative w-full aspect-1440/1024 overflow-hidden">
+        <div ref={desktopRef} className={`hidden lg:block relative w-full aspect-1440/1024 overflow-hidden ${styles.desktopCollage}`}>
           <div data-reveal className="absolute left-0 right-0 top-[4.69%] z-10 text-center">
             <h2 className="text-white font-bold leading-tight">
               <span className="block" style={{ fontSize: "clamp(24px,2.22vw,32px)", letterSpacing: "0.02em" }}>

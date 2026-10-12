@@ -1,4 +1,5 @@
 import { CircleCheckBig, Crown } from "lucide-react";
+import Link from "next/link";
 import styles from "./Pricing.module.css";
 
 const LIGHT_GREEN = "#8ABE85";
@@ -146,11 +147,12 @@ function PlanCard({
         ))}
       </ul>
 
-      <button
+      <Link
+        href="/#how-it-works"
         className={`${styles.button} mt-8 flex h-[50px] w-full items-center justify-center rounded-[7px] text-[18px] font-semibold transition-colors duration-200 ${btnClass}`}
       >
-        Book Your Free Consultation
-      </button>
+        Book your Free Consultation
+      </Link>
     </div>
   );
 }
@@ -238,7 +240,6 @@ export function Pricing() {
               "Personalized health adjustments",
               "Monthly physician visit",
               "Videoconferencing",
-              "Quarterly lab testing included",
             ]}
             featureColor={WHITE}
             checkColor={WHITE}
@@ -253,7 +254,7 @@ export function Pricing() {
             title="Your health, fully managed."
             titleColor={MINT}
             titleSize={17.77}
-            description="High-touch physician care with frequent visits, comprehensive testing, and health optimization."
+            description="High-touch physician care with frequent visits, comprehensive evaluation, and health optimization."
             descriptionColor={WHITE}
             price="249"
             period="/month"
@@ -263,10 +264,8 @@ export function Pricing() {
               "Nutrition & Fitness guidance",
               "Biomarker tracking",
               "Personalized health adjustments",
-              "Videoconferencing",
-              "Personalized adjustments",
               "Biweekly physician visits",
-              "Unlimited physician-directed lab testing, as clinically appropriate",
+              "Videoconferencing",
               "Physician built weekly fitness plan",
               "Continuous care coordination",
             ]}

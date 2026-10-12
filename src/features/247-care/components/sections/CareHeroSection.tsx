@@ -67,7 +67,7 @@ export default function CareHeroSection() {
     <section className="relative flex min-h-dvh w-full flex-col overflow-hidden" style={{ background: HERO_GRADIENT }}>
       {/* Header */}
       <div className="relative z-30">
-        <Header active="pHYSICIAN CARE" variant="dark" />
+        <Header variant="dark" />
       </div>
 
       {/* Doctor image — right */}

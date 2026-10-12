@@ -19,7 +19,7 @@ export default function WhyMeddyHeroSection() {
       <div className={`${styles.shade} absolute inset-0 bg-black/20`} />
 
       <div className={`${styles.navigation} relative z-20`}>
-        <Header variant="dark" active="WHY MEDDY" />
+        <Header variant="dark" />
       </div>
       <div className={`${styles.content} relative z-10 mx-auto! min-h-[640px] w-full max-w-360 flex-1 md:min-h-[740px]`}>
         <h1 className="absolute top-0 left-5 font-sans text-[clamp(32px,7.5vw,56px)] leading-[1.4] font-normal tracking-[-0.02em] text-white md:text-[clamp(48px,7.5vw,108px)] md:leading-[1.45] lg:left-10">

@@ -158,7 +158,7 @@ export default function SleepHeroSection() {
       }
     >
       <div className="relative z-30 shrink-0">
-        <Header variant="dark" active="Sleep" />
+        <Header variant="dark" />
       </div>
 
       {/* Desktop (lg+): copy inside the header container; scene on the 1440 frame */}

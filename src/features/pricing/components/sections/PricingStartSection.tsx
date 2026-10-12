@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import styles from "./PricingStartSection.module.css";
 
 type CollageImage = {
   src: string;
@@ -147,26 +148,26 @@ const itemVariants = {
 export default function PricingStartSection() {
   return (
     <section className="relative flex flex-col overflow-hidden bg-[#F2EEE3]">
-      <div className="mx-auto flex w-full max-w-360 flex-col px-5 pt-12 pb-10 lg:px-[75px] lg:pt-[127px] lg:pb-[77px]">
-        <div className="flex items-end gap-6 lg:gap-[70px]">
+      <div className={styles.container}>
+        <div className={styles.intro}>
           <motion.div
-            className="flex max-w-218.75 flex-col gap-[25px]"
+            className={styles.headingGroup}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h2 className="max-w-218.75 text-[30px] font-bold uppercase leading-[115%] text-[#46524B] sm:text-[48px] lg:text-[64px] lg:leading-[126%]">
+            <h2 className={styles.heading}>
               Your health is more than{" "}
-              <span className="text-[#17925A]">Healthcare.</span>
+              <span className={styles.healthcare}>healthcare.</span>
             </h2>
-            <p className="text-[18px] font-medium uppercase leading-[1.2] text-[#6E7A72] sm:text-[24px] lg:text-[32px] lg:leading-[100%]">
+            <p className={styles.subtitle}>
               Everything works together.
             </p>
           </motion.div>
 
           <motion.p
-            className="hidden max-w-83.25 text-right text-[14px] font-normal leading-snug text-[#6E7A72] md:block sm:text-[16px] lg:text-[20px]"
+            className={styles.description}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.6 }}
@@ -176,13 +177,12 @@ export default function PricingStartSection() {
               ease: [0.22, 1, 0.36, 1],
             }}
           >
-            <b>Nutrition, fitness, sleep, biomarkers, and medical care</b>
-            —all connected around you.
+            Nutrition, workouts, sleep, biomarkers, and medical care—all connected around you.
           </motion.p>
         </div>
 
         <motion.div
-          className="relative mt-10 w-full lg:mt-[74px]"
+          className={styles.collage}
           style={{ aspectRatio: "1290 / 858" }}
           initial="hidden"
           whileInView="visible"

@@ -85,7 +85,7 @@ export default function NutritionHeroSection() {
       </div>
 
       <div className="relative z-30">
-        <Header variant="dark" active="Nutrition" />
+        <Header variant="dark" />
       </div>
 
       {/* ------------------------------------------------------------ mobile */}

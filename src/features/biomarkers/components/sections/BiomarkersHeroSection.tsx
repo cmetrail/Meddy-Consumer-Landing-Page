@@ -29,7 +29,7 @@ export default function BiomarkersHeroSection() {
       />
 
       <div className="relative z-10">
-        <Header variant="light" active="Biomarkers" />
+        <Header variant="light" />
       </div>
 
       <div

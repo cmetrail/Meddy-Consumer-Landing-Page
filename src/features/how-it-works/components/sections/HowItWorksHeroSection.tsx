@@ -48,7 +48,7 @@ export default function HowItWorksHeroSection() {
 
       {/* Header */}
       <div className="relative z-30">
-        <Header active="How it works" />
+        <Header />
       </div>
 
       {/* Content: same container as the header; mobile sits right under the nav, desktop centres in the space below it */}
