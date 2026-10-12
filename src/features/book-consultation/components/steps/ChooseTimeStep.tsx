@@ -36,12 +36,12 @@ export default function ChooseTimeStep() {
           <span className="mx-auto hidden max-w-[433px] lg:block lg:text-center">
             Video visit on Google Meet
             <br />
-            30 minutes · Free · Times shown in Eastern Standard Time
+            30 minutes · Availability shown in EST
           </span>
           <span className="lg:hidden">
             Video visit on Google Meet · 30 minutes
             <br />
-            Free · Times shown in Eastern Time
+            Availability shown in EST
           </span>
         </p>
       </div>
@@ -74,7 +74,7 @@ export default function ChooseTimeStep() {
       <div className="flex w-full items-start gap-[8px] lg:items-center lg:justify-center">
         <Info size={16} className="mt-[2px] shrink-0 text-[#7b7b7b]" />
         <p className="text-[12px] leading-[1.5] text-[#7b7b7b]">
-          Your consultation is with a licensed board certified physician from Sameer Aggarwal Medical PLLC.
+          Medical services are provided by  Sameer Aggarwal Medical PLLC.
         </p>
       </div>
     </div>

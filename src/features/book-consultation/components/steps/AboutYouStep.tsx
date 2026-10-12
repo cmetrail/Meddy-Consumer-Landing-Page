@@ -21,7 +21,8 @@ export default function AboutYouStep() {
           Book your free consultation
         </h1>
         <p className="text-left text-[14px] font-normal leading-normal text-[#7b7b7b] sm:text-center lg:text-[20px] lg:font-medium">
-          A 30 minute video visit with a licensed board certified New York physician.
+          30 minute video visit with a board certified
+          internal medicine physician.
         </p>
       </div>
 
@@ -73,7 +74,7 @@ export default function AboutYouStep() {
         boxClassName="h-[20px] w-[20px] lg:h-[28px] lg:w-[28px]"
         checkSize={20}
         labelClassName="lg:text-[20px]"
-        helper="Msg & data rates may apply. Msg frequency varies. Reply STOP to opt out, HELP for help. Consent isn't required to book."
+        helper="Msg & data rates may apply. Msg frequency varies. Reply STOP to opt out, HELP for help."
         register={register("textReminders")}
       />
 
