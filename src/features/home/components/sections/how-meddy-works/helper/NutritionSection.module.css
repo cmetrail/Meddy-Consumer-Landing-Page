@@ -52,3 +52,19 @@
   .mealCard, .nutrients { transform: scale(.55); }
 }
 
+@media (max-width: 767px) {
+  .content { --feature-scale: min(calc((100vw - 40px) / 360px), 1.4); min-height: 0; padding-inline: 20px !important; margin-top: 56px !important; }
+  .content::before { content: "01"; position: absolute; top: -12px; right: 16px; color: #203425; opacity: .32; font-size: 260px; font-weight: 600; line-height: 1; letter-spacing: -18px; pointer-events: none; }
+  .copy { position: relative; z-index: 1; }
+  .copy h3 { font-size: 20px; font-weight: 600; letter-spacing: -.3px; line-height: 1.4; }
+  .headline { margin-top: 34px !important; font-size: 16px; font-weight: 400; line-height: 1.5; }
+  .headline .accent { font-family: var(--font-plus-jakarta), sans-serif; font-style: normal; color: #548c49; }
+  .description { margin-top: 24px !important; font-size: 14px; line-height: 1.5; }
+  .visual { width: 360px; height: 460px; aspect-ratio: auto; flex-shrink: 0; margin: 48px auto 0 !important; zoom: var(--feature-scale); }
+  .photo { left: 20px; right: auto; top: 28px; width: 340px; height: auto; mask-image: linear-gradient(#000 0%, #000 70%, transparent 100%); }
+  .mealCard { top: 0; right: 24px; transform: scale(.665); }
+  .mealCard p { font-size: 14px; }
+  .nutrients { top: 159px; left: 0; transform: scale(.712); }
+  .mealCard > div, .nutrients > div { border: .75px solid #ffffff66 !important; }
+}
+

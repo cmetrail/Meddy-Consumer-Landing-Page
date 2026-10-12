@@ -85,38 +85,7 @@
 .connection p { color: #7b7b7b; font-size: 14px; line-height: 21px; font-weight: 400; }
 .connection em { color: #17925a; font-family: var(--font-dm-serif), serif !important; font-size: 15px; font-weight: 400; }
 .sleepScorePanel { display: none; }
-@media (max-width: 767px) {
-  /* Mobile uses its own reference canvas; scale is separate from reveal transforms. */
-  .canvas { aspect-ratio: 282 / 729; }
-  .stage { width: 282px; height: 729px; transform: scale(calc(100cqw / 282px)); }
-  .meal, .workout, .calories, .nutrients, .a1c, .sleep { transform-origin: top left; }
-  .workout { left: 40px; top: 39px; scale: .5; }
-  .workoutPhoto { top: 6px; width: 182px; height: 188px; }
-  .loadPanel { left: 166px; width: 170px; box-shadow: none; }
-  .meal { left: 17px; top: 158px; scale: .37; }
-  .mealPanel { left: 105px; top: 135px; scale: 1.176; transform-origin: top left; }
-  .calories { left: 152px; top: 140px; scale: .385; }
-  .statement { left: 17px; top: 296px; width: 247px; }
-  .eyebrow { font-size: 14px; line-height: 23px; }
-  .statement h2 { margin-top: 0 !important; font-size: 17px; line-height: 25px; }
-  .everyday { margin-top: 8px !important; font-size: 18px; line-height: 25px; }
-  .a1c { left: 18px; top: 434px; scale: .425; }
-  .a1cPhoto { left: 85px; }
-  .a1cPanel { top: 202px; scale: 1.26; transform-origin: top left; }
-  .nutrients { left: 146px; top: 438px; scale: .49; }
-  .sleep { left: 147px; top: 517px; scale: .41; }
-  .sleepPanel { display: none; }
-  .sleepScorePanel { display: block; position: absolute; left: 110px; top: 156px; width: 170px; height: 152px; padding: 8px !important; border-radius: 7px; background: #fff; text-align: right; }
-  .sleepScorePanel > span { display: block; color: #8a8a82; font-size: 6px; line-height: 9px; }
-  .sleepScorePanel strong { display: block; font-size: 13px; line-height: 17px; }
-  .sleepScorePanel > b { display: inline-block; background: #57e6ff; border-radius: 8px; padding: 2px 5px !important; font-size: 5px; line-height: 8px; }
-  .sleepScorePanel svg { display: block; width: 100%; height: 86px; margin-top: 7px !important; }
-  .connection { left: 14px; top: 651px; width: 255px; padding-left: 10px !important; }
-  .connection::before { width: 3px; }
-  .connection p { font-size: 9.5px; line-height: 15px; }
-  .connection em { font-size: 10px; }
-  .connectionBreak { display: none; }
-}
+
 
 /* Keep the original collage anchors; improve only the compact overlays and type. */
 @media (min-width: 768px) {
@@ -168,55 +137,12 @@
 .statement h2 { color: #7B7B7B; }
 .connection p { color: #39463e; }
 .eyebrow, .everyday, .connection em { color: #137a4d; }
-@media (max-width: 767px) {
-  .meal { left: var(--collage-left, 17px); }
-  .calories { left: calc(var(--collage-right, 262px) - 286px * .385); }
-  .nutrients { left: calc(var(--collage-right, 264px) - 240px * .49); }
-  .sleep { left: calc(var(--collage-right, 261px) - 278px * .41); }
-  .sleepScorePanel { left: auto; right: 0; }
-  .mealPanel { height: 148px; }
-  .mealHeader { height: 52px; }
-  .mealHeader p { font-size: 22px; line-height: 26px; }
-  .mealHeader span { font-size: 16px; line-height: 20px; }
-  .mealAvatars, .macros, .mealThumbnail { display: none; }
-  .mealRow { height: 48px; gap: 4px; }
-  .mealDescription p { font-size: 18px; line-height: 24px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .mealFullName { display: none; }
-  .mealShortName { display: inline; }
-  .mealCalories p { font-size: 22px; line-height: 24px; }
-  .mealCalories span { font-size: 14px; color: #56645c; }
-  .loadPanel { height: 190px; }
-  .loadHeader { font-size: 16px; height: 20px; color: #39463e; }
-  .loadHeader > div > span { display: none; }
-  .loadLegend { grid-template-columns: minmax(0, 1fr); gap: 4px; }
-  .loadLegend > div { display: none; font-size: 16px; height: 30px; color: #39463e; }
-  .loadLegend > div:nth-child(1), .loadLegend > div:nth-child(4), .loadLegend > div:nth-child(8) { display: flex; }
-  .loadLegend b { margin-left: auto !important; }
-  .calorieHeader p, .calorieStats p { font-size: 18px; line-height: 22px; }
-  .calorieHeader { padding: 14px 12px !important; }
-  .calorieStats > div { padding: 12px 8px !important; }
-  .calorieStats p svg { display: none; }
-  .calorieStats span { font-size: 26px; line-height: 32px; }
-  .calorieTotal span { font-size: 16px; }
-  .nutrientsPanel > p { font-size: 19px; line-height: 24px; }
-  .nutrientBars { margin-top: 14px !important; }
-  .nutrientBars { grid-template-columns: 1.3fr 1fr 1fr; gap: 4px; }
-  .nutrientBars > div span { margin-left: 0 !important; }
-  .nutrientBars span { font-size: 15px; line-height: 20px; }
-  .nutrientBars p { font-size: 16px; line-height: 20px; }
-  .a1cPanel > p { font-size: 12px; line-height: 16px; color: #39463e; }
-  .sleepScorePanel > span { font-size: 18px; line-height: 22px; color: #39463e; }
-  .sleepScorePanel strong { font-size: 28px; line-height: 32px; }
-  .sleepScorePanel > b { font-size: 14px; line-height: 18px; }
-  .sleepScorePanel svg { height: 60px; margin-top: 4px !important; }
-}
+
 
 /* Sleep illustration: preserve the supplied reference's photo/panel proportions. */
 .sleep { width: 333.6px; height: 295.2px; left: calc(var(--collage-right, 1320px) - 333.6px); }
 .sleepArtwork { position: relative; width: 278px; height: 246px; transform: scale(1.2); transform-origin: top left; }
-@media (max-width: 767px) {
-  .sleep { left: calc(var(--collage-right, 261px) - 333.6px * .41); }
-}
+
 .sleepPhoto { left: 0; right: auto; width: 194px; height: 220px; }
 .sleepPhoto .photo { object-position: left center; border-radius: 6.5px; }
 /* Compensate for the surrounding collage scale so this panel keeps readable type. */
@@ -239,11 +165,7 @@
 .sleepLegend span:nth-child(2) { color: #333; }
 .sleepScorePanel { display: none; }
 .canvas { min-height: calc(664.8px * var(--collage-scale, 1) + 350px); }
-@media (max-width: 767px) {
-  .sleepPanel { top: 74px; }
-  .connection { top: calc(553.408px + 340px / var(--collage-scale, 1)); }
-  .canvas { min-height: calc(553.408px * var(--collage-scale, 1) + 420px); }
-}
+
 
 /* Keep only a narrow overlap with the photo and align the composition's outer edge. */
 .sleep {
@@ -255,65 +177,68 @@
 .sleepAxis { font-size: calc(9px / var(--sleep-render-scale, 1.2)); }
 .sleepRange { font-size: calc(9px / var(--sleep-render-scale, 1.2)); }
 .sleepLegend > div { height: calc(20px / var(--sleep-render-scale, 1.2)); }
-@media (max-width: 767px) {
-  .sleep { --sleep-parent-scale: .41; --sleep-group-scale: calc(var(--collage-scale, 1) * .41); }
-  .sleep { width: 232.8px; left: calc(var(--collage-right, 261px) - 232.8px * .41); }
-  .sleepPanel { left: calc(194px - 210px / var(--sleep-render-scale, .492)); top: calc(220px + 12px / var(--sleep-render-scale, .492)); }
-  .connection { top: calc(625.24px + 360px / var(--collage-scale, 1)); }
-  .canvas { min-height: calc(625.24px * var(--collage-scale, 1) + 440px); }
-}
 
-/* Compact phone composition from the mobile reference. Charts expand on tap. */
+/* Mobile collage follows a 400px reference canvas, scaling as one composition. */
 @media (max-width: 767px) {
-  .canvas { aspect-ratio: 282 / 729; min-height: 0; }
-  .stage { width: 282px; height: 729px; }
-  .meal { left: 17px; top: 158px; }
-  .workout { left: 40px; top: 39px; }
-  .calories { left: 152px; top: 140px; }
-  .statement { left: 17px; top: 296px; width: 247px; }
-  .everyday { font-size: 15px; }
-  .mealPanel { height: 120px; }
-  .mealHeader { height: 40px; }
-  .mealHeader p { font-size: 12px; line-height: 16px; }
-  .mealHeader span { font-size: 9px; line-height: 12px; }
-  .mealAvatars { display: flex; }
-  .mealThumbnail { display: block; }
-  .mealRow { height: 40px; gap: 5px; }
-  .mealDescription p { font-size: 9px; line-height: 13px; }
-  .mealFullName { display: inline; }
-  .mealShortName { display: none; }
-  .macros { display: flex; gap: 4px; }
-  .macros span { font-size: 7px; }
-  .mealCalories p { font-size: 11px; line-height: 14px; }
-  .mealCalories span { font-size: 8px; }
-  .loadPanel { height: 156px; }
-  .loadHeader { font-size: 7px; height: 12px; }
-  .loadHeader > div > span { display: block; }
-  .loadLegend { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
-  .loadLegend > div { display: flex; height: 15px; font-size: 6px; gap: 2px; }
-  .calorieHeader { padding: 20px 19px 12px !important; }
-  .calorieHeader p { font-size: 11px; line-height: 14px; }
-  .calorieStats > div { padding: 18px 14px !important; }
-  .calorieStats p { font-size: 10px; line-height: 13px; }
-  .calorieStats span { font-size: 18px; line-height: 23px; }
-  .calorieTotal span { font-size: 10px; }
-  .a1c { left: 18px; top: 438px; }
-  .a1cPanel { width: 138px; height: 120px; }
-  .a1cPanel svg text { font-size: 8px; }
-  .nutrients { left: 146px; top: 441px; }
-  .nutrientsPanel > p { font-size: 14px; line-height: 18px; }
-  .nutrientBars { margin-top: 16px !important; }
-  .nutrientBars span { font-size: 12px; line-height: 17px; }
-  .nutrientBars p { font-size: 11px; line-height: 16px; }
-  .sleep { left: 147px; top: 521px; width: 278px; height: 308px; scale: .41; }
-  .sleepArtwork { width: 278px; height: 308px; transform: none; }
-  .sleepPhoto { left: 0; right: auto; width: 194px; height: 220px; }
-  .sleepPhoto .photo { object-position: center; }
-  .sleepPanel { display: none; }
-  .sleepScorePanel { display: block; position: absolute; left: 116px; right: auto; top: 156px; width: 170px; height: 152px; padding: 8px !important; border-radius: 7px; background: #fff; text-align: right; box-shadow: 2px 3px 5px #00000018; }
-  .sleepScorePanel > span { display: block; font-size: 15px; line-height: 20px; color: #647268; }
-  .sleepScorePanel > strong { display: block; font-size: 20px; line-height: 24px; color: #111; }
-  .sleepScorePanel > b { font-size: 10px; line-height: 14px; padding: 2px 5px !important; border-radius: 8px; background: #57e6ff; }
-  .sleepScorePanel svg { display: block; width: 100%; height: 70px; margin-top: 4px !important; }
-  .connection { left: 14px; top: 655px; width: 255px; }
+  .section { background: #f2eee3; }
+  .canvas { aspect-ratio: 400 / 958; min-height: 0; }
+  .stage { width: 400px; height: 958px; transform: scale(calc(100cqw / 400px)); }
+  .meal, .workout, .calories, .nutrients, .a1c, .sleep { transform-origin: top left; }
+
+  .workout { left: 56px; top: 17px; scale: .54; }
+  .workoutPhoto { top: 8px; width: 240px; height: 249px; }
+  .loadPanel { left: 217px; width: 226px; height: 211px; padding: 10px !important; box-shadow: none; }
+  .loadHeader { font-size: 8px; height: 16px; }
+  .loadBar { height: 31px; margin-top: 8px !important; }
+  .loadLegend { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; margin-top: 11px !important; }
+  .loadLegend > div { height: 21px; font-size: 8px; gap: 3px; }
+  .loadLegend b { margin-left: auto !important; }
+
+  .meal { left: 22px; top: 188px; scale: .53; }
+  .mealPanel { left: 107px; top: 135px; scale: 1.176; transform-origin: top left; }
+  .mealHeader p { font-size: 8px; line-height: 12px; }
+  .mealHeader span { font-size: 6px; line-height: 9px; }
+  .mealDescription p { font-size: 7px; line-height: 12px; white-space: nowrap; }
+  .mealCalories p { font-size: 9px; line-height: 12px; }
+  .mealCalories span { font-size: 6px; }
+
+  .calories { left: 216px; top: 162px; scale: .544; }
+  .calorieHeader p { font-size: 8px; line-height: 12px; }
+  .calorieStats p { font-size: 8px; line-height: 13px; }
+  .calorieStats span { font-size: 15px; line-height: 23px; }
+
+  .statement { left: 18px; top: 377px; width: 364px; }
+  .eyebrow { font-size: 22px; line-height: 30px; color: #17925a; }
+  .statement h2 { margin-top: 0 !important; font-size: 26px; line-height: 36px; font-weight: 500; }
+  .everyday { margin-top: 10px !important; font-size: 24px; line-height: 34px; color: #17925a; }
+
+  .a1c { left: 24px; top: 582px; scale: .61; }
+  .a1cPhoto { left: 84px; }
+  .a1cPanel { top: 202px; scale: 1.26; transform-origin: top left; }
+  .nutrients { left: 207px; top: 588px; scale: .7; }
+  .nutrientBars { grid-template-columns: 96px 67px 50px; }
+
+  .sleep { left: 189px; top: 701px; width: 314px; height: 330px; scale: .588; }
+  .sleepArtwork { width: 314px; height: 330px; transform: none; }
+  .sleepPhoto { left: 0; width: 194px; height: 220px; }
+  .sleepPhoto .photo { object-position: left center; }
+  .sleepPanel {
+    display: block; left: 184px; top: 117px; width: 130px; height: auto; min-height: 190px;
+    padding: 6px !important; border-radius: 8px; border: 0;
+  }
+  .sleepPanel > p { font-size: 5px; line-height: 10px; }
+  .sleepLabel { margin-top: 5px !important; font-size: 4.5px; line-height: 8px; }
+  .sleepPanel > strong { font-size: 11px; line-height: 16px; letter-spacing: 0; }
+  .sleepPanel svg { height: 70px; margin-top: 5px !important; }
+  .sleepAxis { font-size: 3.5px; line-height: 9px; }
+  .sleepRange { flex-direction: row; font-size: 3.5px; line-height: 9px; }
+  .sleepLegend { gap: 3px; margin-top: 4px !important; }
+  .sleepLegend > div { height: 12px; padding: 2px 3px !important; gap: 3px; border-radius: 3px; font-size: 4px; line-height: 8px; }
+  .sleepLegend i { width: 4px; height: 4px; border-radius: 1px; }
+  .sleepScorePanel { display: none; }
+
+  .connection { left: 18px; top: 900px; width: 364px; padding-left: 15px !important; }
+  .connection p { color: #7b7b7b; font-size: 14px; line-height: 21px; }
+  .connection em { color: #17925a; font-size: 15px; }
+  .connectionBreak { display: none; }
 }

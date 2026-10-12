@@ -21,7 +21,7 @@ const PROFILE = [
 function ProfileCard() {
   return (
     <div
-      className={styles.profileCard}
+      className={`${styles.profileCard} mobile-glass-card`}
       style={{
         backdropFilter: "blur(14px)",
         backgroundColor: "rgba(255,255,255,0.06)",

@@ -62,7 +62,7 @@ function SleepNightCard() {
     <div className={`${styles.glassCard} ${styles.nightCard}`}>
       <p className={styles.cardTitle}>Sleep Architecture</p>
       <p className={styles.timeLabel}>Time asleep</p>
-      <p className={styles.timeValue}>5h 50m</p>
+      <p className={styles.timeValue}>5h 40m</p>
       <svg className={styles.nightChart} viewBox="0 0 201 115" role="img" aria-label="Sleep stages from 11 PM to 6 AM">
         {[24, 44, 64, 84].map(y => <path key={y} d={`M25 ${y}H195`} stroke="white" strokeOpacity=".035" />)}
         {NIGHT_SEGMENTS.map(([start, end, y], i) => {
@@ -109,7 +109,7 @@ export default function SleepSection() {
     <div id="sleep-monitoring" ref={sectionRef} className={styles.section}>
       <div className={styles.content}>
         <div className={styles.copy}>
-          <h3>Sleep<br />monitoring</h3>
+          <h3>Sleep<br className={styles.desktopBreak} />{" "}monitoring</h3>
           <p className={styles.headline}>Track your sleep. See how<br className={styles.desktopBreak} /> it affects</p>
           <p className={styles.accent}>Your recovery, performance<br className={styles.desktopBreak} /> and health.</p>
           <p className={styles.description}>Scores your sleep. Never connects it to your<br className={styles.desktopBreak} /> training load, caloric deficit, or HRV dip.</p>

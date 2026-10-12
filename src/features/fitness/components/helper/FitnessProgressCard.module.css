@@ -187,7 +187,8 @@
 .statValue { font-size: 30px; line-height: 45px; }
 .statDelta { font-size: 20px; line-height: 30px; }
 .zones { margin-top: 20px !important; }
-.zonesTitle { display: block; font-size: 16px; line-height: 24px; }
+.zoneLabels { display: flex; }
+.zoneLabels span { flex-basis: 0; min-width: 0; white-space: nowrap; }
 .zoneBar { display: flex; width: 100%; height: 98px; }
 .zoneSegment { flex-basis: 0; min-width: 0; border-right: 1px solid #111113; }
 .zoneSegment:last-child { border-right: 0; }
@@ -230,3 +231,110 @@
   .statDelta { font-size: 11px; }
   .zonePercentages { font-size: 12px; }
 }
+
+/* Keep the training views in the reference's 596px proportions at every width. */
+.cardContainer { width: 100%; min-width: 0; container-type: inline-size; }
+.referenceCard {
+  --card-unit: calc(100cqw / 596);
+  gap: calc(24 * var(--card-unit));
+  padding: calc(16 * var(--card-unit)) calc(16 * var(--card-unit)) calc(16 * var(--card-unit)) !important;
+  border-radius: calc(20 * var(--card-unit));
+}
+.referenceCard .tabs { min-height: calc(62 * var(--card-unit)); }
+.referenceCard .tab {
+  min-height: calc(62 * var(--card-unit));
+  padding: calc(12 * var(--card-unit)) !important;
+  gap: calc(8 * var(--card-unit));
+  font-size: calc(20 * var(--card-unit));
+}
+.referenceCard .tabIcon { width: calc(24 * var(--card-unit)); height: calc(24 * var(--card-unit)); }
+.referenceCard .cardio {
+  min-height: calc(492 * var(--card-unit));
+  border-radius: calc(16 * var(--card-unit));
+  padding: calc(24 * var(--card-unit)) calc(24 * var(--card-unit)) calc(19 * var(--card-unit)) !important;
+  background: #111111;
+}
+.referenceCard .cardioTitle { font-size: calc(24 * var(--card-unit)); line-height: calc(36 * var(--card-unit)); }
+.referenceCard .durationLabel { font-size: calc(20 * var(--card-unit)); line-height: calc(30 * var(--card-unit)); }
+.referenceCard .durationValue { font-size: calc(40 * var(--card-unit)); line-height: calc(60 * var(--card-unit)); }
+.referenceCard .cardioStats { gap: calc(10 * var(--card-unit)); margin-top: calc(38 * var(--card-unit)) !important; }
+.referenceCard .cardioStat {
+  min-height: calc(114 * var(--card-unit));
+  gap: calc(4 * var(--card-unit));
+  padding: calc(20 * var(--card-unit)) calc(24 * var(--card-unit)) !important;
+  border-radius: calc(8 * var(--card-unit));
+  background: #232323;
+}
+.referenceCard .statLabel { font-size: calc(16 * var(--card-unit)); line-height: calc(24 * var(--card-unit)); }
+.referenceCard .statValueRow { gap: calc(8 * var(--card-unit)); }
+.referenceCard .statValue { font-size: calc(30 * var(--card-unit)); line-height: calc(45 * var(--card-unit)); }
+.referenceCard .statDelta { font-size: calc(20 * var(--card-unit)); line-height: calc(30 * var(--card-unit)); }
+.referenceCard .zones { margin-top: calc(16 * var(--card-unit)) !important; }
+.referenceCard .zoneLabels {
+  margin-bottom: calc(7 * var(--card-unit)) !important;
+  font-size: calc(8 * var(--card-unit));
+  line-height: calc(12 * var(--card-unit));
+}
+.referenceCard .zoneBar { height: calc(98 * var(--card-unit)); }
+.referenceCard .zonePercentages {
+  margin-top: calc(8 * var(--card-unit)) !important;
+  font-size: calc(20 * var(--card-unit));
+  line-height: calc(30 * var(--card-unit));
+}
+
+.intensityCard { padding-bottom: calc(19 * var(--card-unit)) !important; }
+.intensity {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(489 * var(--card-unit));
+  border-radius: calc(16 * var(--card-unit));
+  padding: calc(24 * var(--card-unit)) !important;
+  background: #090909;
+  color: white;
+  font-weight: 400;
+}
+.intensityTitle { font-size: calc(20 * var(--card-unit)); line-height: calc(30 * var(--card-unit)); }
+.intensityProgressList { display: flex; flex-direction: column; gap: calc(10 * var(--card-unit)); margin-top: calc(16 * var(--card-unit)) !important; }
+.intensityProgress { display: flex; flex-direction: column; align-items: flex-end; gap: calc(8 * var(--card-unit)); }
+.intensityProgressLabel { display: flex; justify-content: space-between; gap: calc(8 * var(--card-unit)); width: 100%; font-size: calc(14 * var(--card-unit)); line-height: calc(21 * var(--card-unit)); }
+.intensityMinutes { white-space: nowrap; }
+.intensityMinutes > span { color: #7b7b7b; }
+.intensityTrack { width: 100%; height: calc(8 * var(--card-unit)); background: #e2e2e2; }
+.intensityTrack > div { height: 100%; }
+.intensityDelta { display: flex; align-items: center; gap: calc(4 * var(--card-unit)); font-size: calc(12 * var(--card-unit)); line-height: calc(18 * var(--card-unit)); white-space: nowrap; }
+.intensityDelta img { width: calc(10 * var(--card-unit)); height: calc(10 * var(--card-unit)); }
+.intensityBadges { display: flex; flex-direction: column; gap: calc(16 * var(--card-unit)); margin-top: calc(16 * var(--card-unit)) !important; }
+.intensityBadge { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start; gap: calc(8 * var(--card-unit)); min-height: calc(105 * var(--card-unit)); padding: calc(16 * var(--card-unit)) !important; border-radius: calc(12 * var(--card-unit)); background: #171717; }
+.intensityBadgeIcon { display: grid; place-items: center; width: calc(40 * var(--card-unit)); height: calc(40 * var(--card-unit)); border-radius: 50%; }
+.intensityBadgeIcon > span { display: grid; place-items: center; width: calc(31 * var(--card-unit)); height: calc(31 * var(--card-unit)); border-radius: 50%; background: rgb(255 255 255 / 20%); }
+.intensityBadgeIcon img { width: calc(17 * var(--card-unit)); height: calc(22 * var(--card-unit)); }
+.intensityBadgeCopy { display: flex; flex-direction: column; gap: calc(16 * var(--card-unit)); font-size: calc(14 * var(--card-unit)); line-height: calc(21 * var(--card-unit)); }
+.intensityGoal { display: flex; flex-direction: column; color: #7b7b7b; font-size: calc(12 * var(--card-unit)); line-height: calc(18 * var(--card-unit)); }
+.intensityBadgeResult { display: flex; align-items: center; gap: calc(8 * var(--card-unit)); }
+.intensityBadgeCount { border: 1px solid; border-radius: 999px; padding: calc(1 * var(--card-unit)) calc(8 * var(--card-unit)) !important; font-size: calc(14 * var(--card-unit)); line-height: calc(21 * var(--card-unit)); white-space: nowrap; }
+
+.hrZone { display: flex; flex-direction: column; gap: calc(24 * var(--card-unit)); min-height: calc(489 * var(--card-unit)); padding: calc(24 * var(--card-unit)) !important; border-radius: calc(16 * var(--card-unit)); background: #090909; color: #f4f4f5; font-weight: 400; }
+.hrSummary { display: flex; flex-direction: column; gap: calc(8 * var(--card-unit)); }
+.hrTopStats, .hrBottomStats { display: grid; gap: calc(8 * var(--card-unit)); }
+.hrTopStats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.hrBottomStats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.hrStat { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: calc(4 * var(--card-unit)); min-width: 0; min-height: calc(125 * var(--card-unit)); padding: calc(14.6 * var(--card-unit)) !important; border-radius: calc(7.3 * var(--card-unit)); background: #171717; }
+.hrStat > img { width: calc(16 * var(--card-unit)); height: calc(16 * var(--card-unit)); }
+.hrValue { font-size: calc(26 * var(--card-unit)); font-weight: 500; line-height: calc(39 * var(--card-unit)); white-space: nowrap; }
+.hrMuted { color: #7b7b7b; }
+.hrCaption { color: #7b7b7b; font-size: calc(10 * var(--card-unit)); line-height: calc(15 * var(--card-unit)); white-space: nowrap; }
+.hrLabel { color: #7b7b7b; font-size: calc(12 * var(--card-unit)); font-weight: 600; line-height: calc(18 * var(--card-unit)); }
+.hrZoneIndicator { position: relative; display: flex; align-items: center; gap: calc(1 * var(--card-unit)); height: calc(24 * var(--card-unit)); }
+.hrZoneTick { width: calc(8 * var(--card-unit)); height: calc(24 * var(--card-unit)); border-radius: 999px; }
+.hrZonePill { display: flex; align-items: center; gap: calc(4 * var(--card-unit)); height: calc(24 * var(--card-unit)); padding: 0 calc(12 * var(--card-unit)) !important; border-radius: 999px; background: #17925a; color: white; font-size: calc(12 * var(--card-unit)); font-weight: 700; line-height: calc(18 * var(--card-unit)); white-space: nowrap; }
+.hrZonePill img { width: calc(16 * var(--card-unit)); height: calc(16 * var(--card-unit)); }
+.hrZonePointer { position: absolute; left: calc(78 * var(--card-unit)); top: calc(19.5 * var(--card-unit)); width: calc(15 * var(--card-unit)); height: calc(11 * var(--card-unit)); }
+.hrProfile { display: flex; flex-direction: column; gap: calc(10 * var(--card-unit)); }
+.hrRating { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e2e2; padding-bottom: calc(7 * var(--card-unit)) !important; font-size: calc(12 * var(--card-unit)); line-height: calc(21 * var(--card-unit)); }
+.hrRatingValue { display: flex; align-items: center; gap: calc(6 * var(--card-unit)); font-size: calc(14 * var(--card-unit)); font-weight: 600; }
+.hrRatingValue i { width: calc(12 * var(--card-unit)); height: calc(12 * var(--card-unit)); border-radius: 50%; background: #17925a; }
+.hrProfileRows { display: flex; flex-direction: column; gap: calc(8 * var(--card-unit)); padding: calc(11 * var(--card-unit)) calc(12 * var(--card-unit)) !important; border: calc(1 * var(--card-unit)) solid #1f1f21; border-radius: calc(8 * var(--card-unit)); background: #111111; }
+.hrProfileRow { display: flex; align-items: center; justify-content: space-between; font-size: calc(12 * var(--card-unit)); line-height: calc(18 * var(--card-unit)); }
+.hrProfileResult { display: flex; align-items: center; gap: calc(8 * var(--card-unit)); }
+.hrProfileTicks { display: flex; gap: calc(2 * var(--card-unit)); }
+.hrProfileTicks span { width: calc(8 * var(--card-unit)); height: calc(4 * var(--card-unit)); border-radius: calc(2 * var(--card-unit)); }
