@@ -12,6 +12,7 @@ type CheckboxFieldProps = {
   boxClassName?: string;
   checkSize?: number;
   labelClassName?: string;
+  borderClassName?: string;
 };
 
 export default function CheckboxField({
@@ -22,6 +23,7 @@ export default function CheckboxField({
   boxClassName,
   checkSize = 15,
   labelClassName,
+  borderClassName,
 }: CheckboxFieldProps) {
   return (
     <div className="flex w-full flex-col items-start gap-[4px]">
@@ -30,7 +32,7 @@ export default function CheckboxField({
         <span
           className={`mt-[1px] flex shrink-0 items-center justify-center rounded-[4px] border border-solid bg-white transition-colors group-focus-within:ring-2 group-focus-within:ring-[#17925a]/40 group-has-[:checked]:border-[#17925a] group-has-[:checked]:bg-[#17925a] ${
             boxClassName ?? "h-[20px] w-[20px] lg:h-[24px] lg:w-[24px]"
-          } ${error ? "border-[#d92d20]" : "border-[#d9d9d9]"}`}
+          } ${error ? "border-[#d92d20]" : (borderClassName ?? "border-[#d9d9d9]")}`}
         >
           <Check
             size={checkSize}

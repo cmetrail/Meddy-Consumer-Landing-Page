@@ -88,7 +88,7 @@ export default function Calendar({ control, error }: CalendarProps) {
             <p className="text-[20px] font-medium leading-[1.5] text-[#212121] lg:text-[32px]">
               {MONTHS[viewMonth]} {viewYear}
             </p>
-            <div className="flex items-center gap-[12px]">
+            <div className="flex items-center gap-[12px] lg:gap-[35px]">
               <button
                 type="button"
                 onClick={goPrev}
@@ -113,12 +113,12 @@ export default function Calendar({ control, error }: CalendarProps) {
             </div>
           </div>
 
-          <div className="w-full rounded-[15px] bg-white p-[12px] lg:p-[20px]">
-            <div className="grid w-full grid-cols-7 gap-y-[2px] lg:gap-y-[4px]">
+          <div className="w-full rounded-[15px] bg-white p-[12px] lg:p-2">
+            <div className="grid w-full grid-cols-7 gap-y-[2px] lg:gap-y-[10px]">
               {WEEKDAYS.map((d) => (
                 <p
                   key={d}
-                  className="text-center text-[14px] font-normal leading-[1.5] text-[#212121] lg:text-[16px]"
+                  className="text-center text-[14px] font-normal leading-[1.5] text-[#212121] lg:mb-3 lg:text-[16px]"
                 >
                   {d}
                 </p>
@@ -127,20 +127,20 @@ export default function Calendar({ control, error }: CalendarProps) {
                 if (d === null) return <span key={`empty-${i}`} />;
                 const date = new Date(viewYear, viewMonth, d);
                 const iso = toISODate(date);
-                const isPast = date < today;
+                const isPast = date < today || date.getDay() === 0 || date.getDay() === 6; // past days and weekends are not bookable
                 const selected = field.value === iso;
                 return (
                   <button
                     key={iso}
                     type="button"
-                    disabled={isPast}
+                    disabled={isPast && !selected}
                     onClick={() => field.onChange(iso)}
                     className={`mx-auto flex h-[40px] w-[40px] items-center justify-center rounded-full text-[14px] leading-[1.5] transition-colors lg:h-[56px] lg:w-[56px] lg:text-[18px] ${
-                      isPast
-                        ? "cursor-not-allowed font-normal text-[#d9d9d9]"
-                        : selected
-                          ? "bg-[#17925a] font-normal text-white"
-                          : "font-bold text-[#212121] hover:bg-[rgba(23,146,90,0.10)]"
+                      selected
+                        ? "bg-[#17925a] font-bold text-white"
+                        : isPast
+                          ? "cursor-not-allowed font-bold text-[#212121] opacity-40"
+                          : "font-bold text-[#3f6262] hover:bg-[rgba(23,146,90,0.10)]"
                     }`}
                   >
                     {d}

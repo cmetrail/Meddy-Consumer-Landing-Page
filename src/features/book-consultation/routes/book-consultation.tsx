@@ -121,7 +121,7 @@ export const BookConsultationPage = () => {
                     <button
                       type="button"
                       onClick={back}
-                      className="hidden items-center gap-[8px] py-[12px] text-[16px] font-medium uppercase leading-[1.5] text-[#17925a] transition-colors hover:text-[#17925a]/80 lg:flex lg:py-[14px] lg:text-[20px]"
+                      className="hidden items-center gap-[8px] py-[12px] text-[16px] font-medium uppercase leading-[1.5] text-[#17925a] transition-colors hover:text-[#17925a]/80 lg:flex lg:h-[65px] lg:px-6 lg:py-[9px] xl:px-12 lg:text-[20px] lg:underline"
                     >
                       <ArrowLeft size={20} className="lg:hidden" />
                       <ArrowLeft size={24} className="hidden lg:block" />
@@ -133,7 +133,7 @@ export const BookConsultationPage = () => {
                   <button
                     type="button"
                     onClick={next}
-                    className="w-full rounded-[10px] bg-[#17925a] px-[20px] py-[12px] text-[16px] font-medium uppercase leading-[1.5] text-white shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90 lg:w-auto lg:min-w-[377px] lg:px-[24px] lg:py-[14px] lg:text-[20px]"
+                    className="w-full rounded-[10px] bg-[#17925a] px-[20px] py-[12px] text-[16px] font-medium uppercase leading-[1.5] text-white shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90 lg:w-auto lg:h-[65px] lg:min-w-[280px] xl:min-w-[377px] lg:px-[24px] lg:py-[9px] lg:text-[20px] lg:font-bold"
                   >
                     {step === STEPS.length - 1 ? "Get my visit link" : "Continue"}
                   </button>

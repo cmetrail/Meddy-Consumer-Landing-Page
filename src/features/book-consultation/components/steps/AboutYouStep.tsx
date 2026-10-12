@@ -15,17 +15,17 @@ export default function AboutYouStep() {
   } = useFormContext<BookConsultationForm>();
 
   return (
-    <div className="flex w-full flex-col items-start gap-[20px]">
-      <div className="flex w-full flex-col items-center gap-[8px] lg:items-start">
-        <h1 className="text-center text-[24px] font-medium leading-[1.3] text-[#111110] lg:text-left lg:text-[40px] lg:text-[#46524b]">
+    <div className="flex w-full flex-col items-start gap-6 sm:gap-11">
+      <div className="flex w-full flex-col  flex-1 gap-2 max-w-138.5 sm:mx-auto sm:items-center">
+        <h1 className="text-left text-[24px] font-medium leading-[1.3] text-[#111110] sm:text-center lg:text-[40px] lg:text-[#46524b]">
           Book your free consultation
         </h1>
-        <p className="text-center text-[14px] font-normal leading-[1.5] text-[#7b7b7b] lg:text-left lg:text-[20px] lg:font-medium">
+        <p className="text-left text-[14px] font-normal leading-normal text-[#7b7b7b] sm:text-center lg:text-[20px] lg:font-medium">
           A 30 minute video visit with a licensed board certified New York physician.
         </p>
       </div>
 
-      <div className="grid w-full grid-cols-1 gap-[16px] sm:grid-cols-2">
+      <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
         <TextField
           label="First Name"
           placeholder="Enter first name"

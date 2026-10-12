@@ -17,7 +17,7 @@ export default function TimeSlots({ control, error }: TimeSlotsProps) {
       name="time"
       rules={{ required: "Select a time." }}
       render={({ field }) => (
-        <div className="flex w-full flex-row flex-wrap items-center justify-start gap-[12px] lg:flex-col lg:items-center lg:gap-[16px]">
+        <div className="flex w-full flex-row flex-wrap items-center justify-start gap-[12px] lg:flex-col lg:items-center lg:gap-[24px]">
           {TIME_SLOTS.map((t) => {
             const on = field.value === t;
             return (
@@ -25,7 +25,7 @@ export default function TimeSlots({ control, error }: TimeSlotsProps) {
                 key={t}
                 type="button"
                 onClick={() => field.onChange(t)}
-                className={`flex h-[43px] w-[138px] items-center justify-center rounded-full transition-colors lg:h-[52px] lg:w-[184px] ${
+                className={`flex h-[43px] w-[138px] items-center justify-center rounded-full transition-colors lg:h-auto lg:w-auto lg:px-[37px] lg:py-2 ${
                   on
                     ? "bg-[rgba(23,146,90,0.10)] text-[18px] font-medium leading-[1.5] text-[#17925a] lg:text-[24px]"
                     : "text-[14px] font-normal leading-[1.5] text-[#7b7b7b] hover:bg-[rgba(23,146,90,0.05)] hover:text-[#17925a] lg:text-[20px]"

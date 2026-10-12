@@ -18,7 +18,6 @@ export default function BeforeYouVisitStep() {
   const {
     register,
     watch,
-    formState: { errors },
   } = useFormContext<BookConsultationForm>();
 
   const date = watch("date");
@@ -28,45 +27,49 @@ export default function BeforeYouVisitStep() {
   const canSubmit = consent && privacy;
 
   return (
-    <div className="flex w-full flex-col items-center gap-[24px]">
-      <span className="flex h-[58px] w-[58px] items-center justify-center rounded-full bg-[#17925a] lg:h-[94px] lg:w-[94px]">
-        <Check size={33} strokeWidth={3} className="text-white lg:size-[54px]" />
-      </span>
+    <div className="flex w-full flex-col items-center gap-6 sm:gap-11">
+      <div className="flex w-full flex-col items-center gap-6">
+        <span className="flex h-[58px] w-[58px] items-center justify-center rounded-full bg-[#17925a] lg:h-[94.5px] lg:w-[94.5px]">
+          <Check size={33} strokeWidth={3} className="text-white lg:size-[54px]" />
+        </span>
 
-      <div className="flex w-full flex-col items-center gap-[8px]">
-        <h1 className="text-center text-[24px] font-medium leading-[1.3] text-[#7b7b7b] lg:text-[40px]">
-          You&apos;re booked for
-        </h1>
-        <p className="text-center text-[24px] font-medium leading-[1.3] text-[#111110] lg:text-[40px] lg:text-[#46524b]">
-          {formatDate(date)}
-          {time ? ` at ${time}` : ""}
-        </p>
-        <p className="text-center text-[14px] font-normal leading-[1.5] text-[#7b7b7b] lg:text-[20px] lg:font-medium">
-          Two quick steps before you visit.
-        </p>
+        <div className="flex w-full flex-col items-center gap-2 max-w-138.5 sm:mx-auto lg:max-w-none">
+          <div className="flex flex-col items-center">
+            <h1 className="text-center text-[24px] font-medium leading-[1.5] text-[#7b7b7b] lg:text-[40px]">You&apos;re booked for</h1>
+            <p className="text-center text-[24px] font-medium leading-[1.5] text-[#111110] lg:text-[40px] lg:text-[#46524b]">
+              {formatDate(date)}
+              <span className="lg:hidden">{time ? ` at ${time}` : ""}</span>
+            </p>
+          </div>
+          <p className="text-center text-[14px] font-normal leading-normal text-[#7b7b7b] lg:text-[20px] lg:font-medium">
+            Two quick steps before you visit.
+          </p>
+        </div>
       </div>
 
-      <div className="flex w-full flex-col gap-[16px] rounded-[10px] bg-white p-[20px] lg:gap-[24px] lg:p-[28px]">
-        <CheckboxField
-          label="I've read and agree to the Telehealth Informed Consent."
-          boxClassName="h-[20px] w-[20px] lg:h-[30px] lg:w-[30px]"
-          checkSize={20}
-          register={register("telehealthConsent", { validate: (v) => v === true || "Please agree to continue." })}
-          error={errors.telehealthConsent}
-        />
-
-        <CheckboxField
-          label="I acknowledge I've received Meddy's Notice of Privacy Practices."
-          boxClassName="h-[20px] w-[20px] lg:h-[30px] lg:w-[30px]"
-          checkSize={20}
-          register={register("privacyPractices", { validate: (v) => v === true || "Please acknowledge to continue." })}
-          error={errors.privacyPractices}
-        />
+      <div className="flex w-full flex-col gap-[16px] rounded-[10px] border border-solid border-[#979797] bg-white p-[20px] lg:gap-[24px] lg:px-[27px] lg:py-[27px]">
+        <div className="flex w-full flex-col gap-2">
+          <CheckboxField
+            label="I've read and agree to the Telehealth Informed Consent."
+            boxClassName="h-[20px] w-[20px] lg:h-[30px] lg:w-[30px]"
+            borderClassName="border-[#7b7b7b]"
+            checkSize={20}
+            register={register("telehealthConsent")}
+          />
+          <CheckboxField
+            label="I acknowledge I've received Meddy's Notice of Privacy Practices."
+            boxClassName="h-[20px] w-[20px] lg:h-[30px] lg:w-[30px]"
+            borderClassName="border-[#7b7b7b]"
+            checkSize={20}
+            register={register("privacyPractices")}
+          />
+        </div>
 
         <button
           type="submit"
-          className={`flex h-[45px] w-full items-center justify-center rounded-[10px] text-[14px] font-medium uppercase leading-[1.5] transition-colors lg:h-[65px] lg:text-[20px] ${
-            canSubmit ? "bg-[#17925a] text-white hover:opacity-90" : "cursor-not-allowed bg-[#8a8a82] text-white"
+          disabled={!canSubmit}
+          className={`flex h-[45px] w-full items-center justify-center rounded-[10px] text-[14px] font-bold uppercase leading-[1.5] shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-colors lg:h-[65px] lg:text-[20px] ${
+            canSubmit ? "cursor-pointer bg-[#17925a] text-white hover:opacity-90" : "cursor-not-allowed bg-[#8a8a82] text-white"
           }`}
         >
           Get my visit link
