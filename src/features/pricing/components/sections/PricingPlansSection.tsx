@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./PricingPlansSection.module.css";
 
 import { CircleCheckBig, Crown } from "lucide-react";
@@ -98,7 +99,7 @@ function PlanCard({ plan }: { plan: Plan }) {
           </li>
         ))}
       </ul>
-      <button type="button" className={styles.button}>{plan.cta}</button>
+      <Link href="/book-consultation" className={styles.button}>{plan.cta}</Link>
     </article>
   );
 }
