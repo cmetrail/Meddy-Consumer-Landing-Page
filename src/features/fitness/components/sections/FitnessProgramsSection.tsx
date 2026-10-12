@@ -29,44 +29,67 @@ function ProgramCard({ program }: { program: (typeof PROGRAMS)[number] }) {
   return (
     <article className={styles.card}>
       <div className={styles.photo}>
-        <Image src={program.image} alt={program.alt} fill
+        <Image
+          src={program.image}
+          alt={program.alt}
+          fill
           sizes="(max-width: 480px) 72vw, (max-width: 767px) 347px, (max-width: 1440px) 26vw, 371px"
-          className={styles.image} />
+          className={styles.image}
+        />
       </div>
       <h3 className={styles.title}>{program.title}</h3>
       <div className={styles.features}>
         {[program.left, program.right].map((column, index) => (
           <ul key={index} className={styles.featureList}>
-            {column.map((feature) => <li key={feature}>{feature}</li>)}
+            {column.map((feature) => (
+              <li key={feature}>{feature}</li>
+            ))}
           </ul>
         ))}
       </div>
-      <button type="button" className={styles.button}>Start Training</button>
+      <button type="button" className={styles.button}>
+        Get Started
+      </button>
     </article>
   );
 }
 
 export default function FitnessProgramsSection() {
   return (
-    <section className={styles.section} aria-labelledby="fitness-programs-heading">
+    <section
+      className={styles.section}
+      aria-labelledby="fitness-programs-heading"
+    >
       <div className={styles.background} aria-hidden="true">
-        <Image src="/fitness/fitness-programs-bg-916cd5.png" alt="" fill
-          sizes="(max-width: 1440px) 150vw, 2146px" className={styles.backgroundImage} />
+        <Image
+          src="/fitness/fitness-programs-bg-916cd5.png"
+          alt=""
+          fill
+          sizes="(max-width: 1440px) 150vw, 2146px"
+          className={styles.backgroundImage}
+        />
       </div>
       <div className={styles.shade} />
       <div className={styles.content}>
         <header className={styles.heading}>
           <p className={styles.eyebrow}>MORE THAN</p>
           <h2 id="fitness-programs-heading" className={styles.headline}>
-            <span className={styles.desktopHeadline}>Sets, Reps and Minutes.</span>
-            <span className={styles.mobileHeadline}>Sets, Reps, and Minutes.</span>
+            <span className={styles.desktopHeadline}>
+              Sets, Reps and Minutes.
+            </span>
+            <span className={styles.mobileHeadline}>
+              Sets, Reps, and Minutes.
+            </span>
           </h2>
           <p className={styles.description}>
-            Meddy understands how you trained and how<br className={styles.desktopBreak} /> your body was challenged.
+            Meddy understands how you trained and how
+            <br className={styles.desktopBreak} /> your body was challenged.
           </p>
         </header>
         <div className={styles.cards}>
-          {PROGRAMS.map((program) => <ProgramCard key={program.title} program={program} />)}
+          {PROGRAMS.map((program) => (
+            <ProgramCard key={program.title} program={program} />
+          ))}
         </div>
       </div>
     </section>

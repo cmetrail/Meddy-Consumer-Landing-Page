@@ -137,10 +137,11 @@ export default function MostCareSection() {
       const button = header.querySelector("button")?.getBoundingClientRect();
       if (!logo || !button) return;
       const bounds = canvas.getBoundingClientRect();
-      const referenceWidth = window.matchMedia("(max-width: 767px)").matches ? 282 : 1440;
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
+      const referenceWidth = isMobile ? 400 : 1440;
       const scale = bounds.width / referenceWidth;
       canvas.style.setProperty("--collage-scale", `${scale}`);
-      canvas.style.setProperty("--sleep-render-scale", `${scale * 1.2 * (referenceWidth === 282 ? .41 : 1)}`);
+      canvas.style.setProperty("--sleep-render-scale", `${scale * (isMobile ? .588 : 1.2)}`);
       canvas.style.setProperty("--collage-left", `${(logo.left - bounds.left) / scale}px`);
       canvas.style.setProperty("--collage-right", `${(button.right - bounds.left) / scale}px`);
     };

@@ -127,7 +127,11 @@ function CardioContent() {
       </div>
 
       <div className={styles.zones}>
-        <span className={styles.zonesTitle}>HR Zones</span>
+        <div className={styles.zoneLabels}>
+          {HR_ZONES.map((zone, index) => (
+            <span key={zone.label} style={{ flexGrow: zone.width }}>HR Zones {index + 1}</span>
+          ))}
+        </div>
         <div className={styles.zoneBar} role="img" aria-label="Heart rate zones: Zone 1 25%, Zone 2 20%, Zone 3 35%, Zone 4 10%, Zone 5 10%">
           {HR_ZONES.map((zone) => (
             <div key={zone.label} className={styles.zoneSegment} style={{ flexGrow: zone.width, background: zone.color }} />
@@ -156,75 +160,40 @@ const BADGES = [
 
 function IntensityContent() {
   return (
-    <div className="flex flex-col gap-6 rounded-[16px] bg-[#09090B] p-6 lg:h-[489px]">
-      <span className="text-[24px] font-semibold leading-normal text-white">AHA Badges</span>
-
-      <div className="flex flex-col gap-4">
-        {INTENSITY_BARS.map((b) => (
-          <div key={b.label} className="flex flex-col items-end gap-2">
-            <div className="flex w-full items-center justify-between gap-2 text-[14px] font-semibold">
-              <span className="text-white">{b.label}</span>
-              <span className="whitespace-nowrap">
-                <span className="text-white">{b.done}</span>
-                <span className="text-[#7B7B7B]"> / {b.goal}</span>
-              </span>
+    <div className={styles.intensity}>
+      <span className={styles.intensityTitle}>AHA Badges</span>
+      <div className={styles.intensityProgressList}>
+        {INTENSITY_BARS.map((bar) => (
+          <div key={bar.label} className={styles.intensityProgress}>
+            <div className={styles.intensityProgressLabel}>
+              <span>{bar.label}</span>
+              <span className={styles.intensityMinutes}>{bar.done}<span> / {bar.goal}</span></span>
             </div>
-            <div className="flex h-2 w-full gap-px">
-              <div className="h-full shrink-0" style={{ width: "58.9%", background: b.color }} />
-              <div className="h-full flex-1 bg-[#E2E2E2]" />
+            <div className={styles.intensityTrack} role="img" aria-label={`${bar.label}: ${bar.done} of ${bar.goal}`}>
+              <div style={{ width: "58.9%", background: bar.color }} />
             </div>
-            <span
-              className={`flex items-center gap-1 text-[10px] font-medium ${b.up ? "text-[#17925A]" : "text-[#FF546B]"}`}
-            >
-              <Image
-                src={b.up ? "/fitness/icons/intensity-delta-up.svg" : "/fitness/icons/intensity-delta-down.svg"}
-                width={10}
-                height={10}
-                alt=""
-              />
-              {b.delta}
+            <span className={styles.intensityDelta} style={{ color: bar.up ? "#17925A" : "#FF546B" }}>
+              <Image src={bar.up ? "/fitness/icons/intensity-delta-up.svg" : "/fitness/icons/intensity-delta-down.svg"} width={10} height={10} alt="" />
+              {bar.delta}
             </span>
           </div>
         ))}
       </div>
-
-      <div className="grid flex-1 grid-cols-1 gap-5 pt-4 sm:grid-cols-2">
-        {BADGES.map((b) => (
-          <div key={b.label} className="flex flex-col justify-between gap-4 rounded-xl bg-[#171718] p-4">
-            <div className="flex items-start gap-2">
-              <span
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
-                style={{ background: b.color }}
-              >
-                <span className="flex h-[31px] w-[31px] items-center justify-center rounded-full bg-white/20">
-                  <Image src={`/fitness/icons/intensity-flame-${b.flame}.svg`} width={17} height={22} alt="" />
-                </span>
-              </span>
-              <div className="flex flex-col gap-4 font-semibold leading-normal">
-                <span className="text-[14px] text-white">{b.label}</span>
-                <span className="flex flex-col whitespace-nowrap text-[12px] text-[#7B7B7B]">
-                  <span>Goal Achieved</span>
-                  <span>150 min/week</span>
-                </span>
-              </div>
+      <div className={styles.intensityBadges}>
+        {BADGES.map((badge) => (
+          <div key={badge.label} className={styles.intensityBadge}>
+            <span className={styles.intensityBadgeIcon} style={{ background: badge.color }}>
+              <span><Image src={`/fitness/icons/intensity-flame-${badge.flame}.svg`} width={17} height={22} alt="" /></span>
+            </span>
+            <div className={styles.intensityBadgeCopy}>
+              <span>{badge.label}</span>
+              <span className={styles.intensityGoal}><span>Goal Achieved</span><span>150 min/week</span></span>
             </div>
-            <div className="flex items-center gap-1">
-              <span
-                className="rounded-full border px-2 py-0.5 text-[14px] font-medium"
-                style={{ color: b.color, background: `${b.color}1A`, borderColor: `${b.color}33` }}
-              >
-                2 badges
-              </span>
-              <span
-                className={`flex items-center gap-1 text-[10px] font-medium ${b.up ? "text-[#17925A]" : "text-[#FF546B]"}`}
-              >
-                <Image
-                  src={b.up ? "/fitness/icons/intensity-delta-up.svg" : "/fitness/icons/intensity-delta-down.svg"}
-                  width={10}
-                  height={10}
-                  alt=""
-                />
-                {b.delta}
+            <div className={styles.intensityBadgeResult}>
+              <span className={styles.intensityBadgeCount} style={{ color: badge.color, background: `${badge.color}1A`, borderColor: `${badge.color}33` }}>2 badges</span>
+              <span className={styles.intensityDelta} style={{ color: badge.up ? "#17925A" : "#FF546B" }}>
+                <Image src={badge.up ? "/fitness/icons/intensity-delta-up.svg" : "/fitness/icons/intensity-delta-down.svg"} width={10} height={10} alt="" />
+                {badge.delta}
               </span>
             </div>
           </div>
@@ -242,87 +211,64 @@ const PROFILE_ROWS = [
   { label: "Balance", level: "Low", filled: 1, color: "#17925A" },
 ];
 
-const STAT_CARD = "flex flex-1 flex-col items-start justify-center gap-1 rounded-[7.3px] bg-[#171718] p-[14.6px]";
-
 function HRZoneContent() {
   return (
-    <div className="flex flex-col gap-6 rounded-[16px] bg-[#09090B] p-6 lg:h-[489px]">
-      <div className="flex flex-col gap-[7.3px]">
-        <div className="flex gap-[7.3px] lg:h-[130px]">
-          <div className={STAT_CARD}>
+    <div className={styles.hrZone}>
+      <div className={styles.hrSummary}>
+        <div className={styles.hrTopStats}>
+          <div className={styles.hrStat}>
             <Image src="/fitness/icons/hr-icon-time.svg" width={16} height={16} alt="" />
-            <span className="text-[26px] font-medium leading-normal text-white">01:30:33</span>
-            <span className="text-[10px] leading-normal text-[#7B7B7B]">Total Workout Time</span>
+            <span className={styles.hrValue}>01:30:33</span>
+            <span className={styles.hrCaption}>Total Workout Time</span>
           </div>
-          <div className={STAT_CARD}>
+          <div className={styles.hrStat}>
             <Image src="/fitness/icons/hr-icon-exercises.svg" width={16} height={16} alt="" />
-            <span className="text-[26px] font-medium leading-normal text-white">
-              14<span className="text-[#7B7B7B]"> / 15</span>
-            </span>
-            <span className="text-[10px] leading-normal text-[#7B7B7B]">Exercises done</span>
+            <span className={styles.hrValue}>14<span className={styles.hrMuted}> / 15</span></span>
+            <span className={styles.hrCaption}>Exercises done</span>
           </div>
-          <div className={STAT_CARD}>
+          <div className={styles.hrStat}>
             <Image src="/fitness/icons/hr-icon-calories.svg" width={16} height={16} alt="" />
-            <span className="text-[26px] font-medium leading-normal text-white">
-              500<span className="text-[#7B7B7B]"> Kcal</span>
-            </span>
-            <span className="text-[10px] leading-normal text-[#7B7B7B]">Calories Burned</span>
+            <span className={styles.hrValue}>500<span className={styles.hrMuted}> Kcal</span></span>
+            <span className={styles.hrCaption}>Calories Burned</span>
           </div>
         </div>
-
-        <div className="flex gap-[7.3px] lg:h-[108px]">
-          <div className={STAT_CARD}>
-            <span className="text-[12px] font-semibold leading-normal text-[#7B7B7B]">Avg HR Zone</span>
-            <div className="relative flex items-center gap-px">
-              <span className="h-[18px] w-2 rounded-full bg-[#6EE7A0]" />
-              <span className="h-[18px] w-2 rounded-full bg-[#148BD5]" />
-              <span className="flex items-center gap-1 rounded-full bg-[#17925A] px-3 py-0.5">
+        <div className={styles.hrBottomStats}>
+          <div className={styles.hrStat}>
+            <span className={styles.hrLabel}>Avg HR Zone</span>
+            <div className={styles.hrZoneIndicator}>
+              <span className={styles.hrZoneTick} style={{ background: "#6EE7A0" }} />
+              <span className={styles.hrZoneTick} style={{ background: "#148BD5" }} />
+              <span className={styles.hrZonePill}>
                 <Image src="/fitness/icons/hr-zone-frame.svg" width={16} height={16} alt="" />
-                <span className="text-[12px] font-bold leading-normal text-white">ZONE</span>
-                <span className="text-[13px] font-bold leading-normal text-white">3</span>
+                <span>ZONE 3</span>
               </span>
-              <span className="h-[18px] w-2 rounded-full bg-[#E09A2A]" />
-              <span className="h-[18px] w-2 rounded-full bg-[#FF7043]" />
-              <Image
-                src="/fitness/icons/hr-zone-polygon.svg"
-                width={15}
-                height={11}
-                alt=""
-                className="absolute left-[78px] top-[19.5px]"
-              />
+              <span className={styles.hrZoneTick} style={{ background: "#E09A2A" }} />
+              <span className={styles.hrZoneTick} style={{ background: "#FF7043" }} />
+              <Image src="/fitness/icons/hr-zone-polygon.svg" width={15} height={11} alt="" className={styles.hrZonePointer} />
             </div>
           </div>
-          <div className={STAT_CARD}>
-            <span className="text-[12px] font-semibold leading-normal text-[#7B7B7B]">Avg HR</span>
-            <span className="text-[26px] font-medium leading-normal text-white">150 bpm</span>
+          <div className={styles.hrStat}>
+            <span className={styles.hrLabel}>Avg HR</span>
+            <span className={styles.hrValue}>150 bpm</span>
           </div>
         </div>
       </div>
-
-      <div className="flex flex-col gap-[10px]">
-        <div className="flex items-center justify-between border-b border-[#E2E2E2] pb-2">
-          <span className="text-[12px] leading-normal text-white">Workout Rating</span>
-          <div className="flex items-center gap-[6px]">
-            <span className="h-3 w-3 rounded-full bg-[#17925A]" />
-            <span className="text-[14px] font-semibold leading-normal text-white">Easy (2/5)</span>
-          </div>
+      <div className={styles.hrProfile}>
+        <div className={styles.hrRating}>
+          <span>Workout Rating</span>
+          <span className={styles.hrRatingValue}><i />Easy (2/5)</span>
         </div>
-
-        <div className="flex flex-col gap-2 rounded-lg border border-[#1F1F21] bg-[#111113] p-3">
+        <div className={styles.hrProfileRows}>
           {PROFILE_ROWS.map((row) => (
-            <div key={row.label} className="flex items-center justify-between">
-              <span className="text-[12px] leading-normal text-[#7B7B7B]">{row.label}</span>
-              <div className="flex items-center gap-2">
-                <div className="flex w-[48px] items-center gap-[2px]">
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <span
-                      key={i}
-                      className="h-[4px] w-2 shrink-0 rounded-[2px]"
-                      style={{ background: i < row.filled ? row.color : row.label === "Joint Stress" ? "#232324" : "#333333" }}
-                    />
+            <div key={row.label} className={styles.hrProfileRow}>
+              <span className={styles.hrMuted}>{row.label}</span>
+              <div className={styles.hrProfileResult}>
+                <div className={styles.hrProfileTicks} aria-hidden="true">
+                  {Array.from({ length: row.label === "Joint Stress" ? 5 : 3 }, (_, index) => (
+                    <span key={index} style={{ background: index < row.filled ? row.color : row.label === "Joint Stress" ? "#232324" : "#333333" }} />
                   ))}
                 </div>
-                <span className="text-[12px] leading-normal text-[#F4F4F5]">{row.level}</span>
+                <span>{row.level}</span>
               </div>
             </div>
           ))}
@@ -333,33 +279,35 @@ function HRZoneContent() {
 }
 
 export default function FitnessProgressCard() {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(3);
 
   return (
-    <div className={styles.card}>
-      <div className={styles.tabs} role="group" aria-label="Training category">
-        {TABS.map((tab, i) => {
-          const Icon = tab.icon;
-          const isActive = i === active;
-          return (
-            <button
-              key={tab.label}
-              type="button"
-              onClick={() => setActive(i)}
-              aria-pressed={isActive}
-              className={styles.tab}
-            >
-              <Icon className={styles.tabIcon} />
-              {tab.label}
-            </button>
-          );
-        })}
-      </div>
+    <div className={styles.cardContainer}>
+      <div className={`${styles.card} ${(active !== 0) ? styles.referenceCard : ""} ${(active === 2 || active === 3) ? styles.intensityCard : ""}`}>
+        <div className={styles.tabs} role="group" aria-label="Training category">
+          {TABS.map((tab, i) => {
+            const Icon = tab.icon;
+            const isActive = i === active;
+            return (
+              <button
+                key={tab.label}
+                type="button"
+                onClick={() => setActive(i)}
+                aria-pressed={isActive}
+                className={styles.tab}
+              >
+                <Icon className={styles.tabIcon} />
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
 
-      {active === 0 && <StrengthContent />}
-      {active === 1 && <CardioContent />}
-      {active === 2 && <IntensityContent />}
-      {active === 3 && <HRZoneContent />}
+        {active === 0 && <StrengthContent />}
+        {active === 1 && <CardioContent />}
+        {active === 2 && <IntensityContent />}
+        {active === 3 && <HRZoneContent />}
+      </div>
     </div>
   );
 }

@@ -89,7 +89,7 @@ export default function NutritionSection() {
           <div className={styles.copy}>
             <h3>Nutrition Intelligence</h3>
             <p className={styles.headline}>
-              Eat smarter,<br />
+              Eat smarter,<br className={styles.desktopBreak} />{" "}
               and give your doctor <em className={styles.accent}>something to<br className={styles.desktopBreak} /> work with.</em>
             </p>
             <p className={styles.description}>

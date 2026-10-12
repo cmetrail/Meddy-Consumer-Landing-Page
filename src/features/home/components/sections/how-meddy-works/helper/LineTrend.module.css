@@ -1,0 +1,57 @@
+/* Override the site-wide important spacing reset within this chart only. */
+.scroll { position: relative; width: 100%; background: #17231d; }
+.sticky { display: flex; align-items: center; }
+.content { container-type: inline-size; width: 100%; max-width: 1440px; margin: auto !important; padding: 48px 20px 42px !important; }
+.heading { text-align: center; margin-bottom: 3cqw !important; }
+.heading h3 { color: #fff; font-size: clamp(12px, 1.69cqw, 23px); font-weight: 500; line-height: 1.3; letter-spacing: -0.02em; }
+.heading p { margin-top: 0.4cqw !important; color: #e7e7e7; font-size: clamp(9px, 1.12cqw, 15px); line-height: 1.4; }
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.mobileMarkers { display: none; }
+.summary { width: 62.5%; max-width: 100%; margin: 0 auto !important; padding: 1.4cqw !important; border-radius: 1.1cqw; background: #183024; }
+.scroll[data-variant="fitness"] .summary { width: 44%; }
+.scroll[data-variant="sleep"] .summary { width: 57.4%; }
+.summary h4 { color: #fff; font-size: clamp(10px, 1.4cqw, 19px); font-weight: 600; line-height: 1.5; letter-spacing: -0.025em; }
+.metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 2cqw; margin: 0.85cqw 0 !important; }
+.metricLabel { color: #e7e7e7; font-size: clamp(8px, 0.985cqw, 13.4px); }
+.green, .white { margin-top: 0.4cqw !important; font-size: clamp(10px, 1.4cqw, 19px); font-weight: 500; line-height: 1.3; }
+.green { color: #17925a; }
+.white { color: #fff; }
+.range { color: #7b8880; font-size: clamp(7px, 0.985cqw, 13.4px); line-height: 1.4; }
+.description { color: #e7e7e7; font-size: clamp(7px, 0.985cqw, 13.4px); line-height: 1.6; }
+@media (min-width: 1024px) {
+  .content { padding-inline: 40px !important; }
+}
+@media (min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .scroll { min-height: 100svh; }
+  .sticky { min-height: 100svh; }
+}
+@media (max-width: 767px) {
+  .content { padding: clamp(48px, 14vw, 96px) clamp(16px, 4.4vw, 34px) 40px !important; }
+  .heading { text-align: left; margin-bottom: 7cqw !important; }
+  .heading h3 { font-size: clamp(16px, 4.8cqw, 30px); font-weight: 400; line-height: 1.4; }
+  .heading p { margin-top: 0.4cqw !important; font-size: clamp(12px, 3.4cqw, 22px); }
+  .scroll[data-variant="fitness"] .heading { text-align: right; }
+  .scroll[data-variant="sleep"] .content { padding-top: clamp(60px, 19vw, 132px) !important; }
+  .chart { width: 93%; margin-inline: auto !important; overflow: visible; }
+  .chart svg { min-width: 0; width: 100%; }
+  .desktopMarkers { display: none; }
+  .mobileMarkers { display: inline; }
+  .seriesLabel { font-size: 11px; }
+  .scroll[data-variant="fitness"] .whiteSeries { transform: translate(-106px, 16px); }
+  .scroll[data-variant="fitness"] .greenSeries { transform: translate(-44px, 22px); }
+  .scroll[data-variant="sleep"] .whiteSeries { transform: translate(-47px, 9px); }
+  .scroll[data-variant="sleep"] .greenSeries { transform: translate(-34px, 14px); }
+  .scroll[data-variant] .summary { width: 100%; margin-top: 1.5cqw !important; padding: 2.2cqw !important; border-radius: 3.4cqw; }
+  .scroll[data-variant="sleep"] .summary { margin-top: 4cqw !important; }
+  .summary h4 { font-size: clamp(13px, 3.5cqw, 22px); line-height: 1.45; }
+  .metricLabel { font-size: clamp(9px, 2.3cqw, 15px); }
+  .range { font-size: clamp(11px, 2.8cqw, 18px); }
+  .description { font-size: clamp(9px, 2.25cqw, 14px); line-height: 1.5; }
+  .green, .white { margin-top: 1.7cqw !important; font-size: clamp(18px, 4.8cqw, 30px); font-weight: 600; }
+  .metrics { gap: 5cqw; margin: 3cqw 0 !important; }
+}
+@media (max-height: 600px) and (min-width: 1024px) {
+  .content { padding-top: 20px !important; padding-bottom: 20px !important; }
+  .heading { margin-bottom: 20px !important; }
+}

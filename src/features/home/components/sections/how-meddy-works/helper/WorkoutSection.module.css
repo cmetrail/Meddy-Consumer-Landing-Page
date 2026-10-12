@@ -70,3 +70,18 @@
   .headline { font-size: 25px; }
   .visual { margin-left: -35px !important; margin-right: -35px !important; align-self: auto; }
 }
+
+@media (max-width: 767px) {
+  .content { --feature-scale: min(calc((100vw - 40px) / 360px), 1.4); min-height: 0; padding: 48px 20px 32px !important; }
+  .visual { order: 0; width: 360px; height: 450px; margin: 0 auto !important; zoom: var(--feature-scale); }
+  .photo { left: -20px; top: 5px; width: 316px; }
+  .summaryCard { left: 115px; top: 0; scale: .69; }
+  .profile { left: 170px; top: 152px; width: 200px; scale: .925; }
+  .statsCard { left: 0; top: 310px; scale: .456; }
+  .copy { position: relative; isolation: isolate; order: 1; min-height: 320px; margin-top: 50px !important; padding: 0 !important; }
+  .copy::before { content: "02"; position: absolute; z-index: -1; left: 0; top: 46px; color: #203425; opacity: .32; font-size: clamp(200px, 66vw, 260px); font-weight: 600; line-height: 1; letter-spacing: -18px; pointer-events: none; }
+  .copy h3 { font-size: 20px; font-weight: 600; letter-spacing: -.3px; line-height: 1.4; }
+  .headline { margin-top: 34px !important; font-size: 16px; font-weight: 400; line-height: 1.5; }
+  .accent { font-family: var(--font-plus-jakarta), sans-serif; font-style: normal; color: #548c49; }
+  .description { margin-top: 24px !important; font-size: 14px; line-height: 1.5; }
+}
