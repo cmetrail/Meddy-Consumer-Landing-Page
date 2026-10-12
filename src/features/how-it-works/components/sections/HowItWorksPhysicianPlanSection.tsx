@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 // Figma: desktop node 12688:9490 (1440 x 1027). White section: text column (599px) vertically centred on the left,
@@ -8,6 +9,8 @@ import { motion } from "framer-motion";
 // grows with its content; the photo covers whatever height results. Mobile: node 12765:15287 — photo on top fading to white,
 // one 32px paragraph (green serif phrases), intro + button below.
 const ease = [0.22, 1, 0.36, 1] as const;
+
+const MotionLink = motion(Link);
 
 const IMG = "/how-it-works/physician-plan/doctor-plan.png";
 const ALT = "Physician reviewing a patient's health plan";
@@ -83,8 +86,8 @@ export default function HowItWorksPhysicianPlanSection() {
             </motion.p>
           </div>
 
-          <motion.button
-            type="button"
+          <MotionLink
+            href="/book-consultation"
             className="flex items-center justify-center rounded-[35px] bg-[#17925A] px-5 py-3 text-[16px] lg:px-6 lg:py-4 lg:text-[20px] font-normal leading-[normal] text-white transition-opacity hover:opacity-85"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -92,7 +95,7 @@ export default function HowItWorksPhysicianPlanSection() {
             transition={{ duration: 0.8, ease, delay: 0.3 }}
           >
             Book Free Consultation
-          </motion.button>
+          </MotionLink>
         </div>
 
       </div>

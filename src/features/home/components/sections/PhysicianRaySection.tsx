@@ -67,7 +67,7 @@ export default function PhysicianRaySection() {
         </div>
 
         <div data-ray-buttons className={styles.buttons}>
-          <Link href="/#how-it-works" className={styles.primaryButton}>Book Free Consultation</Link>
+          <Link href="/book-consultation" className={styles.primaryButton}>Book Free Consultation</Link>
           <Link href="/how-it-works" className={styles.secondaryButton}>See How It Works</Link>
         </div>
 
