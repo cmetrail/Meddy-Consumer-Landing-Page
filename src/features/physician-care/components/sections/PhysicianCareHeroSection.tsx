@@ -17,7 +17,7 @@ export default function PhysicianCareHeroSection() {
     <section className="relative flex h-dvh w-full flex-col overflow-hidden bg-[#F0E6D4]">
       {/* Header */}
       <div className="relative z-30">
-        <Header active="pHYSICIAN CARE" />
+        <Header />
       </div>
 
       {/* Doctor image — pinned to the right (desktop) */}

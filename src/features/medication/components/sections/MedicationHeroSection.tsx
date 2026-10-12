@@ -255,7 +255,7 @@ export default function MedicationHeroSection() {
       }
     >
       <div className="relative z-30 shrink-0">
-        <Header variant="dark" active="Medication" />
+        <Header variant="dark" />
       </div>
 
       {/* Screen-reader heading */}

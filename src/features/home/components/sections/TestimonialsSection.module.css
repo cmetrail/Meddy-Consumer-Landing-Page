@@ -6,6 +6,16 @@
   display: none;
 }
 
+/* Blend the moving cards into the section's own background at both edges. */
+.desktopCollage, .mobileCollage {
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desktopCollage, .mobileCollage { mask-image: none; -webkit-mask-image: none; }
+}
+
 @media (max-width: 1023px) {
   .section {
     background: linear-gradient(100deg, #c1bda2 0%, #8e9c7f 31%, #366b4c 69%, #163b32 100%);

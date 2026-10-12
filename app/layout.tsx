@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, DM_Serif_Display, Inter, Playfair_Display } from "next/font/google";
+import { Plus_Jakarta_Sans, DM_Serif_Text, Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import MobileScrollAnimations from "@/components/MobileScrollAnimations";
 import SmoothScrollProvider from "@/providers/SmoothScrollProvider";
@@ -10,10 +10,11 @@ const plusJakarta = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700"],
 });
 
-const dmSerif = DM_Serif_Display({
+const dmSerif = DM_Serif_Text({
   variable: "--font-dm-serif",
   subsets: ["latin"],
   weight: "400",
+  style: ["normal", "italic"],
 });
 
 const inter = Inter({

@@ -6,7 +6,7 @@ export default function FitnessHeroSection() {
   return (
     <section className={styles.hero}>
       <div className={styles.navigation}>
-        <Header variant="dark" active="Fitness" />
+        <Header variant="dark" />
       </div>
       <div className={styles.artwork} aria-hidden="true">
         <Image

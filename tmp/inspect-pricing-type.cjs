@@ -1,0 +1,2 @@
+const {chromium}=require('C:/Users/User/AppData/Local/npm-cache/_npx/420ff84f11983ee5/node_modules/playwright');
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1028,height:1000},reducedMotion:'reduce'});await p.goto('http://localhost:3000',{waitUntil:'networkidle'});console.log(await p.locator('#pricing [data-plan-card]').first().evaluate(el=>[...el.querySelectorAll('p,h3,a,li span')].map(n=>({text:n.textContent,weight:getComputedStyle(n).fontWeight,size:getComputedStyle(n).fontSize}))));await b.close();})()

@@ -434,7 +434,7 @@ flex-grow: 0;
 width: 793px;
 height: 137px;
 
-font-family: 'DM Serif Display';
+font-family: 'DM Serif Text';
 font-style: normal;
 font-weight: 400;
 font-size: 100px;

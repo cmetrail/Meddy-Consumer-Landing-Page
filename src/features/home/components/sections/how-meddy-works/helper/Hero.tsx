@@ -5,16 +5,17 @@ import Image from "next/image";
 import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import styles from "./Hero.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const ICONS = [
-  "/home/scattered-1.png",
-  "/home/scattered-2.png",
-  "/home/scattered-3.png",
-  "/home/scattered-4.png",
-  "/home/scattered-5.png",
-  "/home/watch.png",
+  { src: "/home/scattered-1.png", label: "Nutrition" },
+  { src: "/home/scattered-2.png", label: "Workouts" },
+  { src: "/home/scattered-3.png", label: "Sleep" },
+  { src: "/home/scattered-4.png", label: "Heart health" },
+  { src: "/home/scattered-5.png", label: "Labs" },
+  { src: "/home/watch.png", label: "Wearables" },
 ];
 
 export default function Hero() {
@@ -270,7 +271,7 @@ export default function Hero() {
             className="absolute left-0 right-0 bottom-[8%] max-md:static max-md:mb-16"
           >
             <div
-              className="mx-auto flex items-center py-3.25 bg-white/10 justify-around px-2 sm:px-6 lg:px-10"
+              className={styles.shelf}
               style={{
                 maxWidth: 1018,
                 borderRadius: 16,
@@ -278,13 +279,16 @@ export default function Hero() {
                 border: "1px solid rgba(255,255,255,0.06)",
               }}
             >
-              {ICONS.map((src) => (
+              {ICONS.map(({ src, label }) => (
                 <div
                   key={src}
                   data-hmw-icon
-                  className="relative w-[48px] h-[30px] sm:w-[72px] sm:h-[42px] lg:w-[129px] lg:h-[69px]"
+                  className={styles.item}
                 >
-                  <Image src={src} alt="" fill className="object-contain" />
+                  <div className={styles.image}>
+                    <Image src={src} alt="" fill sizes="(min-width: 1024px) 129px, 72px" className="object-contain" />
+                  </div>
+                  <span className={styles.label}>{label}</span>
                 </div>
               ))}
             </div>

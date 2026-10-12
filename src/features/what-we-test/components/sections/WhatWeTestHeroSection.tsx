@@ -8,7 +8,7 @@ export default function WhatWeTestHeroSection() {
     // lg+: exactly one viewport tall (min 640px); the photo card takes whatever height is left.
     <section className="flex w-full flex-col bg-[#FEF9EF] lg:h-dvh lg:min-h-[640px]">
       <div className="relative z-20 shrink-0">
-        <Header variant="light" active="Labs" />
+        <Header variant="light" />
       </div>
 
       <div className="mx-auto flex w-full max-w-360 flex-col items-center gap-[50px] px-5 pb-[80px] pt-[40px] lg:min-h-0 lg:flex-1 lg:gap-[clamp(16px,3vh,50px)] lg:px-[100px] lg:pb-[clamp(16px,4vh,48px)] lg:pt-[clamp(8px,2vh,24px)]">

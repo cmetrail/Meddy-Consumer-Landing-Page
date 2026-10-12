@@ -52,7 +52,7 @@
 .statement { left: 360px; top: 452px; width: 720px; text-align: center; }
 .eyebrow { color: #17925a; font-size: 20px; line-height: 28px; }
 .statement h2 { margin-top: 15px !important; color: #7b7b7b; font-size: 32px; line-height: 42px; font-weight: 500; }
-.everyday { margin-top: 14px !important; color: #17925a; font-family: "Times New Roman", Times, serif !important; font-size: 33px; line-height: 42px; font-weight: 700; font-style: italic; }
+.everyday { margin-top: 14px !important; color: #17925a; font-family: var(--font-dm-serif), serif !important; font-size: 33px; line-height: 42px; font-weight: 400; font-style: italic; }
 .nutrients { left: 120px; top: 556px; width: 240px; height: 129px; }
 .nutrientsPanel { height: 100%; padding: 11px 10px !important; background: #fff; border: 1px solid #e2e2e2; border-radius: 8px; box-shadow: 2px 3px 5px #00000026; }
 .nutrientsPanel > p { font-size: 11px; line-height: 16px; font-weight: 500; }
@@ -83,7 +83,7 @@
 .connection { left: 120px; top: 975px; width: 410px; padding-left: 15px !important; }
 .connection::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #17925a; clip-path: polygon(0 0, 100% 8%, 100% 92%, 0 100%); }
 .connection p { color: #7b7b7b; font-size: 14px; line-height: 21px; font-weight: 400; }
-.connection em { color: #17925a; font-family: "Times New Roman", Times, serif !important; font-size: 15px; font-weight: 700; }
+.connection em { color: #17925a; font-family: var(--font-dm-serif), serif !important; font-size: 15px; font-weight: 400; }
 .sleepScorePanel { display: none; }
 @media (max-width: 767px) {
   /* Mobile uses its own reference canvas; scale is separate from reveal transforms. */
@@ -116,4 +116,204 @@
   .connection p { font-size: 9.5px; line-height: 15px; }
   .connection em { font-size: 10px; }
   .connectionBreak { display: none; }
+}
+
+/* Keep the original collage anchors; improve only the compact overlays and type. */
+@media (min-width: 768px) {
+  .mealPanel { width: 238px; height: 144px; }
+  .mealHeader { height: 46px; padding: 8px 10px !important; }
+  .mealHeader p { font-size: 12px; line-height: 16px; }
+  .mealHeader span { font-size: 10px; line-height: 14px; }
+  .mealRow { height: 49px; padding: 6px 10px !important; gap: 7px; }
+  .mealDescription p { font-size: 10px; line-height: 16px; font-weight: 500; }
+  .macros { gap: 4px; }
+  .macros span { font-size: 9px; color: #56645c; }
+  .mealCalories p { font-size: 13px; line-height: 16px; }
+  .mealCalories span { font-size: 9px; color: #56645c; }
+  .loadPanel { width: 210px; height: 191px; padding: 9px !important; }
+  .loadHeader { font-size: 10px; height: 18px; color: #4f5a53; }
+  .loadLegend { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; margin-top: 8px !important; }
+  .loadLegend > div { font-size: 9px; height: 22px; padding: 2px 3px !important; gap: 2px; color: #39463e; }
+  .loadLegend b { margin-left: auto !important; color: #28392e; }
+  .calorieHeader p, .calorieStats p { font-size: 11px; }
+  .calorieTotal span { font-size: 11px; }
+  .calorieStats span { font-size: 18px; }
+  .nutrientsPanel > p { font-size: 13px; line-height: 18px; }
+  .nutrientBars { margin-top: 18px !important; }
+  .nutrientBars span { font-size: 10px; line-height: 14px; }
+  .nutrientBars p { font-size: 11px; line-height: 16px; }
+  .a1cPanel { width: 178px; height: 155px; padding: 7px !important; }
+  .a1cPanel > p { font-size: 10px; line-height: 15px; color: #39463e; }
+  .a1cPanel svg { height: 126px; }
+  .sleepPanel { width: 180px; height: 255px; padding: 9px !important; }
+  .sleepPanel > p { font-size: 11px; line-height: 16px; color: #39463e; }
+  .sleepLabel { font-size: 9px; line-height: 13px; color: #56645c; }
+  .sleepPanel > strong { font-size: 18px; line-height: 25px; }
+  .sleepPanel svg { height: 78px; }
+  .sleepRange { flex-direction: column; font-size: 9px; line-height: 12px; color: #56645c; }
+  .sleepLegend > div { height: 20px; font-size: 9px; color: #39463e; }
+  .statement h2 { font-size: 36px; line-height: 44px; color: #7B7B7B; }
+  .everyday { font-size: 36px; line-height: 44px; color: #137a4d; }
+}
+.mealDescription { min-width: 0; }
+.mealShortName { display: none; }
+.meal { left: var(--collage-left, 120px); }
+.calories { left: calc(var(--collage-right, 1320px) - 286px); }
+.sleep { left: calc(var(--collage-right, 1320px) - 278px); }
+.sleepPhoto { right: 0; }
+@media (min-width: 768px) {
+  .nutrients, .connection { left: var(--collage-left, 120px); }
+  .sleepPanel { left: auto; right: 0; }
+}
+.statement h2 { color: #7B7B7B; }
+.connection p { color: #39463e; }
+.eyebrow, .everyday, .connection em { color: #137a4d; }
+@media (max-width: 767px) {
+  .meal { left: var(--collage-left, 17px); }
+  .calories { left: calc(var(--collage-right, 262px) - 286px * .385); }
+  .nutrients { left: calc(var(--collage-right, 264px) - 240px * .49); }
+  .sleep { left: calc(var(--collage-right, 261px) - 278px * .41); }
+  .sleepScorePanel { left: auto; right: 0; }
+  .mealPanel { height: 148px; }
+  .mealHeader { height: 52px; }
+  .mealHeader p { font-size: 22px; line-height: 26px; }
+  .mealHeader span { font-size: 16px; line-height: 20px; }
+  .mealAvatars, .macros, .mealThumbnail { display: none; }
+  .mealRow { height: 48px; gap: 4px; }
+  .mealDescription p { font-size: 18px; line-height: 24px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mealFullName { display: none; }
+  .mealShortName { display: inline; }
+  .mealCalories p { font-size: 22px; line-height: 24px; }
+  .mealCalories span { font-size: 14px; color: #56645c; }
+  .loadPanel { height: 190px; }
+  .loadHeader { font-size: 16px; height: 20px; color: #39463e; }
+  .loadHeader > div > span { display: none; }
+  .loadLegend { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .loadLegend > div { display: none; font-size: 16px; height: 30px; color: #39463e; }
+  .loadLegend > div:nth-child(1), .loadLegend > div:nth-child(4), .loadLegend > div:nth-child(8) { display: flex; }
+  .loadLegend b { margin-left: auto !important; }
+  .calorieHeader p, .calorieStats p { font-size: 18px; line-height: 22px; }
+  .calorieHeader { padding: 14px 12px !important; }
+  .calorieStats > div { padding: 12px 8px !important; }
+  .calorieStats p svg { display: none; }
+  .calorieStats span { font-size: 26px; line-height: 32px; }
+  .calorieTotal span { font-size: 16px; }
+  .nutrientsPanel > p { font-size: 19px; line-height: 24px; }
+  .nutrientBars { margin-top: 14px !important; }
+  .nutrientBars { grid-template-columns: 1.3fr 1fr 1fr; gap: 4px; }
+  .nutrientBars > div span { margin-left: 0 !important; }
+  .nutrientBars span { font-size: 15px; line-height: 20px; }
+  .nutrientBars p { font-size: 16px; line-height: 20px; }
+  .a1cPanel > p { font-size: 12px; line-height: 16px; color: #39463e; }
+  .sleepScorePanel > span { font-size: 18px; line-height: 22px; color: #39463e; }
+  .sleepScorePanel strong { font-size: 28px; line-height: 32px; }
+  .sleepScorePanel > b { font-size: 14px; line-height: 18px; }
+  .sleepScorePanel svg { height: 60px; margin-top: 4px !important; }
+}
+
+/* Sleep illustration: preserve the supplied reference's photo/panel proportions. */
+.sleep { width: 333.6px; height: 295.2px; left: calc(var(--collage-right, 1320px) - 333.6px); }
+.sleepArtwork { position: relative; width: 278px; height: 246px; transform: scale(1.2); transform-origin: top left; }
+@media (max-width: 767px) {
+  .sleep { left: calc(var(--collage-right, 261px) - 333.6px * .41); }
+}
+.sleepPhoto { left: 0; right: auto; width: 194px; height: 220px; }
+.sleepPhoto .photo { object-position: left center; border-radius: 6.5px; }
+/* Compensate for the surrounding collage scale so this panel keeps readable type. */
+.sleepPanel {
+  display: block; left: calc(194px - 36px / var(--sleep-render-scale, 1.2)); right: auto; top: 74px;
+  width: calc(210px / var(--sleep-render-scale, 1.2)); height: auto;
+  padding: calc(10px / var(--sleep-render-scale, 1.2)) !important;
+  border: 1px solid #e2e2e2;
+  border-radius: calc(14px / var(--sleep-render-scale, 1.2)); background: #fff;
+}
+.sleepPanel > p { font-size: calc(12px / var(--sleep-render-scale, 1.2)); line-height: calc(16px / var(--sleep-render-scale, 1.2)); color: #666; font-weight: 500; }
+.sleepLabel { margin-top: calc(10px / var(--sleep-render-scale, 1.2)) !important; font-size: calc(10px / var(--sleep-render-scale, 1.2)); line-height: calc(14px / var(--sleep-render-scale, 1.2)); color: #657067; }
+.sleepPanel > strong { font-size: calc(22px / var(--sleep-render-scale, 1.2)); line-height: calc(26px / var(--sleep-render-scale, 1.2)); color: #111; font-weight: 500; letter-spacing: -.25px; }
+.sleepPanel svg { width: 100%; height: calc(84px / var(--sleep-render-scale, 1.2)); margin-top: calc(8px / var(--sleep-render-scale, 1.2)) !important; }
+.sleepAxis { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); text-align: center; font-size: calc(10px / var(--sleep-render-scale, 1.2)); line-height: calc(16px / var(--sleep-render-scale, 1.2)); color: #333; }
+.sleepRange { display: flex; flex-direction: row; justify-content: space-between; font-size: calc(10px / var(--sleep-render-scale, 1.2)); line-height: calc(14px / var(--sleep-render-scale, 1.2)); color: #333; }
+.sleepLegend { gap: calc(4px / var(--sleep-render-scale, 1.2)); margin-top: calc(10px / var(--sleep-render-scale, 1.2)) !important; }
+.sleepLegend > div { height: calc(22px / var(--sleep-render-scale, 1.2)); padding: calc(4px / var(--sleep-render-scale, 1.2)) calc(6px / var(--sleep-render-scale, 1.2)) !important; gap: calc(6px / var(--sleep-render-scale, 1.2)); border-radius: calc(6px / var(--sleep-render-scale, 1.2)); font-size: calc(10px / var(--sleep-render-scale, 1.2)); line-height: calc(16px / var(--sleep-render-scale, 1.2)); color: #666; background: #f5f5f2; }
+.sleepLegend i { width: calc(8px / var(--sleep-render-scale, 1.2)); height: calc(8px / var(--sleep-render-scale, 1.2)); border-radius: 2px; flex-shrink: 0; }
+.sleepLegend span:nth-child(2) { color: #333; }
+.sleepScorePanel { display: none; }
+.canvas { min-height: calc(664.8px * var(--collage-scale, 1) + 350px); }
+@media (max-width: 767px) {
+  .sleepPanel { top: 74px; }
+  .connection { top: calc(553.408px + 340px / var(--collage-scale, 1)); }
+  .canvas { min-height: calc(553.408px * var(--collage-scale, 1) + 420px); }
+}
+
+/* Keep only a narrow overlap with the photo and align the composition's outer edge. */
+.sleep {
+  --sleep-parent-scale: 1;
+  --sleep-group-scale: var(--collage-scale, 1);
+  width: calc(232.8px + 174px / var(--sleep-group-scale));
+  left: calc(var(--collage-right, 1320px) - (232.8px + 174px / var(--sleep-group-scale)) * var(--sleep-parent-scale));
+}
+.sleepAxis { font-size: calc(9px / var(--sleep-render-scale, 1.2)); }
+.sleepRange { font-size: calc(9px / var(--sleep-render-scale, 1.2)); }
+.sleepLegend > div { height: calc(20px / var(--sleep-render-scale, 1.2)); }
+@media (max-width: 767px) {
+  .sleep { --sleep-parent-scale: .41; --sleep-group-scale: calc(var(--collage-scale, 1) * .41); }
+  .sleep { width: 232.8px; left: calc(var(--collage-right, 261px) - 232.8px * .41); }
+  .sleepPanel { left: calc(194px - 210px / var(--sleep-render-scale, .492)); top: calc(220px + 12px / var(--sleep-render-scale, .492)); }
+  .connection { top: calc(625.24px + 360px / var(--collage-scale, 1)); }
+  .canvas { min-height: calc(625.24px * var(--collage-scale, 1) + 440px); }
+}
+
+/* Compact phone composition from the mobile reference. Charts expand on tap. */
+@media (max-width: 767px) {
+  .canvas { aspect-ratio: 282 / 729; min-height: 0; }
+  .stage { width: 282px; height: 729px; }
+  .meal { left: 17px; top: 158px; }
+  .workout { left: 40px; top: 39px; }
+  .calories { left: 152px; top: 140px; }
+  .statement { left: 17px; top: 296px; width: 247px; }
+  .everyday { font-size: 15px; }
+  .mealPanel { height: 120px; }
+  .mealHeader { height: 40px; }
+  .mealHeader p { font-size: 12px; line-height: 16px; }
+  .mealHeader span { font-size: 9px; line-height: 12px; }
+  .mealAvatars { display: flex; }
+  .mealThumbnail { display: block; }
+  .mealRow { height: 40px; gap: 5px; }
+  .mealDescription p { font-size: 9px; line-height: 13px; }
+  .mealFullName { display: inline; }
+  .mealShortName { display: none; }
+  .macros { display: flex; gap: 4px; }
+  .macros span { font-size: 7px; }
+  .mealCalories p { font-size: 11px; line-height: 14px; }
+  .mealCalories span { font-size: 8px; }
+  .loadPanel { height: 156px; }
+  .loadHeader { font-size: 7px; height: 12px; }
+  .loadHeader > div > span { display: block; }
+  .loadLegend { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
+  .loadLegend > div { display: flex; height: 15px; font-size: 6px; gap: 2px; }
+  .calorieHeader { padding: 20px 19px 12px !important; }
+  .calorieHeader p { font-size: 11px; line-height: 14px; }
+  .calorieStats > div { padding: 18px 14px !important; }
+  .calorieStats p { font-size: 10px; line-height: 13px; }
+  .calorieStats span { font-size: 18px; line-height: 23px; }
+  .calorieTotal span { font-size: 10px; }
+  .a1c { left: 18px; top: 438px; }
+  .a1cPanel { width: 138px; height: 120px; }
+  .a1cPanel svg text { font-size: 8px; }
+  .nutrients { left: 146px; top: 441px; }
+  .nutrientsPanel > p { font-size: 14px; line-height: 18px; }
+  .nutrientBars { margin-top: 16px !important; }
+  .nutrientBars span { font-size: 12px; line-height: 17px; }
+  .nutrientBars p { font-size: 11px; line-height: 16px; }
+  .sleep { left: 147px; top: 521px; width: 278px; height: 308px; scale: .41; }
+  .sleepArtwork { width: 278px; height: 308px; transform: none; }
+  .sleepPhoto { left: 0; right: auto; width: 194px; height: 220px; }
+  .sleepPhoto .photo { object-position: center; }
+  .sleepPanel { display: none; }
+  .sleepScorePanel { display: block; position: absolute; left: 116px; right: auto; top: 156px; width: 170px; height: 152px; padding: 8px !important; border-radius: 7px; background: #fff; text-align: right; box-shadow: 2px 3px 5px #00000018; }
+  .sleepScorePanel > span { display: block; font-size: 15px; line-height: 20px; color: #647268; }
+  .sleepScorePanel > strong { display: block; font-size: 20px; line-height: 24px; color: #111; }
+  .sleepScorePanel > b { font-size: 10px; line-height: 14px; padding: 2px 5px !important; border-radius: 8px; background: #57e6ff; }
+  .sleepScorePanel svg { display: block; width: 100%; height: 70px; margin-top: 4px !important; }
+  .connection { left: 14px; top: 655px; width: 255px; }
 }

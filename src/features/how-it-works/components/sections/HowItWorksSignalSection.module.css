@@ -1,0 +1,44 @@
+.section { position: relative; width: 100%; overflow: hidden; background: #a87b46; --signal-unit: min(calc(100vw / 1920), 1px); }
+.backdrop { position: absolute; left: -141px; right: -141px; top: 50%; transform: translateY(-50%); aspect-ratio: 1672 / 941; min-height: 100%; pointer-events: none; }
+.photo { object-fit: cover; }
+.fade { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 15.937%, #030c16 100%); opacity: .6; pointer-events: none; }
+.content { position: relative; z-index: 1; width: calc(100% - 2 * var(--section-gutter)); margin-inline: auto !important; padding-top: calc(134 * var(--signal-unit)) !important; padding-bottom: calc(118 * var(--signal-unit)) !important; }
+.heading { font-size: calc(56 * var(--signal-unit)); font-weight: 400; line-height: calc(84 * var(--signal-unit)); color: #111110; }
+.heading > span { display: block; }
+.firstLine { height: calc(119 * var(--signal-unit)); white-space: nowrap; line-height: calc(134 * var(--signal-unit)); }
+.heading em { font-family: var(--font-dm-serif), Georgia, serif; font-size: calc(104 * var(--signal-unit)); font-weight: 400; color: white; }
+.heading em { margin-inline: calc(8 * var(--signal-unit)) !important; }
+.bottomRow { display: flex; align-items: flex-end; gap: calc(48 * var(--signal-unit)); margin-top: calc(50 * var(--signal-unit)) !important; }
+.card { display: grid; grid-template-columns: 1fr 1fr; width: calc(482 * var(--signal-unit)); height: calc(288 * var(--signal-unit)); padding: calc(16 * var(--signal-unit)) !important; border: 1px solid #ffffff; border-radius: calc(8 * var(--signal-unit)); background: #ffffff1a; backdrop-filter: blur(25px); color: white; }
+.card { column-gap: calc(32 * var(--signal-unit)); }
+.metric { position: relative; min-width: 0; }
+.metric + .metric::before { content: ""; position: absolute; top: 0; bottom: 0; left: calc(-16 * var(--signal-unit)); width: 1px; background: #ffffff1a; }
+.label { font-size: calc(12 * var(--signal-unit)); line-height: 1.5; white-space: nowrap; }
+.signal { color: #58c5ff; }
+.noise { color: #ffffff80; }
+.value { font-size: calc(32 * var(--signal-unit)); font-weight: 600; line-height: 1.4; }
+.change { display: flex; align-items: center; gap: calc(8 * var(--signal-unit)); margin-top: calc(12 * var(--signal-unit)) !important; font-size: calc(16 * var(--signal-unit)); line-height: 1.5; white-space: nowrap; }
+.result { display: flex; align-items: center; gap: calc(4 * var(--signal-unit)); margin-top: calc(8 * var(--signal-unit)) !important; font-size: calc(12 * var(--signal-unit)); line-height: 1.5; white-space: nowrap; }
+.metric svg:not(.chart) { display: inline-block; vertical-align: middle; width: calc(16 * var(--signal-unit)); height: calc(16 * var(--signal-unit)); color: #70efab; flex-shrink: 0; }
+.metric .label svg { width: calc(12 * var(--signal-unit)); height: calc(12 * var(--signal-unit)); }
+.metric svg.flat { color: #efa61c; }
+.chart { display: block; width: 100%; height: calc(100 * var(--signal-unit)); margin-top: calc(12 * var(--signal-unit)) !important; }
+.description { flex: 1; min-width: 0; padding-bottom: calc(1 * var(--signal-unit)) !important; color: white; font-size: calc(20 * var(--signal-unit)); line-height: 1.5; }
+@media (max-width: 1023px) {
+  .section { --signal-unit: 1px; }
+  .backdrop { left: calc(50% + 35.5px); right: auto; top: 0; transform: translateX(-50%); width: 1605px; height: 903px; }
+  .content { padding-block: 64px !important; }
+  .heading { font-size: clamp(26px, 4.5vw, 44px); line-height: 1.5; }
+  .firstLine { height: auto; white-space: normal; line-height: 1.5; }
+  .heading em { font-size: 1.45em; }
+  .bottomRow { flex-direction: column; align-items: flex-start; gap: 28px; margin-top: 40px !important; }
+  .bottomRow > div { width: 100%; max-width: 482px; }
+  .card { width: 100%; }
+  .description { max-width: 600px; font-size: 17px; }
+}
+@media (max-width: 540px) {
+  .card { --signal-unit: calc((100vw - 2 * var(--section-gutter)) / 482); height: auto; min-height: calc(288 * var(--signal-unit)); }
+  .label, .result { font-size: max(9px, calc(12 * var(--signal-unit))); }
+  .change { font-size: max(11px, calc(16 * var(--signal-unit))); }
+  .result { white-space: normal; min-height: 27px; align-items: flex-start; }
+}

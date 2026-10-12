@@ -130,16 +130,17 @@ export default function Comprehensive() {
           <div className={styles.canvas}>
             <div className={styles.intro}>
               <h2 id="comprehensive-heading" className={styles.heading}>
-                Comprehensive primary care services
-                <br />
-                across <em>New York</em>
+                <span className={styles.headingLead}>Comprehensive primary care services</span>
+                <br className={styles.desktopBreak} />{" "}
+                <span className={styles.headingLocation}>across <em>New York</em></span>
               </h2>
               <p className={styles.description}>
                 Whether you&apos;re in{" "}
                 <strong>
                   Buffalo, Rochester, Syracuse, Albany, New York City
                 </strong>
-                , or elsewhere in New York,
+                , or elsewhere in New
+                <br className={styles.mobileBreak} />{" "}York,
                 <br />
                 your primary care physician is always available.
               </p>
@@ -167,6 +168,9 @@ export default function Comprehensive() {
                 strokeWidth="2.5"
               />
               <circle data-care-dot cx="249" cy="440" r="7" fill="#079D59" />
+            </svg>
+            <svg className={styles.mobileConnection} viewBox="0 0 282 605" fill="none" aria-hidden="true">
+              <path d="M55 316 C50 282 84 274 112 290" stroke="#079D59" strokeWidth=".75" />
             </svg>
             <aside className={styles.card} aria-label="Primary care in Buffalo">
               <p className={styles.city}>Buffalo</p>

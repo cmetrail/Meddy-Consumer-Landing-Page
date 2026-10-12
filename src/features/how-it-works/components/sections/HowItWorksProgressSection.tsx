@@ -130,7 +130,7 @@ export default function HowItWorksProgressSection() {
       {/* same container as the header */}
       <div className="relative z-10 mx-auto flex w-full max-w-360 flex-col gap-12 px-5 py-16 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:py-[120px]">
         <div className="flex w-full flex-col items-start justify-center gap-[240px] lg:w-[617px] lg:shrink-0 lg:gap-12">
-          <motion.p
+          <motion.h2
             className="w-full max-w-[575px] text-[0px] font-normal leading-[0] text-[#111110]"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -140,7 +140,7 @@ export default function HowItWorksProgressSection() {
             <span className="comprehensive-serif text-[32px] italic leading-[1.5] text-white lg:text-[64px]">Progress</span>
             <span className="text-[32px] leading-[1.5] lg:text-[96px]"> </span>
             <span className="text-[32px] font-medium leading-[1.5] lg:text-[56px]">is built over time.</span>
-          </motion.p>
+          </motion.h2>
 
           {/* Mobile weight card (Figma 12765:15309) */}
           <motion.div

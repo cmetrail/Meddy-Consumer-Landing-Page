@@ -33,7 +33,7 @@ export default function HowMeddyWorksSection() {
           <FitnessTrend />
           <SleepSection />
           <SleepTrend />
-          <InsightsSection />
+          {/* <InsightsSection /> */}
           <div data-care-journey>
             <MedicationStorySection penDestinationRef={carePenDestinationRef} />
             <A1cTrend sharedPen penDestinationRef={carePenDestinationRef} />

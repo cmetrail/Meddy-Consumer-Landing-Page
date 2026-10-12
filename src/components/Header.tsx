@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { X } from "lucide-react";
+import { usePathname } from "next/navigation";
+import FullScreenMenu from "./FullScreenMenu";
 
 const NAV_ITEMS = [
   { label: "How it works", href: "/how-it-works" },
@@ -57,29 +59,24 @@ const VARIANTS = {
 } as const;
 
 export default function Header({
-  active = "How it works",
   variant = "light",
 }: {
-  active?: string;
   variant?: HeaderVariant;
 }) {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuId = useId();
+  const logoRef = useRef<HTMLAnchorElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const v = VARIANTS[variant];
-
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = "";
-      };
-    }
-  }, [menuOpen]);
 
   return (
     <header className="relative mx-auto grid max-w-360 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 px-5 py-5 lg:px-10">
       {/* Logo */}
       <Link
+        ref={logoRef}
         href="/"
+        aria-current={pathname === "/" ? "page" : undefined}
         className="anim-fade-down focus:outline-none"
         style={{ animationDelay: "0.05s" }}
       >
@@ -95,15 +92,21 @@ export default function Header({
 
       {/* Desktop nav */}
       <nav
-        className="anim-fade-down col-start-2 hidden min-w-0 items-center justify-center gap-4 xl:flex 2xl:gap-12.5"
-        style={{ animationDelay: "0.15s" }}
+        aria-label="Main navigation"
+        className="anim-fade-down col-start-2 hidden min-w-0 items-center justify-center xl:flex"
+        style={{
+          animationDelay: "0.15s",
+          // Keep generous spacing even at the smallest desktop width.
+          columnGap: "clamp(40px, calc(6.25vw - 40px), 50px)",
+        }}
       >
         {NAV_ITEMS.map(({ label, href }) => {
-          const isActive = label === active;
+          const isActive = pathname === href || pathname?.startsWith(`${href}/`);
           return (
             <Link
               key={label}
               href={href}
+              aria-current={isActive ? "page" : undefined}
               className={`group relative whitespace-nowrap text-base leading-tight tracking-[0.01em] uppercase transition-colors
                 ${isActive ? v.linkActive : v.linkInactive}`}
             >
@@ -126,6 +129,7 @@ export default function Header({
           Book Free consultation
         </Link>
         <button
+          ref={menuButtonRef}
           className={`flex h-[41px] w-[53px] flex-col items-center justify-center rounded-[26px] ${v.hamburgerPill}`}
           style={{
             backdropFilter: v.hamburgerBlur,
@@ -133,11 +137,11 @@ export default function Header({
             backgroundColor: "rgba(255,255,255,0.02)",
             border: "1px solid #FFFFFF",
           }}
-          onClick={() => {
-            if (window.matchMedia("(min-width: 1280px)").matches) return;
-            setMenuOpen((v) => !v);
-          }}
-          aria-label="Toggle menu"
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="Open menu"
+          aria-expanded={menuOpen}
+          aria-controls={menuId}
+          aria-haspopup="dialog"
         >
           <span
             className={`block h-0.75 w-[31px] rounded-[2px] ${v.hamburger} origin-center transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[6px]" : ""}`}
@@ -151,48 +155,13 @@ export default function Header({
         </button>
       </div>
 
-      {/* Mobile full-screen menu */}
-      {menuOpen &&
-        typeof document !== "undefined" &&
+      {typeof document !== "undefined" &&
         createPortal(
-          <div className="fixed inset-0 z-[999999] flex flex-col bg-[#17925A]">
-            <div className="mx-auto flex w-full max-w-360 items-center justify-between px-5 py-5 lg:px-10">
-              <Link
-                href="/"
-                onClick={() => setMenuOpen(false)}
-                className="focus:outline-none"
-              >
-                <Image
-                  src="/meddy-logo-white.svg"
-                  alt="Meddy Health"
-                  width={44}
-                  height={28}
-                  unoptimized
-                  className="h-[28px] w-auto"
-                />
-              </Link>
-              <button
-                onClick={() => setMenuOpen(false)}
-                aria-label="Close menu"
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
-              >
-                <X size={26} className="text-white" />
-              </button>
-            </div>
-
-            <nav className="flex flex-1 flex-col items-stretch justify-center gap-8 px-6">
-              {NAV_ITEMS.map(({ label, href }) => (
-                <Link
-                  key={label}
-                  href={href}
-                  onClick={() => setMenuOpen(false)}
-                  className="w-full text-center text-2xl font-semibold uppercase tracking-[0.02em] text-white transition-opacity hover:opacity-80"
-                >
-                  {label}
-                </Link>
-              ))}
-            </nav>
-          </div>,
+          <AnimatePresence>
+            {menuOpen && (
+              <FullScreenMenu key="navigation" id={menuId} logoAnchor={logoRef} buttonAnchor={menuButtonRef} onClose={() => setMenuOpen(false)} />
+            )}
+          </AnimatePresence>,
           document.body,
         )}
     </header>

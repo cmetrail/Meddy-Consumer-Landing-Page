@@ -23,7 +23,6 @@ const FOOTER_COLUMNS: FooterLink[][] = [
     { label: "Fitness", href: "/fitness" },
     { label: "Medication\nmanagement", href: "/medication" },
     { label: "What we test", href: "/what-we-test" },
-    { label: "SEO", href: "/#how-it-works" },
   ],
   [
     { label: "Labs and\nBiomarkers Tracking", href: "/biomarkers" },
@@ -74,16 +73,32 @@ const MOBILE_LINKS: FooterLink[] = [
   { label: "24/7 Primary care", href: "/247-care" },
 ];
 
-export function FooterItems({ noTopMargin, mobileReference = false }: { noTopMargin?: boolean; mobileReference?: boolean }) {
+export function FooterItems({
+  noTopMargin,
+  mobileReference = false,
+}: {
+  noTopMargin?: boolean;
+  mobileReference?: boolean;
+}) {
   return (
     <div
       className={`${mobileReference ? styles.reference : ""} ${noTopMargin ? "" : "mt-10"} w-full rounded-t-[22px] bg-white/10 backdrop-blur-xl`}
     >
-      <div className={`${styles.inner} mx-auto w-full max-w-360 px-5 lg:px-10 py-16 pb-4`}>
-        {mobileReference && <nav className={styles.mobileNav} aria-label="Footer navigation">
-          {MOBILE_LINKS.map(link => <Link key={link.label} href={link.href}>{link.label}</Link>)}
-        </nav>}
-        <div className={`${styles.layout} grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto] lg:gap-x-16 lg:gap-y-0`}>
+      <div
+        className={`${styles.inner} mx-auto w-full max-w-360 px-5 lg:px-10 py-16 pb-4`}
+      >
+        {mobileReference && (
+          <nav className={styles.mobileNav} aria-label="Footer navigation">
+            {MOBILE_LINKS.map((link) => (
+              <Link key={link.label} href={link.href}>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        )}
+        <div
+          className={`${styles.layout} grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto] lg:gap-x-16 lg:gap-y-0`}
+        >
           <div data-reveal className={styles.brand}>
             <Image
               src="/app-logo.png"
@@ -93,9 +108,12 @@ export function FooterItems({ noTopMargin, mobileReference = false }: { noTopMar
               className={`${styles.logo} h-auto w-50 lg:w-89.5`}
             />
 
-            <p className={`${styles.description} max-w-174.75 text-[#F4F4F5] text-[16px] sm:text-[18px] lg:text-[20px] leading-[150%] mt-8`}>
-              Calories, workouts, sleep, labs. Most people manage them separately. Meddy connects
-              them and puts a physician in charge of what they mean.
+            <p
+              className={`${styles.description} max-w-174.75 text-[#F4F4F5] text-[16px] sm:text-[18px] lg:text-[20px] leading-[150%] mt-8`}
+            >
+              Calories, workouts, sleep, labs. Most people manage them
+              separately. Meddy connects them and puts a physician in charge of
+              what they mean.
             </p>
 
             <div className={`${styles.socials} mt-6 flex items-center gap-3.5`}>
@@ -106,14 +124,21 @@ export function FooterItems({ noTopMargin, mobileReference = false }: { noTopMar
                   aria-label={s.label}
                   className="text-[#F4F4F5] transition-opacity hover:opacity-70"
                 >
-                  <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-6 w-6"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
                     <path d={s.path} />
                   </svg>
                 </a>
               ))}
             </div>
 
-            <div className={`${styles.stores} mt-6 flex flex-col gap-4.75 md:flex-row md:flex-wrap lg:mt-6.5`}>
+            <div
+              className={`${styles.stores} mt-6 flex flex-col gap-4.75 md:flex-row md:flex-wrap lg:mt-6.5`}
+            >
               <button
                 className="flex h-15 w-full items-center justify-center gap-2.5 rounded-[9px] bg-black/20 px-4 text-center transition-opacity hover:opacity-80 md:w-auto md:justify-start md:text-left"
                 style={{
@@ -121,7 +146,13 @@ export function FooterItems({ noTopMargin, mobileReference = false }: { noTopMar
                   border: "0.75px solid #FFFFFF1A",
                 }}
               >
-                <Image src="/Apple.svg" alt="Apple" width={30} height={36} className="shrink-0" />
+                <Image
+                  src="/Apple.svg"
+                  alt="Apple"
+                  width={30}
+                  height={36}
+                  className="shrink-0"
+                />
                 <span className="flex flex-col">
                   <span className="block text-white text-[13.5px] leading-[13.5px] font-medium">
                     Download on the
@@ -138,7 +169,13 @@ export function FooterItems({ noTopMargin, mobileReference = false }: { noTopMar
                   border: "0.75px solid #FFFFFF1A",
                 }}
               >
-                <Image src="/Playstore.svg" alt="Google Play" width={32} height={36} className="shrink-0" />
+                <Image
+                  src="/Playstore.svg"
+                  alt="Google Play"
+                  width={32}
+                  height={36}
+                  className="shrink-0"
+                />
                 <span className="flex flex-col gap-1">
                   <span className="block uppercase text-white text-[15px] leading-[15px] font-normal">
                     Get it on
@@ -155,9 +192,16 @@ export function FooterItems({ noTopMargin, mobileReference = false }: { noTopMar
             </div>
           </div>
 
-          <nav data-footer-nav className={`${styles.desktopNav} grid grid-cols-1 items-start gap-8 md:grid-cols-2 lg:flex lg:flex-row lg:items-start lg:gap-16`}>
+          <nav
+            data-footer-nav
+            className={`${styles.desktopNav} grid grid-cols-1 items-start gap-8 md:grid-cols-2 lg:flex lg:flex-row lg:items-start lg:gap-16`}
+          >
             {FOOTER_COLUMNS.map((column) => (
-              <div key={column[0].label} data-footer-col className="flex flex-col items-start gap-5 lg:items-end lg:gap-[35px]">
+              <div
+                key={column[0].label}
+                data-footer-col
+                className="flex flex-col items-start gap-5 lg:items-end lg:gap-[35px]"
+              >
                 {column.map((link) => (
                   <Link
                     key={link.label}
@@ -172,11 +216,19 @@ export function FooterItems({ noTopMargin, mobileReference = false }: { noTopMar
           </nav>
         </div>
 
-        <div className={`${styles.divider} mt-6 border-t border-[#E0E0E0] lg:mt-8`} />
-        {mobileReference && <div className={styles.mobileLegal}>
-          <p>Meddy is a service of Meddy Health LLC.</p>
-          <p>© 2026 Meddy Health LLC. All rights reserved. Privacy Policy · Terms of Use · Notice of Privacy Practices · Accessibility · Contact Us</p>
-        </div>}
+        <div
+          className={`${styles.divider} mt-6 border-t border-[#E0E0E0] lg:mt-8`}
+        />
+        {mobileReference && (
+          <div className={styles.mobileLegal}>
+            <p>Meddy is a service of Meddy Health LLC.</p>
+            <p>
+              © 2026 Meddy Health LLC. All rights reserved. Privacy Policy ·
+              Terms of Use · Notice of Privacy Practices · Accessibility ·
+              Contact Us
+            </p>
+          </div>
+        )}
         <motion.div
           className={`${styles.desktopLegal} mt-8 flex flex-col items-center gap-2 text-center text-[#F4F4F5] text-[14px] leading-[150%] lg:mt-5`}
           initial={{ opacity: 0, y: 20 }}
@@ -186,8 +238,8 @@ export function FooterItems({ noTopMargin, mobileReference = false }: { noTopMar
         >
           <p>Meddy is operated by Meddy Health LLC.</p>
           <p>
-            Medical services are provided by Sameer Aggarwal Medical PLLC. Meddy is not for
-            emergencies. If you have a medical emergency, call 911.
+            Medical services are provided by Sameer Aggarwal Medical PLLC. Meddy
+            is not for emergencies. If you have a medical emergency, call 911.
             <br />
             © 2026 Meddy Health LLC. All rights reserved.
             <br />

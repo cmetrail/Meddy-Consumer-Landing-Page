@@ -156,7 +156,7 @@ export default function WearablesHeroSection() {
 
       {/* Header */}
       <div className="relative z-30">
-        <Header variant="dark" active="Wearables" />
+        <Header variant="dark" />
       </div>
 
       {/* Stage: stacked copy on mobile, scaled 1440 design from md up */}
