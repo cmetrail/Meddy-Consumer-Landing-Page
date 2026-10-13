@@ -1,30 +1,44 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Info } from "lucide-react";
 import type { BookConsultationForm } from "../../types";
 import Calendar from "../Calendar";
 import TimeSlots from "../TimeSlots";
 import CheckboxField from "../form/CheckboxField";
+import { useDaySlots, useMonthAvailability } from "../../hooks";
+import { formatLongDate } from "../../datetime";
 
-function formatDate(iso?: string) {
-  if (!iso) return "Tuesday, October 14";
-  return new Date(`${iso}T00:00:00`).toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  });
-}
-
-export default function ChooseTimeStep() {
+export default function ChooseTimeStep({ duration }: { duration: number }) {
   const {
     register,
     control,
     watch,
+    setValue,
     formState: { errors },
   } = useFormContext<BookConsultationForm>();
 
   const date = watch("date");
+
+  const [view, setView] = useState(() => {
+    const base = date ? new Date(`${date}T00:00:00`) : new Date();
+    return { year: base.getFullYear(), month: base.getMonth() };
+  });
+
+  const availability = useMonthAvailability(view.year, view.month, duration);
+  const { slots, loading, error } = useDaySlots(date, duration);
+
+  const handleViewChange = useCallback((year: number, month: number) => {
+    setView((prev) =>
+      prev.year === year && prev.month === month ? prev : { year, month },
+    );
+  }, []);
+
+  useEffect(() => {
+    setValue("time", "");
+    setValue("endTime", "");
+  }, [date, setValue]);
 
   return (
     <div className="flex w-full flex-col items-start gap-6 sm:gap-11 lg:gap-6">
@@ -36,10 +50,10 @@ export default function ChooseTimeStep() {
           <span className="mx-auto hidden max-w-[433px] lg:block lg:text-center">
             Video visit on Google Meet
             <br />
-            30 minutes · Availability shown in EST
+            {duration} minutes · Availability shown in EST
           </span>
           <span className="lg:hidden">
-            Video visit on Google Meet · 30 minutes
+            Video visit on Google Meet · {duration} minutes
             <br />
             Availability shown in EST
           </span>
@@ -48,14 +62,26 @@ export default function ChooseTimeStep() {
 
       <div className="flex w-full flex-col gap-[24px] lg:flex-row lg:items-center lg:justify-start lg:gap-[40px]">
         <div className="w-full lg:w-[416px] lg:shrink-0">
-          <Calendar control={control} error={errors.date} />
+          <Calendar
+            control={control}
+            error={errors.date}
+            availability={availability}
+            onViewChange={handleViewChange}
+          />
         </div>
         <div className="hidden lg:block lg:h-[299px] lg:w-[1px] lg:shrink-0 lg:bg-[#d9d9d9]" />
         <div className="flex w-full flex-col items-center gap-[24px] lg:w-[200px] lg:shrink-0 lg:gap-[56px]">
           <p className="w-full text-left text-[16px] font-normal leading-[1.5] text-[#7b7b7b] lg:text-center lg:text-[20px] lg:font-bold">
-            {formatDate(date)}
+            {formatLongDate(date)}
           </p>
-          <TimeSlots control={control} error={errors.time} />
+          <TimeSlots
+            control={control}
+            error={errors.time}
+            slots={slots}
+            duration={duration}
+            loading={loading}
+            loadError={error}
+          />
         </div>
       </div>
 

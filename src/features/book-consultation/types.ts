@@ -10,6 +10,7 @@ export type BookConsultationForm = {
   additionalNotes: string;
   date: string;
   time: string;
+  endTime: string;
   agreeTerms: boolean;
   telehealthConsent: boolean;
   privacyPractices: boolean;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { Control, FieldError } from "react-hook-form";
 import { Controller } from "react-hook-form";
@@ -36,12 +36,20 @@ function startOfDay(d: Date) {
 type CalendarProps = {
   control: Control<BookConsultationForm>;
   error?: FieldError;
+  availability?: Record<string, boolean>;
+  onViewChange?: (year: number, month: number) => void;
 };
 
-export default function Calendar({ control, error }: CalendarProps) {
+export default function Calendar({ control, error, availability, onViewChange }: CalendarProps) {
   const today = startOfDay(new Date());
   const [viewYear, setViewYear] = useState(today.getFullYear());
   const [viewMonth, setViewMonth] = useState(today.getMonth());
+
+  useEffect(() => {
+    onViewChange?.(viewYear, viewMonth);
+  }, [viewYear, viewMonth, onViewChange]);
+
+  const hasAvailability = Boolean(availability && Object.keys(availability).length > 0);
 
   const canGoPrev =
     viewYear > today.getFullYear() ||
@@ -127,18 +135,22 @@ export default function Calendar({ control, error }: CalendarProps) {
                 if (d === null) return <span key={`empty-${i}`} />;
                 const date = new Date(viewYear, viewMonth, d);
                 const iso = toISODate(date);
-                const isPast = date < today || date.getDay() === 0 || date.getDay() === 6; // past days and weekends are not bookable
+                const isPast = date < today;
+                const isBookable = hasAvailability
+                  ? availability?.[iso] === true
+                  : date.getDay() !== 0 && date.getDay() !== 6; // fallback before availability loads
+                const disabled = isPast || !isBookable;
                 const selected = field.value === iso;
                 return (
                   <button
                     key={iso}
                     type="button"
-                    disabled={isPast && !selected}
+                    disabled={disabled && !selected}
                     onClick={() => field.onChange(iso)}
                     className={`mx-auto flex h-[40px] w-[40px] items-center justify-center rounded-full text-[14px] leading-[1.5] transition-colors lg:h-[56px] lg:w-[56px] lg:text-[18px] ${
                       selected
                         ? "bg-[#17925a] font-bold text-white"
-                        : isPast
+                        : disabled
                           ? "cursor-not-allowed font-bold text-[#212121] opacity-40"
                           : "font-bold text-[#3f6262] hover:bg-[rgba(23,146,90,0.10)]"
                     }`}

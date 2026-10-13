@@ -4,17 +4,14 @@ import { Check } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import type { BookConsultationForm } from "../../types";
 import CheckboxField from "../form/CheckboxField";
+import { formatLongDate, formatSlotTime } from "../../datetime";
 
-function formatDate(iso?: string) {
-  if (!iso) return "Tuesday, October 14";
-  return new Date(`${iso}T00:00:00`).toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  });
-}
+type BeforeYouVisitStepProps = {
+  submitting?: boolean;
+  error?: string | null;
+};
 
-export default function BeforeYouVisitStep() {
+export default function BeforeYouVisitStep({ submitting, error }: BeforeYouVisitStepProps) {
   const {
     register,
     watch,
@@ -24,7 +21,7 @@ export default function BeforeYouVisitStep() {
   const time = watch("time");
   const consent = watch("telehealthConsent");
   const privacy = watch("privacyPractices");
-  const canSubmit = consent && privacy;
+  const canSubmit = consent && privacy && !submitting;
 
   return (
     <div className="flex w-full flex-col items-center gap-6 sm:gap-11">
@@ -37,8 +34,8 @@ export default function BeforeYouVisitStep() {
           <div className="flex flex-col items-center">
             <h1 className="text-center text-[24px] font-medium leading-[1.5] text-[#7b7b7b] lg:text-[40px]">You&apos;re booked for</h1>
             <p className="text-center text-[24px] font-medium leading-[1.5] text-[#111110] lg:text-[40px] lg:text-[#46524b]">
-              {formatDate(date)}
-              <span className="lg:hidden">{time ? ` at ${time}` : ""}</span>
+              {formatLongDate(date)}
+              <span className="lg:hidden">{time ? ` at ${formatSlotTime(time)}` : ""}</span>
             </p>
           </div>
           <p className="text-center text-[14px] font-normal leading-normal text-[#7b7b7b] lg:text-[20px] lg:font-medium">
@@ -72,8 +69,12 @@ export default function BeforeYouVisitStep() {
             canSubmit ? "cursor-pointer bg-[#17925a] text-white hover:opacity-90" : "cursor-not-allowed bg-[#8a8a82] text-white"
           }`}
         >
-          Get my visit link
+          {submitting ? "Booking…" : "Get my visit link"}
         </button>
+
+        {error ? (
+          <p className="text-center text-[12px] leading-[1.5] text-[#d92d20] lg:text-[14px]">{error}</p>
+        ) : null}
       </div>
     </div>
   );

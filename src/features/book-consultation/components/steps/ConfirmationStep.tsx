@@ -1,62 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useFormContext } from "react-hook-form";
 import type { BookConsultationForm } from "../../types";
-
-function parseTime(t: string) {
-  const [hm, ap] = t.split(" ");
-  const [hRaw, m] = hm.split(":").map(Number);
-  let h = hRaw;
-  if (ap === "PM" && h !== 12) h += 12;
-  if (ap === "AM" && h === 12) h = 0;
-  return { h, m };
-}
-
-const pad = (n: number) => String(n).padStart(2, "0");
-
-function buildCalendarUrl(date: string, time: string) {
-  const dateStr = date.replace(/-/g, "");
-  const { h, m } = parseTime(time || "10:00 AM");
-  const start = `${dateStr}T${pad(h)}${pad(m)}00`;
-  const endH = m + 30 >= 60 ? h + 1 : h;
-  const endM = (m + 30) % 60;
-  const end = `${dateStr}T${pad(endH)}${pad(endM)}00`;
-  const params = new URLSearchParams({
-    action: "TEMPLATE",
-    text: "Meddy Free Consultation",
-    dates: `${start}/${end}`,
-    details: "30 minute video visit on Google Meet with a licensed board certified physician.",
-  });
-  return `https://calendar.google.com/calendar/render?${params.toString()}`;
-}
-
-/** the green "You're all set." panel (Figma 13281:18262), shown under the checkbox card once the visit link is requested */
-export function AllSetPanel() {
-  const { getValues } = useFormContext<BookConsultationForm>();
-  const email = getValues("email");
-  const date = getValues("date");
-  const time = getValues("time");
-
-  return (
-      <div className="flex w-full flex-col items-start gap-[28px] rounded-[10px] bg-[rgba(23,146,90,0.1)] px-5 py-[26px] lg:px-[30px] lg:py-[33px]">
-        <div className="flex w-full flex-col items-start gap-6 text-[#46524b]">
-          <p className="w-full text-[20px] font-bold leading-[1.5]">You&rsquo;re all set.</p>
-          <p className="w-full text-[14px] font-normal leading-[1.5] lg:text-[16px]">
-            We&apos;ve emailed your Google Meet link to <b className="font-bold">{email || "your email"}</b>. Join from a private, quiet place with a camera, microphone and a steady internet connection.
-          </p>
-        </div>
-        <a
-          href={buildCalendarUrl(date, time)}
-          target="_blank"
-          rel="noreferrer"
-          className="flex w-[180px] items-center justify-center rounded-[10px] border border-solid border-[#17925a] p-[10px] text-[16px] font-bold leading-[1.5] text-[#17925a] shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90"
-        >
-          Add to Calendar
-        </a>
-      </div>
-  );
-}
+import type { LeadBookingResult } from "../../api";
 
 const A = "/book-consultation";
 
@@ -82,12 +30,28 @@ function Tick({ k }: { k: number }) {
   );
 }
 
-/** final card (Figma 13624:4916 desktop, 13683:5452 mobile): sparkle tick, "You're all set!", email, Add to Calendar */
-export default function ConfirmationStep() {
+type ConfirmationStepProps = {
+  booking?: LeadBookingResult | null;
+};
+
+/**
+ * Final card (Figma 13624:4916 desktop, 13683:5452 mobile).
+ *
+ * The appointment — including the Google Calendar event and Meet link — is
+ * created server-side by the booking API, so instead of asking the visitor to
+ * add it to their own calendar we surface the generated Meet link directly.
+ */
+export default function ConfirmationStep({ booking }: ConfirmationStepProps) {
   const { getValues } = useFormContext<BookConsultationForm>();
   const email = getValues("email");
-  const date = getValues("date");
-  const time = getValues("time");
+  const meetUrl = booking?.meetUrl ?? null;
+
+  const ctaBase =
+    "flex w-full items-center justify-center rounded-[10px] px-12 py-3 text-[14px] font-bold uppercase leading-[1.5] lg:h-[65px] lg:py-[9px] lg:text-[20px] lg:font-medium";
+  const ctaPrimary =
+    "bg-[#17925a] text-white shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90";
+  const ctaSecondary =
+    "border border-solid border-[#17925a] bg-transparent text-[#17925a] transition-colors hover:bg-[rgba(23,146,90,0.06)]";
 
   return (
     <div className="mx-auto flex w-full max-w-[729px] flex-col items-center gap-4 overflow-clip rounded-[10px] border border-solid border-[#979797] bg-white px-5 py-6 lg:gap-6 lg:px-6 lg:pb-6 lg:pt-[18px]">
@@ -108,14 +72,24 @@ export default function ConfirmationStep() {
         <p className="w-full max-w-[453px] text-left text-[12px] font-normal leading-[1.5] text-[#46524b] lg:text-center lg:text-[16px] lg:text-[#7b7b7b]">
           Join from a private, quiet place with a camera, microphone and a steady internet connection
         </p>
-        <a
-          href={buildCalendarUrl(date, time)}
-          target="_blank"
-          rel="noreferrer"
-          className="flex w-full items-center justify-center rounded-[10px] bg-[#17925a] px-12 py-3 text-[14px] font-bold uppercase leading-[1.5] text-white shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90 lg:h-[65px] lg:py-[9px] lg:text-[20px] lg:font-medium"
-        >
-          Add to calendar
-        </a>
+        <div className="flex w-full flex-col items-center gap-3 lg:gap-4">
+          {meetUrl ? (
+            <a
+              href={meetUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={`${ctaBase} ${ctaPrimary}`}
+            >
+              Join Google Meet
+            </a>
+          ) : null}
+          <Link
+            href="/"
+            className={`${ctaBase} ${meetUrl ? ctaSecondary : ctaPrimary}`}
+          >
+            Done
+          </Link>
+        </div>
       </div>
     </div>
   );

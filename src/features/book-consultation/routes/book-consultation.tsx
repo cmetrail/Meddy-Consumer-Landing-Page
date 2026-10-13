@@ -7,6 +7,8 @@ import type { BookConsultationForm } from "../types";
 import { STEPS } from "../constants";
 import Stepper, { MobileStepper } from "../components/Stepper";
 import { toISODate } from "../components/Calendar";
+import { useBookingContext } from "../hooks";
+import { bookConsultation, type LeadBookingResult } from "../api";
 import AboutYouStep from "../components/steps/AboutYouStep";
 import YourGoalsStep from "../components/steps/YourGoalsStep";
 import ChooseTimeStep from "../components/steps/ChooseTimeStep";
@@ -31,7 +33,8 @@ const DEFAULT_VALUES: BookConsultationForm = {
   goals: [],
   additionalNotes: "",
   date: toISODate(new Date()),
-  time: "10:00 AM",
+  time: "",
+  endTime: "",
   agreeTerms: false,
   telehealthConsent: false,
   privacyPractices: false,
@@ -40,39 +43,79 @@ const DEFAULT_VALUES: BookConsultationForm = {
 export const BookConsultationPage = () => {
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [booking, setBooking] = useState<LeadBookingResult | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { context } = useBookingContext();
+  const allowedDurations = context?.allowedDurations ?? [];
+  // The public consultation is a 30-minute visit; fall back to the provider's
+  // default duration only when 30 minutes isn't offered.
+  const duration = allowedDurations.includes(30) ? 30 : (context?.defaultDuration ?? 30);
   const methods = useForm<BookConsultationForm>({
     defaultValues: DEFAULT_VALUES,
     mode: "onTouched",
     reValidateMode: "onChange",
   });
 
-  const { trigger } = methods;
+  const { trigger, getValues } = methods;
+
+  const submitBooking = async () => {
+    const values = getValues();
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const result = await bookConsultation({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        phone: values.mobileNumber,
+        state: values.stateOfResidence,
+        goals: values.goals,
+        notes: values.additionalNotes,
+        textReminders: values.textReminders,
+        startTime: values.time,
+        endTime: values.endTime,
+      });
+      setBooking(result);
+      setSubmitted(true);
+      scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "We couldn't confirm your booking. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const next = async () => {
     const valid = await trigger(STEP_FIELDS[step]);
     if (!valid) return;
     if (step === STEPS.length - 1) {
-      setSubmitted(true);
+      await submitBooking();
     } else {
       setStep((s) => s + 1);
       scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
-  const back = () => setStep((s) => Math.max(0, s - 1));
+  const back = () => {
+    setSubmitError(null);
+    setStep((s) => Math.max(0, s - 1));
+  };
 
   const renderStep = () => {
-    if (submitted) return <ConfirmationStep />;
+    if (submitted) return <ConfirmationStep booking={booking} />;
     switch (step) {
       case 0:
         return <AboutYouStep />;
       case 1:
         return <YourGoalsStep />;
       case 2:
-        return <ChooseTimeStep />;
+        return <ChooseTimeStep duration={duration} />;
       default:
-        return <BeforeYouVisitStep />;
+        return <BeforeYouVisitStep submitting={submitting} error={submitError} />;
     }
   };
 
