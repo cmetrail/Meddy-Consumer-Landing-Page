@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
@@ -11,7 +11,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 // Figma: desktop node 12613:14372 (1440 x ~1091) + chart cards 12613:14938. Blue gradient section with a portrait
 // pinned to the right; the left column holds the heading and a 609.5px chart card (rail of three bars beside it).
 // On desktop the cards cross-fade while the section is pinned (rail bar follows); below that they stack, scaled to fit.
-// Chart bodies are the Figma layers at fixed px: card 1 plain, card 2 is the mirrored (flipX) layout from the design.
+// Chart bodies use fixed geometry and scale together with their value labels and notes.
 const A = "/longevity/changes";
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
 const BLUE = "#148bd5";
@@ -135,7 +135,7 @@ function Card1({ glass }: { glass?: boolean }) {
             </div>
             <div className={`${COL} relative items-start`} style={{ color: axL }}>
               <Labels vals={["180", "150", "140", "120", "100", "80"]} color={axL} className={dim} />
-              <p className={`absolute left-[0.13px] top-[0.21px] ${dim}`}>(LDL)</p>
+              <p className={`absolute left-[0.13px] top-[0.21px] ${dim}`}>{glass ? "X" : "(LDL)"}</p>
             </div>
           </div>
         </div>
@@ -151,7 +151,7 @@ function Card1({ glass }: { glass?: boolean }) {
             <div data-wipe="1" className="absolute left-[31.77px] top-[105.18px] flex h-[147.066px] w-[378.167px] items-center justify-center">
               <div className="flex-none -scale-y-100 rotate-180">
                 <div className="relative h-[147.066px] w-[378.167px]">
-                  <div className="absolute" style={{ inset: "-1.37% -0.53% 0 -0.53%" }}>
+                  <div className="absolute" style={{ inset: "-1.37% -0.53% 0 -0.53%", filter: glass ? "brightness(0) invert(1)" : undefined }}>
                     <Svg src="c1-area2.svg" />
                   </div>
                 </div>
@@ -169,7 +169,7 @@ function Card1({ glass }: { glass?: boolean }) {
           <div className="flex h-full shrink-0 items-center gap-[9.102px] pb-[39.44px]">
             <div className={`${COL} relative items-end text-right`} style={{ color: axR }}>
               <Labels vals={["35", "30", "25", "20", "15", "10"]} color={axR} className={dim} />
-              <p className={`absolute left-[21px] top-[0.21px] -translate-x-full ${dim}`}>(Fiber)</p>
+              <p className={`absolute left-[21px] top-[0.21px] -translate-x-full ${dim}`}>{glass ? "Y" : "(Fiber)"}</p>
             </div>
             <div className="flex h-[44px] w-[23px] shrink-0 items-center justify-center">
               <p className={`${TXT} rotate-90`} style={{ color: axR }}>g/day</p>
@@ -199,157 +199,87 @@ function Legend({ items }: { items: { dot: string; label: string; upper?: boolea
   );
 }
 
-const FLIP = "flex-none -scale-y-100 rotate-180";
+/** Shared geometry keeps both descending series aligned with their own axes. */
+function TrackingCard({ kind }: { kind: 2 | 3 }) {
+  const id = useId().replace(/:/g, "");
+  const pressure = kind === 2;
+  const leftColor = pressure ? BLUE : GREEN;
+  const rightColor = pressure ? GREEN : BLUE;
+  const leftValues = pressure ? [220, 200, 180, 160, 140, 120] : [9, 8, 7, 6, 5, 4];
+  const rightValues = pressure ? [150, 140, 130, 120, 110, 100] : [220, 200, 180, 160, 140, 120];
+  const weightStart = 131;
+  const weightEnd = pressure ? 251 : 224;
+  const greenStart = pressure ? 157 : 144;
+  const greenEnd = pressure ? 270 : 260;
+  const weightCurve = `M118 ${weightStart} C190 156 263 188 337 207 S440 ${weightEnd - 9} 496 ${weightEnd}`;
+  const greenCurve = `M118 ${greenStart} C190 189 263 217 337 235 S440 ${greenEnd - 6} 496 ${greenEnd}`;
+  const caption = pressure
+    ? "As weight decreased from 205 to 152 lbs, blood pressure dropped from 138 to 112 mmHg over six months."
+    : "As weight decreased from 204 to 162 lbs, A1c levels dropped from 8% to 5.6% over six months.";
+  const valuePill = (text: string, x: number, y: number, color: string) => (
+    <g key={text} data-pill="" style={{ transformBox: "fill-box", transformOrigin: "center" }}>
+      <rect x={x - (text.length === 1 ? 12 : 19)} y={y - 9} width={text.length === 1 ? 24 : 38} height="18" rx="9" fill={color} fillOpacity="0.2" stroke={color} strokeWidth="0.7" />
+      <text x={x} y={y + 4} textAnchor="middle" fill={INK} fontSize="12">{text}</text>
+    </g>
+  );
+  return (
+    <div className="tracking-card-wrap relative w-full pb-[66px]">
+      <div data-card-box className="h-[390px] w-full overflow-hidden rounded-[12px] border border-white bg-white/60 backdrop-blur-[5px]">
+        <svg viewBox="0 0 609.5 390" className="block h-full w-full" role="img" aria-label={caption}>
+          <defs>
+            <linearGradient id={`${id}-weight`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#2a80b8" /><stop offset="100%" stopColor="#2a80b8" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id={`${id}-green`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#008b7e" stopOpacity="0.85" /><stop offset="100%" stopColor="#17925a" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <text x="304.75" y="32" textAnchor="middle" fill={INK} style={{ fontFamily: "Georgia, serif" }} fontWeight="600" fontSize="14">
+            {pressure ? "Tracking Weight and Blood Pressure" : "Tracking A1C and Weight"}
+          </text>
+          <g fontSize="16" fontWeight="400">
+            <text x="49" y="72" fill={leftColor}>{pressure ? "Weight" : "A1C"}</text>
+            <text x="562" y="72" textAnchor="end" fill={rightColor}>{pressure ? "Blood pressure" : "Weight"}</text>
+            {leftValues.map((value, i) => (
+              <g key={value}>
+                <line x1="85" x2="528" y1={97 + i * 45} y2={97 + i * 45} stroke="#111110" strokeOpacity="0.3" strokeWidth="1.5" />
+                <text x="49" y={97 + i * 45} fill={leftColor}>{value}</text>
+                <text x="535" y={97 + i * 45} fill={rightColor}>{rightValues[i]}</text>
+              </g>
+            ))}
+            <text transform="translate(33 195) rotate(-90)" textAnchor="middle" fill={leftColor}>{pressure ? "lbs" : "%"}</text>
+            <text transform="translate(577 195) rotate(90)" textAnchor="middle" fill={rightColor}>{pressure ? "mmHg" : "lbs"}</text>
+          </g>
+          <g data-wipe={kind}>
+            <path d={`${weightCurve} L496 322 L118 322 Z`} fill={`url(#${id}-weight)`} />
+            <path d={`${greenCurve} L496 322 L118 322 Z`} fill={`url(#${id}-green)`} />
+            <path d={weightCurve} fill="none" stroke="white" strokeWidth="1" />
+            <path d={greenCurve} fill="none" stroke="white" strokeWidth="1" strokeDasharray="7 5" />
+            {[ [118, weightStart], [496, weightEnd], [118, greenStart], [496, greenEnd] ].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="2.2" fill="white" />)}
+          </g>
+          {valuePill(pressure ? "205" : "204", 118, weightStart - 16, BLUE)}
+          {valuePill(pressure ? "152" : "162", 496, weightEnd - 16, BLUE)}
+          {valuePill(pressure ? "138" : "8", 110, greenStart + 17, GREEN)}
+          {valuePill(pressure ? "112" : "5.6", 496, greenEnd + (pressure ? 16 : -13), GREEN)}
+          {MONTHS.map((month, i) => (
+            <g key={month} fill={INK} fontSize="16">
+              <line x1={122 + i * 74} x2={122 + i * 74} y1="336" y2="348" stroke={INK} strokeWidth="1.5" />
+              <text x={122 + i * 74} y="369" textAnchor="middle">{month}</text>
+            </g>
+          ))}
+        </svg>
+      </div>
+      <p className="tracking-card-note absolute top-[374px] w-[360px] rounded-[12px] border border-black/20 bg-white/30 px-4 py-2 text-[14px] font-normal leading-[1.5] text-[#111110] backdrop-blur-[10px]">{caption}</p>
+    </div>
+  );
+}
 
-/** card 2 – Weight + Blood pressure; the whole chart is the design's mirrored (flipX) frame, text flipped back */
 function Card2() {
-  return (
-    <div data-card-box className={GLASS} style={{ backgroundImage: "linear-gradient(270deg, rgba(20,139,213,0.7) 0%, rgba(255,255,255,0.7) 100%), linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 100%)" }}>
-      <Legend items={[{ dot: "dot-white.svg", label: "Weight" }, { dot: "dot-blue.svg", label: "Blood pressure" }]} />
-      <div className="flex w-full items-center justify-center">
-        <div className={`${FLIP} w-full`}>
-          <div className="flex w-full flex-col items-start">
-            <div className="flex w-full items-end gap-[6.068px]">
-              {/* (appears right) blood pressure axis */}
-              <div className="flex items-end self-stretch">
-                <div className="flex h-full items-center justify-center">
-                  <div className={`${FLIP} h-full`}>
-                    <div className="flex h-full w-[59.136px] items-center gap-[11.086px] pb-[39.44px]">
-                      <div className={`${COL} relative items-start`} style={{ color: INK }}>
-                        <Labels vals={["150", "140", "130", "120", "110", "100"]} color={INK} />
-                        <p className="absolute right-[109.58px] top-[0.21px] translate-x-full">Blood pressure</p>
-                      </div>
-                      <div className="flex h-[49px] w-[23px] shrink-0 items-center justify-center">
-                        <p className={`${TXT} rotate-90`} style={{ color: INK }}>mmHg</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex min-w-px flex-1 flex-col items-start pt-[18.203px]">
-                <Plot p="c2" inset="0 -0.18%">
-                  <div data-wipe="2" className="absolute left-[31.77px] top-[59.43px] flex h-[192.816px] w-[378.167px] items-center justify-center">
-                    <div className={FLIP}>
-                      <div className="relative h-[192.816px] w-[378.167px]">
-                        <div className="absolute" style={{ inset: "-1.05% -0.53% 0 -0.53%" }}>
-                          <Svg src="c2-area1.svg" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div data-wipe="2" className="absolute left-[31.77px] top-[85.77px] flex h-[166.475px] w-[378.167px] items-center justify-center">
-                    <div className={FLIP}>
-                      <div className="relative h-[166.475px] w-[378.167px]">
-                        <div className="absolute" style={{ inset: "-1.21% -0.53% 0 -0.53%" }}>
-                          <Svg src="c2-area2.svg" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <FlipPill text="112" style={{ left: 16.31, top: 203.61 }} bg="#b8aeab" border="#fff" />
-                  <FlipPill text="152" style={{ left: 13.31, top: 154.45 }} bg="#99a6ae" border={BLUE} />
-                  <FlipPill text="205" style={{ left: 390.75, top: 36.61 }} bg="rgba(90,144,180,0.3)" border={BLUE} />
-                  <FlipPill text="138" style={{ left: 394.98, top: 94.08 }} bg="#b8aeab" border="#fff" />
-                </Plot>
-                <div className="flex w-full items-center justify-center">
-                  <div className={`${FLIP} w-full`}>
-                    <Months />
-                  </div>
-                </div>
-              </div>
-
-              {/* (appears left) weight axis */}
-              <div className="flex items-end self-stretch">
-                <div className="flex h-full items-center justify-center">
-                  <div className={`${FLIP} h-full`}>
-                    <div className="flex h-full items-center gap-[9.102px] pb-[39.44px]">
-                      <div className="flex h-[22px] w-[23px] shrink-0 items-center justify-center">
-                        <p className={`${TXT} -rotate-90`} style={{ color: INK }}>lbs</p>
-                      </div>
-                      <div className={`${COL} relative items-end text-right`} style={{ color: INK }}>
-                        <Labels vals={["220", "200", "180", "160", "140", "120"]} color={INK} />
-                        <p className="absolute left-[52.11px] top-[0.21px] -translate-x-full">Weight</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <TrackingCard kind={2} />;
 }
 
-function FlipPill({ text, style, bg, border }: { text: string; style: React.CSSProperties; bg: string; border: string }) {
-  return (
-    <div className="absolute flex items-center justify-center" style={style} data-pill="">
-      <div className={FLIP}>
-        <div className="flex items-center justify-center rounded-[15.244px] border-[0.693px] border-solid px-[8.315px] backdrop-blur-[50px]" style={{ background: bg, borderColor: border }}>
-          <p className="whitespace-nowrap text-[11.086px] font-normal leading-[1.5] text-black">{text}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/** card 3 – A1C + Weight, not mirrored */
-function Card3({ mobile }: { mobile?: boolean }) {
-  const L = mobile ? "#fff" : INK;
-  return (
-    <div data-card-box className={GLASS} style={{ backgroundImage: "linear-gradient(270deg, rgba(255,255,255,0.7) 0%, rgba(20,139,213,0.7) 100%), linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 100%)" }}>
-      <Legend items={[{ dot: "dot-blue.svg", label: "A1C", upper: true }, { dot: "dot-white.svg", label: "Weight" }]} />
-      <div className="flex w-full flex-col items-start">
-        <div className="flex w-full items-end gap-[6.068px]">
-          <div className="flex items-end self-stretch">
-            <div className="flex h-full w-[59.136px] shrink-0 items-center gap-[11.086px] pb-[39.44px]">
-              <div className="flex h-[15px] w-[23px] shrink-0 items-center justify-center">
-                <p className={`${TXT} -rotate-90`} style={{ color: L }}>%</p>
-              </div>
-              <div className={`${COL} relative items-start`} style={{ color: L }}>
-                <Labels vals={["9", "8", "7", "6", "5", "4"]} color={L} />
-                <p className="absolute left-[0.13px] top-[0.47px]">A1C</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex min-w-px flex-1 flex-col items-start pt-[18.203px]">
-            <Plot p="c2" inset="0 -0.18%">
-              <div data-wipe="3" className="absolute left-[31.77px] top-[59.42px] h-[192.816px] w-[378.167px]">
-                <div className="absolute" style={{ inset: "-1.05% -0.53% 0 -0.53%" }}>
-                  <Svg src="c3-area1.svg" />
-                </div>
-              </div>
-              <div data-wipe="3" className="absolute left-[31.77px] top-[71.9px] h-[180.338px] w-[378.167px]">
-                <div className="absolute" style={{ inset: "-0.35% -0.53% 0 -0.53%" }}>
-                  <Svg src="c3-area2.svg" />
-                </div>
-              </div>
-              <Pill text="5.6" style={{ left: 393.31, top: 167.56 }} bg="#b8aeab" border="#fff" />
-              <Pill text="162" style={{ left: 394.69, top: 130.88 }} bg="#99a6ae" border={BLUE} />
-              <Pill text="204" style={{ left: 17.91, top: 36.61 }} bg="rgba(90,144,180,0.3)" border={BLUE} />
-              <Pill text="8" style={{ left: 16.53, top: 80.22 }} bg="#b8aeab" border="#fff" />
-            </Plot>
-            <Months />
-          </div>
-
-          <div className="flex items-end self-stretch">
-            <div className="flex h-full shrink-0 items-center gap-[9.102px] pb-[39.44px]">
-              <div className={`${COL} relative items-end text-right`} style={{ color: INK }}>
-                <Labels vals={["220", "200", "180", "160", "140", "120"]} color={INK} />
-                <p className="absolute left-[32px] top-[0.47px] -translate-x-full">Weight</p>
-              </div>
-              <div className="flex h-[22px] w-[23px] shrink-0 items-center justify-center">
-                <p className={`${TXT} rotate-90`} style={{ color: INK }}>lbs</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+function Card3() {
+  return <TrackingCard kind={3} />;
 }
 
 /** scales a fixed-width (609.5px) block down to the space it is given, keeping its height in the layout */
@@ -392,7 +322,7 @@ function MobileCard({ children }: { children: React.ReactNode }) {
   const [h, setH] = useState<number | undefined>(undefined);
   const k = w / CARD_W;
   useEffect(() => {
-    const calc = () => setW(Math.min(MOBILE_CARD_W, window.innerWidth - 44));
+    const calc = () => setW(Math.min(MOBILE_CARD_W, window.innerWidth * MOBILE_CARD_W / 402));
     calc();
     window.addEventListener("resize", calc);
     return () => window.removeEventListener("resize", calc);
@@ -459,7 +389,7 @@ export default function LongevityChangesSection() {
           gsap.killTweensOf([...q(cardSel(from)), ...q(cardSel(next)), ...q(`${cardSel(next)} [data-wipe]`), ...q(`${cardSel(next)} [data-pill]`)]);
           gsap.to(cardSel(from), { autoAlpha: 0, y: -24, duration: 0.3, ease: "power2.in" });
           gsap.fromTo(cardSel(next), { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.6, delay: 0.3, ease: "power3.out" });
-          gsap.fromTo(`${cardSel(next)} [data-wipe]`, wipeOut(next === 1), { ...wipeIn, duration: 1.4, delay: 0.5, ease: "power2.inOut" });
+          gsap.fromTo(`${cardSel(next)} [data-wipe]`, wipeOut(false), { ...wipeIn, duration: 1.4, delay: 0.5, ease: "power2.inOut" });
           gsap.fromTo(`${cardSel(next)} [data-pill]`, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.5, stagger: 0.1, delay: 1, ease: "back.out(2)" });
           rails.forEach((r, i) => gsap.to(r, { backgroundColor: i === next ? BLUE : "#d9d9d9", duration: 0.3 }));
           fitRails(next, true);
@@ -483,13 +413,32 @@ export default function LongevityChangesSection() {
 
       <div ref={rootRef} className="changes-scroll relative">
         <style>{`
+          .tracking-card-note { right: 0; }
           .changes-scroll { min-height: 100svh; }
           .changes-sticky { position: relative; min-height: 100svh; display: flex; align-items: flex-start; background: linear-gradient(131.78deg, rgb(255, 255, 249) 0%, rgb(116, 205, 255) 20%, rgb(42, 128, 184) 82.462%); }
+          @layer theme {
+          @media (max-width: 1023px) {
+            .changes-sticky { --changes-unit: calc(min(100vw, 402px) / 402); }
+            .changes-content { min-height: calc(868 * var(--changes-unit)) !important; padding: calc(64 * var(--changes-unit)) calc(20 * var(--changes-unit)) !important; gap: 0 !important; }
+            .changes-intro { flex: none !important; gap: calc(32 * var(--changes-unit)) !important; }
+            .changes-title { font-size: calc(32 * var(--changes-unit)) !important; font-weight: 400 !important; }
+            .changes-summary { gap: calc(30 * var(--changes-unit)) !important; }
+            .changes-subtitle { font-size: calc(24 * var(--changes-unit)) !important; font-weight: 400 !important; }
+            .changes-serif { font-size: calc(32 * var(--changes-unit)) !important; }
+            .changes-description { font-size: calc(16 * var(--changes-unit)) !important; }
+            .changes-mobile-portrait { left: calc(91.67% - 57 * var(--changes-unit)) !important; top: calc(337.5 * var(--changes-unit)) !important; width: calc(417 * var(--changes-unit)) !important; height: calc(554 * var(--changes-unit)) !important; }
+            .changes-mobile-fade { left: calc(100% - 59.5 * var(--changes-unit)) !important; top: calc(335.5 * var(--changes-unit)) !important; width: calc(119 * var(--changes-unit)) !important; height: calc(113 * var(--changes-unit)) !important; }
+            .changes-mobile-carousel { width: calc(100% + 40 * var(--changes-unit)) !important; margin: calc(160 * var(--changes-unit)) calc(-20 * var(--changes-unit)) 0 !important; padding: 0 calc(20 * var(--changes-unit)) !important; scroll-snap-type: x mandatory; }
+            .changes-mobile-carousel > div { gap: calc(8 * var(--changes-unit)) !important; }
+            .changes-mobile-carousel > div > div { scroll-snap-align: start; scroll-margin-left: calc(20 * var(--changes-unit)); }
+          }
+          }
           @media (min-width: 1024px) { .changes-sticky { align-items: center; background: linear-gradient(145.38deg, rgb(42, 128, 184) 2.2521%, rgb(116, 205, 255) 44.988%, rgb(255, 255, 249) 80.207%); } }
           @media (min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
             .changes-scroll { min-height: 260svh; }
             .changes-sticky { position: sticky; top: 0; }
             [data-change-card='2'], [data-change-card='3'] { opacity: 0; visibility: hidden; }
+            .tracking-card-note { right: -104px; }
             .changes-cards { gap: 0; }
             .changes-cards > * { grid-area: 1 / 1; }
           }
@@ -500,11 +449,11 @@ export default function LongevityChangesSection() {
           className="changes-sticky overflow-clip"
         >
           {/* mobile portrait (node 12721:17816): 417 x 554 at 91.67% - 57px, with a soft blue fade at its top-right corner */}
-          <div className="pointer-events-none absolute lg:hidden" style={{ left: "calc(91.67% - 57px)", top: 337.5, width: 417, height: 554, transform: "translateX(-50%)" }}>
+          <div className="changes-mobile-portrait pointer-events-none absolute lg:hidden" style={{ left: "calc(91.67% - 57px)", top: 337.5, width: 417, height: 554, transform: "translateX(-50%)" }}>
             <Image src={`${A}/bg.png`} alt="" fill sizes="417px" className="object-cover" />
           </div>
           <div
-            className="pointer-events-none absolute lg:hidden"
+            className="changes-mobile-fade pointer-events-none absolute lg:hidden"
             style={{ left: "calc(100% - 59.5px)", top: 335.5, width: 119, height: 113, transform: "translateX(-50%) scaleY(-1)", background: "linear-gradient(173.12deg, rgba(105, 192, 244, 0) 57.218%, rgb(86, 173, 226) 94.412%)" }}
           />
           {/* portrait: 1088 x 1445 box pinned to the right, 188px bleed */}
@@ -512,22 +461,22 @@ export default function LongevityChangesSection() {
             <Image src={`${A}/bg.png`} alt="" fill priority sizes="1088px" className="object-cover" />
           </div>
           {/* same container as the header */}
-          <div className="relative mx-auto flex min-h-svh w-full max-w-360 flex-col items-start gap-12 px-5 py-16 lg:min-h-0 lg:gap-16 lg:px-10 lg:py-[120px]">
-            <div className="flex w-full flex-1 flex-col items-start gap-8 leading-[1.5] text-white lg:flex-none lg:gap-[173px]">
-              <p className="text-[32px] font-medium lg:whitespace-nowrap lg:text-[40px]">FIND THE CHANGES THAT MATTER EARLY.</p>
-              <div className="flex w-full flex-col items-start gap-[30px] lg:gap-2">
+          <div className="changes-content relative mx-auto flex min-h-svh w-full max-w-360 flex-col items-start gap-12 px-5 py-16 lg:min-h-0 lg:gap-16 lg:px-10 lg:py-[120px]">
+            <div className="changes-intro flex w-full flex-1 flex-col items-start gap-8 leading-[1.5] text-white lg:flex-none lg:gap-[173px]">
+              <p className="changes-title text-[32px] font-medium lg:whitespace-nowrap lg:text-[40px]">FIND THE CHANGES THAT MATTER EARLY.</p>
+              <div className="changes-summary flex w-full flex-col items-start gap-[30px] lg:gap-2">
                 <div className="flex flex-col items-start whitespace-nowrap">
-                  <p className="text-[24px] font-medium lg:text-[32px]">Your health changes</p>
-                  <p className="comprehensive-serif text-[32px] italic lg:text-[40px]">before you feel it.</p>
+                  <p className="changes-subtitle text-[24px] font-medium lg:text-[32px]">Your health changes</p>
+                  <p className="changes-serif comprehensive-serif text-[32px] italic lg:text-[40px]">before you feel it.</p>
                 </div>
-                <p className="w-full max-w-[750px] text-[16px] font-normal">
+                <p className="changes-description w-full max-w-[750px] text-[16px] font-normal">
                   Follow your <b className="font-bold lg:font-normal">biomarkers and health metrics</b> over time so meaningful changes don&apos;t have to wait for an annual appointment to be noticed. Find out what&rsquo;s working and not working.
                 </p>
               </div>
             </div>
 
             {/* mobile: three 364px cards in a sideways scroller */}
-            <div className="-mx-5 w-[calc(100%+40px)] overflow-x-auto px-5 [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden">
+            <div className="changes-mobile-carousel -mx-5 w-[calc(100%+40px)] overflow-x-auto px-5 [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden">
               <div className="flex w-max items-start gap-2">
                 <MobileCard>
                   <Card1 glass />
@@ -536,7 +485,7 @@ export default function LongevityChangesSection() {
                   <Card2 />
                 </MobileCard>
                 <MobileCard>
-                  <Card3 mobile />
+                  <Card3 />
                 </MobileCard>
               </div>
             </div>
@@ -559,13 +508,11 @@ export default function LongevityChangesSection() {
                     <FitBox width={CARD_W}>
                       <Card2 />
                     </FitBox>
-                    <p className="whitespace-nowrap text-[16px] font-normal leading-[1.5] text-[#0c0d0f]">Weight ↓ 26% | Blood pressure ↓ 19%</p>
                   </div>
                   <div data-change-card="3" className="flex flex-col items-center gap-4">
                     <FitBox width={CARD_W}>
                       <Card3 />
                     </FitBox>
-                    <p className="whitespace-nowrap text-[16px] font-normal leading-[1.5] text-[#0c0d0f]">A1c ↓ 30% | Weight ↓ 21%</p>
                   </div>
                 </div>
               </div>

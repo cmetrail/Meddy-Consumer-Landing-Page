@@ -1,5 +1,5 @@
 ﻿.section { position: relative; background: #fffef2; color: #46524b; }
-.scene { max-width: 1360px; margin: 0 auto !important; padding: 72px 40px 32px !important; }
+.scene { max-width: 1440px; margin: 0 auto !important; padding: 72px 40px 32px !important; }
 .heading { display: grid; grid-template-columns: 1fr auto; gap: 18px 40px; align-items: end; }
 .eyebrow { font-size: 10px; letter-spacing: .16em; color: #6e7a72; }
 .heading .eyebrow { grid-column: 1 / -1; }
@@ -41,7 +41,7 @@
 .section[data-stage="0"] [data-chapter="0"], .section[data-stage="1"] [data-chapter="1"], .section[data-stage="2"] [data-chapter="2"] { opacity: 1; }
 .section[data-animated="true"] .scrollHint { display: block; }
 @media (max-width: 1023px) {
-  .scene { padding: 48px 24px 28px !important; }
+  .scene { padding: 48px 20px 28px !important; }
   .heading { display: block; }
   .heading h2 { margin-top: 14px !important; }
   .heading > p:last-child { max-width: none; margin-top: 14px !important; font-size: 12px; }

@@ -1,0 +1,136 @@
+.section {
+  --breadth-unit: calc(min(100vw, 1440px) / 1440);
+  width: 100%;
+  overflow: hidden;
+  background: #f5f5f1;
+  padding: calc(140 * var(--breadth-unit)) 0 calc(116 * var(--breadth-unit)) !important;
+  color: #111110;
+}
+.content {
+  width: calc(1200 * var(--breadth-unit));
+  margin: 0 auto !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.header {
+  width: calc(min(100vw, 1440px) - 40px);
+  height: calc(184 * var(--breadth-unit));
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.title {
+  color: #81a972;
+  font-size: calc(104 * var(--breadth-unit));
+  font-weight: 400;
+  line-height: calc(120 * var(--breadth-unit));
+  text-transform: uppercase;
+}
+.subtitle {
+  margin-top: calc(16 * var(--breadth-unit)) !important;
+  color: #46524b;
+  font-size: calc(32 * var(--breadth-unit));
+  font-weight: 500;
+  line-height: 1.4;
+}
+.description {
+  margin-top: calc(36 * var(--breadth-unit)) !important;
+  text-align: right;
+  font-size: calc(32 * var(--breadth-unit));
+  font-weight: 500;
+  line-height: 1.5;
+}
+.description span { color: #17925a; font-style: italic; }
+.carousel {
+  position: relative;
+  width: 100%;
+  margin-top: calc(48 * var(--breadth-unit)) !important;
+}
+.arrow {
+  position: absolute;
+  top: calc(99 * var(--breadth-unit));
+  transform: translateY(-50%);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #53b587;
+  border-radius: 50%;
+  background: #f5f5f1;
+  color: #17925a;
+  cursor: pointer;
+}
+.previous { left: -48px; }
+.next { right: -48px; }
+.arrow:hover:not(:disabled) { background: #17925a; color: white; }
+.arrow:disabled { opacity: 0.3; cursor: default; }
+.arrow:focus-visible { outline: 2px solid #17925a; outline-offset: 4px; }
+.track {
+  display: flex;
+  gap: calc(16 * var(--breadth-unit));
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  cursor: grab;
+  user-select: none;
+}
+.track[data-dragging="true"] { cursor: grabbing; scroll-snap-type: none; }
+.track::-webkit-scrollbar { display: none; }
+.track:focus-visible { outline: 2px solid #17925a; outline-offset: 6px; }
+.card { flex: 0 0 calc(204 * var(--breadth-unit)); scroll-snap-align: start; }
+.image {
+  position: relative;
+  height: calc(198 * var(--breadth-unit));
+  overflow: hidden;
+  border: 1px solid #53b587;
+  border-radius: calc(8 * var(--breadth-unit));
+  background: #fdfaf3;
+}
+.artwork { object-fit: cover; }
+.card:nth-child(1) .artwork { transform: scale(1.12); }
+.card:nth-child(2) .artwork { transform: scale(1.5); }
+.card:nth-child(3) .artwork { transform: scale(1.08); }
+.label {
+  margin-top: calc(8 * var(--breadth-unit)) !important;
+  text-align: center;
+  white-space: nowrap;
+  font-size: calc(20 * var(--breadth-unit));
+  line-height: 1.4;
+}
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(56 * var(--breadth-unit));
+  margin-top: calc(24 * var(--breadth-unit)) !important;
+  padding: calc(16 * var(--breadth-unit)) calc(24 * var(--breadth-unit)) !important;
+  border-radius: 999px;
+  background: #17925a;
+  color: white;
+  font-size: calc(20 * var(--breadth-unit));
+  line-height: 1.2;
+  font-weight: 400;
+  text-decoration: none;
+}
+.button:hover { background: #127b4b; }
+.button:focus-visible { outline: 2px solid #111110; outline-offset: 4px; }
+@media (min-width: 1024px) {
+  .header { width: calc(min(100vw, 1440px) - 80px); }
+}
+@media (max-width: 767px) {
+  .section { --breadth-unit: 0.694444px; padding: 56px 0 !important; }
+  .content { width: calc(100% - 40px); }
+  .header { height: auto; flex-direction: column; gap: 24px; }
+  .title { font-size: clamp(42px, 10vw, 64px); line-height: 1.2; }
+  .subtitle { font-size: 19px; margin-top: 8px !important; }
+  .description { margin-top: 0 !important; text-align: left; font-size: 22px; }
+  .carousel { margin-top: 32px !important; padding-bottom: 48px !important; }
+  .arrow { top: auto; bottom: 0; transform: none; }
+  .previous { left: calc(50% - 44px); }
+  .next { right: calc(50% - 44px); }
+  .button { min-height: 40px; margin-top: 24px !important; font-size: 14px; }
+}

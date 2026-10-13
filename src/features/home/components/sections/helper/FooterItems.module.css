@@ -119,3 +119,50 @@
     }
   }
 }
+
+
+@layer base {
+  @media (max-width: 767px) {
+    .reference.longevityReference {
+      background: linear-gradient(90deg, #293a31, #33483c) !important;
+      border: 1px solid rgb(255 255 255 / 20%) !important;
+      box-shadow: inset 0 0 calc(25 * var(--footer-unit)) rgb(255 255 255 / 5%);
+    }
+    .reference.longevityReference .inner {
+      padding-top: calc(48 * var(--footer-unit)) !important;
+      padding-inline: calc(14 * var(--footer-unit)) !important;
+      padding-bottom: calc(73 * var(--footer-unit)) !important;
+    }
+    .reference.longevityReference .mobileNav a,
+    .reference.longevityReference .description,
+    .reference.longevityReference .desktopLegal p,
+    .reference.longevityReference .stores button span { font-family: Arial, sans-serif !important; font-weight: 400 !important; }
+    .reference.longevityReference .mobileNav { gap: calc(13.6 * var(--footer-unit)) !important; }
+    .reference.longevityReference .mobileNav a { font-size: calc(12 * var(--footer-unit)); }
+    .reference.longevityReference .stores button > span > span:first-child { font-size: calc(10 * var(--footer-unit)) !important; }
+    .reference.longevityReference .stores button > span > span:nth-child(2) { font-size: calc(20 * var(--footer-unit)) !important; }
+    .reference.longevityReference .stores button > span > img { width: calc(85 * var(--footer-unit)) !important; }
+    .reference.longevityReference .description {
+      display: block !important;
+      margin-top: calc(16 * var(--footer-unit)) !important;
+      font-size: calc(12 * var(--footer-unit)) !important;
+      line-height: 1.4 !important;
+      text-align: center;
+      font-weight: 400;
+    }
+    .reference.longevityReference .stores {
+      margin-top: calc(32 * var(--footer-unit)) !important;
+      gap: calc(6 * var(--footer-unit)) !important;
+    }
+    .reference.longevityReference .stores button {
+      background: rgb(0 0 0 / 12%) !important;
+    }
+    .reference.longevityReference .desktopLegal {
+      display: flex !important;
+      margin-top: calc(22 * var(--footer-unit)) !important;
+      gap: calc(7 * var(--footer-unit)) !important;
+      font-size: calc(8.5 * var(--footer-unit)) !important;
+      line-height: 1.4 !important;
+    }
+  }
+}

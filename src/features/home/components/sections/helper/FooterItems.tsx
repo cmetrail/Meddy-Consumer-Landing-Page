@@ -76,20 +76,22 @@ const MOBILE_LINKS: FooterLink[] = [
 export function FooterItems({
   noTopMargin,
   mobileReference = false,
+  mobileVariant,
 }: {
   noTopMargin?: boolean;
   mobileReference?: boolean;
+  mobileVariant?: "longevity";
 }) {
   return (
     <div
-      className={`${mobileReference ? styles.reference : ""} ${noTopMargin ? "" : "mt-10"} w-full rounded-t-[22px] bg-white/10 backdrop-blur-xl`}
+      className={`${mobileReference ? styles.reference : ""} ${mobileVariant === "longevity" ? styles.longevityReference : ""} ${noTopMargin ? "" : "mt-10"} w-full rounded-t-[22px] bg-white/10 backdrop-blur-xl`}
     >
       <div
         className={`${styles.inner} mx-auto w-full max-w-360 px-5 lg:px-10 py-16 pb-4`}
       >
         {mobileReference && (
           <nav className={styles.mobileNav} aria-label="Footer navigation">
-            {MOBILE_LINKS.map((link) => (
+            {MOBILE_LINKS.filter((link) => mobileVariant !== "longevity" || link.label !== "FAQ").map((link) => (
               <Link key={link.label} href={link.href}>
                 {link.label}
               </Link>
@@ -219,7 +221,7 @@ export function FooterItems({
         <div
           className={`${styles.divider} mt-6 border-t border-[#E0E0E0] lg:mt-8`}
         />
-        {mobileReference && (
+        {mobileReference && mobileVariant !== "longevity" && (
           <div className={styles.mobileLegal}>
             <p>Meddy is a service of Meddy Health LLC.</p>
             <p>

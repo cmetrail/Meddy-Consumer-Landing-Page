@@ -81,7 +81,7 @@ export default function MedicationWholeResponseSection() {
       {/* Mobile / tablet (<lg): blue gradient + cut-out photo, copy pinned to the bottom */}
       <div
         className="relative mx-auto flex min-h-[calc(873*var(--m))] max-w-[500px] flex-col justify-end px-[var(--p20)] py-[var(--p64)] lg:hidden"
-        style={{ ["--p20" as string]: m(20), ["--p64" as string]: m(64) } as React.CSSProperties}
+        style={{ ["--p20" as string]: "20px", ["--p64" as string]: m(64) } as React.CSSProperties}
       >
         {/* full-bleed gradient behind the (500px max) column */}
         <div

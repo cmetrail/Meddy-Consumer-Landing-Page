@@ -1,0 +1,61 @@
+.shade, .mobileWord { display: none; }
+
+@layer base {
+  @media (max-width: 767px) {
+    .section {
+      height: min(163.6816vw, 100svh) !important;
+      background: url("/247-care/section4-bg.png") center / cover;
+      min-height: 0 !important;
+    }
+    .background {
+      --photo-height: min(155.4975vw, 95svh);
+      height: var(--photo-height) !important;
+      width: calc(var(--photo-height) * 1.6) !important;
+      max-width: none !important;
+      left: calc(50% - var(--photo-height) * .8 + 6.47vw) !important;
+      right: auto !important;
+      top: 3% !important;
+      object-fit: fill !important;
+    }
+    .shade {
+      display: block !important;
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.12) 60%, rgba(0,0,0,.30));
+    }
+    .content {
+      position: absolute !important;
+      inset: 0;
+      height: 100%;
+      min-height: 0 !important;
+      display: block !important;
+    }
+    .heading { position: absolute; top: 9.73%; left: 0; width: 100%; }
+    .title {
+      font-family: var(--font-dm-serif), Georgia, serif !important;
+      font-size: clamp(24px, 7.96vw, 32px) !important;
+      line-height: 44px !important;
+      white-space: nowrap;
+    }
+    .subtitle {
+      margin-top: 0 !important;
+      font-size: clamp(24px, 7.96vw, 32px) !important;
+      line-height: 1.5 !important;
+      font-weight: 500 !important;
+      max-width: 360px;
+    }
+    .caption {
+      position: absolute;
+      left: 0;
+      bottom: 9.42%;
+      width: 100%;
+      max-width: none !important;
+      margin-top: 0 !important;
+      text-align: center !important;
+      font-size: clamp(14px, 3.98vw, 16px) !important;
+      line-height: 1.5 !important;
+    }
+    .desktopWord { display: none; }
+    .mobileWord { display: inline !important; }
+  }
+}

@@ -170,13 +170,13 @@ export default function MedicationFaqSection() {
           </div>
         </div>
         {/* lettering */}
-        <div className="pointer-events-none absolute z-20" style={{ left: `calc(max(0px, (100% - 90rem) / 2) + 2.5rem + ${u(36)})`, top: u(26), width: u(550) }}>
+        <div className="pointer-events-none absolute z-20" style={{ left: `calc(max(0px, (100% - 90rem) / 2) + 2.5rem)`, top: u(26), width: u(550) }}>
           <Image src={`${A}/faq.svg`} alt="faq" width={222} height={124} unoptimized className="block w-full" priority />
         </div>
       </div>
 
       {/* Mobile / tablet (<lg): lettering, then the list over the photo */}
-      <div className="relative mx-auto max-w-[500px] lg:hidden" style={{ ["--p" as string]: m(20) } as React.CSSProperties}>
+      <div className="relative mx-auto max-w-[500px] lg:hidden" style={{ ["--p" as string]: "20px" } as React.CSSProperties}>
         <div className="absolute inset-y-0 -z-0" style={{ left: "calc(50% - 50vw)", right: "calc(50% - 50vw)" }}>
           <Image src={`${A}/m-bg.png`} alt="" fill sizes="100vw" className="object-cover" />
         </div>

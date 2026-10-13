@@ -41,7 +41,7 @@ export const CAUSE_EFFECT_VARIATIONS: CauseEffectVariation[] = [
     id: "nutrition",
     tab: "Nutrition",
     metrics: [
-      { label: "Daily Fiber", value: "32g", delta: "↓ from 16 g/day", direction: "none" },
+      { label: "Daily Fiber", value: "32g", delta: "from 16 g/day", direction: "up" },
       { label: "A1C", value: "6.4%", delta: "from 7.8%", direction: "down" },
     ],
     legend: [

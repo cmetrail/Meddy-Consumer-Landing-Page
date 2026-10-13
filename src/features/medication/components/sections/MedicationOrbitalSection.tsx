@@ -103,7 +103,7 @@ export default function MedicationOrbitalSection() {
         <div className="absolute inset-0">
           <div className="mx-auto h-full max-w-360 px-10">
             <div className="relative h-full">
-              <h2 className="absolute inset-x-0 text-center uppercase leading-[normal] text-[#46524B]" style={{ top: u(113) }}>
+              <h2 className="absolute inset-x-0 text-left uppercase leading-[normal] text-[#46524B]" style={{ top: u(113) }}>
                 <span className="block whitespace-nowrap" style={{ fontSize: `max(20px, ${u(30)})` }}>Medication management with a physician</span>
                 <span className="comprehensive-serif block whitespace-nowrap italic text-[#17925A]" style={{ fontSize: `max(24px, ${u(34)})` }}>who knows your history.</span>
               </h2>
@@ -120,8 +120,8 @@ export default function MedicationOrbitalSection() {
 
       {/* Mobile / tablet (<lg) */}
       <div
-        className="mx-auto flex max-w-[500px] flex-col items-center px-[var(--p20)] py-[var(--p64)] text-center lg:hidden"
-        style={{ ["--p20" as string]: m(20), ["--p64" as string]: m(64), gap: m(48) } as React.CSSProperties}
+        className="mx-auto flex max-w-[500px] flex-col items-center px-[var(--p20)] py-[var(--p64)] text-left lg:hidden"
+        style={{ ["--p20" as string]: "20px", ["--p64" as string]: m(64), gap: m(48) } as React.CSSProperties}
       >
         <div className="flex w-full flex-col text-[#46524B]" style={{ gap: m(32) }}>
           <div className="flex flex-col" style={{ gap: m(8) }}>

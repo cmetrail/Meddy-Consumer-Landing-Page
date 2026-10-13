@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { CauseEffectMetric, CauseEffectVariation } from "./causeEffectVariations";
 
-// Card is drawn in Figma px; --k maps one Figma px to screen px (1px on mobile, --u on lg+)
+// The containing panel supplies --k to scale the chart with its layout.
 const k = (n: number) => `calc(${n} * var(--k))`;
 
 function Trend({ size, down }: { size: "lg" | "sm"; down: boolean }) {
@@ -23,7 +23,7 @@ function Metric({ label, value, delta, context, direction, small }: CauseEffectM
   return (
     <div className="flex min-w-0 flex-col items-start" style={{ gap: k(10) }}>
       <div className="flex flex-col items-start">
-        <span className="whitespace-nowrap leading-[1.416] text-white" style={{ fontSize: `max(9px, ${k(12)})` }}>
+        <span className="whitespace-nowrap leading-[1.416] text-white" style={{ fontSize: k(12) }}>
           {label}
         </span>
         <span className="whitespace-nowrap font-semibold leading-[1.416] text-white" style={{ fontSize: `max(18px, ${k(32)})` }}>
@@ -54,7 +54,7 @@ export default function CauseEffectCard({ variation }: { variation: CauseEffectV
 
   return (
     <div
-      className="flex h-full flex-col justify-between rounded-[var(--r)] border border-white bg-white/10 p-[var(--cp)] [--k:min(1px,calc((100vw-76px)/284.5))] lg:[--k:var(--u)]"
+      className="flex h-full flex-col justify-between rounded-[var(--r)] border border-white bg-white/10 p-[var(--cp)]"
       style={{ ["--cp" as string]: k(16.452), ["--r" as string]: k(8.226), gap: k(24) }}
     >
       <div className="grid grid-cols-2" style={{ width: k(284.5) }}>

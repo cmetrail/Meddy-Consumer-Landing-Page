@@ -2,13 +2,10 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
-  ArrowUpRight,
   Check,
   Dumbbell,
   HeartPulse,
-  Leaf,
   MessageCircle,
   Moon,
   Stethoscope,
@@ -18,30 +15,6 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { SCROLL_MOTION } from "@/lib/motion";
 import type { CareModel } from "../helper/createCareModel";
 import styles from "./MedicationStorySection.module.css";
-
-const chapters = [
-  {
-    label: "THE INITIATION SIGNAL",
-    title: "Make the first dose visible.",
-    text: "When a patient uses the medication pen for the first time, that event can mark the start of therapy. It gives the care team a clear initiation signal and a shared point of reference for follow-up.",
-    note: "First use starts the care journey.",
-    icon: Stethoscope,
-  },
-  {
-    label: "THE WHOLE PICTURE",
-    title: "One part. All connected.",
-    text: "When medication is part of your physician-guided plan, it sits alongside nutrition, movement, and sleep. Every part belongs in the same conversation.",
-    note: "Care that sees the connections.",
-    icon: Leaf,
-  },
-  {
-    label: "THE ONGOING CARE",
-    title: "Your plan grows with you.",
-    text: "Questions, check-ins, and a view of your health over time help keep the conversation going. Your physician can revisit your plan as your needs change.",
-    note: "A continuing conversation.",
-    icon: MessageCircle,
-  },
-];
 
 export default function MedicationStorySection({
   penDestinationRef,
@@ -82,9 +55,30 @@ export default function MedicationStorySection({
         const chart = target?.closest(".a1c-scroll");
         const layer = modelLayerRef.current!;
         const travel = { progress: 0 };
+        const storyCopy = journey.querySelector<HTMLElement>(
+          `.${styles.storyCopy}`,
+        );
+        const supportCard = visual.querySelector<HTMLElement>(
+          `.${styles.supportCard}`,
+        );
+        const syncMobileCards = () => {
+          if (!compact || !storyCopy || !supportCard) return;
+          const copyBounds = storyCopy.getBoundingClientRect();
+          const visualTop = visual.getBoundingClientRect().top;
+          // Ignore the entrance translation of cards that are still invisible.
+          const cardBottom =
+            visualTop + supportCard.offsetTop + supportCard.offsetHeight;
+          const copyOverlapsCards =
+            copyBounds.top < cardBottom + 12 &&
+            copyBounds.bottom > visualTop;
+          visual.dataset.cardsHidden = String(
+            copyOverlapsCards || travel.progress > 0.001,
+          );
+        };
         // Keep the same canvas and pose throughout the handoff. Measure the
         // untransformed visual so refreshes and reverse scrolling stay stable.
         const positionModel = () => {
+          syncMobileCards();
           if (!target) return;
           const from = visual.getBoundingClientRect();
           const to = target.getBoundingClientRect();
@@ -135,10 +129,13 @@ export default function MedicationStorySection({
               Math.min(2, Math.floor(progress * 3)),
             );
             model?.update(progress);
+            syncMobileCards();
           },
+          onRefresh: syncMobileCards,
         });
         progress = trigger.progress;
         visual.dataset.stage = String(Math.min(2, Math.floor(progress * 3)));
+        syncMobileCards();
         const observer = new IntersectionObserver(
           async ([entry]) => {
             if (!entry.isIntersecting || started) return;
@@ -176,6 +173,7 @@ export default function MedicationStorySection({
           model?.dispose();
           delete visual.dataset.loaded;
           delete visual.dataset.stage;
+          delete visual.dataset.cardsHidden;
         };
       },
     );
@@ -189,52 +187,19 @@ export default function MedicationStorySection({
       className={styles.section}
       aria-labelledby="medication-story-heading"
     >
-      <div className={styles.intro}>
-        <p className={styles.eyebrow}>
-          <span /> THE BIGGER PICTURE
-        </p>
-        <h2
-          id="medication-story-heading"
-          className="text-[#ABB1AD] font-bold uppercase  tracking-[2%] leading-[100%] text-[26px] sm:text-[36px] lg:text-[48px]"
-        >
-          Every medication change
-          <br />
-          <span className="text-[#578951]"> tells a story.</span>
-        </h2>
-        <div className={styles.introBottom}>
-          <p>
-            From medication to daily habits, Meddy tracks what happens next.
-            {/* <br /> */}
-            Care that sees the connections.{" "}
-          </p>
-        </div>
-      </div>
-
       <div ref={journeyRef} className={styles.journey}>
-        <div className={styles.chapters}>
-          {chapters.map((chapter, index) => (
-            <article
-              key={chapter.label}
-              data-mobile-reveal
-              className={styles.chapter}
-            >
-              <div className={styles.chapterMeta}>
-                <span>0{index + 1}</span>
-                <p>{chapter.label}</p>
-              </div>
-              <h3>{chapter.title}</h3>
-              <p className={styles.description}>{chapter.text}</p>
-              <div className={styles.chapterNote}>
-                <chapter.icon size={19} strokeWidth={1.5} />
-                <span>{chapter.note}</span>
-              </div>
-              {index === 2 && (
-                <Link href="/pricing" className={styles.cta}>
-                  Explore care plans <ArrowUpRight size={19} />
-                </Link>
-              )}
-            </article>
-          ))}
+        <div className={styles.storyTrack}>
+          <div className={styles.storyCopy}>
+            <h2 id="medication-story-heading">
+              Every medication
+              <br />
+              change <em>tells a story.</em>
+            </h2>
+            <p className={styles.storyDescription}>
+              From medication to daily habits, Meddy tracks what happens next
+            </p>
+            <p className={styles.storyNote}>Care that sees the connections.</p>
+          </div>
         </div>
 
         <div
@@ -322,10 +287,6 @@ export default function MedicationStorySection({
           </div>
         </div>
       </div>
-      <p className={styles.caption}>
-        Illustrative model. Treatment options are discussed with your physician
-        based on your individual needs.
-      </p>
     </section>
   );
 }

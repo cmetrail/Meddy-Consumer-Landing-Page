@@ -13,6 +13,11 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 //   --u = min(100vw, 1440px) / 1440  vs  100dvh / 1029, whichever is smaller
 const u = (n: number) => `calc(${n} * var(--u))`;
 
+// Quiet accents separate the inputs while their signals converge in Meddy green.
+const BRANCH_COLORS = ["#8dceab", "#94bde0", "#d3bc8f", "#b6a4d5"];
+const branchStyle = (index: number) => ({ "--branch-color": BRANCH_COLORS[index] } as React.CSSProperties);
+const chipBranch = (chip: Chip) => chip.x < 600 ? (chip.y < 300 ? 0 : 2) : (chip.y < 300 ? 1 : 3);
+
 type Card = { title: string; icon: string; iconW: number; x: number; y: number; w: number };
 type Chip = { text: string; x: number; y: number };
 
@@ -233,6 +238,43 @@ export default function FitnessPlanSection() {
     return () => media.revert();
   }, { scope: sectionRef });
 
+  useGSAP(() => {
+    const media = gsap.matchMedia();
+    media.add({ desktop: "(min-width: 1024px)", reducedMotion: "(prefers-reduced-motion: reduce)" }, (context) => {
+      if (context.conditions?.reducedMotion) return;
+      const section = sectionRef.current;
+      const diagram = section?.querySelector<HTMLElement>(context.conditions?.desktop ? "[data-plan-desktop]" : "[data-plan-mobile]");
+      if (!diagram) return;
+      const flow = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 0.65 });
+
+      CARDS.forEach((_, index) => {
+        const group = diagram.querySelectorAll(`[data-plan-card="${index}"], [data-plan-chip="${index}"]`);
+        const signal = diagram.querySelector(`[data-plan-flow="${index}"]`);
+        const pulse = signal?.querySelector("[data-plan-pulse]");
+        const at = index * 0.24;
+        flow.to(group, { "--branch-energy": 1, duration: 0.5, stagger: 0.035, ease: "sine.inOut" }, at)
+          .to(group, { "--branch-energy": 0, duration: 0.9, ease: "sine.inOut" }, at + 1.25);
+        if (signal && pulse) {
+          // The dash is entirely outside the path before reset, so no visible jump.
+          flow.set(pulse, { strokeDashoffset: 18 }, at + 0.3)
+            .to(signal, { "--flow-strength": 1, duration: 0.35 }, at + 0.3)
+            .to(pulse, { strokeDashoffset: -100, duration: 1.5, ease: "sine.inOut" }, at + 0.3)
+            .to(signal, { "--flow-strength": 0, duration: 0.5 }, at + 1.6);
+        }
+      });
+      flow.to(diagram.querySelector("[data-plan-fusion]"), { "--fusion-strength": 0.42, duration: 0.8, ease: "sine.inOut" }, 1.6)
+        .to(diagram.querySelector("[data-plan-fusion]"), { "--fusion-strength": 0, duration: 1.25, ease: "sine.inOut" }, 2.4);
+
+      let visible = false;
+      const sync = () => { if (visible && !document.hidden) flow.resume(); else flow.pause(); };
+      const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }, { threshold: 0.15 });
+      observer.observe(diagram);
+      document.addEventListener("visibilitychange", sync);
+      return () => { observer.disconnect(); document.removeEventListener("visibilitychange", sync); flow.kill(); };
+    });
+    return () => media.revert();
+  }, { scope: sectionRef });
+
   return (
     <section
       ref={sectionRef}
@@ -283,13 +325,14 @@ export default function FitnessPlanSection() {
                 <svg
                   aria-hidden="true"
                   className={styles.signal}
+                  data-plan-flow={l.src === "7500" ? 0 : l.src === "7502" ? 1 : l.src === "7501" ? 2 : 3}
                   data-lit={activeCard === (l.src === "7500" ? 0 : l.src === "7502" ? 1 : l.src === "7501" ? 2 : 3)}
                   viewBox={l.src === "7503" ? "0 0 159.633 126.324" : "0 0 179.667 111.167"}
                   preserveAspectRatio="none"
-                  style={{ left: `-${l.inset[1]}%`, top: `-${l.inset[0]}%`, width: `${100 + 2 * l.inset[1]}%`, height: `${100 + 2 * l.inset[0]}%` }}
+                  style={{ ...branchStyle(l.src === "7500" ? 0 : l.src === "7502" ? 1 : l.src === "7501" ? 2 : 3), left: `-${l.inset[1]}%`, top: `-${l.inset[0]}%`, width: `${100 + 2 * l.inset[1]}%`, height: `${100 + 2 * l.inset[0]}%` }}
                 >
                   {[styles.signalTrack, styles.signalPulse].map((className) => (
-                    <path key={className} className={className} fill="none" pathLength={100}
+                    <path key={className} className={className} data-plan-pulse={className === styles.signalPulse ? "" : undefined} fill="none" pathLength={100}
                       d={l.src === "7503" ? "M5.33333 5.33333 L48.3818 54.5936 C61.2169 69.2804 76.7404 81.3815 94.4043 90.4594 L154.3 120.991"
                         : l.src === "7502" ? "M5.33333 5.33333 L62.4102 21.2548 C87.2712 28.1897 109.9225 41.4223 128.173 59.6728 L174.333 105.833"
                         : l.src === "7501" ? "M5.33333 5.33333 L41.9445 44.3799 C64.2398 68.1582 92.8668 85.069 124.453 93.1197 L174.333 105.833"
@@ -318,8 +361,9 @@ export default function FitnessPlanSection() {
               type="button"
               {...cardInteraction(index)}
               data-plan-card={index}
+              data-lit={activeCard === index}
               className={`absolute flex items-start border border-white/20 bg-[#111110] p-[var(--p16)] shadow-[0px_0px_5px_rgba(0,0,0,0.25)] ${styles.card}`}
-              style={{ left: u(c.x), top: u(c.y), width: u(c.w), gap: u(8), borderRadius: u(12) }}
+              style={{ ...branchStyle(index), left: u(c.x), top: u(c.y), width: u(c.w), gap: u(8), borderRadius: u(12) }}
             >
               <Image
                 src={c.icon}
@@ -338,9 +382,10 @@ export default function FitnessPlanSection() {
           {CHIPS.map((ch) => (
             <div
               key={ch.text}
-              data-plan-chip={ch.x < 600 ? (ch.y < 300 ? 0 : 2) : (ch.y < 300 ? 1 : 3)}
-              className="absolute whitespace-nowrap rounded-[36px] border border-white/20 bg-[#232323] px-[var(--p16)] py-[var(--p8)] shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
-              style={{ left: u(ch.x), top: u(ch.y) }}
+              data-plan-chip={chipBranch(ch)}
+              data-lit={activeCard === chipBranch(ch)}
+              className={`absolute whitespace-nowrap rounded-[36px] border border-white/20 bg-[#232323] px-[var(--p16)] py-[var(--p8)] shadow-[0px_0px_5px_rgba(0,0,0,0.25)] ${styles.chip}`}
+              style={{ ...branchStyle(chipBranch(ch)), left: u(ch.x), top: u(ch.y) }}
             >
               <span className="block italic leading-[normal] text-white" style={{ fontSize: `max(10px, ${u(16)})` }}>
                 {ch.text}
@@ -357,8 +402,12 @@ export default function FitnessPlanSection() {
           </div>
           <svg className={styles.mobileConnectors} viewBox="0 0 298 390" aria-hidden="true">
             {MOBILE_LINES.map((path, index) => (
-              <path key={path} d={path} fill="none" stroke="#abc8b5" strokeWidth="0.65"
-                opacity={activeCard === index ? 1 : 0.7} />
+              <g key={path} style={branchStyle(index)}>
+                <path d={path} fill="none" stroke="var(--branch-color)" strokeWidth="0.65" opacity="0.65" />
+                <g className={`${styles.signal} ${styles.mobileSignal}`} data-plan-flow={index} data-lit={activeCard === index}>
+                  <path data-plan-pulse className={styles.signalPulse} d={path} fill="none" pathLength={100} />
+                </g>
+              </g>
             ))}
             {[[101, 76], [177, 66], [108, 301], [172, 328]].map(([x, y]) => (
               <circle key={`${x}-${y}`} cx={x} cy={y} r="1.2" fill="#cce7d5" />
@@ -366,15 +415,16 @@ export default function FitnessPlanSection() {
           </svg>
           {CARDS.map((c, index) => (
             <button key={c.title} type="button" {...cardInteraction(index)} data-plan-card={index}
+              data-lit={activeCard === index}
               className={`${styles.mobileCard} ${styles.card}`}
-              style={{ left: m(MOBILE_CARDS[index].x), top: m(MOBILE_CARDS[index].y) }}>
+              style={{ ...branchStyle(index), left: m(MOBILE_CARDS[index].x), top: m(MOBILE_CARDS[index].y) }}>
               <Image src={c.icon} alt="" width={24} height={24} className={styles.mobileIcon} />
               <span>{c.title}</span>
             </button>
           ))}
           {CHIPS.map((ch) => (
-            <div key={ch.text} data-plan-chip className={styles.mobileChip}
-              style={{ left: m(MOBILE_CHIPS[ch.text][0]), top: m(MOBILE_CHIPS[ch.text][1]) }}>
+            <div key={ch.text} data-plan-chip={chipBranch(ch)} data-lit={activeCard === chipBranch(ch)} className={`${styles.mobileChip} ${styles.chip}`}
+              style={{ ...branchStyle(chipBranch(ch)), left: m(MOBILE_CHIPS[ch.text][0]), top: m(MOBILE_CHIPS[ch.text][1]) }}>
               <span className={ch.y < 300 ? styles.mobileItalic : undefined}>{ch.text}</span>
             </div>
           ))}

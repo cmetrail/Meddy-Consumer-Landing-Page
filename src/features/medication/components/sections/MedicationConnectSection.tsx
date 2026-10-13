@@ -105,7 +105,7 @@ export default function MedicationConnectSection() {
         </div>
 
         {/* Heading (left) */}
-        <div className="absolute flex flex-col leading-[normal]" style={{ left: u(75), top: u(74) }}>
+        <div className="absolute flex flex-col leading-[normal]" style={{ left: 40, top: u(74) }}>
           <span className="whitespace-nowrap text-[#A1AAA3]" style={{ fontSize: `max(22px, ${u(36)})` }}>Keep your medications</span>
           <span className="comprehensive-serif whitespace-nowrap italic text-[#46524B]" style={{ fontSize: `max(24px, ${u(38)})` }}>
             connected to your care.
@@ -193,15 +193,15 @@ export default function MedicationConnectSection() {
       {/* Mobile / tablet (<lg) — Figma node 12306:29654 (402 wide); 1 design px = --m */}
       <div
         className="mx-auto flex max-w-[500px] flex-col items-center px-[var(--p20)] py-[var(--p64)] lg:hidden"
-        style={{ ["--m" as string]: "calc(min(100vw, 500px) / 402)", ["--p20" as string]: m(20), ["--p64" as string]: m(64), gap: m(32) } as React.CSSProperties}
+        style={{ ["--m" as string]: "calc(min(100vw, 500px) / 402)", ["--p20" as string]: "20px", ["--p64" as string]: m(64), gap: m(32) } as React.CSSProperties}
       >
         {/* Heading */}
-        <div className="flex flex-col items-center whitespace-nowrap text-center leading-[normal]" style={{ gap: m(16) }}>
-          <div className="flex flex-col items-center">
+        <div className="flex w-full flex-col items-start whitespace-nowrap text-left leading-[normal]" style={{ gap: m(16) }}>
+          <div className="flex flex-col items-start">
             <span className="text-[#A1AAA3]" style={{ fontSize: m(24) }}>Keep your medications</span>
             <span className="comprehensive-serif italic text-[#46524B]" style={{ fontSize: m(32) }}>connected to your care.</span>
           </div>
-          <div className="flex flex-col items-center uppercase" style={{ gap: m(5), fontSize: m(16) }}>
+          <div className="flex flex-col items-start uppercase" style={{ gap: m(5), fontSize: m(16) }}>
             <span className="text-[#A1AAA3]">One place to understand</span>
             <span className="font-medium italic text-[#6E7A72]">what you&apos;re taking and why.</span>
           </div>

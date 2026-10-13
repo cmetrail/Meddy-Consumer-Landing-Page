@@ -1,84 +1,111 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { SCROLL_MOTION } from "@/lib/motion";
+import styles from "./LongevityPhysicianPreventionSection.module.css";
 
-// Figma: desktop node 12613:14556 (1440 x ~791, #FAFFF9) + mobile node 12721:18074 (402 wide, #FAF9F5).
-// Desktop: left column (label + title on top, copy + button at the bottom) | right column (vertical rule + photo + caption).
-// Mobile: label + title, rule + photo + caption, then the copy with a green tab and the button. The left column uses
-// `contents` on mobile so its two blocks reorder around the photo.
-const ease = [0.22, 1, 0.36, 1] as const;
-const A = "/longevity";
-
-const reveal = (delay = 0) => ({
-  initial: { opacity: 0, y: 40 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.9, ease, delay },
-});
-
-/** the rotated 143px rule with its diamond end; `m` = mobile (thinner) variant */
-function Rule({ m }: { m?: boolean }) {
-  return (
-    <div className="flex h-[143px] w-0 shrink-0 items-center justify-center">
-      <div className="flex-none rotate-90">
-        <div className="relative h-0 w-[143px]">
-          <div className="absolute" style={{ inset: m ? "-5.77px -4.04% -5.77px 0" : "-14.43px -10.09% -14.43px 0" }}>
-            <Image src={`${A}/${m ? "prev-line-m" : "prev-line"}.svg`} alt="" fill unoptimized className="block max-w-none" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+const steps = [
+  { image: "prev-photo.jpg", mobileImage: "prev-photo-m.jpg", caption: "Understand your risks", alt: "A physician talking with a patient" },
+  { image: "img2.jpeg", caption: "Build your plan", alt: "An athlete sitting in a locker room after a workout" },
+  { image: "img3.jpg", caption: "Follow your progress", alt: "A woman enjoying a cup of tea in a sunlit kitchen" },
+  { image: "img4.jpg", caption: "Adjust as your health changes", alt: "A smiling woman holding a water bottle after exercise" },
+];
 
 export default function LongevityPhysicianPreventionSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current!;
+    const media = gsap.matchMedia();
+    media.add(SCROLL_MOTION, () => {
+      const cards = gsap.utils.toArray<HTMLElement>(`.${styles.step}`, section);
+      const rule = section.querySelector(`.${styles.rule}`);
+      gsap.set(cards.slice(1), { autoAlpha: 0, y: 24 });
+      const timeline = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "bottom bottom",
+          // Direct scrubbing: stopping the scroll also stops the reveal.
+          scrub: true,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const stage = self.progress >= 0.75 ? 3 : self.progress >= 0.5 ? 2 : self.progress >= 0.25 ? 1 : 0;
+            section.dataset.stage = String(stage);
+            cards.forEach((card, index) => card.setAttribute("aria-hidden", String(index !== stage)));
+          },
+        },
+      });
+      const heights = ["35%", "55%", "100%"];
+      cards.slice(1).forEach((card, index) => {
+        const start = 0.22 + index * 0.25;
+        timeline
+          .to(cards[index], { autoAlpha: 0, y: -24, duration: 0.06 }, start)
+          .to(card, { autoAlpha: 1, y: 0, duration: 0.06 }, start)
+          .to(rule, { height: heights[index], duration: 0.06 }, start);
+      });
+      // Leave time to read the final step before the section releases.
+      timeline.to({}, { duration: 0.22 });
+      // Native mobile scrolling has no Lenis provider to refresh measurements.
+      // Recalculate after viewport changes and when fonts finish laying out.
+      let refreshFrame = 0;
+      let disposed = false;
+      const refresh = () => {
+        if (disposed) return;
+        cancelAnimationFrame(refreshFrame);
+        refreshFrame = requestAnimationFrame(() => ScrollTrigger.refresh());
+      };
+      const observer = new ResizeObserver(refresh);
+      observer.observe(section);
+      document.fonts.ready.then(refresh);
+      window.addEventListener("load", refresh);
+      return () => {
+        disposed = true;
+        observer.disconnect();
+        window.removeEventListener("load", refresh);
+        cancelAnimationFrame(refreshFrame);
+        delete section.dataset.stage;
+        cards.forEach((card) => card.removeAttribute("aria-hidden"));
+      };
+    });
+    return () => media.revert();
+  }, []);
+
   return (
-    <section className="w-full bg-[#FAF9F5] lg:bg-[#FAFFF9]">
-      {/* same container as the header */}
-      <div className="mx-auto flex w-full max-w-360 flex-col gap-8 px-5 py-16 lg:flex-row lg:items-start lg:gap-12 lg:px-10 lg:py-[120px]">
-        <div className="contents lg:flex lg:min-w-px lg:flex-1 lg:flex-col lg:items-start lg:justify-between lg:self-stretch">
-          {/* label + title */}
-          <motion.div className="order-1 flex w-full flex-col items-start gap-4 lg:order-none lg:w-[428px] lg:gap-5" {...reveal()}>
-            <div className="flex items-center gap-2 lg:gap-2.5">
-              <span className="block size-5 shrink-0 bg-[#17925A] lg:size-[22px]" />
-              <p className="whitespace-nowrap text-[14px] font-normal leading-[1.5] text-[#6E7A72]">Longitudinal doctor care</p>
+    <section ref={sectionRef} className={styles.section} aria-labelledby="longevity-prevention-title">
+      <div className={styles.sticky}>
+        <div className={styles.layout}>
+          <div className={styles.heading}>
+            <div className={styles.label}>
+              <span aria-hidden="true" />
+              <p>Longitudinal doctor care</p>
             </div>
-            <h2 className="comprehensive-serif w-full text-[32px] font-normal italic leading-[1.5] text-[#46524B] lg:text-[64px]">Physician prevention</h2>
-          </motion.div>
-
-          {/* copy + button */}
-          <motion.div className="order-3 flex w-full flex-col items-start gap-8 lg:order-none lg:gap-6" {...reveal(0.1)}>
-            <div className="flex w-full items-start gap-[13px] lg:gap-0">
-              <div className="relative w-2 shrink-0 self-stretch lg:hidden">
-                <Image src={`${A}/prev-bar-m.svg`} alt="" fill unoptimized className="block max-w-none" />
-              </div>
-              <div className="min-w-px flex-1 whitespace-pre-wrap text-[20px] font-medium leading-[1.5] lg:text-[32px]">
-                <p className="text-[#6E7A72]">{"Prevention isn't one visit. "}</p>
-                <p className="comprehensive-serif font-normal italic text-[#17925A]">{"It's an ongoing process."}</p>
-              </div>
-            </div>
-            <button type="button" className="rounded-[35px] bg-[#17925A] px-6 py-4 text-[20px] font-normal leading-[normal] text-white transition-opacity hover:opacity-85">
-              Start Preventive Care
-            </button>
-          </motion.div>
-        </div>
-
-        {/* rule + photo + caption */}
-        <div className="order-2 flex w-full items-start justify-center gap-[26px] lg:order-none lg:min-w-px lg:flex-1 lg:justify-start lg:gap-12">
-          <div className="lg:hidden">
-            <Rule m />
+            <h2 id="longevity-prevention-title" className="comprehensive-serif">Physician prevention</h2>
           </div>
-          <div className="hidden lg:block">
-            <Rule />
-          </div>
-          <motion.div className="flex min-w-px flex-1 flex-col items-start gap-2 lg:gap-4" {...reveal(0.15)}>
-            <div className="relative h-[341px] w-full shrink-0 overflow-hidden rounded-[10px] lg:h-[487px]">
-              <Image src={`${A}/prev-photo-m.jpg`} alt="A physician talking with a patient" fill sizes="402px" className="pointer-events-none object-cover lg:hidden" />
-              <Image src={`${A}/prev-photo.jpg`} alt="A physician talking with a patient" fill sizes="(min-width: 1024px) 640px, 402px" className="pointer-events-none hidden object-cover lg:block" />
+          <div className={styles.copy}>
+            <div className={styles.message}>
+              <p>Prevention isn&apos;t one visit.</p>
+              <p className="comprehensive-serif">It&apos;s an ongoing process.</p>
             </div>
-            <p className="comprehensive-serif w-full text-[20px] font-normal italic leading-[1.5] text-[#6E7A72] lg:text-[32px]">Understand your risks</p>
-          </motion.div>
+            <button type="button" className={styles.button}>Start Preventive Care</button>
+          </div>
+          <div className={styles.visual}>
+            <div className={styles.ruleTrack} aria-hidden="true"><div className={styles.rule} /></div>
+            <div className={styles.steps}>
+              {steps.map((step) => (
+                <figure key={step.image} className={styles.step}>
+                  <div className={styles.photo}>
+                    {step.mobileImage && <Image src={`/longevity/${step.mobileImage}`} alt={step.alt} fill sizes="(max-width: 1023px) 90vw, 640px" className={styles.mobilePhoto} />}
+                    <Image src={`/longevity/${step.image}`} alt={step.alt} fill sizes="(min-width: 1440px) 592px, (min-width: 1024px) 44vw, 90vw" className={step.mobileImage ? styles.desktopPhoto : undefined} />
+                  </div>
+                  <figcaption className="comprehensive-serif">{step.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

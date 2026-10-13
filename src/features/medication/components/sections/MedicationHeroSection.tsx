@@ -3,128 +3,40 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Header from "@/components/Header";
+import Link from "next/link";
+import styles from "./MedicationHeroSection.module.css";
 import { MoveRight } from "lucide-react";
 
-// lg+: Figma node 11274:1211 "Desktop - 356" (1440 x 1028) scaled by --u so the
-// hero always fits one viewport:
-//   --u = min(100vw, 1440px) / 1440  vs  100dvh / 1028, whichever is smaller
-const u = (n: number) => `calc(${n} * var(--u))`;
-
-const BG = "linear-gradient(178deg, rgb(81, 123, 95) 0%, rgb(164, 210, 188) 100%)";
-
-function SleepBar({ fill, variant }: { fill: number; variant: "before" | "after" }) {
-  const isAfter = variant === "after";
-  return (
-    <div
-      className="relative shrink-0 rounded-[29px] lg:h-[var(--bh)] lg:w-[var(--bw)]"
-      style={{
-        height: 21,
-        width: 160,
-        ["--bh" as string]: u(21),
-        ["--bw" as string]: u(242),
-        background: isAfter ? "rgba(76, 131, 76, 0.1)" : "#A8C9B7",
-        border: `1px solid ${isAfter ? "rgba(76, 131, 76, 0.5)" : "#B4E8BC"}`,
-      }}
-    >
-      <div
-        className="absolute left-[-1px] top-[-1px] h-[calc(100%+2px)] rounded-[29px]"
-        style={{ width: `${(fill / 242) * 100}%`, background: isAfter ? "#4C834C" : "#D3FBD3" }}
-      />
-    </div>
-  );
-}
+const BG = "linear-gradient(178deg, #577e63 0%, #a4d2bc 100%)";
 
 function Cards() {
   return (
-    <>
-      {/* Blood pressure */}
-      <div
-        className="flex w-full flex-col justify-between rounded-[21px] border border-white/30 p-5 backdrop-blur-[10px] lg:h-[var(--h)] lg:min-w-0 lg:flex-[1_1_var(--w)] lg:p-[var(--p)]"
-        style={{
-          background: "rgba(217, 217, 217, 0.2)",
-          ["--w" as string]: u(420),
-          ["--h" as string]: u(186),
-          ["--p" as string]: `${u(23)} ${u(28)} ${u(29)} ${u(29)}`,
-        }}
-      >
-        <span className="text-[14px] uppercase leading-[1.42] text-white lg:text-[length:max(12px,var(--d))]" style={{ ["--d" as string]: u(16) }}>
-          Blood pressure
-        </span>
-        <div className="mt-4 flex items-center justify-between gap-3 lg:mt-0 lg:justify-start lg:gap-[var(--g24)]" style={{ ["--g24" as string]: u(24) }}>
-          <div className="flex flex-col lg:gap-[var(--g7)]" style={{ ["--g7" as string]: u(7) }}>
-            <span className="text-[28px] leading-none text-white lg:text-[length:max(24px,var(--d))]" style={{ ["--d" as string]: u(40) }}>132/84</span>
-            <span className="mt-1 text-[11px] text-white lg:mt-0 lg:text-[length:max(10px,var(--d))]" style={{ ["--d" as string]: u(12) }}>mmHg</span>
-          </div>
-          <MoveRight className="shrink-0 text-white" style={{ width: u(48), height: u(48) }} />
-          <div className="flex flex-col lg:gap-[var(--g7)]" style={{ ["--g7" as string]: u(7) }}>
-            <span className="text-[28px] leading-none text-white lg:text-[length:max(24px,var(--d))]" style={{ ["--d" as string]: u(40) }}>128/80</span>
-            <span className="mt-1 text-[11px] text-white lg:mt-0 lg:text-[length:max(10px,var(--d))]" style={{ ["--d" as string]: u(12) }}>mmHg</span>
-          </div>
+    <div className={styles.cards}>
+      <div className={styles.card}>
+        <span className={styles.cardTitle}>Blood pressure</span>
+        <div className={styles.pressure}>
+          <div><span className={styles.metric}>132/84</span><span className={styles.unit}>mmHg</span></div>
+          <MoveRight aria-hidden="true" className={styles.pressureArrow} strokeWidth={1} />
+          <div><span className={styles.metric}>128/80</span><span className={styles.unit}>mmHg</span></div>
         </div>
       </div>
-
-      {/* Resting heart rate */}
-      <div
-        className="flex w-full flex-col rounded-[21px] border border-white/30 p-5 backdrop-blur-[10px] lg:h-[var(--h)] lg:min-w-0 lg:flex-[1_1_var(--w)] lg:p-[var(--p)]"
-        style={{
-          background: "rgba(217, 217, 217, 0.2)",
-          ["--w" as string]: u(420),
-          ["--h" as string]: u(186),
-          ["--p" as string]: `${u(23)} ${u(28)} ${u(16)}`,
-        }}
-      >
-        <span className="text-[14px] uppercase leading-[1.42] text-white lg:text-[length:max(12px,var(--d))]" style={{ ["--d" as string]: u(16) }}>
-          Resting heart rate
-        </span>
-        <div className="mt-5 flex flex-col items-center gap-4 lg:mt-[var(--g25)] lg:gap-[var(--g18)]" style={{ ["--g18" as string]: u(18), ["--g25" as string]: u(25) }}>
-          <div className="w-full max-w-[363px] lg:w-[var(--w)]" style={{ ["--w" as string]: u(363) }}>
-            <Image src="/medication/heart-rate-line-new.svg" alt="" width={364} height={38} unoptimized className="h-auto w-full" />
-          </div>
-          <div className="flex items-center gap-3 lg:gap-[var(--g11)]" style={{ ["--g11" as string]: u(11) }}>
-            <span className="flex items-end gap-1 lg:gap-[var(--g9)]" style={{ ["--g9" as string]: u(9) }}>
-              <span className="text-[20px] leading-none text-white lg:text-[length:max(18px,var(--d))]" style={{ ["--d" as string]: u(24) }}>72</span>
-              <span className="text-[11px] text-white lg:text-[length:max(10px,var(--d))]" style={{ ["--d" as string]: u(12) }}>bpm</span>
-            </span>
-            <MoveRight className="shrink-0 text-white" style={{ width: u(24), height: u(24) }} />
-            <span className="flex items-end gap-1 lg:gap-[var(--g9)]" style={{ ["--g9" as string]: u(9) }}>
-              <span className="text-[20px] leading-none text-white lg:text-[length:max(18px,var(--d))]" style={{ ["--d" as string]: u(24) }}>68</span>
-              <span className="text-[11px] text-white lg:text-[length:max(10px,var(--d))]" style={{ ["--d" as string]: u(12) }}>bpm</span>
-            </span>
-          </div>
+      <div className={`${styles.card} ${styles.heartCard}`}>
+        <span className={styles.cardTitle}>Resting heart rate</span>
+        <Image src="/medication/heart-rate-line-new.svg" alt="" width={364} height={35} unoptimized className={styles.chart} />
+        <div className={styles.heartValues}>
+          <span className={styles.metric}>72</span><span className={styles.bpm}>bpm</span>
+          <MoveRight aria-hidden="true" className={styles.heartArrow} strokeWidth={1} />
+          <span className={styles.metric}>68</span><span className={styles.bpm}>bpm</span>
         </div>
       </div>
-
-      {/* Sleep Duration */}
-      <div
-        className="flex w-full flex-col rounded-[21px] border border-white/30 p-5 backdrop-blur-[10px] lg:h-[var(--h)] lg:min-w-0 lg:flex-[1_1_var(--w)] lg:p-[var(--p)]"
-        style={{
-          background: "rgba(217, 217, 217, 0.2)",
-          ["--w" as string]: u(410),
-          ["--h" as string]: u(186),
-          ["--p" as string]: `${u(23)} ${u(19)} ${u(16)}`,
-        }}
-      >
-        <span className="text-[14px] uppercase leading-[1.42] text-white lg:text-[length:max(12px,var(--d))]" style={{ ["--d" as string]: u(16) }}>
-          Sleep Duration
-        </span>
-        <div className="mt-6 flex flex-col justify-center gap-6 lg:mt-0 lg:flex-1 lg:gap-[var(--g36)]" style={{ ["--g36" as string]: u(36) }}>
-          <div className="flex items-center gap-3 lg:gap-[var(--g10)]" style={{ ["--g10" as string]: u(10) }}>
-            <span className="w-[60px] shrink-0 text-[13px] uppercase text-[#F4F4F5] lg:w-[var(--w)] lg:text-[length:max(12px,var(--d))]" style={{ ["--w" as string]: u(57), ["--d" as string]: u(14) }}>
-              Before
-            </span>
-            <SleepBar fill={98} variant="before" />
-            <span className="shrink-0 text-[14px] text-[#D3FBD3] lg:text-[length:max(13px,var(--d))]" style={{ ["--d" as string]: u(16) }}>6h 12m</span>
-          </div>
-          <div className="flex items-center gap-3 lg:gap-[var(--g10)]" style={{ ["--g10" as string]: u(10) }}>
-            <span className="w-[60px] shrink-0 text-[13px] font-semibold uppercase text-[#F4F4F5] lg:w-[var(--w)] lg:text-[length:max(12px,var(--d))]" style={{ ["--w" as string]: u(57), ["--d" as string]: u(16) }}>
-              After
-            </span>
-            <SleepBar fill={189} variant="after" />
-            <span className="shrink-0 text-[14px] font-semibold text-[#4C834C] lg:text-[length:max(13px,var(--d))]" style={{ ["--d" as string]: u(16) }}>7h 18m</span>
-          </div>
+      <div className={`${styles.card} ${styles.sleepCard}`}>
+        <span className={styles.cardTitle}>Sleep duration</span>
+        <div className={styles.sleepRows}>
+          <div className={styles.sleepRow}><span>Before</span><div className={styles.sleepTrack}><div className={styles.beforeFill} /></div><span className={styles.beforeTime}>6h 12m</span></div>
+          <div className={styles.sleepRow}><span>After</span><div className={`${styles.sleepTrack} ${styles.afterTrack}`}><div className={styles.afterFill} /></div><span className={styles.afterTime}>7h 18m</span></div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -244,84 +156,34 @@ function MobileCards() {
 
 export default function MedicationHeroSection() {
   return (
+    <>
+      <div className={styles.desktopHeader}><Header variant="dark" /></div>
     <section
-      className="relative flex min-h-[calc(875*var(--m))] w-full flex-col overflow-hidden text-white lg:block lg:h-[calc(1028*var(--u))] lg:min-h-0"
+      className={`${styles.hero} relative flex min-h-[calc(875*var(--m))] w-full flex-col overflow-hidden text-white lg:block lg:min-h-0`}
       style={
         {
-          "--u": "min(calc(min(100vw, 1440px) * 0.000694444), calc(100dvh * 0.000972763))",
+          "--u": "calc(min(100vw, 1440px) / 1440)",
           "--m": "calc(min(100vw, 500px) / 402)",
           background: BG,
         } as React.CSSProperties
       }
     >
-      <div className="relative z-30 shrink-0">
+      <div className="relative z-30 shrink-0 lg:hidden">
         <Header variant="dark" />
       </div>
 
       {/* Screen-reader heading */}
       <h1 className="sr-only">Know what your medications are actually doing.</h1>
 
-      {/* Desktop (lg+) — Figma node 11274:1211, absolute layout on the 1440 frame */}
-      <div className="absolute inset-0 z-10 hidden lg:block">
-        <div className="relative mx-auto h-full" style={{ width: u(1440) }}>
-          {/* Big serif word, behind the person */}
-          <div className="absolute" style={{ left: u(204), top: u(152), zIndex: 0 }}>
-            <span className="comprehensive-serif block whitespace-nowrap italic text-[#DCFFD8]" style={{ fontSize: u(188), lineHeight: 1.45 }}>
-              medications
-            </span>
-          </div>
-
-          {/* Person photo: Figma crops a 1199 x 1592 cut-out inside a 603 x 1030 box (bleeds off the bottom) */}
-          <div className="absolute overflow-hidden" style={{ left: u(472), top: u(246), width: u(603), height: u(1030), zIndex: 10 }}>
-            <Image
-              src="/medication/medication-hero-person-new.png"
-              alt=""
-              width={1199}
-              height={1592}
-              priority
-              sizes="1000px"
-              className="absolute max-w-none"
-              style={{ left: "-41.22%", top: "-26.55%", width: "162.86%", height: "126.58%" }}
-            />
-          </div>
-
-          <div className="absolute font-medium uppercase text-white" style={{ left: u(916), top: u(398), zIndex: 20 }}>
-            <span className="block whitespace-nowrap" style={{ fontSize: u(40), lineHeight: 1.1241 }}>are actually doing.</span>
-          </div>
-        </div>
-
-        {/* Left copy + cards share the header container (max-w-360, px-10) */}
-        <div className="absolute inset-0 mx-auto max-w-360 px-10">
-          <div className="relative h-full">
-          {/* Heading + copy + CTA */}
-          <div className="absolute font-medium uppercase text-white" style={{ left: 0, top: u(172), zIndex: 20 }}>
-            <span className="block whitespace-nowrap" style={{ fontSize: u(40), lineHeight: 1.1241 }}>Know what your</span>
-          </div>
-          <p className="absolute text-white" style={{ left: 0, top: u(470), width: u(412), fontSize: `max(13px, ${u(16)})`, lineHeight: 1.47, zIndex: 20 }}>
-            Meddy helps your physician follow what happens before and after a medication starts or
-            changes—so your treatment can evolve based on how you respond.
-          </p>
-          <button
-            type="button"
-            className="absolute flex items-center justify-center whitespace-nowrap rounded-[var(--r)] bg-white px-[var(--px)] py-[var(--py)] font-medium uppercase leading-[1.1241] text-[#5D5D5D] shadow-[0px_4px_2px_rgba(34,33,33,0.25)] transition-opacity hover:opacity-90"
-            style={{
-              left: 0,
-              top: u(600),
-              zIndex: 20,
-              fontSize: `max(11px, ${u(14)})`,
-              ["--r" as string]: u(10),
-              ["--px" as string]: u(33),
-              ["--py" as string]: u(13),
-            }}
-          >
-            Start Physician Care
-          </button>
-
-          {/* Bottom metric cards */}
-          <div className="absolute inset-x-0 flex items-stretch" style={{ top: u(786), gap: u(21), zIndex: 20 }}>
-            <Cards />
-          </div>
-          </div>
+      <div className={styles.desktop}>
+        <div className={styles.canvas}>
+          <span className={styles.intro}>Know what your</span>
+          <span className={styles.medications}>medications</span>
+          <Image src="/medication/medication-hero-person-new.png" alt="Hand holding a green medication capsule" width={1199} height={1592} preload unoptimized sizes="(max-width: 1440px) 68vw, 980px" className={styles.hand} />
+          <span className={styles.outro}>Are actually doing</span>
+          <p className={styles.description}>Meddy helps your physician follow what happens before and after a medication starts or changes—so your treatment can evolve based on how you respond.</p>
+          <Link href="/book-consultation" className={styles.cta}>Start Physician Care</Link>
+          <Cards />
         </div>
       </div>
 
@@ -345,7 +207,7 @@ export default function MedicationHeroSection() {
         <div className="flex flex-col gap-5 px-5">
           <div className="flex flex-col gap-[35px]">
             <p className="leading-[normal]">
-              <span className="block px-[5px] text-[24px] font-medium uppercase leading-[1.1241] text-white">Know what your</span>
+              <span className="block text-[24px] font-medium uppercase leading-[1.1241] text-white">Know what your</span>
               <span className="comprehensive-serif text-[42px] italic leading-[normal] text-[#DCFFD8]">medications </span>
               <span className="text-[24px] font-medium uppercase leading-[1.1241] text-white">are actually doing.</span>
             </p>
@@ -354,12 +216,9 @@ export default function MedicationHeroSection() {
               changes—so your treatment can evolve based on how you respond.
             </p>
           </div>
-          <button
-            type="button"
-            className="w-fit rounded-[49px] bg-white px-5 py-3 text-[16px] leading-[normal] text-[#17925A]"
-          >
+          <Link href="/book-consultation" className="w-fit rounded-[49px] bg-white px-5 py-3 text-[16px] leading-[normal] text-[#17925A]">
             Start Physician Care
-          </button>
+          </Link>
         </div>
 
         <div className="mt-auto">
@@ -367,5 +226,6 @@ export default function MedicationHeroSection() {
         </div>
       </div>
     </section>
+    </>
   );
 }

@@ -50,7 +50,7 @@ export default function LongevityFooterSection() {
       className="relative w-full"
       style={{ background: "linear-gradient(to right, #15211B 0%, #1D3429 93.54%)" }}
     >
-      <FooterItems noTopMargin />
+      <FooterItems noTopMargin mobileReference mobileVariant="longevity" />
     </section>
   );
 }

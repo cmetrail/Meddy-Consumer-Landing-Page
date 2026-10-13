@@ -16,7 +16,14 @@ import BeforeYouVisitStep from "../components/steps/BeforeYouVisitStep";
 import ConfirmationStep from "../components/steps/ConfirmationStep";
 
 const STEP_FIELDS: (keyof BookConsultationForm)[][] = [
-  ["firstName", "lastName", "email", "mobileNumber", "stateOfResidence", "is18OrOlder"],
+  [
+    "firstName",
+    "lastName",
+    "email",
+    "mobileNumber",
+    "stateOfResidence",
+    "is18OrOlder",
+  ],
   ["goals"],
   ["date", "time", "agreeTerms"],
   ["telehealthConsent", "privacyPractices"],
@@ -178,7 +185,9 @@ export const BookConsultationPage = () => {
                     onClick={next}
                     className="w-full rounded-[10px] bg-[#17925a] px-[20px] py-[12px] text-[16px] font-medium uppercase leading-[1.5] text-white shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90 lg:w-auto lg:h-[65px] lg:min-w-[280px] xl:min-w-[377px] lg:px-[24px] lg:py-[9px] lg:text-[20px] lg:font-bold"
                   >
-                    {step === STEPS.length - 1 ? "Get my visit link" : "Continue"}
+                    {step === STEPS.length - 1
+                      ? "Get my visit link"
+                      : "Continue"}
                   </button>
                 </div>
               )}

@@ -283,7 +283,7 @@ export default function A1cTrend({
         }
         @media (max-width: 1023px) {
           .a1c-card { transform: translate(-50%, -100%) scale(0.85); }
-          .a1c-pen { --pen-height: clamp(84px, 26vw, 136px); left: 53.78%; top: calc(44% - var(--pen-height) - 22px); width: clamp(64px, 19vw, 96px); height: var(--pen-height); margin-left: calc(clamp(64px, 19vw, 96px) / -2); }
+          .a1c-pen { --pen-height: clamp(84px, 26vw, 136px); --pen-width: clamp(64px, 19vw, 96px); left: calc(53.78% - var(--pen-width) / 2); top: calc(44% - var(--pen-height) - 22px); width: var(--pen-width); height: var(--pen-height); }
           .a1c-content [data-graph-chart] { min-height: 220px; }
           .a1c-treatment { font-size: 9px; }
           .a1c-phases { font-size: 10px; line-height: 1.5; gap: 8px; }

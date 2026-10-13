@@ -68,9 +68,15 @@ export default function FitnessPhysician({ src, active, sizes }: { src: string; 
   }, [src]);
 
   return (
-    <div className={styles.physician}>
+    <div className={styles.physician} data-lit={active !== null}>
       <Image src={src} alt="" fill sizes={sizes} className="object-cover" />
       <canvas ref={canvasRef} className={styles.particles} aria-hidden="true" />
+      <div data-plan-fusion className={styles.fusionGlow} aria-hidden="true">
+        <Image src={src} alt="" fill sizes={sizes} className="object-cover" />
+      </div>
+      <div className={styles.focusGlow} data-lit={active !== null} aria-hidden="true">
+        <Image src={src} alt="" fill sizes={sizes} className="object-cover" />
+      </div>
       {[0, 1, 2, 3].map((area) => (
         <div key={area} className={styles.glow} data-area={area} data-lit={active === area} aria-hidden="true">
           <Image src={src} alt="" fill sizes={sizes} className="object-cover" />

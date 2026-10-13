@@ -2,6 +2,10 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import layoutStyles from "../../CareLayout.module.css";
+import buttonStyles from "./CareButton.module.css";
+import styles from "./CareAccessSection.module.css";
+import CareBusinessHoursSection from "./CareBusinessHoursSection";
 import { motion } from "framer-motion";
 import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
@@ -28,7 +32,7 @@ const HEADLINE_IMAGES = [
 
 function HeadlineImage({ src, alt }: { src: string; alt: string }) {
   return (
-    <span className="relative inline-block h-[48px] w-[66px] shrink-0 overflow-hidden rounded-[6px] sm:h-[64px] sm:w-[88px] lg:h-[81px] lg:w-[112px]">
+    <span className={`${styles.headlineImage} relative inline-block h-[48px] w-[66px] shrink-0 overflow-hidden rounded-[6px] sm:h-[64px] sm:w-[88px] lg:h-[81px] lg:w-[112px]`}>
       <Image src={src} alt={alt} fill sizes="112px" className="object-cover" />
     </span>
   );
@@ -36,7 +40,7 @@ function HeadlineImage({ src, alt }: { src: string; alt: string }) {
 
 function HeadlineWord({ children }: { children: React.ReactNode }) {
   return (
-    <span className="font-medium uppercase leading-[100%] text-[#46524B] text-[32px] sm:text-[48px] lg:text-[64px]">
+    <span className={`${styles.headlineWord} font-medium uppercase leading-[100%] text-[#46524B] text-[32px] sm:text-[48px] lg:text-[64px]`}>
       {children}
     </span>
   );
@@ -75,11 +79,12 @@ export default function CareAccessSection() {
   );
 
   return (
-    <section className="w-full bg-[#FAF9F5]">
-      <div className="mx-auto w-full max-w-360 px-5 pt-16 lg:px-[75px] lg:pt-24">
+    <>
+    <section className={`${styles.section} w-full bg-[#FAF9F5]`}>
+      <div className={`${layoutStyles.rail} ${styles.content} pt-16 lg:pt-24`}>
         {/* Top-right -Meddy */}
         <motion.div
-          className="text-right"
+          className={`${styles.signature} text-right`}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
@@ -91,32 +96,32 @@ export default function CareAccessSection() {
         </motion.div>
 
         {/* Divider below -Meddy */}
-        <div className="mt-3 h-px w-full bg-[#797979]" />
+        <div className={`${styles.divider} mt-3 h-px w-full bg-[#797979]`} />
 
         {/* Headline + numbered list */}
-        <div className="mt-10 flex flex-col gap-14 lg:mt-[98px] lg:flex-row lg:justify-between">
+        <div className={`${styles.mainRow} mt-10 flex flex-col gap-14 lg:mt-[98px] lg:flex-row lg:justify-between`}>
           <motion.div
-            className="flex flex-col gap-4"
+            className={`${styles.headline} flex flex-col gap-4`}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.8, ease }}
           >
-            <div className="flex items-center gap-4 lg:gap-6">
+            <div className={`${styles.headlineRow} flex items-center gap-4 lg:gap-6`}>
               <HeadlineWord>Access</HeadlineWord>
               <HeadlineImage {...HEADLINE_IMAGES[0]} />
               <HeadlineWord>when</HeadlineWord>
             </div>
-            <div className="flex items-center gap-4 lg:gap-6">
+            <div className={`${styles.headlineRow} flex items-center gap-4 lg:gap-6`}>
               <HeadlineWord>You</HeadlineWord>
               <HeadlineImage {...HEADLINE_IMAGES[1]} />
               <HeadlineWord>Need it.</HeadlineWord>
             </div>
-            <div className="flex items-center gap-4 lg:gap-6">
+            <div className={`${styles.headlineRow} flex items-center gap-4 lg:gap-6`}>
               <HeadlineWord>Continuity</HeadlineWord>
               <HeadlineImage {...HEADLINE_IMAGES[2]} />
             </div>
-            <div className="flex items-center gap-4 lg:gap-6">
+            <div className={`${styles.headlineRow} flex items-center gap-4 lg:gap-6`}>
               <HeadlineWord>when</HeadlineWord>
               <HeadlineWord>You</HeadlineWord>
               <HeadlineWord>Don&rsquo;t.</HeadlineWord>
@@ -125,7 +130,7 @@ export default function CareAccessSection() {
 
           {/* Numbered list */}
           <motion.div
-            className="flex w-full flex-col lg:w-[535px]"
+            className={`${styles.list} flex w-full flex-col lg:w-[535px]`}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
@@ -133,11 +138,11 @@ export default function CareAccessSection() {
           >
             {LIST_ITEMS.map((label, i) => (
               <div key={label}>
-                <div className="flex items-center justify-between py-4 lg:py-5">
-                  <span className="w-[27px] text-center text-[#A1AAA3] text-[18px] lg:text-[24px] leading-[100%]">
+                <div className={`${styles.listRow} flex items-center justify-between py-4 lg:py-5`}>
+                  <span className={`${styles.number} w-[27px] text-center text-[#A1AAA3] text-[18px] lg:text-[24px] leading-[100%]`}>
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="font-dm-serif italic text-right text-[#6E7A72] text-[24px] lg:text-[32px] leading-[100%]">
+                  <span className={`${styles.listLabel} font-dm-serif italic text-right text-[#6E7A72] text-[24px] lg:text-[32px] leading-[100%]`}>
                     {label}
                   </span>
                 </div>
@@ -148,18 +153,18 @@ export default function CareAccessSection() {
         </div>
 
         {/* Bottom row: italic + paragraph (left), CTA (right) */}
-        <div className="mt-16 flex flex-col gap-10 pb-16 lg:mt-20 lg:flex-row lg:items-end lg:justify-between lg:pb-20">
+        <div className={`${styles.bottomRow} mt-16 flex flex-col gap-10 pb-16 lg:mt-20 lg:flex-row lg:items-end lg:justify-between lg:pb-20`}>
           <motion.div
-            className="flex max-w-[670px] flex-col gap-4"
+            className={`${styles.summary} flex max-w-[670px] flex-col gap-4`}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.8, ease }}
           >
-            <p className="italic leading-[120%] text-[#6E7A72] text-[24px] lg:text-[32px]">
+            <p className={`${styles.summaryLead} italic leading-[120%] text-[#6E7A72] text-[24px] lg:text-[32px]`}>
               Appointments are only one part of your care.
             </p>
-            <p className="max-w-[302px] text-[#6E7A72] font-normal leading-[150%] text-[16px]">
+            <p className={`${styles.summaryCopy} max-w-[302px] text-[#6E7A72] font-normal leading-[150%] text-[16px]`}>
               <b className="font-bold">Meddy combines 24/7 access with a physician</b> who follows
               your health over time—so you have somewhere to turn when something changes and someone
               who already knows your story.
@@ -167,7 +172,7 @@ export default function CareAccessSection() {
           </motion.div>
 
           <motion.button
-            className="flex w-full max-w-[535px] items-center justify-center rounded-[10px] bg-[#17925A] px-[30px] py-[15px] font-medium uppercase leading-[30px] text-white text-[18px] lg:text-[20px] shadow-[1px_4px_5.4px_rgba(149,154,149,0.25)] transition-opacity hover:opacity-90"
+            className={`${buttonStyles.button} ${styles.mobileCta}`}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
@@ -178,8 +183,12 @@ export default function CareAccessSection() {
         </div>
       </div>
 
-      {/* Footer */}
-      <div ref={footerRef} className="relative w-full overflow-hidden text-white">
+    </section>
+
+      <CareBusinessHoursSection />
+
+      {/* Footer has its own screen, separate from the access section. */}
+      <footer ref={footerRef} className="relative w-full overflow-hidden text-white">
         <Image
           src="/247-care/footer-bg-c974ec.png"
           alt=""
@@ -187,8 +196,8 @@ export default function CareAccessSection() {
           sizes="100vw"
           className="object-cover"
         />
-        <FooterItems noTopMargin />
-      </div>
-    </section>
+        <div className={styles.footerContent}><FooterItems noTopMargin /></div>
+      </footer>
+    </>
   );
 }
