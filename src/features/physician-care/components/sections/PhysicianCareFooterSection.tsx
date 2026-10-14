@@ -19,7 +19,7 @@ export default function PhysicianCareFooterSection() {
           <Link href="/book-consultation" className={styles.cta}>Start Physician Care</Link>
         </div>
       </div>
-      <FooterItems noTopMargin className={styles.glass} />
+      <FooterItems noTopMargin mobileReference mobileVariant="physician" className={styles.glass} />
     </section>
   );
 }

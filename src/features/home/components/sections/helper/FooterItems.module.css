@@ -3,6 +3,81 @@
   display: none;
 }
 
+/* Mobile Wearables footer follows the supplied 206px-wide reference. */
+@layer base {
+  @media (max-width: 767px) {
+    .reference.wearablesReference {
+      --footer-unit: calc(100vw / 206);
+      background: linear-gradient(100deg, #2c3739, #303d42) !important;
+      border-top-color: rgb(255 255 255 / 10%) !important;
+    }
+    .reference.wearablesReference .inner {
+      padding: calc(34 * var(--footer-unit)) calc(8 * var(--footer-unit))
+        calc(24 * var(--footer-unit)) !important;
+    }
+    .reference.wearablesReference .mobileNav {
+      gap: calc(10.2 * var(--footer-unit)) !important;
+    }
+    .reference.wearablesReference .mobileNav a {
+      font-size: calc(9 * var(--footer-unit)) !important;
+      line-height: 1.2 !important;
+      font-weight: 400 !important;
+    }
+    .reference.wearablesReference .layout {
+      margin-top: calc(23 * var(--footer-unit)) !important;
+    }
+    .reference.wearablesReference .logo {
+      width: calc(150 * var(--footer-unit)) !important;
+      height: calc(90 * var(--footer-unit)) !important;
+    }
+    .reference.wearablesReference .description {
+      display: block !important;
+      margin: calc(11 * var(--footer-unit)) auto 0 !important;
+      max-width: calc(174 * var(--footer-unit)) !important;
+      text-align: center;
+      font-size: calc(9 * var(--footer-unit)) !important;
+      line-height: 1.4 !important;
+      font-weight: 400 !important;
+    }
+    .reference.wearablesReference .stores {
+      margin-top: calc(25 * var(--footer-unit)) !important;
+      gap: calc(5 * var(--footer-unit)) !important;
+    }
+    .reference.wearablesReference .stores button {
+      width: calc((100% - 5 * var(--footer-unit)) / 2) !important;
+      height: calc(32 * var(--footer-unit)) !important;
+      padding: calc(3 * var(--footer-unit)) !important;
+      gap: calc(3 * var(--footer-unit)) !important;
+      background: rgb(0 0 0 / 12%) !important;
+    }
+    .reference.wearablesReference .stores button > img {
+      width: calc(19 * var(--footer-unit)) !important;
+      height: calc(23 * var(--footer-unit)) !important;
+    }
+    .reference.wearablesReference .stores button > span > span:first-child {
+      font-size: calc(7 * var(--footer-unit)) !important;
+    }
+    .reference.wearablesReference .stores button > span > span:nth-child(2) {
+      font-size: calc(14 * var(--footer-unit)) !important;
+    }
+    .reference.wearablesReference .stores button > span > img {
+      width: calc(60 * var(--footer-unit)) !important;
+    }
+    .reference.wearablesReference .divider {
+      margin-top: calc(12 * var(--footer-unit)) !important;
+    }
+    .reference.wearablesReference .desktopLegal {
+      display: flex !important;
+      margin-top: calc(16 * var(--footer-unit)) !important;
+      gap: calc(4 * var(--footer-unit)) !important;
+      font-size: calc(6.5 * var(--footer-unit)) !important;
+      line-height: 1.4 !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}
+
 /* The base layer takes priority over the site's important utility styles. */
 @layer base {
   @media (max-width: 767px) {

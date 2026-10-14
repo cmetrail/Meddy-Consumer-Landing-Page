@@ -18,7 +18,7 @@ export function useHealthSignalsMotion(ref: RefObject<HTMLElement | null>) {
     }, (context) => {
       if (!context.conditions?.motion) return;
       const desktop = Boolean(context.conditions.desktop);
-      const stage = root.querySelector<HTMLElement>(desktop ? "[data-signal-desktop]" : "[data-signal-mobile]");
+      const stage = root.querySelector<HTMLElement>(desktop ? "[data-signal-desktop]" : "[data-signal-mobile-story]");
       if (!stage) return;
       const cards = Array.from(stage.querySelectorAll<HTMLElement>("[data-signal-card]"));
       const timeline = gsap.timeline({
@@ -27,13 +27,25 @@ export function useHealthSignalsMotion(ref: RefObject<HTMLElement | null>) {
           id: "wearables-health-signals",
           trigger: desktop ? root : stage,
           start: context.conditions.tall
-            ? desktop ? "top 80px" : () => `top ${Math.max(88, (window.innerHeight - stage.offsetHeight) / 2)}px`
+            ? desktop ? "top 80px" : "top 24px"
             : "top 85%",
-          end: () => `+=${window.innerHeight * (context.conditions?.tall ? 2 : 1.2)}`,
+          end: () => context.conditions?.tall
+            ? `+=${window.innerHeight * (desktop ? 2 : 1.4)}`
+            : "bottom 30%",
           pin: Boolean(context.conditions.tall),
+          pinSpacing: true,
           scrub: 0.5,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          onRefresh: (trigger) => {
+            // Preserve GSAP's reserved space against the global spacing reset.
+            if (desktop || !context.conditions?.tall) return;
+            const spacer = stage.parentElement;
+            if (!spacer?.classList.contains("pin-spacer")) return;
+            const distance = trigger.end - trigger.start;
+            spacer.style.setProperty("padding-bottom", `${distance}px`, "important");
+            spacer.style.setProperty("height", `${stage.offsetHeight + distance}px`, "important");
+          },
         },
       });
 

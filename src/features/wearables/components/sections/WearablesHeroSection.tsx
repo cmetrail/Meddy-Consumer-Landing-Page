@@ -64,6 +64,7 @@ function DeviceCluster({ className, style, mobile = false }: { className: string
   return (
     <div data-cluster-desktop={mobile ? undefined : ""} data-cluster-mobile={mobile ? "" : undefined} className={`pointer-events-none absolute ${className}`} style={style}>
       <div data-pointer-layer className="absolute inset-0">
+        <div data-phone-composition className="absolute inset-0">
         {/* Phone: sharp inside the selection frame, blurred outside it */}
         {[
           { blur: "blur(18px) brightness(0.7)", clip: "polygon(evenodd, -25% -30%, 150% -30%, 150% 150%, -25% 150%, -25% -30%, -1% -9.7%, 81.8% -9.7%, 81.8% 80.8%, -1% 80.8%, -1% -9.7%)" },
@@ -85,6 +86,7 @@ function DeviceCluster({ className, style, mobile = false }: { className: string
         {HANDLES.map(([x, y]) => (
           <div data-handle key={`${x}-${y}`} className="absolute bg-[#d9d9d9]" style={{ left: u(x), top: u(y), width: u(9), height: u(6.674) }} />
         ))}
+        </div>
         {LINES.map(([name, x, y, w, h, flip], index) => (
           <svg
             key={name}
@@ -225,7 +227,7 @@ export default function WearablesHeroSection() {
           className="pointer-events-none absolute max-w-none"
           style={{
             left: "-30vw",
-            top: "calc(380 * var(--u))",
+            top: "calc(540 * var(--u))",
             width: "160vw",
             height: "45vw",
             filter: "blur(12px)",
@@ -235,12 +237,12 @@ export default function WearablesHeroSection() {
         <DeviceCluster
           mobile
           className=""
-          style={{ left: "calc(20px - 396 * var(--u))", top: u(-110), width: u(1440), height: u(913) }}
+          style={{ left: "calc(-396 * var(--u))", top: u(-110), width: u(1440), height: u(913) }}
         />
       </div>
       <div data-hero-brands className={`relative z-10 flex flex-col items-center gap-[10px] px-5 pb-16 pt-6 text-center text-[16px] md:hidden ${styles.mobileBrands}`}>
         <span className="text-[#9A9A9A]">Works with</span>
-        <span className="font-medium uppercase text-white">• Oura • Apple Watch • Google Pixel Watch • Fitbit</span>
+        <span className="font-medium text-white">• Oura • Apple Watch • Google Pixel Watch • Fitbit</span>
       </div>
 
       {/* Works with */}

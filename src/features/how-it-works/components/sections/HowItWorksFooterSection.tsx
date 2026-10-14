@@ -6,6 +6,7 @@ import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { FooterItems } from "@/features/home/components/sections/helper/FooterItems";
+import styles from "./HowItWorksFooterSection.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -53,7 +54,7 @@ export default function HowItWorksFooterSection() {
         />
       </div>
       <div className="relative">
-        <FooterItems noTopMargin />
+        <FooterItems noTopMargin mobileReference mobileVariant="how-it-works" className={styles.footer} />
       </div>
     </section>
   );

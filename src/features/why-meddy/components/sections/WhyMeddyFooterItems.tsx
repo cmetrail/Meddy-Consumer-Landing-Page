@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import styles from "./WhyMeddyFooter.module.css";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -33,12 +34,30 @@ const FOOTER_COLUMNS: FooterLink[][] = [
   ],
 ];
 
+const MOBILE_LINKS = [
+  "How it works", "Why Meddy", "Physician care", "Pricing", "Nutrition",
+  "Sleep", "Fitness", "What we test", "Medication management",
+  "Labs and biomarkers tracking", "Weight loss and metabolic",
+  "Wearables and health data", "Personalized health plans",
+  "Longevity and preventive health", "24/7 Primary care",
+].map((label) => ({
+  label,
+  href: FOOTER_COLUMNS.flat().find(
+    (link) => link.label.replace(/\n/g, " ").toLowerCase() === label.toLowerCase(),
+  )!.href,
+}));
+
 export function WhyMeddyFooterItems({ noTopMargin, className = "", referenceLayout = false }: { noTopMargin?: boolean; className?: string; referenceLayout?: boolean }) {
   return (
     <div
       className={`${noTopMargin ? "" : "mt-10"} w-full rounded-t-[22px] bg-white/10 backdrop-blur-xl ${className}`}
     >
       <div data-footer-inner className="mx-auto w-full max-w-360 px-5 lg:px-10 py-16 pb-4">
+        {referenceLayout && (
+          <nav data-footer-mobile-nav className={styles.mobileNav} aria-label="Footer navigation">
+            {MOBILE_LINKS.map((link) => <Link key={link.href} href={link.href}>{link.label}</Link>)}
+          </nav>
+        )}
         <div data-footer-grid className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto] lg:gap-x-16 lg:gap-y-0">
           <div data-footer-brand data-reveal>
             <Image

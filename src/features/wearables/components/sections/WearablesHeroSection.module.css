@@ -1,39 +1,67 @@
 @layer components {
-.hero {
-  --u: min(calc(100vw / 1440), calc((var(--dvh) - 81px) / 913), 1px);
-  --canvas-offset: calc((var(--dvh) - 81px - 913 * var(--u)) / 2);
-  --stage-top: calc(81px + var(--canvas-offset));
-  --works-bottom: calc(var(--canvas-offset) + 76 * var(--u));
-  height: var(--dvh);
-}
-
-@media (max-width: 767px) {
   .hero {
-    /* Retain readable content and scrolling on unusually short displays. */
-    min-height: 640px;
+    --u: min(calc(100vw / 1440), calc((var(--dvh) - 81px) / 913), 1px);
+    --canvas-offset: calc((var(--dvh) - 81px - 913 * var(--u)) / 2);
+    --stage-top: calc(81px + var(--canvas-offset));
+    --works-bottom: calc(var(--canvas-offset) + 76 * var(--u));
+    height: var(--dvh);
   }
 
-  .stage {
-    flex-shrink: 0;
-    padding-top: 12px !important;
+  @media (max-width: 767px) {
+    .hero { min-height: 560px; }
+    .hero header { padding: 14px !important; }
+    .hero header > div > a { display: none !important; }
+    .hero header button { width: 38px !important; height: 30px !important; border-color: transparent !important; }
+    .hero header button span { transform: scale(0.7); }
+    .hero header img { height: 20px !important; }
+    .stage { flex-shrink: 0; padding: 20px 14px 0 !important; }
+    .stage > div:first-child { gap: 14px !important; }
+    .stage h1 { font-size: clamp(25px, 9vw, 36px) !important; }
+    .stage h1 > span:first-child {
+      display: block !important;
+      font-family: var(--font-plus-jakarta), sans-serif !important;
+      font-size: clamp(28px, 10vw, 38px) !important;
+      font-weight: 400;
+      text-transform: none !important;
+      margin-bottom: 8px !important;
+    }
+    .stage h1 + p {
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      text-transform: none !important;
+    }
+    .stage > div:first-child > div:last-child > p:first-child {
+      text-transform: none !important;
+      line-height: 1.5 !important;
+    }
+    .stage p > span:first-child { font-size: 16px !important; }
+    .stage p > span:last-child {
+      font-family: var(--font-dm-serif), serif !important;
+      font-size: 18px !important;
+    }
+    .stage > div:first-child > div:last-child > p:last-child { display: none !important; }
+    .mobileDevices {
+      flex: 1;
+      min-height: 210px;
+      container-type: size;
+      --u: min(calc(100vw / 884), calc((100cqh - 35px) / 694));
+      --art-offset: max(0px, calc(100cqh - 694 * var(--u) - 35px));
+    }
+    .mobileDevices [data-cluster-mobile] { top: calc(-110 * var(--u) + var(--art-offset)) !important; }
+    .mobileDevices > img { top: calc(540 * var(--u) + var(--art-offset)) !important; }
+    .mobileDevices [data-phone-composition] {
+      transform-origin: calc(657 * var(--u)) calc(197.34 * var(--u));
+      transform: translate(-6px, 15px) scale(1.33);
+    }
+    .mobileDevices [data-device], .mobileDevices [data-ring] { translate: 0 10px; }
+    .mobileDevices [data-device][alt="Fitbit"],
+    .mobileDevices [data-ring][src*="fitbit-ring"] { translate: 0 50px; }
+    .mobileBrands {
+      flex-shrink: 0;
+      font-size: 11px !important;
+      padding: 0 14px 42px !important;
+      gap: 8px !important;
+    }
+    .mobileBrands > span:last-child { font-weight: 400 !important; }
   }
-
-  .stage h1 { font-size: clamp(32px, 11vw, 44px) !important; }
-  .stage h1 + p { font-size: 18px !important; }
-  .stage p:last-child { font-size: 14px !important; }
-
-  .mobileDevices {
-    flex: 1;
-    min-height: 140px;
-    container-type: size;
-    --u: min(calc((100vw - 40px) / 884), calc(100cqh / 680));
-  }
-
-  .mobileBrands {
-    flex-shrink: 0;
-    font-size: 14px !important;
-    padding-top: 12px !important;
-    padding-bottom: 24px !important;
-  }
-}
 }

@@ -62,9 +62,9 @@ const CARDS: HealthCard[] = [
 
 const CARD_TOPS = [
   "top-0",
-  "top-[64px] md:top-[82px]",
-  "top-[128px] md:top-[165px]",
-  "top-[192px] md:top-[248px]",
+  "top-[56px]",
+  "top-[112px]",
+  "top-[168px]",
 ];
 
 function BulletList({ items }: { items: string[] }) {
@@ -87,14 +87,17 @@ function HealthCard({ card, top, z }: { card: HealthCard; top: string; z: number
   return (
     <div
       data-signal-card
-      className={`absolute inset-x-0 h-[240px] rounded-[24px] p-5 shadow-[3px_5px_10.7px_rgba(0,0,0,0.25)] md:h-[281px] md:p-6 ${top}`}
-      style={{ background: card.bg, zIndex: z }}
+      className={`${styles.mobileCard} absolute inset-x-0 ${top}`}
+      style={{ zIndex: z }}
     >
+      <svg viewBox="7.7 5.7 602 281" preserveAspectRatio="none" className={styles.cardSurface} aria-hidden="true">
+        <path d={CARD_PATH} fill={card.bg} />
+      </svg>
       <Icon
-        className="h-14 w-14 text-[#46524B] md:h-16 md:w-16"
+        className={styles.cardIcon}
         strokeWidth={1.5}
       />
-      <div data-signal-device className="absolute" style={card.imagePos}>
+      <div data-signal-device className={styles.cardDevice}>
         <Image
           src={card.image}
           alt={card.imageAlt}
@@ -104,10 +107,10 @@ function HealthCard({ card, top, z }: { card: HealthCard; top: string; z: number
           className="h-auto w-full object-contain"
         />
       </div>
-      <h3 data-signal-detail className="mt-3 font-dm-serif italic uppercase leading-[1.1] text-[#46524B] text-[28px] md:mt-4 md:text-[36px]">
+      <h3 data-signal-detail className={`${styles.cardTitle} comprehensive-serif italic uppercase text-[#46524B]`}>
         {card.title}
       </h3>
-      <div data-signal-detail className="mt-3 grid grid-cols-2 gap-x-3 md:mt-4">
+      <div data-signal-detail className={styles.cardMetrics}>
         <BulletList items={card.left} />
         <BulletList items={card.right} />
       </div>
@@ -316,24 +319,26 @@ export default function WearablesHealthSignalsSection() {
       }
     >
       <DesktopStage />
-      <div className="mx-auto max-w-360 px-5 py-16 md:hidden">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+      <div className={`${styles.mobileContent} md:hidden`}>
+        <div className={styles.mobileGrid}>
           {/* Left column */}
-          <div className="flex flex-col gap-12 lg:gap-[88px]">
+          <div className={styles.mobileColumn}>
+            <div data-signal-mobile-story className={styles.mobileStory}>
             <div>
-              <h2 className="font-dm-serif uppercase leading-[1.05] text-[#46524B] text-[34px] sm:text-[40px] lg:text-[48px]">
+              <h2 className="comprehensive-serif uppercase leading-[1.05] text-[#46524B]">
                 One place for the signals
               </h2>
-              <p className="mt-[5px] font-medium uppercase italic text-[#A9A9A9] text-[22px] sm:text-[26px] lg:text-[32px]">
+              <p className="mt-[5px] font-medium uppercase italic text-[#A9A9A9]">
                 your body generates every day.
               </p>
             </div>
 
             {/* Stacked cards */}
-            <div data-signal-mobile className={`h-[440px] md:h-[529px] ${styles.mobileStack}`}>
+            <div data-signal-mobile className={styles.mobileStack}>
               {CARDS.map((card, i) => (
                 <HealthCard key={card.title} card={card} top={CARD_TOPS[i]} z={i} />
               ))}
+            </div>
             </div>
 
             {/* Footer */}
@@ -362,7 +367,7 @@ export default function WearablesHealthSignalsSection() {
 
           {/* Right column */}
           <div className="relative flex flex-col">
-            <div className="flex flex-col items-end gap-[58px] text-right">
+            <div className={styles.mobileCopy}>
               <p className="max-w-[408px] font-medium uppercase text-[#9A9A9A] text-[18px] sm:text-[20px] lg:text-[24px]">
                 Stop looking at your health{" "}
                 <em className="font-medium italic text-[#46524B]">

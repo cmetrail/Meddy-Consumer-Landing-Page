@@ -81,20 +81,26 @@ export function FooterItems({
 }: {
   noTopMargin?: boolean;
   mobileReference?: boolean;
-  mobileVariant?: "longevity";
+  mobileVariant?: "longevity" | "wearables" | "physician" | "how-it-works" | "247-care";
   className?: string;
 }) {
   return (
     <div
-      className={`${className} ${mobileReference ? styles.reference : ""} ${mobileVariant === "longevity" ? styles.longevityReference : ""} ${noTopMargin ? "" : "mt-10"} w-full rounded-t-[22px] bg-white/10 backdrop-blur-xl`}
+      className={`${className} ${mobileReference ? styles.reference : ""} ${mobileVariant === "longevity" ? styles.longevityReference : ""} ${mobileVariant === "wearables" ? styles.wearablesReference : ""} ${noTopMargin ? "" : "mt-10"} w-full rounded-t-[22px] bg-white/10 backdrop-blur-xl`}
     >
       <div
         data-footer-inner
         className={`${styles.inner} mx-auto w-full max-w-360 px-5 lg:px-10 py-16 pb-4`}
       >
         {mobileReference && (
-          <nav className={styles.mobileNav} aria-label="Footer navigation">
-            {MOBILE_LINKS.filter((link) => mobileVariant !== "longevity" || link.label !== "FAQ").map((link) => (
+          <nav data-footer-mobile-nav className={styles.mobileNav} aria-label="Footer navigation">
+            {MOBILE_LINKS.flatMap((link) => {
+              if (mobileVariant && link.label === "FAQ") return [];
+              if (mobileVariant === "physician" && link.label === "Medication management") {
+                return [link, { label: "SEO", href: "/#how-it-works" }];
+              }
+              return [link];
+            }).map((link) => (
               <Link key={link.label} href={link.href}>
                 {link.label}
               </Link>
@@ -227,8 +233,8 @@ export function FooterItems({
           data-footer-divider
           className={`${styles.divider} mt-6 border-t border-[#E0E0E0] lg:mt-8`}
         />
-        {mobileReference && mobileVariant !== "longevity" && (
-          <div className={styles.mobileLegal}>
+        {mobileReference && (!mobileVariant || mobileVariant === "physician") && (
+          <div data-footer-mobile-legal className={styles.mobileLegal}>
             <p>Meddy is a service of Meddy Health LLC.</p>
             <p>
               © 2026 Meddy Health LLC. All rights reserved. Privacy Policy ·

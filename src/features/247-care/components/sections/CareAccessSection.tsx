@@ -188,7 +188,7 @@ export default function CareAccessSection() {
       <CareBusinessHoursSection />
 
       {/* Footer has its own screen, separate from the access section. */}
-      <footer ref={footerRef} className="relative w-full overflow-hidden text-white">
+      <footer ref={footerRef} className={`${styles.footer} relative w-full overflow-hidden text-white`}>
         <Image
           src="/247-care/footer-bg-c974ec.png"
           alt=""
@@ -196,7 +196,7 @@ export default function CareAccessSection() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className={styles.footerContent}><FooterItems noTopMargin /></div>
+        <div className={styles.footerContent}><FooterItems noTopMargin mobileReference mobileVariant="247-care" className={styles.footerPanel} /></div>
       </footer>
     </>
   );

@@ -177,7 +177,7 @@ export default function WearablesFAQSection() {
 
       {/* Footer (shared) */}
       <div className="relative z-10">
-        <FooterItems />
+        <FooterItems mobileReference mobileVariant="wearables" />
       </div>
     </section>
   );
