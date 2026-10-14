@@ -1,0 +1,59 @@
+.hero { position: relative; min-height: max(1024px, 100dvh); overflow: hidden; background: linear-gradient(126.0828deg, #4e7959 3.1626%, #4a9990 104.37%); color: white; }
+.header { position: relative; z-index: 30; }
+.content { position: relative; width: calc(100% - 240px); max-width: 1200px; min-height: 919px; margin-inline: auto !important; display: flex; align-items: center; }
+.copy { position: relative; z-index: 2; width: 100%; }
+.heading { display: flex; flex-direction: column; align-items: flex-start; font-weight: 400; }
+.title { padding-inline: 5px !important; margin-bottom: -31px !important; font-size: 64px; font-weight: 500; line-height: 1.5; white-space: nowrap; }
+.serif { font-family: var(--font-dm-serif), Georgia, serif !important; font-size: 104px; font-style: italic; line-height: 1.5; color: #d8ffde; }
+.summary { font-size: 20px; line-height: 1.5; }
+.description { margin-top: 35px !important; color: #e2dada; font-size: 16px; line-height: 1.5; }
+.cta { display: inline-flex; align-items: center; justify-content: center; margin-top: 20px !important; padding: 16px 24px !important; border-radius: 49px; background: white; color: var(--color-accent); font-size: 20px; line-height: normal; transition: background 180ms, transform 180ms; }
+.cta:hover { background: #d8ffde; transform: translateY(-2px); }
+.cta:focus-visible { outline: 2px solid white; outline-offset: 5px; }
+/* Artwork follows the 1440 × 1024 Figma canvas; text stays in normal flow. */
+.composition { position: absolute; bottom: 0; right: -155.93px; width: 809.844px; height: 1129px; pointer-events: none; }
+.grid { position: absolute; bottom: 122.84px; left: 0; width: 809.844px; height: 1006.155px; max-width: none; mix-blend-mode: soft-light; }
+.ellipseA { position: absolute; bottom: 320.34px; left: 69.696px; width: 670.452px; height: 95.31px; max-width: none; mix-blend-mode: soft-light; }
+.ellipseB { position: absolute; bottom: 326.24px; left: 70.68px; width: 669.471px; height: 82.536px; max-width: none; }
+.portraitFrame { position: absolute; bottom: .65px; right: 18.59px; width: 658.99px; height: 887.819px; overflow: hidden; transform: scaleX(-1); }
+.portrait { position: absolute; height: 114.07%; left: -8.94%; top: -14.06%; width: 123.25%; max-width: none; }
+.dots { position: absolute; bottom: 108.11px; right: 101.6px; width: 412.345px; height: 269.225px; max-width: none; mix-blend-mode: soft-light; }
+.portraitFade { position: absolute; bottom: 0; left: 0; width: 809.831px; height: 166.73px; background: linear-gradient(180deg, rgba(75,145,130,0) 20.268%, #4c9182 92.736%); }
+.badge { position: absolute; display: flex; align-items: center; gap: 8px; padding: 4px 8px !important; border-radius: 56px; background: rgba(255,255,255,.1); backdrop-filter: blur(10px); }
+.badgeLabel { font-family: var(--font-dm-serif), Georgia, serif !important; font-size: 16px; font-style: italic; line-height: 1.5; }
+.badgePhoto { position: relative; display: block; width: 51px; height: 40px; overflow: hidden; border-radius: 65px; }
+.badgePhoto img { position: absolute; max-width: none; width: 100%; height: 100%; object-fit: cover; }
+.nutrition { left: 110.918px; bottom: 310px; flex-direction: row-reverse; gap: 4px; }
+.nutrition .badgePhoto { height: 39px; }
+.fitness { left: 240.918px; bottom: 159px; }
+.fitness img { width: 111.51%; height: 148.68%; top: -44.96%; }
+.labs { left: 590.918px; bottom: 389px; }
+.labs img { height: 166.56%; top: -31.59%; }
+.sleep { left: 520.918px; bottom: 169px; }
+.sleep img { height: 166.67%; top: -62.64%; }
+@media (min-width: 1441px) {
+  .content { min-height: max(919px, calc(100dvh - 105px)); }
+}
+@media (min-width: 768px) and (max-width: 1279px) {
+  .content { width: calc(100% - 80px); }
+  .title { font-size: 50px; }
+  .serif { font-size: 90px; }
+  .summary { max-width: 510px; }
+  .description { max-width: 490px; }
+  .desktopBreak { display: none; }
+  .composition { right: -150px; transform: scale(.8); transform-origin: bottom right; }
+}
+@media (max-width: 767px) {
+  .hero { min-height: max(850px, 100dvh); }
+  .content { width: calc(100% - 40px); min-height: 769px; align-items: flex-start; }
+  .copy { padding-top: 34px !important; }
+  .title { padding: 0 !important; margin-bottom: -10px !important; font-size: clamp(24px, 6.5vw, 40px); }
+  .serif { font-size: clamp(52px, 14vw, 76px); }
+  .summary { max-width: 380px; font-size: 16px; }
+  .description { max-width: 380px; margin-top: 22px !important; font-size: 14px; }
+  .desktopBreak { display: none; }
+  .cta { margin-top: 20px !important; padding: 12px 20px !important; font-size: 16px; }
+  .composition { right: -55px; bottom: 0; transform: scale(.48); transform-origin: bottom right; }
+  .grid { bottom: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .cta { transition: none; } }

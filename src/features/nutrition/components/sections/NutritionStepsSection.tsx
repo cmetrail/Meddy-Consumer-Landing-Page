@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-motion";
 
@@ -180,87 +180,73 @@ function Step3() {
 }
 
 /* ------------------------------------------------------------------ step 4 */
-function Stat({ label, value, pct, down }: { label: string; value: string; pct: string; down?: boolean }) {
-  return (
-    <div className="flex min-w-px flex-1 flex-col items-start gap-2 border-l border-solid border-[rgba(255,255,255,0.5)] pl-2">
-      <p className="whitespace-nowrap text-[12px] font-normal leading-[1.416] text-[#111110]">{label}</p>
-      <div className="flex items-end gap-2">
-        <p className="whitespace-nowrap text-[20px] font-medium leading-[1.5] text-[#111110]">{value}</p>
-        <div className="flex items-center gap-[6px]">
-          <span className="relative block size-[12px] shrink-0" style={down ? { transform: "scaleY(-1)" } : undefined}><Svg src={down ? "trend-down.svg" : "trend-up.svg"} /></span>
-          <p className="whitespace-nowrap text-[12px] font-normal leading-[1.416] text-[#111110]">{pct}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function Step4() {
-  const badge = "absolute flex items-center justify-center whitespace-nowrap border-[0.693px] border-solid border-[#148bd5] bg-[rgba(20,139,213,0.1)] backdrop-blur-[5px]";
+  const fillId = useId();
+  const macros = [
+    { x: 52, width: 228, color: "#1499e3", tag: "P 40%", label: "Protein", tagX: 65, tagWidth: 47, textColor: "#fff" },
+    { x: 280, width: 172, color: "#ffdb45", tag: "F 30%", label: "Fats", tagX: 295, tagWidth: 46, textColor: "#111110" },
+    { x: 453, width: 120, color: "#9affad", tag: "C 30%", label: "Carbs", tagX: 464, tagWidth: 48, textColor: "#111110" },
+  ];
   return (
-    <div className="absolute left-1/2 w-[564px]" style={{ top: "calc(50% + 0.21px)", transform: "translate(-50%, -50%)" }}>
-    <motion.div className="flex w-full flex-col items-start overflow-clip rounded-[8.347px] border-[0.882px] border-solid border-[#f8f8f8] bg-[rgba(245,245,240,0.1)] p-[16.695px] backdrop-blur-[22.04px]" variants={panelV}>
-      <div className="flex w-full flex-col items-start gap-4">
-        <p className="whitespace-nowrap text-right text-[14px] font-semibold leading-[1.5] text-[#111110]">Nutrition Changed</p>
-        <div className="flex w-full flex-col items-start gap-2">
-          <div className="flex w-full items-center">
-            <Stat label="Protein" value="96 g" pct="17%" />
-            <Stat label="Sodium" value="2,000 mg" pct="20%" down />
-            <Stat label="Fiber" value="26 g" pct="44%" />
-          </div>
-          <div className="flex w-full items-start gap-2">
-            {/* y axis */}
-            <div className="flex w-[59.136px] shrink-0 items-center gap-[11.086px] self-stretch pb-[39.44px]">
-              <div className="flex h-[67px] w-[18px] shrink-0 items-center justify-center">
-                <p className="-rotate-90 whitespace-nowrap text-[12px] font-normal leading-[1.5] text-[#111110]">Weight (lbs)</p>
-              </div>
-              <div className="flex h-full flex-col items-start justify-end gap-[26px] overflow-clip text-[12px] font-normal leading-[1.5] text-[#111110]">
-                {["200", "180", "160", "140", "120"].map((v) => (
-                  <p key={v}>{v}</p>
-                ))}
-              </div>
-            </div>
-            {/* plot */}
-            <div className="relative flex min-w-px flex-1 flex-col items-start pt-[18.203px]">
-              <div className="relative flex w-full flex-col items-end justify-end">
-                <div className="flex w-full flex-col items-start gap-[16.63px]">
-                  {[0, 1, 2].map((i) => (
-                    <div key={i} className="relative h-[28.834px] w-full shrink-0"><div className="absolute" style={{ inset: "0 -0.16%" }}><Svg src="grid.svg" /></div></div>
-                  ))}
-                  <div className="relative h-[27.316px] w-full shrink-0"><Svg src="grid-a.svg" /></div>
-                  <div className="relative h-[27.316px] w-full shrink-0"><Svg src="grid-b.svg" /></div>
-                  <motion.div
-                    className="absolute flex items-end"
-                    style={{ left: 60.17, top: 56.1, width: 344 }}
-                    variants={{ hidden: { clipPath: "inset(-2% 100% -2% -2%)" }, show: { clipPath: "inset(-2% -2% -2% -2%)", transition: { duration: 1.6, ease: "easeInOut", delay: 0.35 } } }}
-                  >
-                    <div className="relative h-[138.498px] w-[344px] shrink-0"><div className="absolute" style={{ inset: "-0.36% 0 0 0" }}><Svg src="chart.svg" /></div></div>
-                  </motion.div>
-                </div>
-              </div>
-              <div className="flex w-full items-start">
-                {["Jan", "Apr", "Jul", "Oct"].map((m, i) => (
-                  <div key={m} className={`flex min-w-px flex-1 flex-col items-center gap-[3.034px] ${i < 3 ? "mr-[-5px]" : ""}`}>
-                    <div className="h-[12.14px] w-[1.516px] shrink-0 bg-[#111110]" />
-                    <p className="whitespace-nowrap text-[12px] font-normal leading-[1.5] text-[#111110]">{m}</p>
-                  </div>
-                ))}
-              </div>
-              <motion.div className={`${badge} rounded-[8px] px-[8.315px] py-[3px]`} style={{ left: 35.17, top: 32.3 }} variants={{ hidden: { opacity: 0, scale: 0.8 }, show: { opacity: 1, scale: 1, transition: { delay: 0.5, duration: 0.5, ease } } }}>
-                <div className="whitespace-nowrap leading-[1.5] text-black"><p className="text-[8px]">Before</p><p className="text-[10px] font-semibold">182.4 lbs</p></div>
-              </motion.div>
-              <motion.p className={`${badge} rounded-[13px] px-[8.315px] py-[4px] text-[8px] leading-[1.5] text-black`} style={{ left: 184.17, top: 59.3 }} variants={{ hidden: { opacity: 0, scale: 0.8 }, show: { opacity: 1, scale: 1, transition: { delay: 1.1, duration: 0.5, ease } } }}>
-                Nutrition Changed
-              </motion.p>
-              <motion.div className={`${badge} rounded-[8px] px-[8.315px] py-[3px]`} style={{ left: 375.17, top: 72.3 }} variants={{ hidden: { opacity: 0, scale: 0.8 }, show: { opacity: 1, scale: 1, transition: { delay: 1.8, duration: 0.5, ease } } }}>
-                <div className="whitespace-nowrap leading-[1.5] text-black"><p className="text-[8px]">After</p><p className="text-[10px] font-semibold">168.1 lbs</p></div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <motion.div className="absolute inset-0" variants={panelV}>
+      <svg viewBox="0 0 624 520" className="block h-full w-full" fontWeight="400" role="img" aria-label="Nutrition breakdown from January to May: protein 40%, fats 30%, carbs 30%. Current weight 176 pounds, down 8% from 191 pounds.">
+        <defs>
+          <linearGradient id={fillId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="white" stopOpacity="0.5" />
+            <stop offset="1" stopColor="white" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <rect x="35.5" y="14.5" width="553" height="491" rx="8" fill="#f5f5f0" fillOpacity="0.1" stroke="white" />
+        <text x="52" y="46" fill="#111110" fontSize="14" fontWeight="600">Nutrition Breakdown</text>
+        <text x="52" y="64" fill="#32647a" fontSize="10">Average Macronutrient Breakdown : Jan&#8211;May</text>
+        <text x="52" y="90" fill="#111110" fontSize="14">Jan - May</text>
+        {macros.map((macro) => (
+          <g key={macro.label}>
+            <line x1={macro.x} y1="119" x2={macro.x} y2="190" stroke={macro.color} strokeWidth="2" />
+            <rect x={macro.tagX} y="119" width={macro.tagWidth} height="20" rx="2" fill={macro.color} />
+            <text x={macro.tagX + 4} y="133" fill={macro.textColor} fontSize="12" fontWeight="700">{macro.tag}</text>
+            {Array.from({ length: Math.floor(macro.width / 10.8) }, (_, i) => (
+              <motion.line key={i} x1={macro.x + (i + 1) * 10.8} y1="151" x2={macro.x + (i + 1) * 10.8} y2="190" stroke={macro.color} strokeWidth="2"
+                variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { delay: 0.2 + i * 0.015 } } }} />
+            ))}
+            <text x={macro.x - 1} y="207" fill="white" fontSize="12" fontWeight="600">{macro.label}</text>
+          </g>
+        ))}
+        <text x="52" y="238" fill="white" fontSize="13">Current Weight</text>
+        <text x="51" y="279" fill="white" fontSize="30" fontWeight="600">176 lbs</text>
+        <circle cx="172" cy="277" r="10" fill="#65e6a3" />
+        <path d="M172 272V282M168 278L172 282L176 278" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <text x="188" y="282" fill="white" fontSize="14">8% down</text>
+        <text x="52" y="305" fill="white" fontSize="13">from 191 lbs</text>
+        <g>
+          <text transform="translate(60 402) rotate(-90)" fill="white" fontSize="8" textAnchor="middle">Weight (lbs)</text>
+          {[200, 190, 180, 170, 160].map((weight, i) => (
+            <g key={weight}>
+              <text x="87" y={351 + i * 27.25} textAnchor="end" fill="white" fontSize="12">{weight}</text>
+              <line x1="92" y1={347 + i * 27.25} x2="573" y2={347 + i * 27.25}
+                stroke={weight === 160 ? "#526d78" : "#618ba1"} strokeOpacity={weight === 160 ? 1 : 0.35} strokeDasharray={weight === 160 ? "2.5 5" : undefined} />
+            </g>
+          ))}
+          <motion.g variants={{ hidden: { clipPath: "inset(0 100% 0 0)" }, show: { clipPath: "inset(0 0% 0 0)", transition: { duration: 1.3, ease, delay: 0.3 } } }}>
+            <path d="M131 369 C205 386 306 404 383 411 S486 417 523 415 L523 456 L131 456 Z" fill={`url(#${fillId})`} />
+            <path d="M131 369 C205 386 306 404 383 411 S486 417 523 415" fill="none" stroke="white" strokeWidth="1.5" />
+            <line x1="523" y1="398" x2="523" y2="456" stroke="white" strokeWidth="1" />
+            <circle cx="523" cy="415" r="4" fill="white" />
+          </motion.g>
+          <g>
+            <rect x="454" y="377" width="84" height="17" rx="4" fill="white" />
+            <path d="M520 394L526 394L523 398Z" fill="white" />
+            <text x="461" y="389" fill="#111110" fontSize="8">May, 2026 - 176 lbs</text>
+          </g>
+          {["Jan", "Feb", "Mar", "Apr", "May"].map((month, i) => (
+            <g key={month}>
+              <line x1={131 + i * 98} y1="467" x2={131 + i * 98} y2="475" stroke="#e2e2e2" strokeWidth="1.5" />
+              <text x={131 + i * 98} y="488" textAnchor="middle" fill="#111110" fontSize="10">{month}</text>
+            </g>
+          ))}
+        </g>
+      </svg>
     </motion.div>
-    </div>
   );
 }
 

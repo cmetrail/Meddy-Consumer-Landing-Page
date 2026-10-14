@@ -118,7 +118,7 @@ function Lines({ k, x, y, w, h }: { k: K; x: number; y: number; w: number; h: nu
 
 function Person({ k, x, y, w, h }: { k: K; x: number; y: number; w: number; h: number }) {
   return (
-    <div className="absolute overflow-hidden" style={{ left: k(x), top: k(y), width: k(w), height: k(h) }}>
+    <div data-node-id="12640:5064" className="absolute overflow-hidden" style={{ left: k(x), top: k(y), width: k(w), height: k(h) }}>
       <Image
         src={`${A}/d-person.png`}
         alt=""
@@ -128,6 +128,16 @@ function Person({ k, x, y, w, h }: { k: K; x: number; y: number; w: number; h: n
         sizes="1600px"
         className="absolute max-w-none"
         style={{ left: "-0.05%", top: "-83.1%", width: "100.09%", height: "213.36%" }}
+      />
+      {/* Latest Figma foreground, layered over the original cropped fill. */}
+      <Image
+        src={`${A}/person-clear.png`}
+        alt=""
+        width={2087}
+        height={753}
+        preload
+        unoptimized
+        className="absolute inset-0 size-full max-w-none object-cover"
       />
     </div>
   );
@@ -188,7 +198,7 @@ export default function SleepHeroSection() {
             {D_BEHIND.map((s, i) => (
               <Cloud key={`b${i}`} s={s} k={u} />
             ))}
-            <Person k={u} x={353} y={-12} w={1527} h={539.4} />
+            <Person k={u} x={373} y={-8} w={1507} h={532} />
             {D_METRICS.map((s) => (
               <Metric key={s.id} s={s} k={u} d />
             ))}

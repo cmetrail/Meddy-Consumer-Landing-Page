@@ -17,11 +17,11 @@ const Y_LABELS = ["20:00", "00:00", "04:00", "08:00", "12:00"];
 /** white recovery card (358 x 278 design px) */
 function RecoveryScoreCard({ k }: { k: K }) {
   return (
-    <div className="flex flex-col bg-white p-[var(--p)]" style={{ width: k(358), height: k(278), gap: k(16), borderRadius: k(24), ["--p" as string]: k(16) }}>
+    <div className="flex flex-col border border-white/20 bg-[#596b40]/85 p-[var(--p)] backdrop-blur-md" style={{ width: k(358), height: k(278), gap: k(16), borderRadius: k(24), ["--p" as string]: k(16) }}>
       <div className="flex flex-col" style={{ gap: k(2) }}>
         <span className="leading-[1.5] text-[#B3B3B3]" style={{ fontSize: `max(calc(8px * var(--fl, 1)), ${k(12)})` }}>Score</span>
         <div className="flex items-center" style={{ gap: k(4) }}>
-          <span className="whitespace-nowrap font-semibold leading-[1.2] tracking-[-0.015em] text-[#111110]" style={{ fontSize: `max(calc(18px * var(--fl, 1)), ${k(32)})` }}>93%</span>
+          <span className="whitespace-nowrap font-semibold leading-[1.2] tracking-[-0.015em] text-white" style={{ fontSize: `max(calc(18px * var(--fl, 1)), ${k(32)})` }}>93%</span>
           <span className="flex items-center" style={{ gap: k(4) }}>
             <Image src={`${A}/icon-up.svg`} alt="" width={16} height={16} unoptimized style={{ width: k(16), height: k(16), transform: "scaleY(-1)" }} />
             <span className="whitespace-nowrap font-medium leading-[1.5] text-[#17925A]" style={{ fontSize: `max(calc(10px * var(--fl, 1)), ${k(14)})` }}> 10%</span>
@@ -41,7 +41,7 @@ function RecoveryScoreCard({ k }: { k: K }) {
           {/* y labels */}
           <div className="flex flex-col justify-center font-semibold leading-[1.5]" style={{ width: k(36), gap: k(10), fontSize: `max(calc(8px * var(--fl, 1)), ${k(12)})` }}>
             {Y_LABELS.map((t, i) => (
-              <span key={t} className="whitespace-nowrap" style={{ color: i === 0 ? "#B3B3B3" : "#111110" }}>{t}</span>
+              <span key={t} className="whitespace-nowrap" style={{ color: i === 0 ? "#B3B3B3" : "#FFFFFF" }}>{t}</span>
             ))}
           </div>
           {/* grid + bars */}
@@ -56,8 +56,8 @@ function RecoveryScoreCard({ k }: { k: K }) {
                   {i === HI && (
                     <>
                       <Image src={`${A}/marker.svg`} alt="" width={1} height={86} unoptimized className="absolute max-w-none" style={{ left: "50%", top: k(-5), width: 1, height: k(86) }} />
-                      <span className="absolute -translate-x-1/2 whitespace-nowrap font-bold leading-[1.5] text-[#111110]" style={{ left: "50%", top: k(-30), fontSize: `max(calc(8px * var(--fl, 1)), ${k(12)})` }}>00:07</span>
-                      <span className="absolute -translate-x-1/2 whitespace-nowrap font-bold leading-[1.5] text-[#111110]" style={{ left: "50%", top: k(h + 4), fontSize: `max(calc(8px * var(--fl, 1)), ${k(12)})` }}>8:03</span>
+                      <span className="absolute -translate-x-1/2 whitespace-nowrap font-bold leading-[1.5] text-white" style={{ left: "50%", top: k(-30), fontSize: `max(calc(8px * var(--fl, 1)), ${k(12)})` }}>00:07</span>
+                      <span className="absolute -translate-x-1/2 whitespace-nowrap font-bold leading-[1.5] text-white" style={{ left: "50%", top: k(h + 4), fontSize: `max(calc(8px * var(--fl, 1)), ${k(12)})` }}>8:03</span>
                     </>
                   )}
                 </span>
@@ -88,37 +88,37 @@ export default function SleepRecoveryScoreSection() {
       className="relative w-full overflow-hidden bg-[#FAF9F5]"
       style={
         {
-          "--u": "min(calc(min(100vw, 1440px) * 0.000694444), calc(100dvh * 0.000811030))",
+          "--u": "calc(100vw / 1440)",
           "--m": "calc(min(100vw, 500px) / 402)",
         } as React.CSSProperties
       }
     >
       {/* ─── Desktop: Figma 11279:4093, copy inside the header container ─── */}
-      <div className="relative hidden md:block" style={{ height: u(1233) }}>
+      <div className="relative hidden md:block" style={{ height: u(1044) }}>
         {/* full-bleed: the ellipse is cropped to its own bounds and stretched to the full section width */}
-        <Image src={`${A}/bg-crop.png`} alt="" fill priority sizes="100vw" className="object-fill" />
+        <Image src="/sleep/recovery/sleepwomen.png" alt="" fill priority sizes="100vw" className="object-fill" style={{ clipPath: "ellipse(92% 49% at 50% 50%)" }} />
         <div className="absolute inset-0">
-          <div className="mx-auto h-full max-w-360 px-10">
+          <div className="mx-auto h-full w-[83.08%]">
             <div className="relative h-full">
               <span
                 className="pointer-events-none absolute left-0 select-none font-bold italic leading-[normal] text-[rgba(216,216,216,0.5)]"
-                style={{ top: u(96), fontSize: u(128), letterSpacing: u(2.56), transform: "rotate(-0.31deg)" }}
+                style={{ top: u(136), fontSize: u(128), letterSpacing: u(2.56), transform: "rotate(-0.31deg)" }}
               >
                 04
               </span>
-              <div className="absolute left-0 flex flex-col text-[#E6DFDF]" style={{ top: u(330), width: u(618), gap: u(50) }}>
-                <h2 className="font-medium uppercase leading-[1.416]" style={{ fontSize: `max(24px, ${u(36)})` }}>
-                  Sleep is only part of <span className="font-bold italic">recovery.</span>
+              <div className="absolute left-0 flex flex-col text-[#E6DFDF]" style={{ top: u(374), width: u(618), gap: u(50) }}>
+                <h2 className="font-normal leading-[1.416]" style={{ fontSize: u(42) }}>
+                  Sleep is only part of <span className="comprehensive-serif italic">recovery</span>
                 </h2>
-                <p className="leading-[1.416]" style={{ fontSize: `max(14px, ${u(20)})` }}>
-                  Meddy brings together the signals that help show how your body is <span className="font-bold text-white">responding to stress, activity, and rest.</span>
+                <p className="leading-[1.416]" style={{ fontSize: u(20) }}>
+                  Meddy brings together the signals that help show how your body is <span className="text-white">responding to stress, activity, and rest.</span>
                 </p>
               </div>
 
-              <div className="absolute right-0 flex flex-col items-end" style={{ top: u(93), gap: u(153) }}>
-                <div className="flex flex-col items-end text-right uppercase leading-[1.416] text-white" style={{ gap: u(5) }}>
-                  <span className="comprehensive-serif whitespace-nowrap italic" style={{ fontSize: `max(52px, ${u(92)})` }}>Recovery</span>
-                  <span className="whitespace-nowrap font-medium" style={{ fontSize: `max(15px, ${u(24)})` }}>Know when your body is ready</span>
+              <div className="absolute right-0 flex flex-col items-end" style={{ top: u(136), gap: u(157) }}>
+                <div className="flex flex-col items-end text-right leading-[1.416] text-white" style={{ gap: u(5) }}>
+                  <span className="comprehensive-serif whitespace-nowrap italic" style={{ fontSize: u(104) }}>Recovery</span>
+                  <span className="whitespace-nowrap font-normal" style={{ fontSize: u(20) }}>Know when your body is ready</span>
                 </div>
                 <RecoveryScoreCard k={u} />
               </div>
@@ -130,7 +130,7 @@ export default function SleepRecoveryScoreSection() {
       {/* ─── Mobile / tablet (<md): Figma 12223:24388 (402 x 876) ─── */}
       <div className="relative mx-auto min-h-[calc(876*var(--m))] max-w-[500px] md:hidden">
         <div className="absolute inset-y-0 overflow-hidden" style={{ left: "calc(50% - 50vw)", right: "calc(50% - 50vw)" }}>
-          <Image src={`${A}/m-bg-crop.png`} alt="" width={905} height={1083} priority sizes="500px" className="absolute max-w-none" style={{ left: `calc(50% - ${m(201)} - ${m(223)})`, top: m(-178.6), width: m(905), height: m(1083) }} />
+          <Image src="/sleep/recovery/sleepwomen.png" alt="" width={1488} height={1057} priority sizes="905px" className="absolute max-w-none" style={{ left: `calc(50% - ${m(201)} - ${m(223)})`, top: m(-178.6), width: m(905), height: m(1083) }} />
         </div>
         <div className="pointer-events-none absolute inset-x-0 bottom-0" style={{ height: m(788), background: "linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 79.18%)" }} />
 
@@ -155,7 +155,7 @@ export default function SleepRecoveryScoreSection() {
               Sleep is only part of <span className="font-bold italic">recovery.</span>
             </p>
             <p className="leading-[1.416] text-[#E6DFDF]" style={{ fontSize: m(16) }}>
-              Meddy brings together the signals that help show how your body is <span className="font-bold text-white">responding to stress, activity, and rest.</span>
+              Meddy brings together the signals that help show how your body is <span className="text-white">responding to stress, activity, and rest.</span>
             </p>
           </div>
         </div>
