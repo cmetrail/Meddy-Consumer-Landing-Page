@@ -1,6 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { useRef } from "react";
+import { useWearablesPlatformsMotion } from "./useWearablesPlatformsMotion";
+import styles from "./WearablesPlatformsSection.module.css";
 
 type CardProps = {
   bg: string;
@@ -26,10 +29,11 @@ function Card({
   const isRight = align === "right";
   return (
     <div
-      className="relative flex h-[520px] overflow-hidden rounded-[12px] md:h-[560px]"
+      data-platform-card
+      className={`${styles.card} flex overflow-hidden rounded-[12px]`}
       style={{ background: bg }}
     >
-      <div className={`absolute ${imageClass}`}>
+      <div data-platform-image className={`absolute ${imageClass}`}>
         <Image
           src={image}
           alt={imageAlt}
@@ -40,6 +44,7 @@ function Card({
       </div>
 
       <div
+        data-platform-copy
         className={`relative z-10 flex w-full flex-col gap-2 p-4 md:p-6 ${
           isRight ? "items-end text-right" : "items-start text-left"
         }`}
@@ -65,11 +70,14 @@ const Italic = ({ color, children }: { color: string; children: React.ReactNode 
 );
 
 export default function WearablesPlatformsSection() {
+  const rootRef = useRef<HTMLElement>(null);
+  useWearablesPlatformsMotion(rootRef);
+
   return (
-    <section className="bg-[#FAF9F5] py-16 lg:py-[120px]">
-      <div className="mx-auto flex w-full max-w-360 flex-col gap-12 px-5 lg:px-[100px]">
+    <section ref={rootRef} id="wearables-platforms" className={`${styles.section} bg-[#FAF9F5] py-16 lg:py-[120px]`}>
+      <div data-platform-pin className={`${styles.content} mx-auto flex w-full max-w-360 flex-col gap-12 px-5 lg:px-10`}>
         {/* Heading */}
-        <div className="flex flex-col items-center gap-2 text-center lg:gap-5">
+        <div data-platform-heading className="flex flex-col items-center gap-2 text-center lg:gap-5">
           <h2 className="font-medium uppercase leading-[1.05] text-[32px] md:text-[40px] lg:text-[48px]">
             <span className="block text-[#A1AAA3]">Keep wearing</span>
             <span className="block text-[#46524B]">
@@ -85,7 +93,7 @@ export default function WearablesPlatformsSection() {
         </div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
+        <div data-platform-stage className={`${styles.stage} grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4`}>
           <Card
             bg="#FFFFFF"
             title="Apple Health"
@@ -162,8 +170,17 @@ export default function WearablesPlatformsSection() {
           />
         </div>
 
+        <div className={styles.progress} data-platform-progress aria-hidden="true">
+          {["Apple Health", "Oura Ring", "Google Health Connect", "Fitbit"].map((name, index) => (
+            <div key={name} className={styles.step}>
+              <div className={styles.track}><span data-platform-fill /></div>
+              <span data-platform-label><small>0{index + 1}</small>{name}</span>
+            </div>
+          ))}
+        </div>
+
         {/* Footer */}
-        <div className="flex items-center justify-center gap-4">
+        <div data-platform-footer className="flex items-center justify-center gap-4">
           <Image
             src="/wearables/powered-accent.svg"
             alt=""

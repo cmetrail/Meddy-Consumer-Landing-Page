@@ -77,16 +77,19 @@ export function FooterItems({
   noTopMargin,
   mobileReference = false,
   mobileVariant,
+  className = "",
 }: {
   noTopMargin?: boolean;
   mobileReference?: boolean;
   mobileVariant?: "longevity";
+  className?: string;
 }) {
   return (
     <div
-      className={`${mobileReference ? styles.reference : ""} ${mobileVariant === "longevity" ? styles.longevityReference : ""} ${noTopMargin ? "" : "mt-10"} w-full rounded-t-[22px] bg-white/10 backdrop-blur-xl`}
+      className={`${className} ${mobileReference ? styles.reference : ""} ${mobileVariant === "longevity" ? styles.longevityReference : ""} ${noTopMargin ? "" : "mt-10"} w-full rounded-t-[22px] bg-white/10 backdrop-blur-xl`}
     >
       <div
+        data-footer-inner
         className={`${styles.inner} mx-auto w-full max-w-360 px-5 lg:px-10 py-16 pb-4`}
       >
         {mobileReference && (
@@ -99,9 +102,10 @@ export function FooterItems({
           </nav>
         )}
         <div
+          data-footer-grid
           className={`${styles.layout} grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto] lg:gap-x-16 lg:gap-y-0`}
         >
-          <div data-reveal className={styles.brand}>
+          <div data-footer-brand data-reveal className={styles.brand}>
             <Image
               src="/app-logo.png"
               alt="Meddy Health"
@@ -139,6 +143,7 @@ export function FooterItems({
             </div>
 
             <div
+              data-footer-stores
               className={`${styles.stores} mt-6 flex flex-col gap-4.75 md:flex-row md:flex-wrap lg:mt-6.5`}
             >
               <button
@@ -219,6 +224,7 @@ export function FooterItems({
         </div>
 
         <div
+          data-footer-divider
           className={`${styles.divider} mt-6 border-t border-[#E0E0E0] lg:mt-8`}
         />
         {mobileReference && mobileVariant !== "longevity" && (
@@ -232,6 +238,7 @@ export function FooterItems({
           </div>
         )}
         <motion.div
+          data-footer-legal
           className={`${styles.desktopLegal} mt-8 flex flex-col items-center gap-2 text-center text-[#F4F4F5] text-[14px] leading-[150%] lg:mt-5`}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Search, X, ArrowRight, CircleCheck, ChevronRight } from "lucide-react";
+import { Search, X, CircleCheck, ChevronRight } from "lucide-react";
 import { JUMP_TO, TEST_CATEGORIES } from "../../data/tests";
 
 const slugify = (name: string) => name.toLowerCase().replace(/\s+/g, "-");
@@ -139,7 +139,7 @@ export default function WhatWeTestCatalogSection() {
               className="flex scroll-mt-24 flex-col gap-[24px] lg:gap-[41px]"
             >
               {/* Header */}
-              <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
+              <div className="flex flex-wrap items-end justify-end gap-x-4 gap-y-2">
                 <div className="flex items-center gap-[11px]">
                   <Image
                     src={`/what-we-test/icons/category-icon-${category.icon.filenameSuffix}.png`}
@@ -158,16 +158,6 @@ export default function WhatWeTestCatalogSection() {
                       <span className="text-[18px] lg:text-[24px]">)</span>
                     </span>
                   </div>
-                </div>
-
-                <div className="hidden shrink-0 flex-col gap-[5px] py-[14px] sm:flex">
-                  <span className="flex items-end justify-end gap-[12px]">
-                    <span className="whitespace-nowrap text-[16px] font-bold text-[#17925A]">
-                      {category.aboutText}
-                    </span>
-                    <ArrowRight className="h-5 w-5 shrink-0 text-[#17925A]" />
-                  </span>
-                  <span className="h-px w-full bg-[#17925A]" />
                 </div>
               </div>
 

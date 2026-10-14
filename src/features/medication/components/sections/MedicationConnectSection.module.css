@@ -1,0 +1,58 @@
+.card {
+  box-shadow: 0 8px 30px rgb(70 82 75 / 7%), inset 0 1px 0 rgb(255 255 255 / 70%);
+  transform-origin: 50% 60%;
+  transition: box-shadow 350ms ease, border-color 350ms ease;
+}
+
+.lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.track,
+.progress {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.track {
+  stroke: #a1aaa3;
+  stroke-opacity: 0.3;
+  stroke-width: 1;
+}
+
+.progress {
+  stroke: #279464;
+  stroke-width: 1.8;
+}
+
+.tip {
+  fill: #28a469;
+  filter: drop-shadow(0 0 5px rgb(40 164 105 / 65%));
+}
+
+.node {
+  fill: #279464;
+  stroke: #fffef2;
+  stroke-width: 2;
+  transform-box: fill-box;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    border-color: #279464;
+    box-shadow: 0 14px 45px rgb(70 82 75 / 13%), 0 0 0 1px rgb(39 148 100 / 12%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}

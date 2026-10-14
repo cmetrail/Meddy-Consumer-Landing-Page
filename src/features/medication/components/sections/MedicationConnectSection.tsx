@@ -1,6 +1,14 @@
-import Image from "next/image";
+"use client";
 
-// Figma node 11274:1266 "Desktop - 359" (1440 x ~1360) — static light section.
+import Image from "next/image";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import styles from "./MedicationConnectSection.module.css";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+// Figma node 11274:1266 "Desktop - 359" — scroll-connected care diagram.
 // Scaled by width only so it keeps its natural aspect ratio:
 //   --u = min(100vw, 1440px) / 1440
 const u = (n: number) => `calc(${n} * var(--u))`;
@@ -8,7 +16,6 @@ const u = (n: number) => `calc(${n} * var(--u))`;
 const grad = (deg: number) =>
   `linear-gradient(${deg}deg, rgb(227, 239, 223) 28.962%, rgb(246, 244, 237) 42.836%, rgb(246, 244, 237) 63.859%, rgb(240, 230, 207) 100.98%)`;
 const CARD_BG = grad(155);
-const CARD_BORDER = "1px solid #46524B";
 
 // NB: the global reset zeroes inline padding, so padding goes through classes + vars
 const PAD_PILL = "px-[var(--px)] py-[var(--py)]";
@@ -46,7 +53,8 @@ function Number({ children }: { children: React.ReactNode }) {
 function Card({ x, y, w, deg, className = "", children }: { x: number; y: number; w?: number; deg: number; className?: string; children: React.ReactNode }) {
   return (
     <div
-      className={`absolute border border-[#46524B] p-[var(--cp)] ${className}`}
+      data-connect-card
+      className={`absolute border border-[#46524B] p-[var(--cp)] ${styles.card} ${className}`}
       style={{ left: u(x), top: u(y), width: w ? u(w) : undefined, background: grad(deg), borderRadius: u(10), ["--cp" as string]: u(15) }}
     >
       {children}
@@ -60,7 +68,8 @@ const m = (n: number) => `calc(${n} * var(--m))`;
 function MCard({ children, style }: { children: React.ReactNode; style: React.CSSProperties }) {
   return (
     <div
-      className="absolute flex items-start border-solid border-[#46524B] p-[var(--cp)]"
+      data-connect-card
+      className={`absolute flex items-start border-solid border-[#46524B] p-[var(--cp)] ${styles.card}`}
       style={{ background: CARD_BG, ["--cp" as string]: style.padding, ...style, padding: undefined } as React.CSSProperties}
     >
       {children}
@@ -88,24 +97,132 @@ function MImg({ src, w, h, style, crop }: { src: string; w: number; h: number; s
   );
 }
 
+function Connectors({ mobile = false }: { mobile?: boolean }) {
+  // Normalized SVGs keep the diagram visible even before hydration.
+  const paths = mobile
+    ? ["M272.5 71.4 H312 Q332 71.4 332 91.4 V171.5", "M95 245 H54 Q34 245 34 265 V350.6"]
+    : ["M512 456 H1067 Q1107 456 1107 496 V576", "M848 676 H346 Q306 676 306 716 V863"];
+  return (
+    <svg data-connect-lines className={styles.lines} viewBox={mobile ? "0 0 364 538.6" : "0 0 1440 1550"} preserveAspectRatio="none" aria-hidden="true">
+      {paths.map((d, i) => (
+        <g key={i}>
+          <path data-connect-track d={d} className={styles.track} />
+          <path data-connect-path d={d} pathLength="1" className={styles.progress} />
+          <circle data-connect-tip r={mobile ? 3 : 5} className={styles.tip} opacity="0" />
+          <circle data-connect-node r={mobile ? 3 : 5} className={styles.node} opacity="0" />
+        </g>
+      ))}
+    </svg>
+  );
+}
+
 export default function MedicationConnectSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    const media = gsap.matchMedia();
+    media.add({ desktop: "(min-width: 1024px)", mobile: "(max-width: 1023px)", reduce: "(prefers-reduced-motion: reduce)" }, (context) => {
+      const root = sectionRef.current!;
+      const desktop = Boolean(context.conditions?.desktop);
+      const layout = root.querySelector<HTMLElement>(desktop ? "[data-connect-desktop]" : "[data-connect-mobile]")!;
+      const scene = layout.querySelector<HTMLElement>("[data-connect-scene]") ?? layout;
+      const cards = Array.from(scene.querySelectorAll<HTMLElement>("[data-connect-card]"));
+      const svg = scene.querySelector<SVGSVGElement>("[data-connect-lines]")!;
+      const paths = Array.from(svg.querySelectorAll<SVGPathElement>("[data-connect-path]"));
+      const tracks = Array.from(svg.querySelectorAll<SVGPathElement>("[data-connect-track]"));
+      const tips = Array.from(svg.querySelectorAll<SVGCircleElement>("[data-connect-tip]"));
+      const nodes = Array.from(svg.querySelectorAll<SVGCircleElement>("[data-connect-node]"));
+
+      const measure = () => {
+        svg.setAttribute("viewBox", `0 0 ${scene.offsetWidth} ${scene.offsetHeight}`);
+        paths.forEach((path, i) => {
+          const from = cards[i];
+          const to = cards[i + 1];
+          const x = from.offsetLeft + (i === 0 ? from.offsetWidth : 0);
+          const y = from.offsetTop + from.offsetHeight * 0.48;
+          const endX = to.offsetLeft + to.offsetWidth * (i === 0 ? 0.82 : 0.22);
+          const endY = to.offsetTop;
+          const direction = i === 0 ? 1 : -1;
+          const radius = Math.min(desktop ? 32 : 18, Math.abs(endX - x) / 2, Math.max(1, endY - y) / 2);
+          const d = `M${x} ${y} H${endX - direction * radius} Q${endX} ${y} ${endX} ${y + radius} V${endY}`;
+          path.setAttribute("d", d);
+          tracks[i].setAttribute("d", d);
+          nodes[i].setAttribute("cx", String(endX));
+          nodes[i].setAttribute("cy", String(endY));
+        });
+      };
+      measure();
+      ScrollTrigger.addEventListener("refreshInit", measure);
+
+      if (!context.conditions?.reduce) {
+        const timeline = gsap.timeline({
+          defaults: { ease: "power3.out" },
+          scrollTrigger: {
+            id: "medication-connect",
+            trigger: scene,
+            start: () => `top+=${cards[0].offsetTop} 88%`,
+            end: () => `top+=${cards[2].offsetTop + cards[2].offsetHeight} 72%`,
+            scrub: 0.65,
+            invalidateOnRefresh: true,
+          },
+        });
+        gsap.set(paths, { strokeDasharray: 1, strokeDashoffset: 1 });
+        cards.forEach((card, i) => {
+          const at = [0, 1.65, 3.3][i];
+          timeline.fromTo(card,
+            { autoAlpha: 0, y: desktop ? 65 : 28, scale: 0.94, rotation: i === 1 ? 2 : -2 },
+            { autoAlpha: 1, y: 0, scale: 1, rotation: 0, duration: 0.85 }, at);
+          timeline.fromTo(card.querySelectorAll("img"), { scale: 1.16 }, { scale: 1, duration: 1.1 }, at);
+          timeline.fromTo(card.querySelectorAll("span"), { opacity: 0, y: 10 }, { opacity: 1, y: 0, stagger: 0.035, duration: 0.4 }, at + 0.15);
+        });
+        paths.forEach((path, i) => {
+          const at = 0.65 + i * 1.65;
+          const travel = { progress: 0 };
+          // Preserve fractional offsets on the normalized path instead of rounding to pixels.
+          timeline.to(path, { strokeDashoffset: 0, autoRound: false, ease: "none", duration: 1.15 }, at);
+          timeline.to(tips[i], { opacity: 1, duration: 0.12 }, at);
+          timeline.to(travel, {
+            progress: 1, ease: "none", duration: 1.15,
+            onUpdate: () => {
+              const point = path.getPointAtLength(path.getTotalLength() * travel.progress);
+              tips[i].setAttribute("cx", String(point.x));
+              tips[i].setAttribute("cy", String(point.y));
+            },
+          }, at);
+          timeline.to(tips[i], { opacity: 0, duration: 0.2 }, at + 1.15);
+          timeline.fromTo(nodes[i], { opacity: 0, scale: 0, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.3 }, at + 1.05);
+        });
+        gsap.fromTo(layout.querySelectorAll("[data-connect-intro]"), { autoAlpha: 0, y: 24 }, {
+          autoAlpha: 1, y: 0, stagger: 0.15, duration: 0.9, ease: "power3.out",
+          scrollTrigger: { trigger: layout, start: "top 82%", toggleActions: "play none none reverse" },
+        });
+        gsap.fromTo(layout.querySelector("[data-connect-outro]"), { autoAlpha: 0, y: 20 }, {
+          autoAlpha: 1, y: 0, duration: 0.7,
+          scrollTrigger: { trigger: layout.querySelector("[data-connect-outro]"), start: "top 94%", toggleActions: "play none none reverse" },
+        });
+      }
+      return () => {
+        ScrollTrigger.removeEventListener("refreshInit", measure);
+        tips.forEach((tip) => { tip.removeAttribute("cx"); tip.removeAttribute("cy"); });
+      };
+    });
+    return () => media.revert();
+  }, { scope: sectionRef });
+
   return (
     <section
+      ref={sectionRef}
+      id="medication-connect"
       className="relative w-full overflow-hidden bg-[#FFFEF2]"
       style={{ ["--u" as string]: "calc(min(100vw, 1440px) * 0.000694444)" }}
     >
       {/* Desktop (lg+) — Figma node 11274:1266 (1440 x 1550) absolute layout */}
-      <div className="relative mx-auto hidden max-w-360 lg:block" style={{ height: u(1550) }}>
+      <div data-connect-desktop className="relative mx-auto hidden max-w-360 lg:block" style={{ height: u(1550) }}>
         {/* Connector lines (drawn under the cards) */}
-        <div className="absolute" style={{ left: u(512), top: u(456), width: u(595), height: u(114) }}>
-          <Image src="/medication/connect/d-line-1.svg" alt="" width={608} height={127} unoptimized className="absolute max-w-none" style={{ left: "-1.12%", top: "-5.85%", width: "102.24%", height: "111.7%" }} />
-        </div>
-        <div className="absolute" style={{ left: u(306), top: u(676), width: u(536), height: u(181), transform: "scaleX(-1)" }}>
-          <Image src="/medication/connect/d-line-2.svg" alt="" width={549} height={194} unoptimized className="absolute max-w-none" style={{ left: "-1.24%", top: "-3.68%", width: "102.48%", height: "107.36%" }} />
-        </div>
+        <Connectors />
 
         {/* Heading (left) */}
-        <div className="absolute flex flex-col leading-[normal]" style={{ left: 40, top: u(74) }}>
+        <div data-connect-intro className="absolute flex flex-col leading-[normal]" style={{ left: 40, top: u(74) }}>
           <span className="whitespace-nowrap text-[#A1AAA3]" style={{ fontSize: `max(22px, ${u(36)})` }}>Keep your medications</span>
           <span className="comprehensive-serif whitespace-nowrap italic text-[#46524B]" style={{ fontSize: `max(24px, ${u(38)})` }}>
             connected to your care.
@@ -113,7 +230,7 @@ export default function MedicationConnectSection() {
         </div>
 
         {/* Statement (right) */}
-        <div className="absolute flex flex-col uppercase leading-[normal]" style={{ left: u(800), top: u(189), width: u(565), gap: u(10), fontSize: `max(20px, ${u(36)})` }}>
+        <div data-connect-intro className="absolute flex flex-col uppercase leading-[normal]" style={{ left: u(800), top: u(189), width: u(565), gap: u(10), fontSize: `max(20px, ${u(36)})` }}>
           <span className="text-right text-[#A1AAA3]">One place to understand</span>
           <span className="whitespace-nowrap font-medium italic text-[#6E7A72]">what you&apos;re taking and why.</span>
         </div>
@@ -182,7 +299,7 @@ export default function MedicationConnectSection() {
         </Card>
 
         {/* Closing note */}
-        <div className="absolute flex items-center justify-end" style={{ left: u(828), top: u(1253), gap: u(8) }}>
+        <div data-connect-outro className="absolute flex items-center justify-end" style={{ left: u(828), top: u(1253), gap: u(8) }}>
           <span className="whitespace-pre text-right uppercase leading-[normal] text-[#6E7A72]" style={{ fontSize: `max(20px, ${u(36)})` }}>
             {"Your physician sees the \nsame connected picture."}
           </span>
@@ -192,11 +309,12 @@ export default function MedicationConnectSection() {
 
       {/* Mobile / tablet (<lg) — Figma node 12306:29654 (402 wide); 1 design px = --m */}
       <div
+        data-connect-mobile
         className="mx-auto flex max-w-[500px] flex-col items-center px-[var(--p20)] py-[var(--p64)] lg:hidden"
         style={{ ["--m" as string]: "calc(min(100vw, 500px) / 402)", ["--p20" as string]: "20px", ["--p64" as string]: m(64), gap: m(32) } as React.CSSProperties}
       >
         {/* Heading */}
-        <div className="flex w-full flex-col items-start whitespace-nowrap text-left leading-[normal]" style={{ gap: m(16) }}>
+        <div data-connect-intro className="flex w-full flex-col items-start whitespace-nowrap text-left leading-[normal]" style={{ gap: m(16) }}>
           <div className="flex flex-col items-start">
             <span className="text-[#A1AAA3]" style={{ fontSize: m(24) }}>Keep your medications</span>
             <span className="comprehensive-serif italic text-[#46524B]" style={{ fontSize: m(32) }}>connected to your care.</span>
@@ -208,13 +326,8 @@ export default function MedicationConnectSection() {
         </div>
 
         {/* Diagram: three cards joined by two connector lines */}
-        <div className="relative" style={{ width: m(364), height: m(538.6) }}>
-          <div className="absolute" style={{ left: m(272), top: m(70.5), width: m(60), height: m(101) }}>
-            <Image src="/medication/connect/m-line-1.svg" alt="" width={71} height={112} unoptimized className="absolute max-w-none" style={{ left: "-8.89%", top: "-5.28%", width: "117.78%", height: "110.56%" }} />
-          </div>
-          <div className="absolute" style={{ left: m(34), top: m(249.5), width: m(63), height: m(101), transform: "scaleX(-1)" }}>
-            <Image src="/medication/connect/m-line-2.svg" alt="" width={76} height={115} unoptimized className="absolute max-w-none" style={{ left: "-10.58%", top: "-6.6%", width: "121.16%", height: "113.2%" }} />
-          </div>
+        <div data-connect-scene className="relative" style={{ width: m(364), height: m(538.6) }}>
+          <Connectors mobile />
 
           {/* 01 */}
           <MCard style={{ left: 0, top: 0, width: m(272.5), height: m(142.8), padding: m(16.7), borderRadius: m(7.12), borderWidth: m(0.712) }}>
@@ -269,7 +382,7 @@ export default function MedicationConnectSection() {
         </div>
 
         {/* Closing note */}
-        <div className="flex items-center justify-between" style={{ width: m(335) }}>
+        <div data-connect-outro className="flex items-center justify-between" style={{ width: m(335) }}>
           <Image src="/medication/connect/m-bar.svg" alt="" width={5} height={20} unoptimized style={{ width: m(5), height: m(20), transform: "scaleY(-1)" }} />
           <span className="whitespace-pre uppercase leading-[normal] text-[#6E7A72]" style={{ fontSize: m(12) }}>
             Your physician sees the same connected picture.

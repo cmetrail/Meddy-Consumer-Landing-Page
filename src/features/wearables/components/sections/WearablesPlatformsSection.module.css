@@ -1,0 +1,44 @@
+@layer utilities {
+.section { display: flex; flex-direction: column; align-items: center; }
+.progress { display: none; }
+.card { position: relative; height: 520px; }
+@media (min-width: 768px) { .card { height: 560px; } }
+
+.section[data-platform-motion="showcase"] { padding: 56px 0 !important; }
+.section[data-platform-motion="showcase"] .content { gap: 20px !important; }
+.section[data-platform-motion="showcase"] [data-platform-heading] { gap: 10px !important; }
+.section[data-platform-motion="showcase"] [data-platform-heading] h2 { font-size: clamp(30px, 3vw, 44px) !important; }
+.section[data-platform-motion="showcase"] .stage {
+  position: relative;
+  display: block !important;
+  height: clamp(360px, calc(100svh - 330px), 620px);
+  isolation: isolate;
+}
+.section[data-platform-motion="showcase"] [data-platform-card] {
+  position: absolute;
+  width: calc(50% - 8px);
+  height: calc(50% - 8px);
+  border-radius: 16px;
+}
+.section[data-platform-motion="showcase"] [data-platform-card]:nth-child(2) { left: calc(50% + 8px); }
+.section[data-platform-motion="showcase"] [data-platform-card]:nth-child(3) { top: calc(50% + 8px); }
+.section[data-platform-motion="showcase"] [data-platform-card]:nth-child(4) { left: calc(50% + 8px); top: calc(50% + 8px); }
+.section[data-platform-motion="showcase"] [data-platform-copy] { padding: 24px !important; }
+.section[data-platform-motion="showcase"] [data-platform-copy] h3 { font-size: clamp(24px, 2.8vw, 40px) !important; }
+.section[data-platform-motion="showcase"] [data-platform-copy] p { font-size: clamp(11px, 1.1vw, 15px) !important; }
+.section[data-platform-motion="showcase"] .progress { display: flex; gap: 20px; }
+.step { flex: 1; min-width: 0; }
+.track { height: 2px; background: #dce1d9; overflow: hidden; margin-bottom: 8px; }
+.track span { display: block; height: 100%; background: #46524b; transform: scaleX(0); transform-origin: left; }
+.step > span { display: flex; gap: 8px; font-size: 11px; color: #46524b; text-transform: uppercase; letter-spacing: .05em; }
+.step small { color: #929b92; font-size: inherit; }
+.section[data-platform-motion="showcase"] [data-platform-footer] { gap: 10px !important; }
+.section[data-platform-motion="showcase"] [data-platform-footer] img { height: 24px !important; }
+.section[data-platform-motion="showcase"] [data-platform-footer] span { font-size: 12px !important; }
+
+@media (max-width: 900px) {
+  .section[data-platform-motion="showcase"] .progress { gap: 10px; }
+  .step > span { font-size: 9px; gap: 5px; }
+}
+
+}

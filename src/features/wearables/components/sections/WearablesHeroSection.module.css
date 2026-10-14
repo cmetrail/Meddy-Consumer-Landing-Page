@@ -1,0 +1,39 @@
+@layer components {
+.hero {
+  --u: min(calc(100vw / 1440), calc((var(--dvh) - 81px) / 913), 1px);
+  --canvas-offset: calc((var(--dvh) - 81px - 913 * var(--u)) / 2);
+  --stage-top: calc(81px + var(--canvas-offset));
+  --works-bottom: calc(var(--canvas-offset) + 76 * var(--u));
+  height: var(--dvh);
+}
+
+@media (max-width: 767px) {
+  .hero {
+    /* Retain readable content and scrolling on unusually short displays. */
+    min-height: 640px;
+  }
+
+  .stage {
+    flex-shrink: 0;
+    padding-top: 12px !important;
+  }
+
+  .stage h1 { font-size: clamp(32px, 11vw, 44px) !important; }
+  .stage h1 + p { font-size: 18px !important; }
+  .stage p:last-child { font-size: 14px !important; }
+
+  .mobileDevices {
+    flex: 1;
+    min-height: 140px;
+    container-type: size;
+    --u: min(calc((100vw - 40px) / 884), calc(100cqh / 680));
+  }
+
+  .mobileBrands {
+    flex-shrink: 0;
+    font-size: 14px !important;
+    padding-top: 12px !important;
+    padding-bottom: 24px !important;
+  }
+}
+}

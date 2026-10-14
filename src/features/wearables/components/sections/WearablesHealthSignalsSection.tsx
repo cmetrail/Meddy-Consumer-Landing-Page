@@ -1,7 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { useRef } from "react";
 import { MoonStar, HandHeart, Footprints, Dumbbell } from "lucide-react";
+import { useHealthSignalsMotion } from "./useHealthSignalsMotion";
+import styles from "./WearablesHealthSignalsSection.module.css";
 
 type HealthCard = {
   bg: string;
@@ -83,6 +86,7 @@ function HealthCard({ card, top, z }: { card: HealthCard; top: string; z: number
   const Icon = card.icon;
   return (
     <div
+      data-signal-card
       className={`absolute inset-x-0 h-[240px] rounded-[24px] p-5 shadow-[3px_5px_10.7px_rgba(0,0,0,0.25)] md:h-[281px] md:p-6 ${top}`}
       style={{ background: card.bg, zIndex: z }}
     >
@@ -90,7 +94,7 @@ function HealthCard({ card, top, z }: { card: HealthCard; top: string; z: number
         className="h-14 w-14 text-[#46524B] md:h-16 md:w-16"
         strokeWidth={1.5}
       />
-      <div className="absolute" style={card.imagePos}>
+      <div data-signal-device className="absolute" style={card.imagePos}>
         <Image
           src={card.image}
           alt={card.imageAlt}
@@ -100,10 +104,10 @@ function HealthCard({ card, top, z }: { card: HealthCard; top: string; z: number
           className="h-auto w-full object-contain"
         />
       </div>
-      <h3 className="mt-3 font-dm-serif italic uppercase leading-[1.1] text-[#46524B] text-[28px] md:mt-4 md:text-[36px]">
+      <h3 data-signal-detail className="mt-3 font-dm-serif italic uppercase leading-[1.1] text-[#46524B] text-[28px] md:mt-4 md:text-[36px]">
         {card.title}
       </h3>
-      <div className="mt-3 grid grid-cols-2 gap-x-3 md:mt-4">
+      <div data-signal-detail className="mt-3 grid grid-cols-2 gap-x-3 md:mt-4">
         <BulletList items={card.left} />
         <BulletList items={card.right} />
       </div>
@@ -181,7 +185,7 @@ function DesktopBullets({ items, gap, width }: { items: string[]; gap: number; w
 function DesktopCardView({ c, z }: { c: DesktopCard; z: number }) {
   const [dl, dt, dw, dh] = c.device.outer;
   return (
-    <div className="absolute" style={{ ...absBox([c.pos[0], c.pos[1], 602, 281]), zIndex: z }}>
+    <div data-signal-card className="absolute" style={{ ...absBox([c.pos[0], c.pos[1], 602, 281]), zIndex: z }}>
       {/* tabbed card shape + shadow (path from Figma "Union", 602x281) */}
       <svg
         viewBox="7.7 5.7 602 281"
@@ -202,12 +206,13 @@ function DesktopCardView({ c, z }: { c: DesktopCard; z: number }) {
         style={{ left: u(c.iconLeft), top: u(c.iconTop), width: u(64), height: u(64) }}
       />
       <p
+        data-signal-detail
         className="comprehensive-serif absolute uppercase italic leading-[normal] text-[#46524B]"
         style={{ left: u(c.titleLeft), top: u(105), fontSize: u(36) }}
       >
         {c.title}
       </p>
-      <div className="absolute flex items-start" style={{ left: u(33), top: u(197), gap: u(9) }}>
+      <div data-signal-detail className="absolute flex items-start" style={{ left: u(33), top: u(197), gap: u(9) }}>
         <DesktopBullets items={c.left} gap={8} width={135} />
         <DesktopBullets items={c.right} gap={6} width={165} />
       </div>
@@ -226,7 +231,7 @@ function DesktopCardView({ c, z }: { c: DesktopCard; z: number }) {
       </div>
 
       {/* device */}
-      <div className="absolute flex items-center justify-center" style={{ left: u(dl), top: u(dt), width: u(dw), height: u(dh) }}>
+      <div data-signal-device className="absolute flex items-center justify-center" style={{ left: u(dl), top: u(dt), width: u(dw), height: u(dh) }}>
         <div className="relative" style={{ width: u(c.device.inner[0]), height: u(c.device.inner[1]), scale: c.device.scale, rotate: `${c.device.rot}deg` }}>
           <Image src={c.device.src} alt={c.device.alt} fill sizes="300px" className="object-contain" />
         </div>
@@ -237,7 +242,7 @@ function DesktopCardView({ c, z }: { c: DesktopCard; z: number }) {
 
 function DesktopStage() {
   return (
-    <div className="relative mx-auto hidden md:block" style={{ width: u(1440), height: u(1024) }}>
+    <div data-signal-desktop className="relative mx-auto hidden md:block" style={{ width: u(1440), height: u(1024) }}>
       {/* Phones */}
       <div className="absolute overflow-hidden" style={absBox([683, 348, 829, 663])}>
         <Image
@@ -250,7 +255,7 @@ function DesktopStage() {
       </div>
 
       {/* Heading */}
-      <div className="absolute flex flex-col uppercase leading-[normal]" style={{ left: u(81), top: u(96), width: u(567), gap: u(5) }}>
+      <div data-signal-left className="absolute flex flex-col uppercase leading-[normal]" style={{ left: u(81), top: u(96), width: u(567), gap: u(5) }}>
         <h2 className="comprehensive-serif whitespace-nowrap text-[#46524B]" style={{ fontSize: u(48) }}>
           One place for the signals
         </h2>
@@ -278,7 +283,7 @@ function DesktopStage() {
       ))}
 
       {/* Footer */}
-      <div className="absolute flex flex-col" style={{ left: u(82), top: u(839), width: u(382), gap: u(17) }}>
+      <div data-signal-left className="absolute flex flex-col" style={{ left: u(82), top: u(839), width: u(382), gap: u(17) }}>
         <div className="flex items-center" style={{ gap: u(10) }}>
           <Image src="/wearables/history-accent.svg" alt="" width={9} height={35} style={{ width: u(9), height: u(35) }} />
           <span className="whitespace-nowrap font-medium uppercase text-[#7B7B7B]" style={{ fontSize: u(20) }}>
@@ -295,9 +300,14 @@ function DesktopStage() {
 }
 
 export default function WearablesHealthSignalsSection() {
+  const ref = useRef<HTMLElement>(null);
+  useHealthSignalsMotion(ref);
+
   return (
     <section
-      className="relative overflow-hidden"
+      ref={ref}
+      id="wearables-health-signals"
+      className={`overflow-hidden ${styles.section}`}
       style={
         {
           "--u": "calc(min(100vw, 1440px) * 0.000694444)",
@@ -320,7 +330,7 @@ export default function WearablesHealthSignalsSection() {
             </div>
 
             {/* Stacked cards */}
-            <div className="relative h-[440px] md:h-[529px]">
+            <div data-signal-mobile className={`h-[440px] md:h-[529px] ${styles.mobileStack}`}>
               {CARDS.map((card, i) => (
                 <HealthCard key={card.title} card={card} top={CARD_TOPS[i]} z={i} />
               ))}

@@ -10,22 +10,15 @@ import styles from "./FullScreenMenu.module.css";
 
 const COLUMNS = [
   [
-    { label: "Home page", href: "/" },
-    { label: "How it works", href: "/how-it-works" },
-    { label: "Why Meddy", href: "/why-meddy" },
-    { label: "Sleep and recovery", href: "/sleep" },
     { label: "Pricing", href: "/pricing" },
-    { label: "Nutrition", href: "/nutrition" },
-    { label: "Physician Care", href: "/physician-care" },
     { label: "Personalized health plans", href: "/personalized-health-plans" },
-  ],
-  [
     { label: "Medication management", href: "/medication" },
     { label: "Longevity and preventive health", href: "/longevity" },
+  ],
+  [
     { label: "Labs and biomarkers tracking", href: "/biomarkers" },
     { label: "Weight loss & metabolic", href: "/weight-loss" },
     { label: "Wearables & health data", href: "/wearables" },
-    { label: "Fitness", href: "/fitness" },
     { label: "24/7 Primary care access", href: "/247-care" },
   ],
 ];

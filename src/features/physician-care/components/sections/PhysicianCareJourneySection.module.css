@@ -1,0 +1,130 @@
+.section {
+  --journey-scale: calc(100vw / 1440px);
+  position: relative;
+  width: 100%;
+  height: calc(1117px * var(--journey-scale));
+  overflow: hidden;
+  background: #fffff9;
+  color: #46524b;
+}
+
+/* Scale the complete composition together, preserving the Figma geometry. */
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1440px;
+  height: 1117px;
+  transform: translateX(-50%) scale(var(--journey-scale));
+  transform-origin: top center;
+}
+
+.heading {
+  position: absolute;
+  top: 120px;
+  inset-inline: 120px;
+  text-align: center;
+}
+
+.heading h2 {
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.heading span {
+  display: block;
+  font-size: 40px;
+}
+
+.heading em {
+  display: block;
+  font-family: var(--font-dm-serif), serif;
+  font-size: 104px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.heading > p {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.journey {
+  position: absolute;
+  top: 366px;
+  left: -29.5px;
+  width: 1499px;
+  height: 631px;
+}
+
+.path {
+  position: absolute;
+  left: -16.04px;
+  top: 23.974px;
+  max-width: none;
+}
+
+.milestones {
+  list-style: none;
+}
+
+.pathLettering {
+  position: absolute;
+  left: 79.49px;
+  top: 47.432px;
+  max-width: none;
+}
+
+.card {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #af6363;
+  color: #fff;
+}
+
+.january { left: 126px; top: 327px; width: 160px; height: 187px; background: black; }
+.april { left: 448px; top: 174px; width: 185px; height: 216px; }
+.august { left: 776px; top: 181px; width: 271px; height: 317px; }
+.december { left: 1200px; top: 0; width: 185px; height: 216px; }
+
+.photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: none;
+  object-fit: cover;
+  height: 100%;
+}
+
+.january .photo { height: 190px; }
+
+.shade {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 158px;
+  background: linear-gradient(to top, #423f3f 8.556%, rgb(255 255 255 / 0%) 82.159%);
+}
+
+.january .shade { height: 135px; bottom: -3px; }
+.december .shade { height: 103px; }
+
+.label {
+  position: absolute;
+  top: 156px;
+  left: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+
+.january .label { top: 132px; left: 9px; width: 102px; }
+.august .label { top: 257px; left: 20.51px; width: 166.995px; }
+.december .label { left: 6px; width: 166.995px; }
+
+.month { font-size: 16px; font-weight: 700; }
+.caption { font-size: 12px; font-weight: 400; text-align: center; white-space: nowrap; }

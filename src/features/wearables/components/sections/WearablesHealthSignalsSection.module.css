@@ -1,0 +1,42 @@
+.section { position: relative; }
+
+/* Match the header's centered 1440px container and 20px / 40px gutters,
+   even when the pinned composition scales down to fit the viewport height. */
+@media (min-width: 768px) {
+  .section { --signal-gutter: 20px; }
+
+  .section [data-signal-desktop] :is([data-signal-left], [data-signal-card]) {
+    left: calc((1440 * var(--u) - min(100vw, 1440px)) / 2 + var(--signal-gutter)) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section { --signal-gutter: 40px; }
+}
+
+/* Fit the complete composition below the navigation during the pinned story. */
+@media (min-width: 768px) and (min-height: 650px) and (prefers-reduced-motion: no-preference) {
+  .section {
+    --u: min(calc(100vw / 1440), calc((100svh - 100px) / 1024)) !important;
+  }
+}
+
+.mobileStack {
+  position: relative;
+  isolation: isolate;
+  z-index: 5;
+}
+
+.mobileStack [data-signal-detail]:is(div) {
+  width: 70%;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.mobileStack [data-signal-detail] ul { gap: 6px; }
+
+@media (max-width: 359px) {
+  .mobileStack [data-signal-card] h3 { font-size: 25px; }
+  .mobileStack [data-signal-card] ul { gap: 6px; }
+  .mobileStack [data-signal-card] li { gap: 5px; }
+}
