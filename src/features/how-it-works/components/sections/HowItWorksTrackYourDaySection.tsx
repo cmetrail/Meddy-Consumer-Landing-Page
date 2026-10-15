@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useInView } from "framer-motion";
 import styles from "./HowItWorksTrackYourDaySection.module.css";
 
 type Tab = { label: string; body: string; tags: string };
+const TAB_INTERVAL_MS = 5000;
 
 const TABS: Tab[] = [
   {
@@ -31,7 +33,27 @@ const TABS: Tab[] = [
 
 export default function HowItWorksTrackYourDaySection() {
   const [active, setActive] = useState(0);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(cardRef, { amount: 0.25 });
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [pageVisible, setPageVisible] = useState(true);
+  const paused = hovered || focused;
   const current = TABS[active];
+
+  useEffect(() => {
+    const updateVisibility = () => setPageVisible(document.visibilityState === "visible");
+    updateVisibility();
+    document.addEventListener("visibilitychange", updateVisibility);
+    return () => document.removeEventListener("visibilitychange", updateVisibility);
+  }, []);
+
+  useEffect(() => {
+    if (!inView || paused || !pageVisible) return;
+    // A fresh delay after each selection or pause gives every category time to be read.
+    const timer = window.setTimeout(() => setActive(index => (index + 1) % TABS.length), TAB_INTERVAL_MS);
+    return () => window.clearTimeout(timer);
+  }, [active, inView, paused, pageVisible]);
 
   return (
     <section id="track-your-day" className={styles.section} aria-labelledby="track-your-day-heading">
@@ -45,7 +67,11 @@ export default function HowItWorksTrackYourDaySection() {
         <p className={styles.intro}>
           One place to understand your everyday health and wellness. Track the habits and activities that influence how you feel and perform throughout the day.
         </p>
-        <div className={styles.card}>
+        <div ref={cardRef} className={styles.card}
+          onPointerEnter={event => { if (event.pointerType === "mouse") setHovered(true); }}
+          onPointerLeave={() => setHovered(false)}
+          onFocusCapture={() => setFocused(true)}
+          onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
           <div className={styles.rail} aria-label="Daily health categories">
             {TABS.map((tab, index) => (
               <button key={tab.label} type="button" onClick={() => setActive(index)} aria-pressed={active === index} aria-controls="daily-health-panel" className={`${styles.tab} ${active === index ? styles.active : ""}`}>
@@ -53,9 +79,9 @@ export default function HowItWorksTrackYourDaySection() {
               </button>
             ))}
           </div>
-          <div id="daily-health-panel" className={styles.panel} aria-live="polite" aria-atomic="true">
-            <h3 className={styles.panelTitle}>{current.label}</h3>
-            <div className={styles.panelCopy}>
+          <div id="daily-health-panel" className={styles.panel} aria-live={paused ? "polite" : "off"} aria-atomic="true">
+            <h3 key={`${current.label}-title`} className={styles.panelTitle}>{current.label}</h3>
+            <div key={`${current.label}-copy`} className={styles.panelCopy}>
               <p className={styles.body}>{current.body}</p>
               <p className={styles.tags}>{current.tags}</p>
             </div>

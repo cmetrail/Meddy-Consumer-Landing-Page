@@ -1,3 +1,19 @@
-const {chromium}=require('C:/Users/User/AppData/Local/npm-cache/_npx/420ff84f11983ee5/node_modules/playwright');
-const assert=require('node:assert/strict');
-(async()=>{const b=await chromium.launch();for(const [width,height]of[[780,596],[1440,900],[1920,958],[593,447],[390,844],[320,700]]){const p=await b.newPage({viewport:{width,height},reducedMotion:'reduce'});const errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto('http://localhost:3000',{waitUntil:'networkidle'});await p.evaluate(()=>document.fonts.ready);const s=p.locator('#physician-care');await s.scrollIntoViewIfNeeded();await s.locator('img').evaluateAll(async imgs=>await Promise.all(imgs.map(i=>{i.loading='eager';return i.decode().catch(()=>{});})));await s.screenshot({path:`tmp/physician-reference-${width}.png`});const state=await s.evaluate(el=>{const r=el.getBoundingClientRect();return{overflow:el.scrollWidth>el.clientWidth,links:[...el.querySelectorAll('a')].map(a=>{const b=a.getBoundingClientRect();return{text:a.textContent,width:b.width,height:b.height,inside:b.left>=r.left&&b.right<=r.right};}),cardInside:[...el.querySelectorAll('[data-ray-social]')].every(c=>c.getBoundingClientRect().bottom<=r.bottom),broken:[...el.querySelectorAll('img')].some(i=>!i.naturalWidth)};});assert.equal(state.overflow,false);assert.equal(state.broken,false);assert.ok(state.cardInside);assert.ok(state.links.every(a=>a.inside));assert.equal(await s.getByText('337',{exact:true}).count(),1);if(width===780){assert.ok(Math.abs(state.links[0].width-148)<3);assert.ok(Math.abs(state.links[1].width-116)<3);assert.ok(Math.abs(state.links[0].height-32)<3);}assert.deepEqual(errors,[]);console.log(JSON.stringify({width,height,...state,errors}));await p.close();}await b.close();})().catch(e=>{console.error(e);process.exit(1)});
+const { chromium } = require('C:/Users/User/AppData/Local/npm-cache/_npx/420ff84f11983ee5/node_modules/playwright');
+(async () => {
+ const browser = await chromium.launch({ headless: true });
+ const page = await browser.newPage({ viewport: { width: 882, height: 600 }, reducedMotion: 'reduce' });
+ await page.goto('http://localhost:3000/wearables', { waitUntil: 'networkidle' });
+ await page.evaluate(() => document.fonts.ready);
+ const section = page.locator('section[aria-labelledby="wearables-physician-heading"]');
+ await section.scrollIntoViewIfNeeded();
+ await section.screenshot({ path: 'tmp/physician-reference-desktop.png' });
+ console.log(await section.evaluate(el => ({card:el.firstElementChild.getBoundingClientRect().toJSON(), heading:getComputedStyle(el.querySelector('h2')).fontSize,images:[...el.querySelectorAll('img')].every(i=>i.complete&&i.naturalWidth>0)})));
+ for (const width of [320,390,767,1440]) {
+  await page.setViewportSize({width,height:900});
+  await section.screenshot({path:`tmp/physician-reference-${width}.png`});
+  const layout=await section.evaluate(el=>{ const card=el.firstElementChild.getBoundingClientRect();const copy=el.querySelector('button').getBoundingClientRect();return {width:innerWidth,cardWidth:card.width,ctaFits:copy.bottom<=card.bottom&&copy.right<=card.right,overflow:document.documentElement.scrollWidth>innerWidth};});
+  console.log(layout);
+  if (!layout.ctaFits || layout.overflow) throw new Error(JSON.stringify(layout));
+ }
+ await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});

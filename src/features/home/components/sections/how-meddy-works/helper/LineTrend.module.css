@@ -3,11 +3,18 @@
 .sticky { display: flex; align-items: center; }
 .content { container-type: inline-size; width: 100%; max-width: 1440px; margin: auto !important; padding: 48px 20px 42px !important; }
 .heading { text-align: center; margin-bottom: 3cqw !important; }
-.heading h3 { color: #fff; font-size: clamp(12px, 1.69cqw, 23px); font-weight: 500; line-height: 1.3; letter-spacing: -0.02em; }
-.heading p { margin-top: 0.4cqw !important; color: #e7e7e7; font-size: clamp(9px, 1.12cqw, 15px); line-height: 1.4; }
+.heading h3 { color: #fff; font-size: clamp(18px, 2.4cqw, 34px); font-weight: 500; line-height: 1.3; letter-spacing: -0.02em; }
+.heading p { margin-top: 1.4cqw !important; color: #e7e7e7; font-family: var(--font-dm-serif), Georgia, serif; font-style: italic; font-size: clamp(12px, 1.4cqw, 20px); line-height: 1.4; }
 .chart { position: relative; width: 100%; }
 .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
 .mobileMarkers { display: none; }
+.chartMetrics > div { position: absolute; z-index: 2; padding: 0.65cqw !important; border: 1px solid; border-radius: 3px; }
+.driverMetric { top: 39%; right: 1.6%; background: #183225e6; border-color: #17925a !important; }
+.scroll[data-variant="fitness"] .driverMetric { right: 0; }
+.scroll[data-variant="sleep"] .driverMetric { right: -1%; }
+.outcomeMetric { top: 70%; right: 11.2%; background: #303b35e6; border-color: #d4ddd7 !important; }
+.chartMetrics .metricLabel, .chartMetrics .range { font-size: clamp(8px, 0.85cqw, 12px); }
+.chartMetrics .green, .chartMetrics .white { font-size: clamp(11px, 1.2cqw, 17px); }
 .summary { width: 62.5%; max-width: 100%; margin: 0 auto !important; padding: 1.4cqw !important; border-radius: 1.1cqw; background: #183024; }
 .scroll[data-variant="fitness"] .summary { width: 44%; }
 .scroll[data-variant="sleep"] .summary { width: 57.4%; }
@@ -19,6 +26,10 @@
 .white { color: #fff; }
 .range { color: #7b8880; font-size: clamp(7px, 0.985cqw, 13.4px); line-height: 1.4; }
 .description { color: #e7e7e7; font-size: clamp(7px, 0.985cqw, 13.4px); line-height: 1.6; }
+@media (min-width: 768px) {
+  .scroll[data-variant] .summary { width: 100%; padding: 0.8cqw 0 0 !important; background: transparent; text-align: center; }
+  .summary h4, .summary .metrics { display: none; }
+}
 @media (min-width: 1024px) {
   .content { padding-inline: 40px !important; }
 }
@@ -27,12 +38,13 @@
   .sticky { min-height: 100svh; }
 }
 @media (max-width: 767px) {
-  .content { padding: clamp(48px, 14vw, 96px) clamp(16px, 4.4vw, 34px) 40px !important; }
-  .heading { text-align: left; margin-bottom: 7cqw !important; }
+  .content { padding: clamp(40px, 8vw, 64px) clamp(16px, 5.6vw, 40px) clamp(40px, 9vw, 64px) !important; }
+  .scroll[data-variant="nutrition"] .content { padding-top: clamp(48px, 12vw, 88px) !important; }
+  .scroll[data-variant="fitness"] .content { padding-top: clamp(32px, 6vw, 48px) !important; }
+  .scroll[data-variant="sleep"] .content { padding-top: clamp(24px, 4vw, 32px) !important; }
+  .heading { text-align: center; margin-bottom: 8cqw !important; }
   .heading h3 { font-size: clamp(16px, 4.8cqw, 30px); font-weight: 400; line-height: 1.4; }
-  .heading p { margin-top: 0.4cqw !important; font-size: clamp(12px, 3.4cqw, 22px); }
-  .scroll[data-variant="fitness"] .heading { text-align: right; }
-  .scroll[data-variant="sleep"] .content { padding-top: clamp(60px, 19vw, 132px) !important; }
+  .heading p { margin-top: 2.5cqw !important; font-size: clamp(12px, 3.8cqw, 24px); }
   .chart { width: 93%; margin-inline: auto !important; overflow: visible; }
   .chart svg { min-width: 0; width: 100%; }
   .desktopMarkers { display: none; }
@@ -42,14 +54,14 @@
   .scroll[data-variant="fitness"] .greenSeries { transform: translate(-44px, 22px); }
   .scroll[data-variant="sleep"] .whiteSeries { transform: translate(-47px, 9px); }
   .scroll[data-variant="sleep"] .greenSeries { transform: translate(-34px, 14px); }
-  .scroll[data-variant] .summary { width: 100%; margin-top: 1.5cqw !important; padding: 2.2cqw !important; border-radius: 3.4cqw; }
-  .scroll[data-variant="sleep"] .summary { margin-top: 4cqw !important; }
-  .summary h4 { font-size: clamp(13px, 3.5cqw, 22px); line-height: 1.45; }
-  .metricLabel { font-size: clamp(9px, 2.3cqw, 15px); }
-  .range { font-size: clamp(11px, 2.8cqw, 18px); }
-  .description { font-size: clamp(9px, 2.25cqw, 14px); line-height: 1.5; }
-  .green, .white { margin-top: 1.7cqw !important; font-size: clamp(18px, 4.8cqw, 30px); font-weight: 600; }
-  .metrics { gap: 5cqw; margin: 3cqw 0 !important; }
+  .chartMetrics .metricLabel { font-size: 1cqw; }
+  .chartMetrics .range { font-size: 0.85cqw; }
+  .chartMetrics .green, .chartMetrics .white { margin-top: 0.4cqw !important; font-size: 1.4cqw; }
+  .scroll[data-variant="fitness"] .driverMetric { right: -3%; }
+  .scroll[data-variant="sleep"] .driverMetric { right: -5%; }
+  .scroll[data-variant] .summary { width: 100%; margin-top: 6cqw !important; padding: 0 !important; border-radius: 0; background: transparent; text-align: center; }
+  .summary h4, .summary .metrics { display: none; }
+  .description { font-size: clamp(14px, 3.5cqw, 22px); line-height: 1.5; text-wrap: pretty; }
 }
 @media (max-height: 600px) and (min-width: 1024px) {
   .content { padding-top: 20px !important; padding-bottom: 20px !important; }

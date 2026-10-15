@@ -1,0 +1,135 @@
+.section {
+  --physician-unit: min(0.0590632vw, 1px);
+  display: flex;
+  justify-content: center;
+  padding: calc(40 * var(--physician-unit)) 0 calc(140 * var(--physician-unit)) !important;
+  background: #fafafa;
+}
+
+.card {
+  position: relative;
+  width: calc(1409 * var(--physician-unit));
+  height: calc(972 * var(--physician-unit));
+  overflow: hidden;
+  border-radius: calc(18 * var(--physician-unit));
+}
+
+.heading {
+  position: absolute;
+  top: calc(36 * var(--physician-unit));
+  left: calc(38 * var(--physician-unit));
+  font-weight: 400;
+  z-index: 1;
+}
+
+.intro {
+  display: block;
+  color: #7690a6;
+  font-size: calc(48 * var(--physician-unit));
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.intro em {
+  font-weight: 400;
+  color: #5d7181;
+}
+
+.title {
+  display: block;
+  margin-top: calc(10 * var(--physician-unit)) !important;
+  color: #5d7181;
+  font-size: calc(76 * var(--physician-unit));
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.copy {
+  position: absolute;
+  top: calc(522 * var(--physician-unit));
+  left: calc(38 * var(--physician-unit));
+  width: calc(555 * var(--physician-unit));
+  z-index: 1;
+}
+
+.description {
+  color: #6e7a72;
+  font-size: calc(24 * var(--physician-unit));
+  line-height: 1.5;
+}
+
+.message {
+  margin-top: calc(42 * var(--physician-unit)) !important;
+}
+
+.statement {
+  color: #101817;
+  font-size: calc(38 * var(--physician-unit));
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.care {
+  margin-top: calc(6 * var(--physician-unit)) !important;
+  color: #079b58;
+  font-size: calc(38 * var(--physician-unit));
+  line-height: 1.45;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: calc(22 * var(--physician-unit)) !important;
+  width: calc(188 * var(--physician-unit));
+  height: calc(67 * var(--physician-unit));
+  border: 0;
+  border-radius: 999px;
+  background: #12965d;
+  color: #fff;
+  font-size: calc(24 * var(--physician-unit));
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.button:hover { background: #108350; }
+.button:focus-visible { outline: 2px solid #5d7181; outline-offset: 4px; }
+
+.orbit {
+  position: absolute;
+  top: calc(-1 * var(--physician-unit));
+  right: calc(20 * var(--physician-unit));
+  width: calc(566 * var(--physician-unit));
+  height: auto;
+  transform: scaleY(0.9);
+  transform-origin: top;
+  max-width: none;
+  pointer-events: none;
+}
+
+.physician {
+  position: absolute;
+  top: calc(-82 * var(--physician-unit));
+  right: calc(-100 * var(--physician-unit));
+  width: calc(760 * var(--physician-unit));
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .section { padding: 20px !important; }
+  .card { width: 100%; height: auto; border-radius: 15px; }
+  .heading { position: relative; top: auto; left: auto; padding: 28px 24px 0 !important; }
+  .intro { font-size: clamp(18px, 4.8vw, 30px); }
+  .title { margin-top: 8px !important; font-size: clamp(28px, 7.5vw, 48px); }
+  .copy { position: relative; top: auto; left: auto; width: auto; padding: 40px 24px 0 !important; }
+  .description { max-width: 420px; font-size: 14px; }
+  .message { margin-top: 24px !important; max-width: 340px; }
+  .statement, .care { font-size: 20px; }
+  .care { margin-top: 4px !important; }
+  .button { margin-top: 20px !important; width: 112px; height: 40px; font-size: 14px; }
+  .physician { position: relative; display: block; top: auto; right: auto; width: 85%; margin: -35px 0 -70px auto !important; }
+  .orbit { top: auto; bottom: 150px; right: 3%; width: 80%; height: auto; transform: none; }
+}
+

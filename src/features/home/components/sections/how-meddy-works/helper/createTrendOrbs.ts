@@ -84,7 +84,8 @@ export async function createTrendOrbs(
       const point = pointAt((lo + hi) / 2);
       group.position.set((point.x - view.x) / view.width * width,
         height - (point.y - view.y) / view.height * height, 0);
-      group.scale.setScalar(group.userData.baseScale * (index === 0 ? 18 : 28));
+      const responsiveScale = Math.max(0.55, Math.min(1, width / 720));
+      group.scale.setScalar(group.userData.baseScale * (index === 0 ? 18 : 28) * responsiveScale);
       group.rotation.set(progress * Math.PI, progress * Math.PI * 3, progress * 0.5);
     });
     renderer.render(scene, camera);

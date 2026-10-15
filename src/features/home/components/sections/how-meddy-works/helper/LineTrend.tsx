@@ -1,7 +1,13 @@
 "use client";
 
-import { useId } from "react";
+import { useId, useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { SCROLL_MOTION } from "@/lib/motion";
+import TrendOrbs from "./TrendOrbs";
 import styles from "./LineTrend.module.css";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type Marker = { x: number; y: number; green: boolean; week: number; label: string; value: string; width: number };
 type Trend = {
@@ -18,7 +24,7 @@ const fallingOutcome = "M8 57 C35 42 62 61 95 72 C166 94 184 107 222 100 C272 91
 
 const trends: Record<"nutrition" | "fitness" | "sleep", Trend> = {
   nutrition: {
-    title: "Blood pressure • Sodium Intake", subtitle: "Nutrition threshold",
+    title: "See how your nutrition affects your health.", subtitle: "Sodium Intake & Blood Pressure",
     whitePath: "M8 74 C50 99 108 72 163 55 C225 37 265 91 312 116 C366 147 417 139 483 128 C573 111 619 102 680 174",
     greenPath: "M8 76 C40 44 81 80 139 105 C221 143 258 112 303 88 C354 60 381 62 435 70 C536 85 625 121 680 188",
     markers: [
@@ -29,11 +35,11 @@ const trends: Record<"nutrition" | "fitness" | "sleep", Trend> = {
     ],
     whiteLabel: "Blood Pressure", greenLabel: "Sodium Intake", whiteLabelX: 199, whiteLabelY: 76, greenLabelX: 40, greenLabelY: 102,
     headline: "Lower sodium intake coincided with lower blood pressure.",
-    metrics: [{ label: "Daily sodium intake", change: "−29%", range: "3,400 → 2,400 mg", green: true }, { label: "Systolic blood pressure", change: "−8 mmHg", range: "138 → 130 mmHg", green: true }],
-    description: "Over 8 weeks, both measurements decreased, suggesting a possible relationship between sodium intake and blood pressure.",
+    metrics: [{ label: "Daily sodium", change: "−29%", range: "3,400 → 2,400 mg", green: true }, { label: "Systolic blood pressure", change: "−8 mmHg", range: "138 → 130 mmHg", green: false }],
+    description: "Over 8 weeks, your average daily sodium intake fell 29% while systolic blood pressure decreased by 8 mmHg.",
   },
   fitness: {
-    title: "Body Weight • HR Zone 3 Minutes", subtitle: "Fitness Trend",
+    title: "See how your workouts affect your health.", subtitle: "Heart Rate Zone 3 Minutes & Body Weight",
     whitePath: fallingOutcome, greenPath: risingDriver,
     markers: [
       { x: 96, y: 72.31, green: false, week: 1, label: "Weight:", value: "185 lb", width: 62 },
@@ -43,11 +49,11 @@ const trends: Record<"nutrition" | "fitness" | "sleep", Trend> = {
     ],
     whiteLabel: "Body Weight", greenLabel: "Zone 3 Activity", whiteLabelX: 118, whiteLabelY: 74, greenLabelX: 68, greenLabelY: 138,
     headline: "More Zone 3 activity coincided with lower body weight.",
-    metrics: [{ label: "Zone 3 activity", change: "+60%", range: "80 → 128 min", green: true }, { label: "Body weight", change: "−15 lb", range: "185 → 170 lb", green: true }],
+    metrics: [{ label: "Zone 3 activity", change: "+60%", range: "80 → 128 min", green: true }, { label: "Body weight", change: "−15 lb", range: "185 → 170 lb", green: false }],
     description: "Over 8 weeks, Zone 3 activity increased by 60%, while body weight decreased by 15 lb.",
   },
   sleep: {
-    title: "Deep Sleep • Caffeine Intake", subtitle: "Sleep Trend",
+    title: "See how your daily habits affect your sleep.", subtitle: "Caffeine Intake & Deep Sleep",
     whitePath: fallingOutcome, greenPath: risingDriver,
     markers: [
       { x: 61, y: 58.81, green: false, week: 1, label: "Deep Sleep:", value: "18%", width: 62 },
@@ -57,12 +63,50 @@ const trends: Record<"nutrition" | "fitness" | "sleep", Trend> = {
     ],
     whiteLabel: "Deep Sleep (KPI)", greenLabel: "Caffeine (Driver)", whiteLabelX: 113, whiteLabelY: 69, greenLabelX: 60, greenLabelY: 146,
     headline: "Higher caffeine intake coincided with less deep sleep.",
-    metrics: [{ label: "Caffeine intake", change: "+4%", range: "165 → 172 mg", green: true }, { label: "Deep sleep", change: "−4 pts", range: "18% → 14%", green: false }],
+    metrics: [{ label: "Caffeine Intake", change: "+4%", range: "165 → 172 mg", green: true }, { label: "Deep Sleep (KPI)", change: "−4 pts", range: "18% → 14%", green: false }],
     description: "Over 4 weeks, caffeine intake increased by approximately 4%, while deep sleep decreased by 4 percentage points.",
   },
 };
 
 export default function LineTrend({ variant }: { variant: keyof typeof trends }) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  useGSAP(() => {
+    const media = gsap.matchMedia();
+    media.add(SCROLL_MOTION, () => {
+      const root = rootRef.current;
+      if (!root) return;
+      const mask = root.querySelector<SVGRectElement>("[data-graph-reveal]");
+      const cards = Array.from(root.querySelectorAll<SVGElement | HTMLElement>("[data-reveal-x]"));
+      // The mask, moving models, and cards all use the same reveal edge.
+      const updateCards = () => {
+        const edge = Number(mask?.getAttribute("width"));
+        cards.forEach(card => {
+          const x = Number(card.dataset.revealX);
+          card.style.opacity = String(gsap.utils.clamp(0, 1, (edge - x) / 36));
+        });
+      };
+      const observer = new MutationObserver(updateCards);
+      if (mask) observer.observe(mask, { attributes: true, attributeFilter: ["width"] });
+      gsap.set(cards, { opacity: 0 });
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: root,
+          start: "top 85%",
+          end: "top 10%",
+          scrub: 0.5,
+          invalidateOnRefresh: true,
+        },
+      });
+      timeline.fromTo(mask, { attr: { width: 0 } }, {
+        attr: { width: 720 }, duration: 1, ease: "none", lazy: false,
+      });
+      return () => {
+        observer.disconnect();
+        cards.forEach(card => card.style.removeProperty("opacity"));
+      };
+    });
+    return () => media.revert();
+  }, { scope: rootRef });
   const trend = trends[variant];
   const mobileMarkers = trend.markers.map((marker, index) => {
     // Spread the driver callouts across the mobile plot, as in the references.
@@ -77,7 +121,7 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
   const refId = (name: string) => `${id}-${name}`;
 
   return (
-    <div data-mobile-reveal="card" data-variant={variant} className={styles.scroll}>
+    <div ref={rootRef} data-variant={variant} className={styles.scroll}>
       <div className={styles.sticky}>
         <div className={styles.content}>
           <header className={styles.heading}>
@@ -107,7 +151,7 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
               {[trend.markers, mobileMarkers].map((markers, groupIndex) => (
                 <g key={groupIndex} className={groupIndex === 0 ? styles.desktopMarkers : styles.mobileMarkers}>
                 {markers.map((marker, index) => (
-                <g key={index} data-marker={index}>
+                <g key={index} data-marker={index} data-reveal-x={marker.x}>
                   <circle cx={marker.x} cy={marker.y} r={marker.green ? 9 : 5} fill={marker.green ? "#55c272" : "#fff"} opacity="0.65" filter={`url(#${refId("glow")})`} />
                   <circle cx={marker.x} cy={marker.y} r={marker.green ? 6.8 : 2.7} fill={marker.green ? `url(#${refId("dot")})` : "#fff"} />
                   <g transform={groupIndex === 1 ? `translate(${marker.x} ${marker.y}) scale(1.5) translate(${-marker.x} ${-marker.y})` : undefined}>
@@ -122,11 +166,19 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
               ))}
                 </g>
               ))}
-              <text className={`${styles.seriesLabel} ${styles.whiteSeries}`} x={trend.whiteLabelX} y={trend.whiteLabelY} fill="#e7e7e7" fontSize="8.5">{trend.whiteLabel}</text>
-              <text className={`${styles.seriesLabel} ${styles.greenSeries}`} x={trend.greenLabelX} y={trend.greenLabelY} fill="#17925a" fontSize="8.5">{trend.greenLabel}</text>
+              <text data-reveal-x={trend.whiteLabelX} className={`${styles.seriesLabel} ${styles.whiteSeries}`} x={trend.whiteLabelX} y={trend.whiteLabelY} fill="#e7e7e7" fontSize="8.5">{trend.whiteLabel}</text>
+              <text data-reveal-x={trend.greenLabelX} className={`${styles.seriesLabel} ${styles.greenSeries}`} x={trend.greenLabelX} y={trend.greenLabelY} fill="#17925a" fontSize="8.5">{trend.greenLabel}</text>
             </svg>
+            <TrendOrbs />
+            <div className={styles.chartMetrics}>
+              {trend.metrics.map(metric => <div key={metric.label} data-reveal-x={metric.green ? 648 : 678} className={metric.green ? styles.driverMetric : styles.outcomeMetric}>
+                <p className={styles.metricLabel}>{metric.label}</p>
+                <p className={metric.green ? styles.green : styles.white}>{metric.change}</p>
+                <p className={styles.range}>{metric.range}</p>
+              </div>)}
+            </div>
           </div>
-          <div className={styles.summary}>
+          <div data-reveal-x="680" className={styles.summary}>
             <h4>{trend.headline}</h4>
             <div className={styles.metrics}>
               {trend.metrics.map(metric => <div key={metric.label}>

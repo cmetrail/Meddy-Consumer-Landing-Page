@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { DESKTOP_MOTION } from "@/lib/motion";
+import { SCROLL_MOTION } from "@/lib/motion";
 
 /** The SVG mask is the source of truth, including GSAP's scrub smoothing. */
 export default function TrendOrbs() {
@@ -15,7 +15,7 @@ export default function TrendOrbs() {
     const paths = svg ? Array.from(svg.querySelectorAll<SVGPathElement>("path[clip-path], path[data-trend-path]")) : [];
     if (!host || !chart || !svg || !mask || paths.length !== 2) return;
 
-    const media = window.matchMedia(DESKTOP_MOTION);
+    const media = window.matchMedia(SCROLL_MOTION);
     let disposed = false;
     let release: (() => void) | undefined;
     let loading = false;

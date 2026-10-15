@@ -1,6 +1,50 @@
 "use client";
 
 import Image from "next/image";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+function useSignalCardMotion(ref: React.RefObject<HTMLElement | null>) {
+  useGSAP(() => {
+    const media = gsap.matchMedia();
+    media.add({
+      desktop: "(min-width: 768px)",
+      motion: "(prefers-reduced-motion: no-preference)",
+    }, (context) => {
+      if (!context.conditions?.motion) return;
+      const desktop = Boolean(context.conditions.desktop);
+      const stage = ref.current?.querySelector(desktop ? "[data-card-desktop]" : "[data-card-mobile]");
+      const cards = stage?.querySelectorAll<HTMLElement>("[data-metric-card]");
+      cards?.forEach((card, index) => {
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: card,
+            start: "top 88%",
+            once: true,
+          },
+          delay: desktop ? index * 0.14 : 0,
+          defaults: { ease: "power3.out" },
+        })
+          .from(card, { autoAlpha: 0, y: 36, duration: 0.8 })
+          .from(card.querySelector("[data-metric-chart]"), {
+            scaleY: 0,
+            transformOrigin: "center bottom",
+            duration: 1.1,
+          }, 0.18)
+          .from(card.querySelectorAll("[data-metric-stat]"), {
+            autoAlpha: 0,
+            y: 10,
+            stagger: 0.045,
+            duration: 0.55,
+          }, 0.22);
+      });
+    });
+    return () => media.revert();
+  }, { scope: ref });
+}
 
 // Authored in Figma px (node 10865:3600, 1440 wide) and scaled by CSS vars:
 //   --u  = min(100vw, 1440px) / 1440   (md+ stage)
@@ -73,6 +117,7 @@ function At({
 }) {
   return (
     <div
+      data-metric-stat
       className={`absolute flex flex-col ${side === "r" ? "items-end text-right" : "items-start"}`}
       style={{ [side === "l" ? "left" : "right"]: cu(x), top: cu(y), width: w ? cu(w) : undefined }}
     >
@@ -107,7 +152,7 @@ function StatCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col" style={{ width: cu(403), gap: cu(15) }}>
+    <div data-metric-card className="flex flex-col" style={{ width: cu(403), gap: cu(15) }}>
       <h3
         className="comprehensive-serif italic leading-[normal] text-[#46524B]"
         style={{ fontSize: cu(24), paddingLeft: cu(5) }}
@@ -117,6 +162,7 @@ function StatCard({
       <div className="relative overflow-hidden" style={{ height: cu(height), background: bg, borderRadius: cu(22) }}>
         {children}
         <Image
+          data-metric-chart
           src={chart}
           alt=""
           width={404}
@@ -271,7 +317,7 @@ function DesktopStage() {
   const colX = [79, 511.5, 944];
   const own = { "--cu": "var(--u)" } as React.CSSProperties;
   return (
-    <div className="relative mx-auto hidden md:block" style={{ width: u(1440), height: u(1024) }}>
+    <div data-card-desktop className="relative mx-auto hidden md:block" style={{ width: u(1440), height: u(1024) }}>
       {/* Person + connector line */}
       <div className="pointer-events-none absolute" style={{ left: u(841), top: u(491.7), width: u(340.416), height: u(97.106) }}>
         <Image src="/wearables/signal-line.svg" alt="" width={418} height={175} unoptimized className="absolute max-w-none" style={{ left: "-11.4%", top: "-39.96%", width: "122.8%", height: "179.92%" }} />
@@ -318,7 +364,7 @@ function MobileStack() {
   // one card = 403 design px wide; shrink it to fit the column, never grow past 1:1
   const own = { "--cu": "min(1px, calc((100vw - 40px) * 0.002481))" } as React.CSSProperties;
   return (
-    <div className="mx-auto flex w-full flex-col px-5 py-12 md:hidden">
+    <div data-card-mobile className="mx-auto flex w-full flex-col px-5 py-12 md:hidden">
       <p className="font-medium italic uppercase leading-[normal] text-[#A9A9A9] text-[24px]">
         See what your wearable <span className="text-[#46524B]">can&apos;t show you alone.</span>
       </p>
@@ -356,8 +402,12 @@ function MobileStack() {
 }
 
 export default function WearablesSignalSection() {
+  const ref = useRef<HTMLElement>(null);
+  useSignalCardMotion(ref);
+
   return (
     <section
+      ref={ref}
       className="relative overflow-hidden bg-[#FAFAFA]"
       style={{ "--u": "calc(min(100vw, 1440px) * 0.000694444)" } as React.CSSProperties}
     >

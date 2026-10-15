@@ -319,7 +319,7 @@ export default function A1cTrend({
               preserveAspectRatio="none"
               className="absolute inset-0 h-full w-full"
               role="img"
-              aria-label="Illustrative A1c trend: 7.5 percent before medication, semaglutide introduced, then a gradual improvement to 6.0 percent at follow-up."
+              aria-label="Illustrative A1c trend: 7.5 percent before medication, Insulin introduced, then a gradual improvement to 6.0 percent at follow-up."
             >
               <defs>
                 <clipPath id={baselineId} clipPathUnits="userSpaceOnUse">
@@ -465,7 +465,7 @@ export default function A1cTrend({
               )}
             </div>
             <div data-treatment className="a1c-treatment">
-              Semaglutide introduced
+              Insulin introduced
             </div>
 
             {/* Callout cards — absolute */}
