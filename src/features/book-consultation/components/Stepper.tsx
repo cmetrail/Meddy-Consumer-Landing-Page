@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowLeft, Check } from "lucide-react";
 import { STEPS } from "../constants";
 
@@ -10,19 +11,20 @@ type StepperProps = {
 
 export default function Stepper({ step }: StepperProps) {
   return (
-    <div className="flex w-full flex-1 flex-col items-center">
-      <div className="pt-14">
+    <div className="mx-auto flex w-full max-w-[280px] flex-1 flex-col items-start">
+      <Link href="/" aria-label="Meddy Health home" className="shrink-0 pt-10">
         <Image
-          src="/meddy-emr-logo.svg"
-          alt="Meddy EMR"
-          width={148}
-          height={24}
-          className="h-[24px] w-[148px]"
+          src="/meddy-logo-white.svg"
+          alt="Meddy Health"
+          width={44}
+          height={28}
+          unoptimized
+          className="h-[28px] w-auto"
         />
-      </div>
+      </Link>
 
-      <div className="flex w-full flex-1 flex-col items-center pb-20 pt-20">
-        <ol className="flex h-full flex-col items-start">
+      <div className="flex w-full flex-1 flex-col items-start pb-20 pt-20">
+        <ol className="flex h-full w-full flex-col items-start">
           {STEPS.map((s, i) => {
             const done = i < step;
             const active = i === step;
@@ -39,7 +41,7 @@ export default function Stepper({ step }: StepperProps) {
               >
                 <div className="flex items-center gap-[20px]">
                   <span
-                    className={`flex h-[63px] w-[63px] items-center justify-center rounded-full ${
+                    className={`flex h-[63px] w-[63px] shrink-0 items-center justify-center rounded-full ${
                       done
                         ? "bg-[#17925a]"
                         : active
@@ -69,7 +71,7 @@ export default function Stepper({ step }: StepperProps) {
                 </div>
                 {i < STEPS.length - 1 && (
                   <span
-                    className={`ml-[28px] my-[8px] min-h-[40px] w-[6px] flex-1 rounded-full ${lineColor}`}
+                    className={`ml-[28.5px] my-[8px] min-h-[40px] w-[6px] flex-1 rounded-full ${lineColor}`}
                   />
                 )}
               </li>
@@ -84,15 +86,16 @@ export default function Stepper({ step }: StepperProps) {
 export function MobileStepper({ step, onBack }: StepperProps & { onBack?: () => void }) {
   return (
     <div className="flex w-full flex-col items-start gap-[16px]">
-      <div>
+      <Link href="/" aria-label="Meddy Health home">
         <Image
-          src="/meddy-emr-logo.svg"
-          alt="Meddy EMR"
-          width={148}
-          height={24}
-          className="h-[17px] w-[105px]"
+          src="/meddy-logo-white.svg"
+          alt="Meddy Health"
+          width={44}
+          height={28}
+          unoptimized
+          className="h-[28px] w-auto"
         />
-      </div>
+      </Link>
 
       <div className="flex w-full flex-col items-start gap-[12px]">
         {onBack ? (

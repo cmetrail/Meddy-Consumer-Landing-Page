@@ -7,6 +7,7 @@ import { US_STATES } from "../../constants";
 import TextField from "../form/TextField";
 import SelectField from "../form/SelectField";
 import CheckboxField from "../form/CheckboxField";
+import styles from "./AboutYouStep.module.css";
 
 export default function AboutYouStep() {
   const {
@@ -15,7 +16,7 @@ export default function AboutYouStep() {
   } = useFormContext<BookConsultationForm>();
 
   return (
-    <div className="flex w-full flex-col items-start gap-6 sm:gap-11">
+    <div className={`${styles.form} flex w-full flex-col items-start gap-6 sm:gap-11`}>
       <div className="flex w-full flex-col  flex-1 gap-2 max-w-138.5 sm:mx-auto sm:items-center">
         <h1 className="text-left text-[24px] font-medium leading-[1.3] text-[#111110] sm:text-center lg:text-[40px] lg:text-[#46524b]">
           Book your free consultation

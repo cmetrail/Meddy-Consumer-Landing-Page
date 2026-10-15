@@ -140,7 +140,7 @@ export const BookConsultationPage = () => {
           <div
             ref={scrollRef}
             data-lenis-prevent
-            className="flex min-h-0 w-full flex-1 flex-col overflow-y-auto px-5 py-6 lg:px-10 lg:py-14"
+            className="flex min-h-0 w-full flex-1 flex-col overflow-y-auto px-5 py-6 lg:px-10 lg:py-[clamp(16px,3dvh,32px)]"
           >
             <div className="mb-8 lg:hidden">
               <MobileStepper
