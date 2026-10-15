@@ -1,10 +1,11 @@
 "use client";
 
-import { useLayoutEffect, useRef, type RefObject } from "react";
+import { useLayoutEffect, useRef, useState, type RefObject } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, useIsPresent, useReducedMotion } from "framer-motion";
-import { X } from "lucide-react";
+import { ArrowUpRight, X } from "lucide-react";
 import { getLenis } from "@/lib/lenis";
 import styles from "./FullScreenMenu.module.css";
 
@@ -27,6 +28,52 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const CLOSED = "inset(0% 0% 100% 0%)";
 const OPEN = "inset(0% 0% 0% 0%)";
 
+const DEFAULT_PREVIEW = {
+  src: "/personalized-health-plans/hero/photo.png",
+  title: "More life. More you.",
+  description: "Personal care. A lasting connection.",
+};
+
+const PREVIEWS: Record<string, typeof DEFAULT_PREVIEW> = {
+  default: DEFAULT_PREVIEW,
+  "/pricing": {
+    src: "/longevity/prev-photo.jpg",
+    title: "Care with clarity.",
+    description: "Explore your Meddy membership.",
+  },
+  "/personalized-health-plans": {
+    src: "/physician-care/physician-hug-28a6d9.png",
+    title: "Uniquely yours.",
+    description: "A health plan that fits your life.",
+  },
+  "/medication": {
+    src: "/medication/medication-hero-person-new.png",
+    title: "Guidance at every step.",
+    description: "Medication care, made personal.",
+  },
+  "/longevity": DEFAULT_PREVIEW,
+  "/biomarkers": {
+    src: "/biomarkers/annual-labs-new.png",
+    title: "Know yourself better.",
+    description: "Deeper insights into your health.",
+  },
+  "/weight-loss": {
+    src: "/weight-loss/whole/bg.png",
+    title: "Find your balance.",
+    description: "Support for lasting, healthy change.",
+  },
+  "/wearables": {
+    src: "/wearables/smartwatch-activity-5a6c38.png",
+    title: "Every signal matters.",
+    description: "Turn everyday data into insight.",
+  },
+  "/247-care": {
+    src: "/247-care/hero-doctor-77e094.png",
+    title: "Here when you need us.",
+    description: "A connection to care, day or night.",
+  },
+};
+
 export default function FullScreenMenu({ id, onClose, logoAnchor, buttonAnchor }: {
   id: string;
   onClose: () => void;
@@ -38,6 +85,10 @@ export default function FullScreenMenu({ id, onClose, logoAnchor, buttonAnchor }
   const pathname = usePathname();
   const reducedMotion = useReducedMotion();
   const isPresent = useIsPresent();
+  const [hoveredHref, setHoveredHref] = useState<string | null>(null);
+  const [focusedHref, setFocusedHref] = useState<string | null>(null);
+  const previewKey = hoveredHref ?? focusedHref ?? "default";
+  const preview = PREVIEWS[previewKey];
 
   useLayoutEffect(() => {
     const dialog = dialogRef.current;
@@ -134,9 +185,15 @@ export default function FullScreenMenu({ id, onClose, logoAnchor, buttonAnchor }
           visible: { clipPath: OPEN, transition: { duration: reducedMotion ? 0 : 0.8, ease: EASE } },
         }}
       >
-        <nav className={styles.navigation} aria-label="All pages" inert={!isPresent}>
+        <div className={styles.content} inert={!isPresent}>
+        <div className={styles.explore}>
+          <p className={styles.eyebrow}>EXPLORE MEDDY</p>
+          <h2 className={styles.heading}>A healthier life.<br /><span>Built around you.</span></h2>
+        <nav className={styles.navigation} aria-label="All pages" onMouseLeave={() => setHoveredHref(null)}>
           {COLUMNS.map((items, column) => (
-            <ul className={styles.column} key={column}>
+            <div key={column}>
+            <p className={styles.groupLabel}>{column === 0 ? "YOUR CARE" : "YOUR HEALTH"}</p>
+            <ul className={styles.column}>
               {items.map(({ label, href }, index) => (
                 <li className={styles.item} key={href}>
                   <motion.div
@@ -145,15 +202,37 @@ export default function FullScreenMenu({ id, onClose, logoAnchor, buttonAnchor }
                       visible: { y: "0%", opacity: 1, transition: { duration: reducedMotion ? 0 : 0.65, delay: reducedMotion ? 0 : 0.24 + index * 0.045 + column * 0.07, ease: EASE } },
                     }}
                   >
-                    <Link href={href} onClick={onClose} aria-current={pathname === href ? "page" : undefined} className={styles.link}>
-                      {label}
+                    <Link href={href} onClick={onClose} onMouseEnter={() => setHoveredHref(href)} onFocus={() => setFocusedHref(href)} onBlur={() => setFocusedHref(null)} aria-current={pathname === href ? "page" : undefined} className={styles.link}>
+                      <span>{label}</span><ArrowUpRight size={18} aria-hidden="true" />
                     </Link>
                   </motion.div>
                 </li>
               ))}
             </ul>
+            </div>
           ))}
         </nav>
+        </div>
+        <aside className={styles.feature} aria-label="Care built around you">
+          <div className={styles.portrait}>
+            {Object.entries(PREVIEWS).map(([key, image]) => (
+              <div key={key} className={styles.previewLayer} data-active={key === previewKey} aria-hidden="true">
+                <Image src={image.src} alt="" fill loading="eager" sizes="(max-width: 700px) 55vw, 38vw" className={styles.portraitImage} />
+              </div>
+            ))}
+          </div>
+          <div className={styles.featureCaption}>
+            <div className={styles.carePhoto}>
+              <Image src="/physician-care/physician-hug-28a6d9.png" alt="" fill sizes="56px" />
+            </div>
+            <div><p className={styles.featureTitle}>{preview.title}</p><p className={styles.featureDescription}>{preview.description}</p></div>
+          </div>
+        </aside>
+        <div className={styles.footer}>
+          <p>Your next chapter starts with a conversation.</p>
+          <Link href="/book-consultation" onClick={onClose} className={`${styles.cta} rounded-[22px] bg-[#FFFFFF] px-[14px] py-[10px] font-medium uppercase leading-[100%] text-[#1A231F] text-[12px] shadow-[2px_4px_4px_rgba(0,0,0,0.25)] whitespace-nowrap sm:px-[19px] sm:py-[13px] sm:text-[14px]`}>Book Free consultation</Link>
+        </div>
+        </div>
       </motion.div>
     </motion.dialog>
   );
