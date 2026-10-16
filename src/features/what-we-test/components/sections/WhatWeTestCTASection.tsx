@@ -6,6 +6,7 @@ import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { FooterItems } from "@/features/home/components/sections/helper/FooterItems";
+import styles from "./WhatWeTestCTASection.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -58,10 +59,10 @@ export default function WhatWeTestCTASection() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex flex-col justify-end overflow-hidden bg-white pt-[60px] lg:pt-[120px]"
+      className={`${styles.section} relative flex flex-col justify-end overflow-hidden bg-white pt-[60px] lg:pt-[120px]`}
     >
       {/* Background image + overlay */}
-      <div className="pointer-events-none absolute inset-0">
+      <div className={`${styles.background} pointer-events-none absolute inset-0`}>
         <Image
           src="/what-we-test/what-we-test-cta-bg.png"
           alt=""
@@ -77,9 +78,9 @@ export default function WhatWeTestCTASection() {
       </div>
 
       {/* CTA content */}
-      <div className="relative z-10 flex flex-col items-center gap-[40px] lg:gap-[59px]">
-        <div className="flex flex-col items-center gap-[10px]">
-          <div className="flex flex-wrap items-center justify-center gap-[12px] lg:gap-[24px]">
+      <div className={`${styles.cta} relative z-10 flex flex-col items-center gap-[40px] lg:gap-[59px]`}>
+        <div className={`${styles.heading} flex flex-col items-center gap-[10px]`}>
+          <div className={`${styles.title} flex flex-wrap items-center justify-center gap-[12px] lg:gap-[24px]`}>
             <span className="text-[40px] leading-none text-white sm:text-[64px] lg:text-[96px]">
               Life is
             </span>
@@ -102,8 +103,8 @@ export default function WhatWeTestCTASection() {
       </div>
 
       {/* Footer (shared) */}
-      <div className="relative z-10 mt-[60px] lg:mt-[120px]">
-        <FooterItems />
+      <div className={`${styles.footer} relative z-10 mt-[60px] lg:mt-[120px]`}>
+        <FooterItems mobileReference mobileVariant="what-we-test" className={styles.glass} />
       </div>
     </section>
   );

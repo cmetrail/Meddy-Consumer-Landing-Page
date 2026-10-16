@@ -1,9 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
-
-const ease = [0.22, 1, 0.36, 1] as const;
-
 type Item = {
   number: string;
   title: string;
@@ -47,14 +43,10 @@ const ITEMS: Item[] = [
 
 export default function PhysicianCareAllIncludedSection() {
   return (
-    <section className="w-full bg-[#F9F9F9]">
+    <section data-pc-chapter="Support at every step" className="w-full bg-[#F9F9F9]">
       <div className="mx-auto w-full max-w-360">
-        <motion.div
+        <div data-pc-reveal
           className="flex flex-col gap-[10px] px-5 pt-16 lg:px-[75px] lg:pt-[61px]"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.8, ease }}
         >
           <p className="font-medium uppercase leading-[1.26] text-[#A1AAA3] text-[28px] sm:text-[40px] lg:text-[48px]">
             Thoughtful care.
@@ -62,12 +54,12 @@ export default function PhysicianCareAllIncludedSection() {
           <h2 className="font-dm-serif italic leading-[1.371] text-[#46524B] text-[36px] sm:text-[52px] lg:text-[64px]">
             All included.
           </h2>
-        </motion.div>
+        </div>
 
         <div className="mt-12 border-t border-[#E6E6E6] lg:mt-[42px]">
           {ITEMS.map((item) => (
             <div
-              key={item.number}
+              data-pc-service key={item.number}
               className="group border-b border-[#E6E6E6] transition-colors duration-300 hover:bg-[#96B984]"
             >
               <div className="flex flex-col gap-4 px-5 py-7 lg:min-h-[145px] lg:flex-row lg:items-center lg:justify-between lg:gap-[131px] lg:px-[68px] lg:py-0 lg:pl-[292px]">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Dumbbell, Heart, NotebookPen } from "lucide-react";
 import styles from "./FitnessProgressCard.module.css";
@@ -20,6 +20,8 @@ const TABS = [
   { label: "Intensity", icon: Heart },
   { label: "HR Zone", icon: NotebookPen },
 ];
+
+const AUTO_ROTATE_INTERVAL = 5000;
 
 /* ---------- Strength ---------- */
 const STRENGTH_GROUPS = [
@@ -280,9 +282,27 @@ function HRZoneContent() {
 
 export default function FitnessProgressCard() {
   const [active, setActive] = useState(3);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const timer = window.setInterval(() => {
+      const bounds = container.getBoundingClientRect();
+      const hovering = window.matchMedia("(hover: hover)").matches && container.matches(":hover");
+      // Let people read or interact without the selected panel changing underneath them.
+      if (document.hidden || bounds.bottom <= 0 || bounds.top >= window.innerHeight ||
+          hovering || container.contains(document.activeElement)) return;
+
+      setActive((current) => (current + 1) % TABS.length);
+    }, AUTO_ROTATE_INTERVAL);
+
+    return () => window.clearInterval(timer);
+  }, [active]);
 
   return (
-    <div className={styles.cardContainer}>
+    <div ref={containerRef} className={styles.cardContainer}>
       <div className={`${styles.card} ${(active !== 0) ? styles.referenceCard : ""} ${(active === 2 || active === 3) ? styles.intensityCard : ""}`}>
         <div className={styles.tabs} role="group" aria-label="Training category">
           {TABS.map((tab, i) => {

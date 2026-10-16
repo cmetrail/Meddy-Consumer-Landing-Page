@@ -1,4 +1,7 @@
-import React from "react";
+"use client";
+
+import { useRef } from "react";
+import { useHowItWorksStory } from "../components/useHowItWorksStory";
 import HowItWorksHeroSection from "../components/sections/HowItWorksHeroSection";
 import HowItWorksTrackYourDaySection from "../components/sections/HowItWorksTrackYourDaySection";
 import HowItWorksSignalSection from "../components/sections/HowItWorksSignalSection";
@@ -9,8 +12,11 @@ import HowItWorksFooterSection from "../components/sections/HowItWorksFooterSect
 import styles from "./how-it-works.module.css";
 
 export const HowItWorksPage = () => {
+  const pageRef = useRef<HTMLElement>(null);
+  useHowItWorksStory(pageRef);
+
   return (
-    <main className={styles.page}>
+    <main ref={pageRef} className={styles.page}>
       <HowItWorksHeroSection />
       <HowItWorksTrackYourDaySection />
       <HowItWorksSignalSection />

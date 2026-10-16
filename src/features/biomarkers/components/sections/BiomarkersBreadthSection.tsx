@@ -95,10 +95,10 @@ export default function BiomarkersBreadthSection() {
       <div className={styles.content}>
         <div className={styles.header}>
           <div>
-            <h2 id="biomarkers-breadth-title" className={styles.title}>Breadth</h2>
-            <p className={styles.subtitle}>See more of your health</p>
+            <h2 data-bio-reveal id="biomarkers-breadth-title" className={styles.title}>Breadth</h2>
+            <p data-bio-reveal className={styles.subtitle}>See more of your health</p>
           </div>
-          <p className={styles.description}>
+          <p data-bio-reveal className={styles.description}>
             One connected view<br />
             of your <span className="comprehensive-serif">biomarkers</span>.
           </p>
@@ -107,7 +107,7 @@ export default function BiomarkersBreadthSection() {
         <button type="button" className={`${styles.arrow} ${styles.previous}`} aria-label="Previous biomarker categories" aria-controls="biomarkers-breadth-carousel" disabled={edges.start} onClick={() => move(-1)}>
           <ChevronLeft size={20} aria-hidden="true" />
         </button>
-        <div ref={trackRef} id="biomarkers-breadth-carousel" className={styles.track} tabIndex={0} role="region" aria-roledescription="carousel" aria-label="Biomarker categories"
+        <div data-bio-cards ref={trackRef} id="biomarkers-breadth-carousel" className={styles.track} tabIndex={0} role="region" aria-roledescription="carousel" aria-label="Biomarker categories"
           onPointerDown={startDrag} onPointerMove={drag} onPointerUp={stopDrag} onPointerCancel={stopDrag} onLostPointerCapture={stopDrag}
           onKeyDown={(event) => {
           if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
@@ -116,8 +116,8 @@ export default function BiomarkersBreadthSection() {
           }
         }}>
           {CARDS.map((card, index) => (
-            <div key={card.label} className={styles.card} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${CARDS.length}: ${card.label}`}>
-              <div className={styles.image}>
+            <div data-bio-card data-bio-hover key={card.label} className={styles.card} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${CARDS.length}: ${card.label}`}>
+              <div data-bio-hover-layer className={styles.image}>
                 <Image src={`/biomarkers/breadth/${card.image}.png`} alt={card.label} draggable={false} fill sizes="(max-width: 767px) 142px, (max-width: 1440px) 14.2vw, 204px" className={styles.artwork} />
               </div>
               <p className={styles.label}>{card.label}</p>
@@ -128,7 +128,7 @@ export default function BiomarkersBreadthSection() {
           <ChevronRight size={20} aria-hidden="true" />
         </button>
         </div>
-        <Link href="/what-we-test" className={styles.button}>Explore What We Test</Link>
+        <Link data-bio-reveal href="/what-we-test" className={styles.button}>Explore What We Test</Link>
       </div>
     </section>
   );

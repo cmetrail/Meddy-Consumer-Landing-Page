@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import Header from "@/components/Header";
+import { useLongevityHeroMotion } from "./useLongevityHeroMotion";
 
 // Figma: desktop node 12613:14341 (1440 x 1096), mobile node 12721:17771 (402 x 874), cream #FFF8E4.
 // Hero text sits between six photos. Each photo is the Figma bounding box (left/top/w/h) holding the raw
 // image at its own size, rotated + skewed like the design so the edges end up as parallelograms/trapezoids.
 // Desktop: 1200 x 838 stage, scaled down to always fit the viewport under the header. Mobile: two 362px photo rows.
-const ease = [0.22, 1, 0.36, 1] as const;
 
 type Photo = {
   src: string;
@@ -50,13 +49,17 @@ const MOBILE_BOTTOM: Photo[] = [
 function Photos({ list }: { list: Photo[] }) {
   return (
     <>
-      {list.map((p) => (
+      {list.map((p, index) => (
         <div
           key={p.src}
           className="pointer-events-none absolute flex items-center justify-center"
           style={{ left: p.left, right: p.right, top: p.top, bottom: p.bottom, width: p.w, height: p.h, transform: p.flip }}
         >
+          <div data-lg-depth={index} className="flex h-full w-full items-center justify-center">
+          <div data-lg-pointer className="flex h-full w-full items-center justify-center">
+          <div data-lg-float className="flex h-full w-full items-center justify-center">
           <div
+            data-lg-photo
             className="relative shrink-0"
             style={{
               width: p.iw ?? p.w,
@@ -67,6 +70,9 @@ function Photos({ list }: { list: Photo[] }) {
             }}
           >
             <Image src={p.src} alt="" fill sizes="220px" className="max-w-none object-cover" />
+          </div>
+          </div>
+          </div>
           </div>
         </div>
       ))}
@@ -93,23 +99,24 @@ function useStageScale() {
   return s;
 }
 
-const fade = (delay: number) => ({
-  initial: { opacity: 0, y: 40 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.9, ease, delay },
-});
+function Headline() {
+  return <>{["Stay", "healthier", "longer."].map((word, index) => (
+    <span key={word} className="comprehensive-serif">{index > 0 ? "\u00a0" : ""}<span data-lg-word className="comprehensive-serif inline-block">{word}</span></span>
+  ))}</>;
+}
 
 export default function LongevityHeroSection() {
   const { d: s, w, m, ready } = useStageScale();
+  const sectionRef = useLongevityHeroMotion(ready);
 
   return (
-    <section className="relative flex min-h-dvh w-full flex-col overflow-hidden bg-[#FFF8E4] lg:min-h-[1096px]">
+    <section ref={sectionRef} id="longevity-hero" className="relative flex min-h-dvh w-full flex-col overflow-hidden bg-[#FFF8E4] lg:min-h-[1096px]">
       <div className="relative z-30">
         <Header variant="light" />
       </div>
 
       {/* Mobile */}
-      <div className="relative z-20 mx-auto flex w-full max-w-[402px] flex-1 flex-col items-center justify-center gap-6 px-5 pb-16 pt-6 lg:hidden">
+      <div data-lg-mobile className="relative z-20 mx-auto flex w-full max-w-[402px] flex-1 flex-col items-center justify-center gap-6 px-5 pb-16 pt-6 lg:hidden">
         <div className="relative" style={{ width: 362 * m, height: 145 * m, visibility: ready ? "visible" : "hidden" }}>
           <div className="absolute left-0 top-0 origin-top-left" style={{ width: 362, height: 145, transform: `scale(${m})` }}>
             <Photos list={MOBILE_TOP} />
@@ -119,21 +126,21 @@ export default function LongevityHeroSection() {
         <div className="flex w-full flex-col items-center gap-9">
           <div className="flex w-full flex-col items-center gap-4 text-center">
             <div className="flex w-full flex-col items-center leading-[1.5]">
-              <motion.p className="whitespace-nowrap text-[24px] font-medium uppercase text-[#6E7A72]" {...fade(0)}>
+              <p data-lg-eyebrow className="whitespace-nowrap text-[24px] font-medium uppercase text-[#6E7A72]">
                 Don&rsquo;t just live longer.
-              </motion.p>
-              <motion.h1 className="comprehensive-serif whitespace-nowrap text-[32px] font-normal italic text-[#46524B]" {...fade(0.1)}>
-                Stay healthier longer.
-              </motion.h1>
+              </p>
+              <h1 aria-label="Stay healthier longer." className="comprehensive-serif whitespace-nowrap text-[32px] font-normal italic text-[#46524B]">
+                <span aria-hidden="true"><Headline /></span>
+              </h1>
             </div>
-            <motion.p className="w-full text-[14px] font-normal leading-[1.5] text-[#6E7A72]" {...fade(0.2)}>
+            <p data-lg-description className="w-full text-[14px] font-normal leading-[1.5] text-[#6E7A72]">
               Meddy brings your <b className="font-bold">biomarkers, nutrition, fitness, sleep, weight, medications, and health history</b> together so you and your
               physician can understand where your health is going and act earlier.
-            </motion.p>
+            </p>
           </div>
-          <motion.button type="button" className="rounded-[35px] bg-[#17925A] px-5 py-3 text-[16px] font-normal leading-[normal] text-white" {...fade(0.3)}>
+          <div data-lg-cta-reveal><button data-lg-cta type="button" className="rounded-[35px] bg-[#17925A] px-5 py-3 text-[16px] font-normal leading-[normal] text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#17925A]">
             Get Started
-          </motion.button>
+          </button></div>
         </div>
 
         <div className="relative" style={{ width: 362 * m, height: 143 * m, visibility: ready ? "visible" : "hidden" }}>
@@ -144,7 +151,7 @@ export default function LongevityHeroSection() {
       </div>
 
       {/* Desktop */}
-      <div className="relative z-20 hidden flex-1 items-start justify-center pb-[120px] pt-[70px] lg:flex">
+      <div data-lg-desktop className="relative z-20 hidden flex-1 items-start justify-center pb-[120px] pt-[70px] lg:flex">
         <div style={{ width: w * s, height: STAGE_H * s, visibility: ready ? "visible" : "hidden" }}>
           <div
             className="relative flex flex-col items-center justify-center text-center"
@@ -154,21 +161,21 @@ export default function LongevityHeroSection() {
 
             <div className="flex flex-col items-center gap-9">
               <div className="flex flex-col items-center">
-                <motion.p className="-mb-[10px] text-[40px] font-medium uppercase leading-[1.5] text-[#6E7A72]" {...fade(0)}>
+                <p data-lg-eyebrow className="-mb-[10px] text-[40px] font-medium uppercase leading-[1.5] text-[#6E7A72]">
                   Don&rsquo;t just live longer
-                </motion.p>
-                <motion.h1 className="comprehensive-serif whitespace-nowrap text-[104px] font-normal italic leading-[1.5] text-[#46524B]" {...fade(0.1)}>
-                  Stay healthier longer.
-                </motion.h1>
-                <motion.p className="whitespace-nowrap text-[16px] font-normal leading-[1.5] text-[#6E7A72]" {...fade(0.2)}>
+                </p>
+                <h1 aria-label="Stay healthier longer." className="comprehensive-serif whitespace-nowrap text-[104px] font-normal italic leading-[1.5] text-[#46524B]">
+                  <span aria-hidden="true"><Headline /></span>
+                </h1>
+                <p data-lg-description className="whitespace-nowrap text-[16px] font-normal leading-[1.5] text-[#6E7A72]">
                   Meddy brings your biomarkers, nutrition, fitness, sleep, weight, medications, and health history together
                   <br />
                   so you and your physician can understand where your health is going and act earlier.
-                </motion.p>
+                </p>
               </div>
-              <motion.button type="button" className="rounded-[35px] bg-[#17925A] px-6 py-4 text-[20px] font-normal leading-[normal] text-white transition-opacity hover:opacity-85" {...fade(0.3)}>
+              <div data-lg-cta-reveal><button data-lg-cta type="button" className="rounded-[35px] bg-[#17925A] px-6 py-4 text-[20px] font-normal leading-[normal] text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#17925A]">
                 Get Started
-              </motion.button>
+              </button></div>
             </div>
           </div>
         </div>

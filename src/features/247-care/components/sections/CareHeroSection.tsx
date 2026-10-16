@@ -1,18 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import buttonStyles from "./CareButton.module.css";
-
-const ease = [0.22, 1, 0.36, 1] as const;
+import motionStyles from "./CareHeroMotion.module.css";
+import { useCareHeroMotion } from "./useCareHeroMotion";
 
 const HERO_GRADIENT =
   "linear-gradient(227deg, rgba(80,142,91,1) 0%, rgba(122,167,135,1) 64%, rgba(89,130,106,1) 86%, rgba(150,170,139,1) 100%)";
 
 function ChatReply({ text }: { text: string }) {
   return (
-    <div className="flex items-start">
+    <div data-care-message className="flex items-start">
       <svg
         width="6"
         height="6"
@@ -40,11 +39,12 @@ function ChatReply({ text }: { text: string }) {
 function ChatMockup() {
   return (
     <div
+      data-care-float
       className="relative h-[279px] w-[555px] overflow-hidden rounded-[44px]"
       style={{ background: "rgba(255,254,237,0.42)" }}
     >
       {/* Samsung phone */}
-      <div className="absolute left-[39px] top-[30px] h-[249px] w-[203px] overflow-hidden rounded-[20px]">
+      <div data-care-phone className="absolute left-[39px] top-[30px] h-[249px] w-[203px] overflow-hidden rounded-[20px]">
         <Image
           src="/247-care/hero-phone-d58c1b.png"
           alt="Meddy app"
@@ -55,7 +55,7 @@ function ChatMockup() {
       </div>
 
       {/* User message (green, right) */}
-      <div className="absolute left-[303px] top-[47px] flex items-start">
+      <div data-care-message className="absolute left-[303px] top-[47px] flex items-start">
         <div className="flex w-[219px] flex-col gap-[3px] rounded-[9px] rounded-tr-[0px] bg-[#4B875F] px-[9px] py-[6px]">
           <span className="text-[10.5px] leading-[1.5] text-white">
             Okay. Are there any side effects I should watch for?
@@ -88,76 +88,86 @@ function ChatMockup() {
 }
 
 export default function CareHeroSection() {
+  const sectionRef = useCareHeroMotion();
+
   return (
     <section
-      className="relative flex min-h-dvh w-full flex-col overflow-hidden"
+      ref={sectionRef}
+      className={`${motionStyles.hero} relative flex min-h-dvh w-full flex-col overflow-hidden`}
       style={{ background: HERO_GRADIENT }}
     >
+      <div aria-hidden="true" className={motionStyles.atmosphere}>
+        <div data-care-glow className={motionStyles.glow} />
+      </div>
       {/* Header */}
-      <div className="relative z-30">
-        <Header variant="dark" />
+      <div className={`${motionStyles.header} relative z-30`}>
+        <Header variant="dark" hideMobileConsultation />
       </div>
 
       {/* Doctor image — right */}
-      <motion.div
-        className="absolute right-0 top-[61px] z-0 hidden lg:block"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease, delay: 0.1 }}
+      <div
+        data-care-depth
+        className={motionStyles.portraitPlacement}
       >
-        <div
-          className="relative"
-          style={{ width: "min(762px, 53vw)", aspectRatio: "762 / 1027" }}
-        >
-          <Image
-            src="/247-care/hero-doctor-77e094.png"
-            alt="Meddy physician"
-            fill
-            priority
-            sizes="762px"
-            className="object-cover object-bottom"
-          />
+        <div data-care-pointer>
+          <div
+            data-care-portrait
+            className={motionStyles.portrait}
+          >
+            <Image
+              src="/247-care/hero-doctor-77e094.png"
+              alt="Meddy physician"
+              fill
+              priority
+              sizes="(min-width: 1024px) min(762px, 53vw), 100vw"
+              className="object-cover object-bottom"
+            />
+          </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Text content */}
-      <div className="relative z-20 mx-auto flex w-full max-w-360 flex-1 flex-col px-5 pb-10 lg:px-[75px]">
-        <motion.div
+      <div className={`${motionStyles.content} relative z-20 mx-auto flex w-full max-w-360 flex-none flex-col px-5 pb-10 lg:flex-1 lg:px-[75px]`}>
+        <div
+          data-care-copy
           className="mt-8 flex max-w-[721px] flex-col lg:mt-10"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease }}
         >
           <h1 className="flex flex-col">
-            <span className="whitespace-nowrap font-dm-serif italic leading-[1] text-[#D8FFE5] text-[44px] sm:text-[72px] lg:text-[128px]">
-              Primary care
+            <span className={motionStyles.lineMask}>
+              <span data-care-line className="block whitespace-nowrap font-dm-serif italic leading-[1] text-[#D8FFE5] text-[44px] sm:text-[72px] lg:text-[128px]">
+                Primary care
+              </span>
             </span>
-            <span className="whitespace-nowrap font-medium   leading-[1] text-white text-[18px] sm:text-[28px] lg:text-[48px]">
-              that doesn&rsquo;t clock out.
+            <span className={motionStyles.lineMask}>
+              <span data-care-line className="block whitespace-nowrap font-medium leading-[1] text-white text-[18px] sm:text-[28px] lg:text-[48px]">
+                that doesn&rsquo;t clock out.
+              </span>
             </span>
           </h1>
 
-          <p className="mt-10 max-w-[687px] text-[#DFDFDF] font-normal leading-[1.4] text-[16px] sm:text-[18px] lg:text-[20px]">
+          <p data-care-description className="mt-10 max-w-[687px] text-[#DFDFDF] font-normal leading-[1.4] text-[16px] sm:text-[18px] lg:text-[20px]">
             See the same{" "}
             <b className="font-bold text-white">physician over time</b>, reach{" "}
             <b className="font-bold text-white">Meddy 24/7,</b> and get help
             navigating what comes up between appointments.
           </p>
 
-          <button className={`${buttonStyles.button} ${buttonStyles.hero}`}>
-            Start Physician Care
+          <button data-care-cta className={`${buttonStyles.button} ${buttonStyles.hero} ${motionStyles.button}`}>
+            <span data-care-shine aria-hidden="true" className={motionStyles.shine} />
+            <span className={motionStyles.buttonLabel}>Start Physician Care</span>
           </button>
-        </motion.div>
+        </div>
 
         {/* Chat mockup — below CTA (desktop) */}
-        <motion.div
+        <div
+          data-care-chat
           className="mt-8 hidden lg:mt-10 lg:block"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease, delay: 0.2 }}
         >
           <ChatMockup />
-        </motion.div>
+        </div>
+      </div>
+      <div className={motionStyles.mobileChat}>
+        <ChatMockup />
       </div>
     </section>
   );

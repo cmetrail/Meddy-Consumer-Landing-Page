@@ -64,7 +64,7 @@ function DeltaIcon({ src, k, flip }: { src: string; k: K; flip: boolean }) {
 
 function Hypnogram({ k, floor = 5 }: { k: K; floor?: number }) {
   return (
-    <div className="w-full">
+    <div data-story-chart className="w-full">
       <div className="relative" style={{ height: k(92.01) }}>
         {STAGE_LABELS.map((s) => (
           <div key={s.name}>
@@ -76,7 +76,7 @@ function Hypnogram({ k, floor = 5 }: { k: K; floor?: number }) {
         ))}
         {STEPS.map((st, i) => (
           <div key={i}>
-            <span className="absolute block" style={{ left: k(st.x), top: k(st.y), width: k(st.w), height: k(st.h ?? 2.045), background: st.c, borderRadius: k(1.022) }} />
+            <span data-story-bar className="absolute block" style={{ left: k(st.x), top: k(st.y), width: k(st.w), height: k(st.h ?? 2.045), background: st.c, borderRadius: k(1.022) }} />
             {st.v && (
               // Figma rotates a horizontal line asset 90deg
               <Image
@@ -112,7 +112,7 @@ function Hypnogram({ k, floor = 5 }: { k: K; floor?: number }) {
 function SleepSummaryCard({ k }: { k: K }) {
   return (
     <div
-      className="flex flex-col bg-white/5 p-[var(--p)] backdrop-blur-[6px]"
+      data-story-card className="flex flex-col bg-white/5 p-[var(--p)] backdrop-blur-[6px]"
       style={{ width: k(201.375), gap: k(9), borderRadius: k(13.5), ["--p" as string]: k(9) }}
     >
       <div className="flex flex-col" style={{ gap: k(1.125) }}>
@@ -143,7 +143,7 @@ const STAGE_COLS = [
 function Current30DaysCard({ k }: { k: K }) {
   return (
     <div
-      className="flex flex-col bg-[rgba(23,35,29,0.55)] p-[var(--p)] backdrop-blur-[8px]"
+      data-story-card className="flex flex-col bg-[rgba(23,35,29,0.55)] p-[var(--p)] backdrop-blur-[8px]"
       style={{ width: k(251.72), borderRadius: k(16.875), ["--p" as string]: k(11.25) }}
     >
       <span className="leading-[1.5] text-[#F4F4F5]" style={{ fontSize: `max(calc(7px * var(--fl, 1)), ${k(8.438)})` }}>Current 30 Days</span>
@@ -205,7 +205,7 @@ export default function SleepArchitectureSection() {
 
       {/* ─── Desktop: inside the header container (max-w-360, px-10) ──── */}
       <div className="absolute inset-0 z-10 hidden lg:block">
-        <span
+        <span data-story-number
           className="pointer-events-none absolute select-none font-bold italic leading-[normal] text-white/[0.16] mix-blend-plus-lighter"
           style={{ left: `calc(max(0px, (100% - 90rem) / 2) + 2.5rem + ${u(33)})`, top: u(95.7), fontSize: u(96), letterSpacing: u(1.92) }}
         >
@@ -215,14 +215,14 @@ export default function SleepArchitectureSection() {
         <div className="mx-auto h-full max-w-360 px-10">
           <div className="relative h-full">
             <div className="absolute inset-x-0 flex flex-col items-center text-center uppercase leading-[1.416]" style={{ top: u(120), gap: u(5) }}>
-              <h2 className="comprehensive-serif whitespace-nowrap italic text-[#E6DFDF]" style={{ fontSize: `max(30px, ${u(46)})` }}>Sleep Architecture</h2>
-              <p className="whitespace-nowrap text-[#A1A1A1]" style={{ fontSize: `max(16px, ${u(24)})` }}>See what happens while you sleep</p>
+              <h2 data-story-copy className="comprehensive-serif whitespace-nowrap italic text-[#E6DFDF]" style={{ fontSize: `max(30px, ${u(46)})` }}>Sleep Architecture</h2>
+              <p data-story-copy className="whitespace-nowrap text-[#A1A1A1]" style={{ fontSize: `max(16px, ${u(24)})` }}>See what happens while you sleep</p>
             </div>
 
             {/* left visual group */}
             <div className="absolute left-0" style={{ top: u(333.5), width: u(626.72), height: u(606.5) }}>
               <div className="absolute overflow-hidden" style={{ left: u(8), top: u(39.5), width: u(492), height: u(567) }}>
-                <Image src="/sleep/architecture/d-person.png" alt="Person asleep, tracked by Meddy" fill sizes="520px" className="object-cover" />
+                <Image data-story-photo src="/sleep/architecture/d-person.png" alt="Person asleep, tracked by Meddy" fill sizes="520px" className="object-cover" />
               </div>
               <div className="absolute left-0 top-0">
                 <SleepSummaryCard k={u} />
@@ -234,10 +234,10 @@ export default function SleepArchitectureSection() {
 
             {/* right copy */}
             <div className="absolute right-0 flex flex-col justify-between text-right" style={{ top: u(333), width: u(515), height: u(607) }}>
-              <p className="uppercase leading-[1.416] text-[#A1A1A1]" style={{ fontSize: `max(22px, ${u(32)})` }}>
+              <p data-story-copy className="uppercase leading-[1.416] text-[#A1A1A1]" style={{ fontSize: `max(22px, ${u(32)})` }}>
                 See your night <em className="italic text-white">beneath the surface.</em>
               </p>
-              <p className="leading-[1.416] text-[#A1A1A1]" style={{ fontSize: `max(14px, ${u(20)})` }}>
+              <p data-story-copy className="leading-[1.416] text-[#A1A1A1]" style={{ fontSize: `max(14px, ${u(20)})` }}>
                 <strong className="font-bold text-white">Understand how your sleep is distributed</strong> across the stages your body moves through each night.
               </p>
             </div>
@@ -251,21 +251,21 @@ export default function SleepArchitectureSection() {
           <Image src="/sleep/architecture/m-bg.png" alt="" fill sizes="100vw" className="object-cover" />
         </div>
         <div className="relative mx-auto flex max-w-[500px] flex-col px-[var(--p20)] py-[var(--p64)]" style={{ ["--p20" as string]: m(20), ["--p64" as string]: m(64), gap: m(48) } as React.CSSProperties}>
-          <span className="select-none font-bold italic leading-none text-[rgba(216,216,216,0.5)]" style={{ fontSize: m(120), letterSpacing: m(2.4), transform: "rotate(-0.31deg)", width: "fit-content" }}>
+          <span data-story-number className="select-none font-bold italic leading-none text-[rgba(216,216,216,0.5)]" style={{ fontSize: m(120), letterSpacing: m(2.4), transform: "rotate(-0.31deg)", width: "fit-content" }}>
             02
           </span>
 
           <div className="flex flex-col" style={{ gap: m(48) }}>
             <div className="flex flex-col" style={{ gap: m(32) }}>
               <div className="flex flex-col items-center text-center uppercase leading-[1.416]" style={{ gap: m(5) }}>
-                <h2 className="comprehensive-serif italic text-[#E6DFDF]" style={{ fontSize: m(32) }}>Sleep Architecture</h2>
-                <p className="text-[#A1A1A1]" style={{ fontSize: m(20) }}>See what happens while you sleep</p>
+                <h2 data-story-copy className="comprehensive-serif italic text-[#E6DFDF]" style={{ fontSize: m(32) }}>Sleep Architecture</h2>
+                <p data-story-copy className="text-[#A1A1A1]" style={{ fontSize: m(20) }}>See what happens while you sleep</p>
               </div>
 
               {/* visual group: same pieces as desktop, every size x 0.5776 */}
               <div className="relative" style={{ width: m(362), height: m(350.3), ["--fl" as string]: 0 } as React.CSSProperties}>
                 <div className="absolute overflow-hidden" style={{ left: m(8 * MS), top: m(39.5 * MS), width: m(492 * MS), height: m(567 * MS) }}>
-                  <Image src="/sleep/architecture/d-person.png" alt="Person asleep, tracked by Meddy" fill sizes="300px" className="object-cover" />
+                  <Image data-story-photo src="/sleep/architecture/d-person.png" alt="Person asleep, tracked by Meddy" fill sizes="300px" className="object-cover" />
                 </div>
                 <div className="absolute left-0 top-0">
                   <SleepSummaryCard k={km} />
@@ -277,10 +277,10 @@ export default function SleepArchitectureSection() {
             </div>
 
             <div className="flex flex-col text-right" style={{ gap: m(16) }}>
-              <p className="uppercase leading-[1.416] text-[#A1A1A1]" style={{ fontSize: m(20) }}>
+              <p data-story-copy className="uppercase leading-[1.416] text-[#A1A1A1]" style={{ fontSize: m(20) }}>
                 See your night <em className="italic text-white">beneath the surface.</em>
               </p>
-              <p className="leading-[1.416] text-[#A1A1A1]" style={{ fontSize: m(16) }}>
+              <p data-story-copy className="leading-[1.416] text-[#A1A1A1]" style={{ fontSize: m(16) }}>
                 <strong className="font-bold text-white">Understand how your sleep is distributed</strong> across the stages your body moves through each night.
               </p>
             </div>

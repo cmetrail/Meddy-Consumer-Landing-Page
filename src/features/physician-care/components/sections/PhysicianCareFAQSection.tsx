@@ -40,9 +40,9 @@ export default function PhysicianCareFAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="physician-care-faq" className={styles.section} aria-labelledby="physician-care-faq-heading">
+    <section data-pc-chapter="Clarity before you begin" id="physician-care-faq" className={styles.section} aria-labelledby="physician-care-faq-heading">
       <div className={styles.layout}>
-        <div className={styles.intro}>
+        <div data-pc-reveal className={styles.intro}>
           <h2 id="physician-care-faq-heading" className={styles.heading}>
             <span>Frequently Asked</span>
             <em>Questions</em>
@@ -55,7 +55,7 @@ export default function PhysicianCareFAQSection() {
             const buttonId = `physician-faq-question-${index}`;
             const panelId = `physician-faq-answer-${index}`;
             return (
-              <div key={faq.question} className={styles.item} data-open={isOpen}>
+              <div data-pc-faq key={faq.question} className={styles.item} data-open={isOpen}>
                 <h3 className={styles.question}>
                   <button id={buttonId} type="button" aria-expanded={isOpen} aria-controls={panelId} onClick={() => setOpenIndex(isOpen ? null : index)}>
                     <span>{faq.question}</span>

@@ -1,0 +1,95 @@
+/* Scale the supplied mobile reference proportions without changing desktop. */
+@layer base {
+  @media (max-width: 767px) {
+    .footer {
+      --plans-footer-unit: calc(100vw / 227);
+      border-radius: 0 !important;
+      background: #246b5b;
+    }
+
+    .footer .background { display: none !important; }
+
+    .footer .glass {
+      --footer-unit: var(--plans-footer-unit);
+      background: linear-gradient(120deg, #2c7966, #236757) !important;
+      border: 1px solid rgb(255 255 255 / 18%) !important;
+      box-shadow: inset 0 0 calc(16 * var(--footer-unit)) rgb(190 220 200 / 12%);
+    }
+
+    .footer .glass [data-footer-inner] {
+      max-width: none !important;
+      padding: calc(36 * var(--footer-unit)) calc(11 * var(--footer-unit)) calc(40 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-mobile-nav] { gap: calc(11.6 * var(--footer-unit)) !important; }
+
+    .footer .glass [data-footer-mobile-nav] a {
+      font-size: calc(9 * var(--footer-unit));
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .footer .glass [data-footer-grid] { margin-top: calc(27 * var(--footer-unit)) !important; }
+
+    .footer .glass [data-footer-brand] > img {
+      width: calc(160 * var(--footer-unit)) !important;
+      height: calc(96 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-brand] > p {
+      display: block !important;
+      max-width: calc(190 * var(--footer-unit)) !important;
+      margin: calc(12 * var(--footer-unit)) auto 0 !important;
+      text-align: center;
+      font-size: calc(9 * var(--footer-unit)) !important;
+      font-weight: 400;
+      line-height: 1.5 !important;
+    }
+
+    .footer .glass [data-footer-stores] {
+      margin-top: calc(27 * var(--footer-unit)) !important;
+      gap: calc(5 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-stores] button {
+      flex: 1 1 0;
+      min-width: 0;
+      width: auto !important;
+      height: calc(33 * var(--footer-unit)) !important;
+      padding: calc(4 * var(--footer-unit)) !important;
+      gap: calc(4 * var(--footer-unit)) !important;
+      border-radius: calc(6 * var(--footer-unit)) !important;
+      background: rgb(0 0 0 / 12%) !important;
+    }
+
+    .footer .glass [data-footer-stores] button > img {
+      width: calc(19 * var(--footer-unit)) !important;
+      height: calc(23 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-stores] button > span > span:first-child {
+      font-size: calc(7.5 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-stores] button > span > span:nth-child(2) {
+      font-size: calc(14 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-stores] button > span > img {
+      width: calc(60 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-divider] { margin-top: calc(14 * var(--footer-unit)) !important; }
+
+    .footer .glass [data-footer-legal] {
+      display: flex !important;
+      max-width: calc(190 * var(--footer-unit));
+      margin: calc(18 * var(--footer-unit)) auto 0 !important;
+      gap: calc(4 * var(--footer-unit)) !important;
+      font-size: calc(6.5 * var(--footer-unit)) !important;
+      line-height: 1.4 !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}

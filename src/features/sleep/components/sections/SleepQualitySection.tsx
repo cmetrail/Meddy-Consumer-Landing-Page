@@ -53,7 +53,7 @@ export default function SleepQualitySection() {
         <div className="absolute inset-0 backdrop-blur-[2.5px]" style={{ background: OVERLAY }} />
 
         {/* big watermark number */}
-        <span
+        <span data-story-number
           className="pointer-events-none absolute select-none font-bold italic leading-[normal] text-white/[0.16] mix-blend-plus-lighter"
           style={{ left: `calc(max(0px, (100% - 90rem) / 2) + 2.5rem + ${u(33)})`, top: u(48), fontSize: u(96), letterSpacing: u(1.92) }}
         >
@@ -65,10 +65,10 @@ export default function SleepQualitySection() {
             <div className="relative h-full">
               {/* left copy */}
               <div className="absolute left-0 flex flex-col justify-between" style={{ top: u(390), width: u(346), height: u(472) }}>
-                <p className="uppercase leading-[1.416] text-[#A1A1A1]" style={{ fontSize: `max(20px, ${u(32)})` }}>
+                <p data-story-copy className="uppercase leading-[1.416] text-[#A1A1A1]" style={{ fontSize: `max(20px, ${u(32)})` }}>
                   Understand how well you&apos;re <em className="font-bold italic text-white">actually sleeping.</em>
                 </p>
-                <p className="leading-[1.416] text-[#A1A1A1]" style={{ fontSize: `max(12px, ${u(16)})` }}>
+                <p data-story-copy className="leading-[1.416] text-[#A1A1A1]" style={{ fontSize: `max(12px, ${u(16)})` }}>
                   A single sleep score brings together the different <strong className="font-bold text-white">dimensions of your sleep.</strong>
                 </p>
               </div>
@@ -76,11 +76,11 @@ export default function SleepQualitySection() {
               {/* centre: title + photo, centred on the page */}
               <div className="absolute left-1/2 flex -translate-x-1/2 flex-col items-center" style={{ top: u(120), width: u(525), gap: u(30) }}>
                 <div className="flex flex-col items-center text-center uppercase leading-[1.416]" style={{ gap: u(5), width: u(436) }}>
-                  <h2 className="comprehensive-serif whitespace-nowrap italic text-[#E6DFDF]" style={{ fontSize: `max(28px, ${u(46)})` }}>Sleep Quality</h2>
-                  <p className="text-[#A1A1A1]" style={{ fontSize: `max(14px, ${u(24)})` }}>More than Just - hours in bed</p>
+                  <h2 data-story-copy className="comprehensive-serif whitespace-nowrap italic text-[#E6DFDF]" style={{ fontSize: `max(28px, ${u(46)})` }}>Sleep Quality</h2>
+                  <p data-story-copy className="text-[#A1A1A1]" style={{ fontSize: `max(14px, ${u(24)})` }}>More than Just - hours in bed</p>
                 </div>
                 <div className="relative w-full overflow-hidden" style={{ height: u(605) }}>
-                  <Image src={`${A}/d-photo.png`} alt="Woman sleeping peacefully" width={2000} height={1328} sizes="560px" className="absolute max-w-none" style={{ left: "-22.22%", top: 0, width: "173.07%", height: "100%" }} />
+                  <Image data-story-photo src={`${A}/d-photo.png`} alt="Woman sleeping peacefully" width={2000} height={1328} sizes="560px" className="absolute max-w-none" style={{ left: "-22.22%", top: 0, width: "173.07%", height: "100%" }} />
                 </div>
               </div>
 
@@ -89,7 +89,7 @@ export default function SleepQualitySection() {
                 <div className="flex flex-col items-end" style={{ gap: u(21) }}>
                   <div className="flex flex-col items-end uppercase" style={{ gap: u(4) }}>
                     <span className="italic leading-[1.416] text-[#A1A1A1]" style={{ fontSize: `max(13px, ${u(20)})` }}>Sleep Score</span>
-                    <span className="font-normal leading-[normal] text-white" style={{ fontSize: `max(52px, ${u(96)})` }}>84</span>
+                    <span className="font-normal leading-[normal] text-white" style={{ fontSize: `max(52px, ${u(96)})` }} data-story-count="84">84</span>
                   </div>
                   <div className="border-t border-solid border-[#A1A1A1]" style={{ width: u(174) }} />
                 </div>
@@ -121,7 +121,7 @@ export default function SleepQualitySection() {
           className="relative mx-auto flex max-w-[500px] flex-col px-[var(--p20)] py-[var(--p64)]"
           style={{ ["--p20" as string]: m(20), ["--p64" as string]: m(64), gap: m(48) } as React.CSSProperties}
         >
-          <span
+          <span data-story-number
             className="select-none font-bold italic leading-none text-[rgba(216,216,216,0.5)]"
             style={{ fontSize: m(120), letterSpacing: m(2.4), transform: "rotate(-0.31deg)", width: "fit-content" }}
           >
@@ -133,11 +133,11 @@ export default function SleepQualitySection() {
               <div className="flex flex-col items-center" style={{ gap: m(16) }}>
                 <div className="flex w-full flex-col" style={{ gap: m(32) }}>
                   <div className="flex flex-col items-center text-center uppercase leading-[1.416]" style={{ gap: m(5) }}>
-                    <h2 className="comprehensive-serif whitespace-nowrap italic text-[#E6DFDF]" style={{ fontSize: m(32) }}>Sleep Quality</h2>
-                    <p className="text-[#A1A1A1]" style={{ fontSize: m(20) }}>More than Just - hours in bed</p>
+                    <h2 data-story-copy className="comprehensive-serif whitespace-nowrap italic text-[#E6DFDF]" style={{ fontSize: m(32) }}>Sleep Quality</h2>
+                    <p data-story-copy className="text-[#A1A1A1]" style={{ fontSize: m(20) }}>More than Just - hours in bed</p>
                   </div>
                   <div className="relative w-full overflow-hidden" style={{ height: m(417) }}>
-                    <Image src={`${A}/m-photo.png`} alt="Woman sleeping peacefully" width={2000} height={1328} sizes="500px" className="absolute max-w-none" style={{ left: "-22.22%", top: 0, width: "173.07%", height: "100%" }} />
+                    <Image data-story-photo src={`${A}/m-photo.png`} alt="Woman sleeping peacefully" width={2000} height={1328} sizes="500px" className="absolute max-w-none" style={{ left: "-22.22%", top: 0, width: "173.07%", height: "100%" }} />
                   </div>
                 </div>
                 <div className="flex flex-col items-center text-center uppercase leading-[1.416]" style={{ gap: m(10) }}>
@@ -147,10 +147,10 @@ export default function SleepQualitySection() {
               </div>
 
               <div className="flex flex-col text-center" style={{ gap: m(16) }}>
-                <p className="uppercase leading-[1.416] text-[#A1A1A1]" style={{ fontSize: m(20) }}>
+                <p data-story-copy className="uppercase leading-[1.416] text-[#A1A1A1]" style={{ fontSize: m(20) }}>
                   Understand how well you&apos;re <em className="font-bold italic text-white">actually sleeping.</em>
                 </p>
-                <p className="leading-[1.416] text-[#A1A1A1]" style={{ fontSize: m(16) }}>
+                <p data-story-copy className="leading-[1.416] text-[#A1A1A1]" style={{ fontSize: m(16) }}>
                   A single sleep score brings together the different <strong className="font-bold text-white">dimensions of your sleep.</strong>
                 </p>
               </div>
@@ -159,7 +159,7 @@ export default function SleepQualitySection() {
             <div className="flex flex-col items-center" style={{ gap: m(16) }}>
               <div className="flex flex-col items-center uppercase" style={{ gap: m(8) }}>
                 <span className="italic leading-[1.416] text-[#A1A1A1]" style={{ fontSize: m(12) }}>Sleep Score</span>
-                <span className="font-bold leading-[normal] text-white" style={{ fontSize: m(32) }}>84</span>
+                <span className="font-bold leading-[normal] text-white" style={{ fontSize: m(32) }} data-story-count="84">84</span>
               </div>
               <div className="flex w-full" style={{ gap: m(25) }}>
                 {[

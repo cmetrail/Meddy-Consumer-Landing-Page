@@ -17,7 +17,7 @@ function Score94() {
   return (
     <span className="flex items-baseline gap-[10px] text-white">
       <span className="text-[64px] uppercase leading-none lg:text-[length:max(40px,var(--d64))]" style={{ ["--d64" as string]: u(64) }}>
-        94
+        <span data-story-count="94">94</span>
       </span>
       <span className="text-[48px] uppercase leading-none lg:text-[length:max(32px,var(--d48))]" style={{ ["--d48" as string]: u(48) }}>
         %
@@ -50,7 +50,7 @@ export default function SleepConsistencySection() {
       <div className="relative hidden overflow-hidden lg:block" style={{ height: u(995) }}>
         <div className="mx-auto h-full max-w-360 px-10">
           <div className="relative pt-[var(--pt)]" style={{ ["--pt" as string]: u(200) }}>
-            <span
+            <span data-story-number
               className="pointer-events-none absolute select-none font-bold italic leading-[normal] text-[rgba(216,216,216,0.5)]"
               style={{ left: u(-20), top: u(30), fontSize: u(180), letterSpacing: u(3.6), transform: "rotate(-0.31deg)" }}
             >
@@ -59,13 +59,13 @@ export default function SleepConsistencySection() {
 
             <div className="relative flex" style={{ height: u(675), gap: u(15) }}>
               {/* Card 1 — 30-day score */}
-              <div className="relative flex-1 overflow-hidden" style={{ background: GREEN, borderRadius: u(15) }}>
+              <div data-story-panel className="relative flex-1 overflow-hidden" style={{ background: GREEN, borderRadius: u(15) }}>
                 {[
                   [220, 93, "d-line83.svg", 101],
                   [312, 93, "d-line83.svg", 101],
                   [406, 93, "d-line83.svg", 101],
                   [406, 211, "d-line86.svg", 219],
-                ].map(([top, len, src, w], i) => (
+                ].map(([top, , src, w], i) => (
                   <Image
                     key={i}
                     src={`${A}/${src}`}
@@ -86,36 +86,36 @@ export default function SleepConsistencySection() {
                 <div className="absolute flex flex-col uppercase" style={{ left: u(24), top: u(41) }}>
                   <span className="whitespace-nowrap font-medium italic leading-[1.416] text-[#DFDFDF]" style={{ fontSize: `max(14px, ${u(20)})` }}>30 days</span>
                   <span className="whitespace-nowrap font-normal text-white" style={{ lineHeight: 1.416 }}>
-                    <span style={{ fontSize: `max(40px, ${u(64)})` }}>94</span>
+                    <span style={{ fontSize: `max(40px, ${u(64)})` }} data-story-count="94">94</span>
                     <span style={{ fontSize: `max(30px, ${u(48)})` }}>%</span>
                   </span>
                 </div>
               </div>
 
               {/* Card 2 — photo */}
-              <div className="relative flex-1 overflow-hidden" style={{ background: DARK, borderRadius: u(15) }}>
+              <div data-story-panel className="relative flex-1 overflow-hidden" style={{ background: DARK, borderRadius: u(15) }}>
                 <div className="absolute left-0 top-0 overflow-hidden" style={{ width: u(743), height: u(675) }}>
-                  <Image src={`${A}/d-photo.png`} alt="Woman resting in bed with a book" width={820} height={1024} sizes="760px" className="absolute max-w-none" style={{ left: "-10.41%", top: "-18.79%", width: "100%", height: "137.46%" }} />
+                  <Image data-story-photo src={`${A}/d-photo.png`} alt="Woman resting in bed with a book" width={820} height={1024} sizes="760px" className="absolute max-w-none" style={{ left: "-10.41%", top: "-18.79%", width: "100%", height: "137.46%" }} />
                 </div>
                 <Image src={`${A}/d-line82.svg`} alt="" width={256} height={2} unoptimized className="absolute max-w-none" style={{ width: u(256), height: u(2), left: `calc(${u(52)} - ${u(128)})`, top: `calc(${u(224 + 128)} - ${u(1)})`, transform: "rotate(90deg)" }} />
 
                 <div className="absolute flex flex-col text-white" style={{ left: u(31), right: u(31), top: u(18) }}>
                   <h3 className="comprehensive-serif text-right italic uppercase leading-[1.416]" style={{ fontSize: `max(30px, ${u(50)})` }}>Consistency</h3>
-                  <p className="text-center font-medium uppercase leading-[1.416]" style={{ fontSize: `max(14px, ${u(20)})` }}>
+                  <p data-story-copy className="text-center font-medium uppercase leading-[1.416]" style={{ fontSize: `max(14px, ${u(20)})` }}>
                     <span className="text-[#F2F2F2]">Your body </span>
                     <strong className="font-bold">keeps a schedule</strong>
                   </p>
                 </div>
                 <div className="absolute flex flex-col items-center text-center text-[#E6DFDF]" style={{ left: u(42), right: u(42), top: u(492), gap: u(14) }}>
-                  <p className="font-medium uppercase leading-[1.416]" style={{ fontSize: `max(16px, ${u(24)})`, maxWidth: u(320) }}>Good sleep isn&apos;t just about one good night.</p>
-                  <p className="leading-[1.416]" style={{ fontSize: `max(12px, ${u(16)})`, maxWidth: u(320) }}>
+                  <p data-story-copy className="font-medium uppercase leading-[1.416]" style={{ fontSize: `max(16px, ${u(24)})`, maxWidth: u(320) }}>Good sleep isn&apos;t just about one good night.</p>
+                  <p data-story-copy className="leading-[1.416]" style={{ fontSize: `max(12px, ${u(16)})`, maxWidth: u(320) }}>
                     See how consistently you&apos;re sleeping and waking—and <strong className="font-bold text-white">whether your sleep patterns are improving over time.</strong>
                   </p>
                 </div>
               </div>
 
               {/* Card 3 — bed / wake schedule */}
-              <div className="relative flex-1 overflow-hidden" style={{ background: GREEN, borderRadius: u(15) }}>
+              <div data-story-panel className="relative flex-1 overflow-hidden" style={{ background: GREEN, borderRadius: u(15) }}>
                 <div className="absolute" style={{ left: u(17), right: u(17), top: u(43) }}>
                   <div className="flex items-center justify-between">
                     {[
@@ -138,7 +138,7 @@ export default function SleepConsistencySection() {
                     {BARS.map(([h, top], i) => (
                       <span
                         key={i}
-                        className="absolute block"
+                        data-story-bar className="absolute block"
                         style={{
                           left: `${((i * 13.0282) / 370.0003) * 100}%`,
                           top: u(top + 0),
@@ -151,7 +151,7 @@ export default function SleepConsistencySection() {
                     ))}
                   </div>
                 </div>
-                <p className="absolute leading-[1.416] text-white" style={{ left: u(17), right: u(17), top: u(591), fontSize: `max(11px, ${u(14)})` }}>
+                <p data-story-copy className="absolute leading-[1.416] text-white" style={{ left: u(17), right: u(17), top: u(591), fontSize: `max(11px, ${u(14)})` }}>
                   This is where your <strong className="font-bold">circadian/consistency scoring becomes tangible.</strong>
                 </p>
               </div>
@@ -162,13 +162,13 @@ export default function SleepConsistencySection() {
 
       {/* ─── Mobile ──────────────────────────────────────────────── */}
       <div className="relative flex flex-col gap-[16px] py-[64px] lg:hidden">
-        <span className="pointer-events-none select-none pl-5 text-[120px] font-bold italic leading-none text-[rgba(216,216,216,0.5)]">
+        <span data-story-number className="pointer-events-none select-none pl-5 text-[120px] font-bold italic leading-none text-[rgba(216,216,216,0.5)]">
           03
         </span>
 
         <div className="flex snap-x snap-mandatory gap-[15px] overflow-x-auto px-5 pb-2">
           {/* Card 1 */}
-          <div className="relative h-[675px] w-[362px] shrink-0 snap-center overflow-hidden rounded-[15px] p-[24px]" style={{ background: GREEN }}>
+          <div data-story-panel className="relative h-[675px] w-[362px] shrink-0 snap-center overflow-hidden rounded-[15px] p-[24px]" style={{ background: GREEN }}>
             <span className="text-[20px] font-medium italic uppercase leading-[1.42] text-[#DFDFDF]">
               30 days
             </span>
@@ -176,6 +176,7 @@ export default function SleepConsistencySection() {
               <Score94 />
             </div>
             <Image
+              data-story-chart
               src={`${A}/score-chart.svg`}
               alt=""
               width={16}
@@ -187,21 +188,21 @@ export default function SleepConsistencySection() {
           </div>
 
           {/* Card 2 */}
-          <div className="relative h-[675px] w-[362px] shrink-0 snap-center overflow-hidden rounded-[15px] p-[24px]" style={{ background: DARK }}>
+          <div data-story-panel className="relative h-[675px] w-[362px] shrink-0 snap-center overflow-hidden rounded-[15px] p-[24px]" style={{ background: DARK }}>
             <Image src={`${A}/consistency-photo-78fd6d.png`} alt="" fill sizes="400px" className="object-cover" />
             <div className="relative flex h-full flex-col">
               <h3 className="comprehensive-serif italic text-[32px] uppercase leading-[1.42] text-white">
                 Consistency
               </h3>
-              <p className="text-center text-[20px] uppercase leading-[1.42] text-white">
+              <p data-story-copy className="text-center text-[20px] uppercase leading-[1.42] text-white">
                 <span className="text-[#F2F2F2]">Your body </span>
                 <strong className="font-bold">keeps a schedule</strong>
               </p>
               <div className="mt-auto flex flex-col gap-[14px] text-center">
-                <p className="text-[20px] font-medium uppercase leading-[1.42] text-[#E6DFDF]">
+                <p data-story-copy className="text-[20px] font-medium uppercase leading-[1.42] text-[#E6DFDF]">
                   Good sleep isn&apos;t just about one good night.
                 </p>
-                <p className="text-[16px] leading-[1.42] text-[#E6DFDF]">
+                <p data-story-copy className="text-[16px] leading-[1.42] text-[#E6DFDF]">
                   See how consistently you&apos;re sleeping and waking—and{" "}
                   <strong className="font-bold text-white">
                     whether your sleep patterns are improving over time.
@@ -212,7 +213,7 @@ export default function SleepConsistencySection() {
           </div>
 
           {/* Card 3 */}
-          <div className="relative h-[675px] w-[362px] shrink-0 snap-center overflow-hidden rounded-[15px] p-[24px]" style={{ background: GREEN }}>
+          <div data-story-panel className="relative h-[675px] w-[362px] shrink-0 snap-center overflow-hidden rounded-[15px] p-[24px]" style={{ background: GREEN }}>
             <div className="flex flex-col gap-[24px]">
               <div className="flex items-center justify-between">
                 <div className="flex flex-col">
@@ -229,6 +230,7 @@ export default function SleepConsistencySection() {
                 </div>
               </div>
               <Image
+                data-story-chart
                 src={`${A}/schedule-chart.svg`}
                 alt=""
                 width={370}
@@ -236,7 +238,7 @@ export default function SleepConsistencySection() {
                 unoptimized
                 className="h-auto w-full"
               />
-              <p className="text-[14px] leading-[1.42] text-white">
+              <p data-story-copy className="text-[14px] leading-[1.42] text-white">
                 This is where your{" "}
                 <strong className="font-bold">circadian/consistency scoring becomes tangible.</strong>
               </p>

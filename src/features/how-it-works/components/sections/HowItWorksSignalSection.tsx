@@ -106,8 +106,8 @@ export default function HowItWorksSignalSection() {
     transition: { duration: reducedMotion ? 0 : 0.7, ease },
   };
   return (
-    <section className={styles.section} aria-labelledby="signal-heading">
-      <div className={styles.backdrop}>
+    <section data-story-chapter="signal" className={styles.section} aria-labelledby="signal-heading">
+      <div data-story-photo className={styles.backdrop}>
         <Image src="/how-it-works/signal/bg.png" alt="" fill sizes="(min-width: 1024px) 120vw, 1605px" className={styles.photo} />
       </div>
       <div className={styles.fade} />

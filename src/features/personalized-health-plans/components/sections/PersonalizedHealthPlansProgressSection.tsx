@@ -2,22 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { useHealthPlanProgressMotion } from "./useHealthPlanProgressMotion";
 
 // Figma: desktop node 12613:16219 (1440 x 1047.5). White -> green vertical gradient. Header (serif headline | statement + copy),
 // then a 1621.6px row of six app-dashboard cards centred (bleeding off both sides) with a tilted iPhone image over its middle,
 // anchored to the section's bottom edge. The card row + phone are fixed-px Figma layers, scaled down below 1440 wide.
 // Mobile (node 12721:16151, 402 x 874): centred copy, the same row at ~0.55 scale offset left so the weight / score / nutrients
 // cards peek around a ~0.5 scale phone.
-const ease = [0.22, 1, 0.36, 1] as const;
 const A = "/personalized-health-plans/progress";
-
-const fade = (delay: number) => ({
-  initial: { opacity: 0, y: 40 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.9, ease, delay },
-});
 
 const INK = "#111110";
 const SEC = "#7b7b7b";
@@ -64,8 +56,8 @@ function ScoreChart({ yLabels }: { yLabels: string[] }) {
                 <div key={i} className="relative h-[13.5px] w-full shrink-0"><Svg src="grid-row.svg" /></div>
               ))}
             </div>
-            <div className="absolute size-[13.5px]" style={{ left: 192, top: 46.5 }}><Svg src="dot.svg" /></div>
-            <div className="absolute flex flex-col items-center justify-center" style={{ left: 141, top: 1.5 }}>
+            <div data-progress-dot className="absolute size-[13.5px]" style={{ left: 192, top: 46.5 }}><Svg src="dot.svg" /></div>
+            <div data-progress-tooltip className="absolute flex flex-col items-center justify-center" style={{ left: 141, top: 1.5 }}>
               <div className="flex flex-col items-start justify-center gap-[1.5px] rounded-[6px] px-[6px] py-[3px] text-[9px] font-semibold leading-[1.5] whitespace-nowrap" style={{ background: BORDER, color: INK }}>
                 <p>May 21, 2026</p>
                 <p>83</p>
@@ -74,8 +66,8 @@ function ScoreChart({ yLabels }: { yLabels: string[] }) {
                 <div className="flex-none rotate-180"><div className="relative h-[3.75px] w-[6.429px]"><Svg src="tip-arrow.svg" /></div></div>
               </div>
             </div>
-            <div className="absolute" style={{ left: 0, top: 31.5, width: 198.75, height: 58.875 }}><Svg src="area.svg" /></div>
-            <div className="absolute" style={{ left: 0.38, top: 31.5, width: 198.75, height: 23.12 }}>
+            <div data-progress-area className="absolute" style={{ left: 0, top: 31.5, width: 198.75, height: 58.875 }}><Svg src="area.svg" /></div>
+            <div data-progress-curve className="absolute" style={{ left: 0.38, top: 31.5, width: 198.75, height: 23.12 }}>
               <div className="absolute" style={{ inset: "-2.37% 0 -2.43% 0" }}><Svg src="curve.svg" /></div>
             </div>
           </div>
@@ -149,7 +141,7 @@ function SleepCard() {
         <div className="flex w-full items-start gap-[1.5px]">
           {STAGES.map((s) => (
             <div key={s.name} className={`flex flex-col items-start justify-center gap-[2.25px] ${s.grow ? "min-w-px flex-1" : "shrink-0"}`} style={s.grow ? undefined : { width: s.w }}>
-              <div className="flex h-[45px] w-full items-end gap-[0.75px] pt-[9px]">
+              <div data-progress-bar className="flex h-[45px] w-full items-end gap-[0.75px] pt-[9px]">
                 <div className="h-full w-[1.5px] shrink-0" style={{ background: s.c }} />
                 <div className="h-full min-w-px flex-1" style={{ background: s.c }} />
               </div>
@@ -233,7 +225,7 @@ function NutrientsCard() {
       <div className="relative flex w-full flex-col items-start justify-center gap-[2.514px] pt-[20.112px]">
         <div className="flex h-[61.173px] w-full items-end justify-between pt-[20.112px]">
           {groups.flatMap((g, gi) => Array.from({ length: g.n }, (_, i) => (
-            <div key={`${gi}-${i}`} className="w-[1.676px] shrink-0" style={{ height: i === 0 ? 61.173 : 33.52, background: g.c }} />
+            <div data-progress-nutrient key={`${gi}-${i}`} className="w-[1.676px] shrink-0" style={{ height: i === 0 ? 61.173 : 33.52, background: g.c }} />
           )))}
         </div>
         {badge("P", "40%", "#e09a2a", 5.02)}
@@ -286,11 +278,13 @@ function useScale() {
 }
 
 const ROW_W = 1621.629;
+const DASHBOARD_CARDS = [WeightCard, SleepCard, A1cCard, ScoreCard, NutrientsCard, ActivityCard];
 
 export default function PersonalizedHealthPlansProgressSection() {
   const { s: ds, ready, mobile } = useScale();
   const s = mobile ? 0.55 : ds;
   const phoneS = mobile ? 0.53 : ds;
+  const sectionRef = useHealthPlanProgressMotion(ready, mobile, ROW_W + 15);
   const rowRef = useRef<HTMLDivElement>(null);
   const [rowH, setRowH] = useState(213);
   useEffect(() => {
@@ -299,22 +293,21 @@ export default function PersonalizedHealthPlansProgressSection() {
 
   return (
     <section
+      ref={sectionRef}
+      id="personalized-health-plans-progress"
+      aria-labelledby="health-plan-progress-heading"
       className="relative w-full overflow-hidden"
       style={{ minHeight: mobile ? 874 : 1047.5 * s, backgroundImage: "linear-gradient(to bottom, #fffff9 8.713%, #7fbc9f 100.09%, #8db488 179.06%)" }}
     >
-      <style>{`
-        @keyframes hp-slide { from { transform: translateX(0); } to { transform: translateX(-${ROW_W + 15}px); } }
-        .hp-track { animation: hp-slide 45s linear infinite; }
-        @media (prefers-reduced-motion: reduce) { .hp-track { animation: none; } }
-      `}</style>
+      <div data-progress-glow aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[75%]" style={{ background: "radial-gradient(ellipse at 50% 80%, rgba(233,255,226,.35), transparent 65%)" }} />
 
       {/* same container as the header */}
       <div className="relative z-10 mx-auto flex w-full max-w-360 flex-col gap-[130px] px-5 py-16 lg:gap-[180px] lg:px-10 lg:py-[120px]">
         <div className="flex w-full flex-col items-center gap-8 text-center lg:flex-row lg:items-start lg:gap-12 lg:text-left">
-          <motion.p className="comprehensive-serif min-w-px text-[32px] font-normal italic leading-[1.5] text-[#46524b] lg:flex-1 lg:text-[40px] lg:text-[#17925a]" {...fade(0)}>
+          <h2 id="health-plan-progress-heading" data-progress-heading className="comprehensive-serif min-w-px text-[32px] font-normal italic leading-[1.5] text-[#46524b] lg:flex-1 lg:text-[40px] lg:text-[#17925a]">
             Your plan changes when you do.
-          </motion.p>
-          <motion.div className="flex min-w-px flex-col items-center gap-4 lg:flex-1 lg:items-start lg:gap-2 lg:text-[#111110]" {...fade(0.1)}>
+          </h2>
+          <div data-progress-copy className="flex min-w-px flex-col items-center gap-4 lg:flex-1 lg:items-start lg:gap-2 lg:text-[#111110]">
             <p className="text-[20px] font-normal leading-[1.5] text-[#6e7a72] lg:text-[32px] lg:font-medium lg:text-[#111110]">
               What worked last month may <span className="comprehensive-serif hidden italic lg:inline">not be what you need next month.</span>
               <span className="lg:hidden">not be </span>
@@ -323,11 +316,11 @@ export default function PersonalizedHealthPlansProgressSection() {
             <p className="text-[14px] font-normal leading-[1.5] text-[#6e7a72] lg:text-[16px] lg:text-[#111110] lg:opacity-80">
               Meddy follows your progress between visits—your <b className="font-bold text-[#46524b] lg:font-normal lg:text-inherit">weight, nutrition, workouts, sleep, recovery, biomarkers</b>, and other health data.
             </p>
-          </motion.div>
+          </div>
         </div>
 
         {/* card row: fixed-px Figma layout, centred so it bleeds off both sides */}
-        <div className="relative w-full" style={{ height: rowH * s, visibility: ready ? "visible" : "hidden" }}>
+        <div data-progress-stage className="relative w-full" style={{ height: rowH * s, visibility: ready ? "visible" : "hidden" }}>
           <div
             ref={rowRef}
             className="absolute top-0 flex items-start gap-[15px]"
@@ -338,15 +331,14 @@ export default function PersonalizedHealthPlansProgressSection() {
             }
           >
             {/* three identical sets slide left one set-width, then jump back (seamless loop) */}
-            <div className="hp-track flex shrink-0 items-start gap-[15px]">
+            <div data-progress-track className="flex shrink-0 items-start gap-[15px]">
               {[0, 1, 2].map((k) => (
                 <div key={k} className="flex shrink-0 items-start gap-[15px]" style={{ width: ROW_W }} aria-hidden={k > 0}>
-                  <WeightCard />
-                  <SleepCard />
-                  <A1cCard />
-                  <ScoreCard />
-                  <NutrientsCard />
-                  <ActivityCard />
+                  {DASHBOARD_CARDS.map((Card, index) => (
+                    <div key={index} data-progress-card className="shrink-0">
+                      <Card />
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
@@ -359,15 +351,21 @@ export default function PersonalizedHealthPlansProgressSection() {
         className="pointer-events-none absolute bottom-[0.5px] left-1/2 z-20 h-[692px] w-[696px] overflow-hidden"
         style={{ transform: `translateX(-50%) scale(${phoneS})`, transformOrigin: "bottom center", visibility: ready ? "visible" : "hidden" }}
       >
-        <Image
-          src={`${A}/phone.png`}
-          alt="The Meddy app showing a fitness targets screen"
-          width={4000}
-          height={3000}
-          sizes="1420px"
-          className="pointer-events-none absolute max-w-none"
-          style={{ height: "153.56%", left: "-49.27%", top: "-18.84%", width: "203.56%" }}
-        />
+        <div data-progress-phone-depth className="absolute inset-0">
+          <div data-progress-phone-pointer className="absolute inset-0">
+            <div data-progress-phone-reveal className="absolute inset-0">
+              <Image
+                src={`${A}/phone.png`}
+                alt="The Meddy app showing a fitness targets screen"
+                width={4000}
+                height={3000}
+                sizes="1420px"
+                className="pointer-events-none absolute max-w-none"
+                style={{ height: "153.56%", left: "-49.27%", top: "-18.84%", width: "203.56%" }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

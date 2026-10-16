@@ -24,6 +24,19 @@
   pointer-events: none;
 }
 
+.artworkLayer {
+  position: absolute;
+  inset: 0;
+}
+
+.glow {
+  position: absolute;
+  inset: -15%;
+  pointer-events: none;
+  opacity: 0.45;
+  background: radial-gradient(ellipse at 70% 46%, rgb(170 224 177 / 22%), transparent 55%);
+}
+
 .muscle {
   position: absolute;
   left: calc(50% - 523 * var(--hero-unit));
@@ -55,6 +68,28 @@
   white-space: nowrap;
 }
 
+.lineMask {
+  overflow: clip;
+  perspective: 900px;
+}
+
+.buttonReveal {
+  width: fit-content;
+}
+
+.buttonLabel {
+  position: relative;
+}
+
+.buttonShine {
+  position: absolute;
+  inset: -50% auto -50% -70%;
+  width: 50%;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgb(174 222 193 / 65%), transparent);
+  transform: skewX(-20deg);
+}
+
 .description {
   width: max(300px, calc(543 * var(--hero-unit)));
   margin-top: calc(4 * var(--hero-unit)) !important;
@@ -64,6 +99,8 @@
 }
 
 .button {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;

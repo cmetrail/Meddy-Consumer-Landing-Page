@@ -51,12 +51,12 @@
   outline: none;
 }
 .card:focus-visible { outline: 2px solid var(--branch-color); outline-offset: 4px; }
-.signal { position: absolute; overflow: visible; pointer-events: none; opacity: var(--flow-strength, 0); transition: opacity 400ms ease; filter: drop-shadow(0 0 4px #9ce9c3); }
+.signal { position: absolute; overflow: visible; pointer-events: none; opacity: calc(0.22 + var(--flow-strength, 0) * 0.78); transition: opacity 200ms ease; filter: drop-shadow(0 0 3px #55e99c) drop-shadow(0 0 8px #37cf8170); }
 .signal[data-lit="true"] { opacity: 1; }
-.signalTrack { stroke: var(--branch-color); stroke-width: 2; opacity: 0.45; }
-.signalPulse { stroke: #c2f5d9; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 18 100; stroke-dashoffset: 18; }
+.signalTrack { stroke: #52d995; stroke-width: 2; opacity: 0.65; }
+.signalPulse { stroke: #8affbe; stroke-width: 3.8; stroke-linecap: round; stroke-dasharray: 36 100; stroke-dashoffset: 36; }
 .mobileSignal { position: static; }
-.mobileSignal .signalPulse { stroke-width: 1.15; }
+.mobileSignal .signalPulse { stroke-width: 1.6; }
 @media (prefers-reduced-motion: reduce) {
   .physician { transform: none; transition: none; }
   .particles { display: none; }

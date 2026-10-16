@@ -26,14 +26,20 @@ export function useNutritionHeroMotion() {
       const chips = select("[data-nutrient]");
       const float = select("[data-float]");
       const pointer = select("[data-pointer]");
+      const letters = gsap.utils.toArray<SVGPathElement>(stage.querySelectorAll("[data-headline] [data-letter]"));
+
+      // Keep the original outlined lettering; each SVG path is one xylophone key.
+      gsap.set(letters, { transformOrigin: "50% 90%" });
 
       // Separate entrance, float, pointer and scroll layers never compete for transforms.
       gsap.set(food, { transformPerspective: 1100, transformOrigin: "50% 85%" });
       const intro = gsap.timeline({ defaults: { duration: 1.25, ease: "power3.out" } });
       intro.from(select("[data-title-copy]"), { y: 20, autoAlpha: 0, stagger: 0.1 }, 0.1)
-        .from(select("[data-headline]"), {
-          clipPath: "inset(100% 0 0 0)", y: desktop ? 28 : 12,
-          autoAlpha: 0, duration: 1.5, ease: "power4.inOut",
+        .from(letters, {
+          yPercent: 55, scaleY: 0.7,
+          rotation: (index: number) => index % 2 ? 6 : -6,
+          autoAlpha: 0, stagger: 0.085, duration: 1.35,
+          ease: "elastic.out(1, 0.45)",
         }, 0.15)
         .from(select("[data-shadow]"), { scale: 0.72, autoAlpha: 0, transformOrigin: "50% 50%" }, 0.55)
         .from(food, {
@@ -54,11 +60,28 @@ export function useNutritionHeroMotion() {
       });
       ambient.to(select("[data-shadow]"), { scaleX: 0.96, opacity: 0.8, duration: 4.2, ease: "sine.inOut" }, 0);
 
+      const xylophone = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 3.8 });
+      letters.forEach((letter: SVGPathElement, index: number) => {
+        const strike = index * 0.085;
+        const lift = 22 - index * 0.8;
+        xylophone
+          .to(letter, { yPercent: 5, scaleY: 0.92, scaleX: 1.025, duration: 0.09, ease: "power2.in" }, strike)
+          .to(letter, {
+            yPercent: -lift, scaleY: 1.035, scaleX: 0.99,
+            rotation: index % 2 ? 2 : -2, duration: 0.2, ease: "power2.out",
+          }, strike + 0.09)
+          .to(letter, {
+            yPercent: 0, scaleY: 1, scaleX: 1, rotation: 0,
+            duration: 1.05, ease: "elastic.out(1, 0.32)",
+          }, strike + 0.29);
+      });
+
       let introDone = false;
       const syncMotion = () => {
         const bounds = root.getBoundingClientRect();
         const visible = !document.hidden && bounds.bottom > 0 && bounds.top < innerHeight;
         ambient.paused(!introDone || !visible);
+        xylophone.paused(!introDone || !visible);
         intro.paused(!visible);
       };
       intro.eventCallback("onComplete", () => { introDone = true; syncMotion(); });

@@ -16,14 +16,14 @@ export default function BiomarkersAnnualLabsSection() {
           {/* Left column */}
           <div className="flex flex-col gap-[60px] lg:w-[var(--w)] lg:shrink-0 lg:gap-[var(--g155)]" style={{ ["--w" as string]: u(659), ["--g155" as string]: u(155) }}>
             <div className="flex flex-col uppercase">
-              <h2
+              <h2 data-bio-reveal
                 className="font-medium leading-[1.416] text-[#81A972] text-[48px] sm:text-[64px] lg:text-[length:max(48px,var(--d))]"
                 style={{ ["--d" as string]: u(100) }}
               >
                 More Than <br className="hidden lg:block" />
                 Annual Labs
               </h2>
-              <p
+              <p data-bio-reveal
                 className="leading-[1.416] text-[#46524B] text-[16px] sm:text-[18px] lg:text-[length:max(14px,var(--d))]"
                 style={{ ["--d" as string]: u(20) }}
               >
@@ -32,7 +32,7 @@ export default function BiomarkersAnnualLabsSection() {
             </div>
 
             <div className="flex max-w-[594px] flex-col gap-[37px] lg:max-w-[var(--w)] lg:gap-[var(--g37)]" style={{ ["--w" as string]: u(594), ["--g37" as string]: u(37) }}>
-              <p className="uppercase leading-[1.416] text-[#46524B]">
+              <p data-bio-reveal className="uppercase leading-[1.416] text-[#46524B]">
                 <span className="italic text-[18px] sm:text-[22px] lg:text-[length:max(15px,var(--s))]" style={{ ["--s" as string]: u(24) }}>
                   Your health doesn&apos;t change once a year.
                 </span>{" "}
@@ -40,7 +40,7 @@ export default function BiomarkersAnnualLabsSection() {
                   Why test it that way?
                 </span>
               </p>
-              <p
+              <p data-bio-reveal
                 className="max-w-[436px] font-medium leading-[1.416] text-[16px] lg:max-w-[var(--w)] lg:text-[length:max(12px,var(--d))]"
                 style={{ ["--w" as string]: u(436), ["--d" as string]: u(16) }}
               >
@@ -55,8 +55,9 @@ export default function BiomarkersAnnualLabsSection() {
           </div>
 
           {/* Right: image (absolute on lg, as in Figma) */}
-          <div className="relative mx-auto aspect-[723/829] w-full max-w-[420px] overflow-hidden lg:absolute lg:right-[var(--r)] lg:top-[var(--t)] lg:mx-0 lg:w-[var(--w)] lg:max-w-none" style={{ ["--w" as string]: u(723), ["--r" as string]: u(-48), ["--t" as string]: u(-121) }}>
+          <div data-bio-reveal className="relative mx-auto aspect-[723/829] w-full max-w-[420px] overflow-hidden lg:absolute lg:right-[var(--r)] lg:top-[var(--t)] lg:mx-0 lg:w-[var(--w)] lg:max-w-none" style={{ ["--w" as string]: u(723), ["--r" as string]: u(-48), ["--t" as string]: u(-121) }}>
             <Image
+                data-bio-parallax
                 src="/biomarkers/annual-labs-new.png"
                 alt="Meddy clinically appropriate lab testing"
                 width={736}
@@ -66,7 +67,7 @@ export default function BiomarkersAnnualLabsSection() {
               />
           </div>
 
-          <p
+          <p data-bio-reveal
             className="max-w-[310px] leading-[1.416] text-[#46524B] text-[14px] lg:absolute lg:left-[var(--l)] lg:top-[var(--t)] lg:w-[var(--w)] lg:max-w-none lg:text-[length:max(11px,var(--d))]"
             style={{ ["--d" as string]: u(14), ["--l" as string]: u(684), ["--t" as string]: u(87), ["--w" as string]: u(310) }}
           >

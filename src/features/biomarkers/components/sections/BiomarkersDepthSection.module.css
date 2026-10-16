@@ -1,0 +1,162 @@
+.mobileTrack {
+  --m: min(calc(100vw / 292), calc(100svh / 638));
+  height: 400svh;
+}
+
+.mobileStage {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.mobileCanvas {
+  position: relative;
+  flex: none;
+  width: calc(292 * var(--m));
+  height: calc(638 * var(--m));
+}
+
+.heading {
+  position: absolute;
+  top: calc(51 * var(--m));
+  left: calc(14 * var(--m));
+}
+
+.heading h2 {
+  color: #81a972;
+  font-size: calc(24 * var(--m));
+  font-weight: 500;
+  line-height: 1.416;
+}
+
+.heading p {
+  color: #46524b;
+  font-size: calc(13 * var(--m));
+  line-height: 1.416;
+}
+
+.copy {
+  position: absolute;
+  top: calc(128 * var(--m));
+  right: calc(14 * var(--m));
+  width: calc(264 * var(--m));
+  text-align: right;
+}
+
+.copy p:first-child {
+  color: #46524b;
+  font-size: calc(15 * var(--m));
+  line-height: 1.42;
+}
+
+.copy strong {
+  color: #868686;
+  font-weight: 500;
+}
+
+.copy p + p {
+  margin-top: calc(12 * var(--m)) !important;
+  color: #6e7a72;
+  font-size: calc(12 * var(--m));
+  line-height: 1.42;
+}
+
+.month {
+  position: absolute;
+  top: calc(228 * var(--m));
+  left: calc(18 * var(--m));
+  color: #46524b;
+  font-size: calc(10 * var(--m));
+  line-height: 1.416;
+}
+
+.number {
+  position: absolute;
+  top: calc(248 * var(--m));
+  left: calc(15 * var(--m));
+  font-size: calc(100 * var(--m));
+  font-weight: 700;
+  line-height: 1.2;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.person {
+  position: absolute;
+  top: calc(361 * var(--m));
+  left: calc(-47 * var(--m));
+  width: calc(240 * var(--m));
+  max-width: none;
+  height: auto;
+}
+
+.progress {
+  position: absolute;
+  top: calc(227 * var(--m));
+  left: calc(130 * var(--m));
+  width: calc(9 * var(--m));
+  height: calc(240 * var(--m));
+  overflow: visible;
+}
+
+.readings {
+  position: absolute;
+  top: calc(230 * var(--m));
+  right: calc(14 * var(--m));
+  width: calc(121 * var(--m));
+  text-align: right;
+}
+
+.reading {
+  position: relative;
+  height: calc(81 * var(--m));
+}
+
+.reading::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: calc(10 * var(--m));
+  width: calc(79 * var(--m));
+  height: 1px;
+  background: #46524b;
+  opacity: 0.65;
+}
+
+.reading:last-child::after {
+  width: 100%;
+}
+
+.value {
+  color: white;
+  font-size: calc(24 * var(--m));
+  font-weight: 500;
+  line-height: 1.416;
+  white-space: nowrap;
+}
+
+.value small {
+  font-size: calc(12 * var(--m));
+  font-weight: 400;
+}
+
+.status {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: calc(6 * var(--m));
+  color: rgb(255 255 255 / 60%);
+  font-size: calc(12 * var(--m));
+  line-height: 1.416;
+  white-space: nowrap;
+}
+
+.badge {
+  border-radius: 29px;
+  padding: calc(3 * var(--m)) calc(6 * var(--m)) !important;
+  font-size: calc(9 * var(--m));
+}

@@ -9,6 +9,7 @@ const u = (n: number) => `calc(${n} * var(--u))`;
 export default function BiomarkersHeroSection() {
   return (
     <section
+      data-bio-hero
       className="relative flex w-full flex-col overflow-hidden lg:min-h-[calc(1025*var(--u))]"
       style={{ "--u": "min(calc(min(100vw, 1440px) * 0.000694444), calc(100dvh * 0.000975609))" } as React.CSSProperties}
     >
@@ -20,6 +21,7 @@ export default function BiomarkersHeroSection() {
         }}
       />
       <Image
+        data-bio-hero-image
         src="/biomarkers/biomarkers-hero-bg.png"
         alt=""
         fill
@@ -39,20 +41,20 @@ export default function BiomarkersHeroSection() {
         <div className="flex flex-col gap-4 lg:gap-[var(--g16)]" style={{ ["--g16" as string]: u(16) }}>
           <div className="flex flex-col gap-8 lg:gap-[var(--g32)]" style={{ ["--g32" as string]: u(32) }}>
             <div className="flex flex-col gap-[5px]">
-              <h1
+              <h1 data-bio-intro
                 className="comprehensive-serif uppercase leading-[1.1] text-[#17925A] text-[52px] sm:text-[72px] lg:text-[length:max(56px,var(--d))]"
                 style={{ ["--d" as string]: u(96) }}
               >
                 Go beyond
               </h1>
-              <p
+              <p data-bio-intro
                 className="font-bold italic uppercase leading-[1.12] text-[#6C6C6C] text-[24px] sm:text-[30px] lg:text-[length:max(24px,var(--d))]"
                 style={{ ["--d" as string]: u(36) }}
               >
                 the annual Blood test
               </p>
             </div>
-            <p
+            <p data-bio-intro
               className="max-w-[591px] text-[16px] leading-[1.5] text-[#6E7A72] sm:text-[18px] lg:max-w-[var(--w)] lg:text-[length:max(15px,var(--d))] lg:leading-[normal]"
               style={{ ["--d" as string]: u(20), ["--w" as string]: u(591) }}
             >
@@ -66,7 +68,7 @@ export default function BiomarkersHeroSection() {
             </p>
           </div>
 
-          <button
+          <button data-bio-intro
             className="w-fit rounded-[35px] bg-[#17925A] px-[24px] py-[16px] text-[16px] leading-none text-white sm:text-[18px] lg:text-[length:max(15px,var(--d))]"
             style={{ ["--d" as string]: u(20) }}
           >
@@ -74,7 +76,7 @@ export default function BiomarkersHeroSection() {
           </button>
         </div>
 
-        <p
+        <p data-bio-intro
           className="max-w-[540px] uppercase leading-[1.42] text-[#46524B] text-[20px] sm:text-[22px] lg:max-w-[var(--w)] lg:text-[length:max(16px,var(--d))]"
           style={{ ["--d" as string]: u(24), ["--w" as string]: u(540) }}
         >

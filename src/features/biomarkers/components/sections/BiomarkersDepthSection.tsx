@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { desktopMotion } from "@/lib/motion";
+import styles from "./BiomarkersDepthSection.module.css";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -171,79 +172,88 @@ export default function BiomarkersDepthSection() {
     { scope: rootRef },
   );
 
+  useGSAP(() => {
+    const media = gsap.matchMedia();
+    media.add({ mobile: "(max-width: 1023px)", reduced: "(prefers-reduced-motion: reduce)" }, (context) => {
+      if (!context.conditions?.mobile) return;
+      const root = rootRef.current;
+      if (!root) return;
+      const snapshots = Array.from(root.querySelectorAll<HTMLElement>("[data-depth-mobile-snapshot]"));
+      const numbers = Array.from(root.querySelectorAll<HTMLElement>("[data-depth-mobile-number]"));
+      const reduced = Boolean(context.conditions.reduced);
+      const timeline = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: root.querySelector("[data-depth-mobile-track]"),
+          start: "top top", end: "bottom bottom", scrub: reduced ? true : 0.6,
+          invalidateOnRefresh: true,
+          onUpdate: (trigger) => {
+            const active = Math.min(3, Math.floor(trigger.progress * 4));
+            snapshots.forEach((snapshot, i) => snapshot.setAttribute("aria-hidden", String(i !== active)));
+          },
+        },
+      });
+      for (let i = 1; i < MONTHS.length; i++) {
+        const at = i - 0.12;
+        timeline.to([snapshots[i - 1], numbers[i - 1]], { opacity: 0, duration: reduced ? 0.001 : 0.24 }, at);
+        timeline.to([snapshots[i], numbers[i]], { opacity: 1, duration: reduced ? 0.001 : 0.24 }, at);
+        timeline.to(root.querySelector("[data-depth-mobile-fill]"), {
+          attr: { height: FILL[i] * 214 / 484 }, duration: 0.24,
+        }, at);
+      }
+      timeline.to({}, { duration: 0.76 });
+      return () => snapshots.forEach((snapshot, i) => snapshot.setAttribute("aria-hidden", String(i !== 0)));
+    });
+    return () => media.revert();
+  }, { scope: rootRef });
+
   return (
     <section ref={rootRef} id="depth" className="relative bg-[#17231D]">
-      {/* Mobile / fallback: static, stacked, no pinning. */}
-      <div className="flex flex-col gap-12 px-5 py-16 lg:hidden">
-        <div className="flex flex-col gap-2">
-          <h2 className="text-[48px] font-medium uppercase leading-[1.05] text-[#81A972]">
-            Depth
-          </h2>
-          <p className="text-[16px] uppercase leading-[1.42] text-[#46524B]">
-            stop looking at isolated results
-          </p>
-        </div>
-
-        <div className="relative mx-auto aspect-[1200/1376] w-full max-w-[360px] overflow-hidden">
-          <Image
-            src="/biomarkers/depth/person.png"
-            alt="Meddy physician reviewing biomarkers over time"
-            fill
-            sizes="360px"
-            className="object-cover"
-          />
-        </div>
-
-        <div className="flex flex-col items-end gap-4 text-right">
-          <p className="text-[22px] uppercase leading-[1.42] text-[#46524B]">
-            A lab result is a moment.{" "}
-            <span className="font-bold text-[#868686]">Your health is a trend.</span>
-          </p>
-          <p className="text-[16px] leading-[1.42] text-[#6E7A72]">
-            Every result becomes part of your longitudinal health record.
-          </p>
-        </div>
-
-        <div className="flex flex-col gap-10">
-          {MONTHS.map((month) => (
-            <div key={month.number} className="flex flex-col gap-3">
-              <div className="flex items-baseline gap-3">
-                <span
-                  className="text-[40px] font-bold leading-none tracking-[0.02em]"
-                  style={{
-                    backgroundImage: NUMBER_GRADIENT(114),
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    color: "transparent",
-                  }}
-                >
-                  {month.number}
-                </span>
-                <span className="text-[14px] uppercase text-[#46524B]">Months</span>
-              </div>
-              <div className="flex flex-col divide-y divide-[#46524B]/30">
+      {/* Mobile: the portrait, month, and readings share one compact canvas. */}
+      <div data-depth-mobile-track className={`${styles.mobileTrack} lg:hidden`}>
+        <div className={styles.mobileStage}>
+          <div className={styles.mobileCanvas}>
+            <div className={styles.heading}>
+              <h2>Longitudinal</h2>
+              <p>stop looking at isolated results</p>
+            </div>
+            <div className={styles.copy}>
+              <p>A lab result is a moment. <strong>Your health is a trend.</strong></p>
+              <p>Every result becomes part of your longitudinal health record.</p>
+            </div>
+            <span className={styles.month}>Months</span>
+            {MONTHS.map((month, i) => (
+              <span key={month.number} data-depth-mobile-number aria-hidden="true" className={styles.number}
+                style={{ opacity: i === 0 ? 1 : 0, backgroundImage: NUMBER_GRADIENT(month.angle) }}>
+                {month.number}
+              </span>
+            ))}
+            <Image src="/biomarkers/depth/person.png"
+              alt="Meddy physician reviewing biomarkers over time"
+              width={1200} height={1376} sizes="(max-width: 1023px) 83vw, 240px"
+              className={styles.person} />
+            <svg className={styles.progress} viewBox="0 0 9 240" fill="none" aria-hidden="true">
+              <path d="M4.5 17V231" stroke="#2A2A2A" />
+              <circle cx="4.5" cy="4.5" r="4.5" fill="white" />
+              <rect data-depth-mobile-fill x="4" y="17" width="1" height="21" fill="#D9D9D9" />
+              <circle cx="4.5" cy="235.5" r="4.5" fill="white" />
+            </svg>
+            {MONTHS.map((month, i) => (
+              <div key={month.number} data-depth-mobile-snapshot className={styles.readings}
+                role="group" aria-label={`Month ${month.number} biomarker results`}
+                aria-hidden={i !== 0} style={{ opacity: i === 0 ? 1 : 0 }}>
                 {month.biomarkers.map((b) => (
-                  <div key={b.label} className="flex items-center justify-between py-3">
-                    <div className="text-[28px] font-medium leading-none text-white">
-                      {b.value}{" "}
-                      <span className="text-[14px] font-normal">{b.unit}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="rounded-full px-3 py-1"
-                        style={{ background: TONE_BG[b.tone] }}
-                      >
-                        <span className="text-[14px] leading-[1.5] text-white/60">
-                          {b.status}
-                        </span>
-                      </span>
-                      <span className="text-[14px] uppercase text-white/60">{b.label}</span>
+                  <div key={b.label} className={styles.reading}>
+                    <div className={styles.value}>{b.value}<small> {b.unit}</small></div>
+                    <div className={styles.status}>
+                      <span className={styles.badge} style={{ background: TONE_BG[b.tone] }}>{b.status}</span>
+                      <span>{b.label.toUpperCase()}</span>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
@@ -256,7 +266,7 @@ export default function BiomarkersDepthSection() {
           <div className="relative" style={{ width: u(1440), height: u(1024) }}>
             {/* Left heading */}
             <div className="absolute flex flex-col" style={{ left: u(100), top: u(60), width: u(370) }}>
-              <h2 className="whitespace-nowrap font-medium uppercase leading-[1.416] text-[#81A972]" style={{ fontSize: u(64) }}>
+              <h2 data-bio-reveal className="whitespace-nowrap font-medium uppercase leading-[1.416] text-[#81A972]" style={{ fontSize: u(64) }}>
                 Depth
               </h2>
               <p className="uppercase leading-[1.416] text-[#46524B]" style={{ fontSize: u(20) }}>

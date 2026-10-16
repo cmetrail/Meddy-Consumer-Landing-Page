@@ -81,7 +81,7 @@ export function FooterItems({
 }: {
   noTopMargin?: boolean;
   mobileReference?: boolean;
-  mobileVariant?: "longevity" | "wearables" | "physician" | "how-it-works" | "247-care";
+  mobileVariant?: "longevity" | "wearables" | "physician" | "how-it-works" | "247-care" | "weight-loss" | "medication" | "personalized-health-plans" | "biomarkers" | "what-we-test" | "fitness" | "sleep" | "nutrition" | "pricing";
   className?: string;
 }) {
   return (

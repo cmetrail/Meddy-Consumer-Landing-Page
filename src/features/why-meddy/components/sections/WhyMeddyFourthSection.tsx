@@ -1,9 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
-
-const ease = [0.22, 1, 0.36, 1] as const;
 
 const MORE_CONTEXT = [
   { fontSize: 7,  fontWeight: 400 },
@@ -20,7 +17,7 @@ const MORE_CONTEXT = [
 
 export default function WhyMeddyFourthSection() {
   return (
-    <section className="relative w-full overflow-hidden">
+    <section data-why-chapter="philosophy" className="relative w-full overflow-hidden">
       {/* Gallery wall background */}
       <Image
         src="/why-meddy/574592ae3ce5fcc9eeb91ce60875127f20212f84.jpg"
@@ -34,12 +31,8 @@ export default function WhyMeddyFourthSection() {
       <div className="relative z-10 mx-auto flex w-full max-w-360 flex-col gap-12 px-5 py-16 lg:gap-16 lg:px-10 lg:py-24">
 
         {/* Heading */}
-        <motion.h2
+        <h2 data-why-heading
           className="text-center text-[28px] font-normal leading-[120%] text-white sm:text-[40px] lg:text-[64px]"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease }}
         >
           A{" "}
           <em className="rounded-lg bg-[#2A4D38] px-2 font-normal font-dm-serif italic text-[#8CDDA8] lg:px-3">
@@ -47,19 +40,15 @@ export default function WhyMeddyFourthSection() {
           </em>
           <br />
           of primary care.
-        </motion.h2>
+        </h2>
 
         {/* 4 poster frames */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
+        <div data-why-posters className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
 
           {/* Card 1: Doctors photo + "Less Fragmentation" */}
-          <motion.div
+          <div
             className="flex flex-col overflow-hidden border-[3px] border-black"
             style={{ aspectRatio: "3/4" }}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0, ease }}
           >
             <div className="relative min-h-0 flex-1">
               <Image
@@ -78,23 +67,19 @@ export default function WhyMeddyFourthSection() {
                 Meddy
               </p>
             </div>
-          </motion.div>
+          </div>
 
           {/* Card 2: More Context cascade */}
-          <motion.div
+          <div
             className="flex flex-col justify-between overflow-hidden border-[3px] border-black px-5 py-3"
             style={{ aspectRatio: "3/4", background: "linear-gradient(180deg, #175447 0%, #7F938F 100%)" }}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.1, ease }}
           >
             <div className="flex h-[70%] flex-col items-center justify-between text-center">
               {MORE_CONTEXT.map(({ fontSize, fontWeight }, i) => (
-                <p
+                <p data-why-context
                   key={i}
                   className="leading-tight text-white"
-                  style={{ fontSize, fontWeight }}
+                  style={{ fontSize: `clamp(${Math.max(7, fontSize * 0.55)}px, ${fontSize / 7.68}vw, ${fontSize}px)`, fontWeight }}
                 >
                   More Context
                 </p>
@@ -103,16 +88,12 @@ export default function WhyMeddyFourthSection() {
             <p className="text-right font-dm-serif italic text-[12px] text-white">
               Meddy
             </p>
-          </motion.div>
+          </div>
 
           {/* Card 3: Better Decisions + thumbs up */}
-          <motion.div
+          <div
             className="flex flex-col overflow-hidden border-[3px] border-black bg-[#F5F0E8] py-3"
             style={{ aspectRatio: "3/4" }}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.2, ease }}
           >
             <p className="px-5 font-dm-serif font-bold text-[#283D32] text-[16px] sm:text-[18px] lg:text-[20px]">
               Better Decisions
@@ -133,16 +114,12 @@ export default function WhyMeddyFourthSection() {
             <p className="px-5 text-right font-dm-serif italic text-[12px] text-[#2C2C2C]">
               Meddy
             </p>
-          </motion.div>
+          </div>
 
           {/* Card 4: Photo + care tagline */}
-          <motion.div
+          <div
             className="relative overflow-hidden border-[3px] border-black"
             style={{ aspectRatio: "3/4" }}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.3, ease }}
           >
             <Image
               src="/why-meddy/43afe996582fb06aa73b50b30e8e07260ae19d2f.jpg"
@@ -159,7 +136,7 @@ export default function WhyMeddyFourthSection() {
                 Meddy
               </p>
             </div>
-          </motion.div>
+          </div>
 
         </div>
       </div>

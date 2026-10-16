@@ -60,8 +60,10 @@ const VARIANTS = {
 
 export default function Header({
   variant = "light",
+  hideMobileConsultation = true,
 }: {
   variant?: HeaderVariant;
+  hideMobileConsultation?: boolean;
 }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -124,7 +126,7 @@ export default function Header({
       <div className="col-start-3 flex shrink-0 items-center gap-2.5">
         <Link
           href="/book-consultation"
-          className="rounded-[22px] bg-[#FFFFFF] px-[14px] py-[10px] font-medium uppercase leading-[100%] text-[#1A231F] text-[12px] shadow-[2px_4px_4px_rgba(0,0,0,0.25)] whitespace-nowrap sm:px-[19px] sm:py-[13px] sm:text-[14px]"
+          className={`${hideMobileConsultation ? "hidden lg:block" : ""} rounded-[22px] bg-[#FFFFFF] px-[14px] py-[10px] font-medium uppercase leading-[100%] text-[#1A231F] text-[12px] shadow-[2px_4px_4px_rgba(0,0,0,0.25)] whitespace-nowrap sm:px-[19px] sm:py-[13px] sm:text-[14px]`}
         >
           Book Free consultation
         </Link>

@@ -5,6 +5,7 @@ import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { FooterItems } from "@/features/home/components/sections/helper/FooterItems";
+import styles from "./BiomarkersFooterSection.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -55,8 +56,8 @@ export default function BiomarkersFooterSection() {
   );
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#17231D]">
-      <FooterItems noTopMargin />
+    <section ref={sectionRef} className={`${styles.footer} w-full bg-[#17231D]`}>
+      <FooterItems noTopMargin mobileReference mobileVariant="biomarkers" className={styles.glass} />
     </section>
   );
 }

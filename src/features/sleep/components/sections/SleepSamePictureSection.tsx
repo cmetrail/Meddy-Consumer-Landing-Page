@@ -9,9 +9,6 @@ import Image from "next/image";
 const u = (n: number) => `calc(${n} * var(--u))`;
 const m = (n: number) => `calc(${n} * var(--m))`;
 
-const A = "/sleep/same-picture";
-const GREEN = "#17925A";
-
 const DD = "/sleep/same-picture/d";
 
 // headline words (Figma 11971:14559, group 622 x 292): [text, x, y, serif]
@@ -49,13 +46,13 @@ export default function SleepSamePictureSection() {
     >
       {/* ─── Desktop: Figma 11971:14555 (1440 x 1024); left column inside the header container ─── */}
       <div className="absolute inset-0 hidden lg:block">
-        <span
+        <span data-story-number
           className="pointer-events-none absolute select-none font-bold italic leading-none text-[rgba(216,216,216,0.5)]"
           style={{ left: `calc(50% - ${u(720)} + ${u(1069)})`, top: u(164.4), fontSize: u(200), letterSpacing: u(4), transform: "rotate(-0.31deg)" }}
         >
           06
         </span>
-        <Image src={`${DD}/photo.png`} alt="Smiling Meddy physician" width={843} height={1054} priority sizes="760px" className="absolute object-cover" style={{ left: `calc(50% - ${u(720)} + ${u(723)})`, top: u(223), width: u(719), height: u(898) }} />
+        <Image data-story-photo src={`${DD}/photo.png`} alt="Smiling Meddy physician" width={843} height={1054} priority sizes="760px" className="absolute object-cover" style={{ left: `calc(50% - ${u(720)} + ${u(723)})`, top: u(223), width: u(719), height: u(898) }} />
 
         <div className="absolute inset-0">
           <div className="mx-auto h-full max-w-360 px-10">
@@ -63,7 +60,7 @@ export default function SleepSamePictureSection() {
               {/* headline */}
               <div className="absolute left-0" style={{ top: u(50.5), width: u(622), height: u(292) }}>
                 {WORDS.map(([t, x, y, serif]) => (
-                  <span
+                  <span data-story-word
                     key={t}
                     className={`absolute whitespace-nowrap leading-[normal] uppercase ${serif ? "comprehensive-serif italic text-[#17925A]" : "font-medium text-[#111110]"}`}
                     style={{ left: u(x), top: u(y), fontSize: `max(30px, ${u(serif ? 62 : 64)})` }}
@@ -76,7 +73,7 @@ export default function SleepSamePictureSection() {
                 ))}
               </div>
 
-              <p className="absolute left-0 leading-[1.5] text-[#111110] opacity-70" style={{ top: u(366.5), width: u(657), fontSize: `max(14px, ${u(20)})` }}>
+              <p data-story-copy className="absolute left-0 leading-[1.5] text-[#111110] opacity-70" style={{ top: u(366.5), width: u(657), fontSize: `max(14px, ${u(20)})` }}>
                 Your Meddy physician can follow your <strong className="font-bold text-[#17925A]">sleep, recovery, exercise, nutrition, and health trends</strong> together and use that context when adjusting your plan.
               </p>
 
@@ -86,17 +83,17 @@ export default function SleepSamePictureSection() {
                   Sleep + Recovery + Exercise + Nutrition + Health
                 </span>
                 {DLINES.map(([f, x, y, w, h, flip, ox], i) => (
-                  <div key={i} className="absolute" style={{ left: u(x), top: u(y), width: u(w), height: u(h), transform: flip ? "scaleY(-1)" : undefined }}>
+                  <div data-story-connector key={i} className="absolute" style={{ left: u(x), top: u(y), width: u(w), height: u(h), transform: flip ? "scaleY(-1)" : undefined }}>
                     <Image src={`${DD}/${f}.svg`} alt="" width={Math.round(w)} height={Math.round(h)} unoptimized loading="eager" className="absolute max-w-none" style={{ left: `-${ox}%`, top: 0, width: `${100 + 2 * ox}%`, height: "100%" }} />
                   </div>
                 ))}
                 <div className="absolute" style={{ left: u(300.5), top: u(274), width: 0, height: u(81) }}>
                   <Image src={`${DD}/v7492.svg`} alt="" width={7} height={88} unoptimized loading="eager" className="absolute max-w-none" style={{ left: u(-3.41), top: "-4.21%", width: u(6.82), height: "108.4%" }} />
                 </div>
-                <div className={PILL} style={{ left: u(209.7), top: u(202.03), width: u(180.3), height: u(71.6), borderRadius: u(84.4) }}>
+                <div data-story-pill className={PILL} style={{ left: u(209.7), top: u(202.03), width: u(180.3), height: u(71.6), borderRadius: u(84.4) }}>
                   <span className="whitespace-nowrap leading-[1.2] tracking-[0.02em] text-white" style={{ fontSize: `max(14px, ${u(25.574)})` }}>Physician</span>
                 </div>
-                <div className={PILL} style={{ left: u(210), top: u(355.34), width: u(181.57), height: u(71.6), borderRadius: u(84.4) }}>
+                <div data-story-pill className={PILL} style={{ left: u(210), top: u(355.34), width: u(181.57), height: u(71.6), borderRadius: u(84.4) }}>
                   <span className="whitespace-nowrap leading-[1.2] tracking-[0.02em] text-white" style={{ fontSize: `max(14px, ${u(25.574)})` }}>Your plan</span>
                 </div>
               </div>
@@ -107,11 +104,11 @@ export default function SleepSamePictureSection() {
 
       {/* ─── Mobile / tablet (<lg): Figma 12223:24775 (402 x 715) ─── */}
       <div className="relative mx-auto min-h-[calc(715*var(--m))] max-w-[500px] overflow-hidden lg:hidden">
-        <Image src="/sleep/same-picture/m/photo.png" alt="Smiling Meddy physician" width={843} height={1054} sizes="300px" loading="eager" className="absolute object-cover" style={{ left: m(196), top: m(415.5), width: m(277), height: m(346) }} />
+        <Image data-story-photo src="/sleep/same-picture/m/photo.png" alt="Smiling Meddy physician" width={843} height={1054} sizes="300px" loading="eager" className="absolute object-cover" style={{ left: m(196), top: m(415.5), width: m(277), height: m(346) }} />
 
         <div className="relative px-[var(--p20)] py-[var(--p64)]" style={{ ["--p20" as string]: m(20), ["--p64" as string]: m(64) } as React.CSSProperties}>
           <div className="flex flex-col" style={{ gap: m(16) }}>
-            <div className="flex flex-col uppercase leading-[normal]" style={{ gap: m(8), fontSize: m(32) }}>
+            <div data-story-copy className="flex flex-col uppercase leading-[normal]" style={{ gap: m(8), fontSize: m(32) }}>
               <div className="flex items-center justify-center" style={{ gap: m(10), height: m(50) }}>
                 <span className="font-medium text-[#46524B]">Your</span>
                 <Image src="/sleep/same-picture/m/w1.png" alt="" width={61} height={50} unoptimized className="object-cover" style={{ width: m(61), height: m(50), borderRadius: m(5) }} />
@@ -127,7 +124,7 @@ export default function SleepSamePictureSection() {
                 <span className="comprehensive-serif whitespace-nowrap italic text-[#17925A]">Same Picture</span>
               </div>
             </div>
-            <p className="text-center leading-[1.5] text-[#111110] opacity-70" style={{ fontSize: m(16) }}>
+            <p data-story-copy className="text-center leading-[1.5] text-[#111110] opacity-70" style={{ fontSize: m(16) }}>
               Your Meddy physician can follow your <strong className="font-bold text-[#17925A]">sleep, recovery, exercise, nutrition, and health trends</strong> together and use that context when adjusting your plan.
             </p>
           </div>
@@ -135,12 +132,12 @@ export default function SleepSamePictureSection() {
           {/* diagram (283 x 277) */}
           <div className="relative mt-[var(--mt)]" style={{ width: m(283), height: m(277), ["--mt" as string]: m(32) } as React.CSSProperties}>
             <span className="absolute left-0 top-0 text-center leading-[1.5] tracking-[0.02em] text-[#0C0D0F]" style={{ width: m(283), fontSize: m(12) }}>Sleep + Recovery + Exercise + Nutrition + Health</span>
-            <Image src="/sleep/same-picture/m/lines.svg" alt="" width={240} height={113} unoptimized loading="eager" className="absolute max-w-none" style={{ left: m(24), top: m(28), width: m(239.9), height: m(113.3) }} />
-            <Image src="/sleep/same-picture/m/vline.svg" alt="" width={5} height={91} unoptimized loading="eager" className="absolute max-w-none" style={{ left: m(146.87 - 2.41), top: m(131 + 29.69 - 2.4), width: m(4.81), height: m(91.5) }} />
-            <div className="absolute flex items-center justify-center bg-[#17925A]" style={{ left: m(101.5), top: m(131), width: m(88), height: m(30), borderRadius: m(59.6) }}>
+            <Image data-story-connector src="/sleep/same-picture/m/lines.svg" alt="" width={240} height={113} unoptimized loading="eager" className="absolute max-w-none" style={{ left: m(24), top: m(28), width: m(239.9), height: m(113.3) }} />
+            <Image data-story-connector src="/sleep/same-picture/m/vline.svg" alt="" width={5} height={91} unoptimized loading="eager" className="absolute max-w-none" style={{ left: m(146.87 - 2.41), top: m(131 + 29.69 - 2.4), width: m(4.81), height: m(91.5) }} />
+            <div data-story-pill className="absolute flex items-center justify-center bg-[#17925A]" style={{ left: m(101.5), top: m(131), width: m(88), height: m(30), borderRadius: m(59.6) }}>
               <span className="leading-[1.2] tracking-[0.02em] text-white" style={{ fontSize: m(12) }}>Physician</span>
             </div>
-            <div className="absolute flex items-center justify-center bg-[#17925A]" style={{ left: m(101), top: m(247), width: m(88), height: m(30), borderRadius: m(59.6) }}>
+            <div data-story-pill className="absolute flex items-center justify-center bg-[#17925A]" style={{ left: m(101), top: m(247), width: m(88), height: m(30), borderRadius: m(59.6) }}>
               <span className="leading-[1.2] tracking-[0.02em] text-white" style={{ fontSize: m(12) }}>Your plan</span>
             </div>
           </div>

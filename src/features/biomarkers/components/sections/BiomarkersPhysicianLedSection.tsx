@@ -54,7 +54,7 @@ export default function BiomarkersPhysicianLedSection() {
   const scrollBy = (dir: number) => {
     const el = scrollerRef.current;
     if (!el) return;
-    el.scrollBy({ left: dir * el.clientWidth * 0.5, behavior: "smooth" });
+    el.scrollBy({ left: dir * el.clientWidth * 0.5, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
   };
 
   return (
@@ -68,13 +68,13 @@ export default function BiomarkersPhysicianLedSection() {
         <div className="mx-auto w-full max-w-360 px-5 lg:px-10">
           <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-[var(--g48)]" style={{ ["--g48" as string]: u(48) }}>
             <div className="flex flex-col gap-2 lg:flex-1 lg:gap-[var(--g10)]" style={{ ["--g10" as string]: u(10) }}>
-              <h2
+              <h2 data-bio-reveal
                 className="font-medium uppercase leading-[1.416] text-white text-[44px] sm:text-[56px] lg:whitespace-nowrap lg:text-[length:max(40px,var(--d))]"
                 style={{ ["--d" as string]: u(64) }}
               >
                 Physician-Led
               </h2>
-              <p
+              <p data-bio-reveal
                 className="leading-[1.416] text-[#F4F4F4] text-[16px] sm:text-[20px] lg:whitespace-nowrap lg:text-[length:max(14px,var(--d))]"
                 style={{ ["--d" as string]: u(20) }}
               >
@@ -83,14 +83,14 @@ export default function BiomarkersPhysicianLedSection() {
             </div>
 
             <div className="flex flex-col gap-6 lg:flex-1 lg:justify-between lg:gap-[var(--g)]" style={{ ["--g" as string]: u(4) }}>
-              <p
+              <p data-bio-reveal
                 className="uppercase leading-[1.416] text-[#D2D2D2] text-[24px] sm:text-[28px] lg:text-[length:max(22px,var(--d))]"
                 style={{ ["--d" as string]: u(32) }}
               >
                 Every result has <span className="font-bold italic text-white">somewhere</span>{" "}
                 <span className="italic text-white">to go.</span>
               </p>
-              <p
+              <p data-bio-reveal
                 className="leading-[1.416] text-[#D2D2D2] text-[15px] sm:text-[16px] lg:text-[length:max(12px,var(--d))]"
                 style={{ ["--d" as string]: u(16) }}
               >
@@ -106,7 +106,7 @@ export default function BiomarkersPhysicianLedSection() {
         {/* Cards: full-bleed track; first card starts on the container edge, the rest scroll edge to edge */}
         <div className="flex flex-col gap-4 lg:gap-[var(--g16)]" style={{ ["--g16" as string]: u(16) }}>
           <div
-            ref={scrollerRef}
+            data-bio-cards ref={scrollerRef}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={endDrag}
@@ -116,12 +116,14 @@ export default function BiomarkersPhysicianLedSection() {
           >
             {STEPS.map((step) => (
               <div
+                data-bio-card data-bio-hover
                 key={step.num}
                 className="relative flex h-[400px] w-[280px] shrink-0 snap-start flex-col justify-end overflow-hidden rounded-[12px] bg-[#FFF8EE] p-4 sm:h-[426px] sm:w-[295px] lg:h-[var(--ch)] lg:w-[var(--cw)] lg:rounded-[var(--r12)] lg:p-[var(--p16)]"
                 style={{ ["--ch" as string]: u(426), ["--cw" as string]: u(295), ["--p16" as string]: u(16), ["--r12" as string]: u(12) }}
               >
                 {/* image box: Figma offsets are for the 295 x 426 card, so scale them with the card */}
                 <div
+                  data-bio-hover-layer
                   className="absolute overflow-hidden"
                   style={{
                     left: `${(step.box.l / 295) * 100}%`,

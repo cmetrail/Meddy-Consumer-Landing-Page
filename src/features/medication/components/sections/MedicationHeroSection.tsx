@@ -13,6 +13,18 @@ gsap.registerPlugin(useGSAP);
 
 const BG = "linear-gradient(178deg, #577e63 0%, #a4d2bc 100%)";
 
+function MedicationLetters() {
+  return (
+    <span className={styles.word}>
+      {Array.from("medications").map((letter, index) => (
+        <span key={index} data-medication-letter className={styles.letter}>
+          {letter}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function Cards() {
   return (
     <div className={styles.cards}>
@@ -271,11 +283,29 @@ export default function MedicationHeroSection() {
       const cards = select(desktop ? `.${styles.card}` : "[data-hero-card]");
       const glow = select(`.${styles.glow}`);
       const fills = desktop ? select(`.${styles.beforeFill}, .${styles.afterFill}`) : [];
+      const letters = select(desktop
+        ? `.${styles.desktop} [data-medication-letter]`
+        : "[data-hero-heading] [data-medication-letter]");
+      gsap.set(letters, { transformOrigin: "50% 90%" });
+      const xylophone = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 3.8 });
+      letters.forEach((letter: HTMLElement, index: number) => {
+        const strike = index * 0.085;
+        xylophone
+          .to(letter, { yPercent: 5, scaleY: 0.92, scaleX: 1.025, duration: 0.09, ease: "power2.in" }, strike)
+          .to(letter, {
+            yPercent: -(22 - index * 0.8), scaleY: 1.035, scaleX: 0.99,
+            rotation: index % 2 ? 2 : -2, duration: 0.2, ease: "power2.out",
+          }, strike + 0.09)
+          .to(letter, {
+            yPercent: 0, scaleY: 1, scaleX: 1, rotation: 0,
+            duration: 1.05, ease: "elastic.out(1, 0.32)",
+          }, strike + 0.29);
+      });
       let entered = false;
       let visible = true;
 
       const entrance = gsap.timeline({ defaults: { ease: "power3.out" },
-        onComplete: () => { entered = true; },
+        onComplete: () => { entered = true; syncPlayback(); },
       });
       entrance
         .fromTo(glow, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 1.8 }, 0)
@@ -302,6 +332,7 @@ export default function MedicationHeroSection() {
       const syncPlayback = () => {
         const active = visible && !document.hidden;
         ambient.paused(!active);
+        xylophone.paused(!entered || !active);
         if (!entered) entrance.paused(!active);
       };
       const observer = new IntersectionObserver(([entry]) => {
@@ -363,7 +394,7 @@ export default function MedicationHeroSection() {
         <div className={styles.desktop}>
           <div className={styles.canvas}>
             <span className={styles.intro}>Know what your</span>
-            <span className={styles.medications}>medications</span>
+            <span className={styles.medications} aria-hidden="true"><MedicationLetters /></span>
             <Image
               src="/medication/med.png"
               alt="Hand holding a green medication capsule"
@@ -424,8 +455,8 @@ export default function MedicationHeroSection() {
                 <span className="block text-[24px] font-medium uppercase leading-[1.1241] text-white">
                   Know what your
                 </span>
-                <span className="comprehensive-serif text-[42px] italic leading-[normal] text-[#DCFFD8]">
-                  medications{" "}
+                <span aria-hidden="true" className="comprehensive-serif text-[42px] italic leading-[normal] text-[#DCFFD8]">
+                  <MedicationLetters />{" "}
                 </span>
                 <span className="text-[24px] font-medium uppercase leading-[1.1241] text-white">
                   are actually doing.

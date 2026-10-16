@@ -120,8 +120,8 @@ export default function HowItWorksInsightsSection() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className={styles.section} aria-labelledby="insights-heading">
-      <div className={styles.backdrop}><Image src={`${A}/scene.png`} alt="" fill sizes="140vw" className={styles.photo} /></div>
+    <section data-story-chapter="insights" ref={sectionRef} className={styles.section} aria-labelledby="insights-heading">
+      <div data-story-photo className={styles.backdrop}><Image src={`${A}/scene.png`} alt="" fill sizes="140vw" className={styles.photo} /></div>
       <div className={styles.canvas}>
         <div className={styles.intro}>
           <h2 id="insights-heading" className={styles.heading}>

@@ -8,6 +8,8 @@ import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { FooterItems } from "./PricingFooterItems";
+import { FooterItems as MobileFooterItems } from "@/features/home/components/sections/helper/FooterItems";
+import mobileStyles from "./PricingMobileFooter.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -76,7 +78,13 @@ export default function PricingFooterSection() {
         </div>
       </div>
 
-      <FooterItems noTopMargin omitSeo className={styles.footerGlass} />
+      <div className={mobileStyles.desktopFooter}>
+        <FooterItems noTopMargin omitSeo className={styles.footerGlass} />
+      </div>
+      <div data-pricing-mobile-footer className={mobileStyles.footer}>
+        <Image src="/pricing/footer-bg.png" alt="" fill sizes="100vw" className={mobileStyles.background} />
+        <MobileFooterItems noTopMargin mobileReference mobileVariant="pricing" className={mobileStyles.glass} />
+      </div>
     </section>
   );
 }

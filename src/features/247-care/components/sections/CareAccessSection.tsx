@@ -6,15 +6,13 @@ import layoutStyles from "../../CareLayout.module.css";
 import buttonStyles from "./CareButton.module.css";
 import styles from "./CareAccessSection.module.css";
 import CareBusinessHoursSection from "./CareBusinessHoursSection";
-import { motion } from "framer-motion";
+import { useCareSectionMotion } from "./useCareSectionMotion";
 import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { FooterItems } from "@/features/home/components/sections/helper/FooterItems";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
-
-const ease = [0.22, 1, 0.36, 1] as const;
 
 const LIST_ITEMS = [
   "24/7 response",
@@ -47,6 +45,7 @@ function HeadlineWord({ children }: { children: React.ReactNode }) {
 }
 
 export default function CareAccessSection() {
+  const sectionRef = useCareSectionMotion("access");
   const footerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -80,64 +79,53 @@ export default function CareAccessSection() {
 
   return (
     <>
-    <section className={`${styles.section} w-full bg-[#FAF9F5]`}>
+    <section ref={sectionRef} data-care-story="access" className={`${styles.section} w-full bg-[#FAF9F5]`}>
       <div className={`${layoutStyles.rail} ${styles.content} pt-16 lg:pt-24`}>
         {/* Top-right -Meddy */}
-        <motion.div
+        <div
+          data-cs-reveal
           className={`${styles.signature} text-right`}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.8, ease }}
         >
           <span className="font-dm-serif italic leading-[100%] text-[#46524B] text-[24px] lg:text-[32px]">
             -Meddy
           </span>
-        </motion.div>
+        </div>
 
         {/* Divider below -Meddy */}
-        <div className={`${styles.divider} mt-3 h-px w-full bg-[#797979]`} />
+        <div data-cs-rule className={`${styles.divider} mt-3 h-px w-full bg-[#797979]`} />
 
         {/* Headline + numbered list */}
         <div className={`${styles.mainRow} mt-10 flex flex-col gap-14 lg:mt-[98px] lg:flex-row lg:justify-between`}>
-          <motion.div
+          <div
             className={`${styles.headline} flex flex-col gap-4`}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.8, ease }}
           >
-            <div className={`${styles.headlineRow} flex items-center gap-4 lg:gap-6`}>
+            <div data-cs-access-line className={`${styles.headlineRow} flex items-center gap-4 lg:gap-6`}>
               <HeadlineWord>Access</HeadlineWord>
               <HeadlineImage {...HEADLINE_IMAGES[0]} />
               <HeadlineWord>when</HeadlineWord>
             </div>
-            <div className={`${styles.headlineRow} flex items-center gap-4 lg:gap-6`}>
+            <div data-cs-access-line className={`${styles.headlineRow} flex items-center gap-4 lg:gap-6`}>
               <HeadlineWord>You</HeadlineWord>
               <HeadlineImage {...HEADLINE_IMAGES[1]} />
               <HeadlineWord>Need it.</HeadlineWord>
             </div>
-            <div className={`${styles.headlineRow} flex items-center gap-4 lg:gap-6`}>
+            <div data-cs-access-line className={`${styles.headlineRow} flex items-center gap-4 lg:gap-6`}>
               <HeadlineWord>Continuity</HeadlineWord>
               <HeadlineImage {...HEADLINE_IMAGES[2]} />
             </div>
-            <div className={`${styles.headlineRow} flex items-center gap-4 lg:gap-6`}>
+            <div data-cs-access-line className={`${styles.headlineRow} flex items-center gap-4 lg:gap-6`}>
               <HeadlineWord>when</HeadlineWord>
               <HeadlineWord>You</HeadlineWord>
               <HeadlineWord>Don&rsquo;t.</HeadlineWord>
             </div>
-          </motion.div>
+          </div>
 
           {/* Numbered list */}
-          <motion.div
+          <div
             className={`${styles.list} flex w-full flex-col lg:w-[535px]`}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.8, delay: 0.1, ease }}
           >
             {LIST_ITEMS.map((label, i) => (
-              <div key={label}>
+              <div data-cs-item key={label}>
                 <div className={`${styles.listRow} flex items-center justify-between py-4 lg:py-5`}>
                   <span className={`${styles.number} w-[27px] text-center text-[#A1AAA3] text-[18px] lg:text-[24px] leading-[100%]`}>
                     {String(i + 1).padStart(2, "0")}
@@ -146,20 +134,17 @@ export default function CareAccessSection() {
                     {label}
                   </span>
                 </div>
-                <div className="h-px w-full bg-[#D4D4D4]" />
+                <div data-cs-rule className="h-px w-full bg-[#D4D4D4]" />
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
 
         {/* Bottom row: italic + paragraph (left), CTA (right) */}
         <div className={`${styles.bottomRow} mt-16 flex flex-col gap-10 pb-16 lg:mt-20 lg:flex-row lg:items-end lg:justify-between lg:pb-20`}>
-          <motion.div
+          <div
+            data-cs-reveal
             className={`${styles.summary} flex max-w-[670px] flex-col gap-4`}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.8, ease }}
           >
             <p className={`${styles.summaryLead} italic leading-[120%] text-[#6E7A72] text-[24px] lg:text-[32px]`}>
               Appointments are only one part of your care.
@@ -169,17 +154,14 @@ export default function CareAccessSection() {
               your health over time—so you have somewhere to turn when something changes and someone
               who already knows your story.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.button
+          <button
+            data-cs-cta
             className={`${buttonStyles.button} ${styles.mobileCta}`}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.8, delay: 0.1, ease }}
           >
             Start Physician Care →
-          </motion.button>
+          </button>
         </div>
       </div>
 

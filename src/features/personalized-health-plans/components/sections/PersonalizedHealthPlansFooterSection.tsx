@@ -6,6 +6,7 @@ import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { FooterItems } from "@/features/home/components/sections/helper/FooterItems";
+import styles from "./PersonalizedHealthPlansFooterSection.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -46,17 +47,17 @@ export default function PersonalizedHealthPlansFooterSection() {
   );
 
   return (
-    <section ref={sectionRef} className="relative w-full overflow-hidden rounded-t-[22px] text-white">
+    <section ref={sectionRef} className={`${styles.footer} relative w-full overflow-hidden rounded-t-[22px] text-white`}>
       <Image
         src="/personalized-health-plans/footer-photo.jpg"
         alt=""
         fill
         priority
-        className="object-cover"
+        className={`${styles.background} object-cover`}
       />
 
       <div className="relative">
-        <FooterItems noTopMargin />
+        <FooterItems noTopMargin mobileReference mobileVariant="personalized-health-plans" className={styles.glass} />
       </div>
     </section>
   );

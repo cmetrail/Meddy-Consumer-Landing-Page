@@ -245,7 +245,7 @@ export default function FitnessPlanSection() {
       const section = sectionRef.current;
       const diagram = section?.querySelector<HTMLElement>(context.conditions?.desktop ? "[data-plan-desktop]" : "[data-plan-mobile]");
       if (!diagram) return;
-      const flow = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 0.65 });
+      const flow = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 0.2 });
 
       CARDS.forEach((_, index) => {
         const group = diagram.querySelectorAll(`[data-plan-card="${index}"], [data-plan-chip="${index}"]`);
@@ -256,14 +256,14 @@ export default function FitnessPlanSection() {
           .to(group, { "--branch-energy": 0, duration: 0.9, ease: "sine.inOut" }, at + 1.25);
         if (signal && pulse) {
           // The dash is entirely outside the path before reset, so no visible jump.
-          flow.set(pulse, { strokeDashoffset: 18 }, at + 0.3)
-            .to(signal, { "--flow-strength": 1, duration: 0.35 }, at + 0.3)
-            .to(pulse, { strokeDashoffset: -100, duration: 1.5, ease: "sine.inOut" }, at + 0.3)
-            .to(signal, { "--flow-strength": 0, duration: 0.5 }, at + 1.6);
+          flow.set(pulse, { strokeDashoffset: 36 }, at + 0.3)
+            .to(signal, { "--flow-strength": 1, duration: 0.2 }, at + 0.3)
+            .to(pulse, { strokeDashoffset: -100, duration: 1.7, ease: "none" }, at + 0.3)
+            .to(signal, { "--flow-strength": 0, duration: 0.4 }, at + 1.9);
         }
       });
-      flow.to(diagram.querySelector("[data-plan-fusion]"), { "--fusion-strength": 0.42, duration: 0.8, ease: "sine.inOut" }, 1.6)
-        .to(diagram.querySelector("[data-plan-fusion]"), { "--fusion-strength": 0, duration: 1.25, ease: "sine.inOut" }, 2.4);
+      flow.to(diagram.querySelector("[data-plan-fusion]"), { "--fusion-strength": 0.62, duration: 0.65, ease: "sine.inOut" }, 1.35)
+        .to(diagram.querySelector("[data-plan-fusion]"), { "--fusion-strength": 0, duration: 0.95, ease: "sine.inOut" }, 2.1);
 
       let visible = false;
       const sync = () => { if (visible && !document.hidden) flow.resume(); else flow.pause(); };

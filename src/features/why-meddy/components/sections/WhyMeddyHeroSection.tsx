@@ -6,8 +6,9 @@ import styles from "./WhyMeddyHeroSection.module.css";
 
 export default function WhyMeddyHeroSection() {
   return (
-    <section className={`${styles.hero} relative flex min-h-[max(720px,var(--dvh))] w-full flex-col gap-8 overflow-hidden md:min-h-[max(780px,var(--dvh))] md:gap-12`}>
+    <section data-why-chapter="hero" className={`${styles.hero} relative flex min-h-[max(720px,var(--dvh))] w-full flex-col gap-8 overflow-hidden md:min-h-[max(780px,var(--dvh))] md:gap-12`}>
       <Image
+        data-why-hero-photo
         src="/why-meddy/hero.jpg"
         alt=""
         fill
@@ -22,7 +23,7 @@ export default function WhyMeddyHeroSection() {
         <Header variant="dark" />
       </div>
       <div className={`${styles.content} relative z-10 mx-auto! min-h-[640px] w-full max-w-360 flex-1 md:min-h-[740px]`}>
-        <h1 className="absolute top-0 left-5 font-sans text-[clamp(32px,7.5vw,56px)] leading-[1.4] font-normal tracking-[-0.02em] text-white md:text-[clamp(48px,7.5vw,108px)] md:leading-[1.45] lg:left-10">
+        <h1 data-why-title className="absolute top-0 left-5 font-sans text-[clamp(32px,7.5vw,56px)] leading-[1.4] font-normal tracking-[-0.02em] text-white md:text-[clamp(48px,7.5vw,108px)] md:leading-[1.45] lg:left-10">
           <span className="block whitespace-nowrap">Healthcare</span>{" "}
           <span className="block whitespace-nowrap">wasn&apos;t designed</span>{" "}
           <span className="block whitespace-nowrap">
@@ -30,7 +31,7 @@ export default function WhyMeddyHeroSection() {
           </span>{" "}
           <em className="block whitespace-nowrap font-dm-serif! font-normal text-[#8CDDA8] italic">life.</em>
         </h1>
-        <p className="absolute right-[5%] bottom-[8%] w-[90%] max-w-[374px] text-[18px] leading-[1.5] font-normal text-white md:right-[8.333333%] md:bottom-[12.3%] md:w-[374px] md:text-[20px]">
+        <p data-why-hero-copy className="absolute right-[5%] bottom-[8%] w-[90%] max-w-[374px] text-[18px] leading-[1.5] font-normal text-white md:right-[8.333333%] md:bottom-[12.3%] md:w-[374px] md:text-[20px]">
           Most medical decisions are made from occasional appointments and a handful of lab results even though your health is shaped by what happens between visits.
         </p>
       </div>

@@ -56,30 +56,30 @@ export default function HowItWorksTrackYourDaySection() {
   }, [active, inView, paused, pageVisible]);
 
   return (
-    <section id="track-your-day" className={styles.section} aria-labelledby="track-your-day-heading">
-      <div className={styles.backdrop}>
+    <section data-story-chapter="track" id="track-your-day" className={styles.section} aria-labelledby="track-your-day-heading">
+      <div data-story-photo className={styles.backdrop}>
         <Image src="/how-it-works/track-your-day/track-day.png" alt="" fill sizes="(max-width: 767px) 1000px, 124vw" className={styles.photo} />
       </div>
       <div className={styles.content}>
-        <h2 id="track-your-day-heading" className={styles.heading}>
+        <h2 data-story-track-title id="track-your-day-heading" className={styles.heading}>
           <span className={styles.serif}>Track</span><span>Your Day</span>
         </h2>
-        <p className={styles.intro}>
+        <p data-story-reveal className={styles.intro}>
           One place to understand your everyday health and wellness. Track the habits and activities that influence how you feel and perform throughout the day.
         </p>
-        <div ref={cardRef} className={styles.card}
+        <div data-story-daily-card ref={cardRef} className={styles.card}
           onPointerEnter={event => { if (event.pointerType === "mouse") setHovered(true); }}
           onPointerLeave={() => setHovered(false)}
           onFocusCapture={() => setFocused(true)}
           onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
-          <div className={styles.rail} aria-label="Daily health categories">
+          <div data-story-tabs className={styles.rail} aria-label="Daily health categories">
             {TABS.map((tab, index) => (
               <button key={tab.label} type="button" onClick={() => setActive(index)} aria-pressed={active === index} aria-controls="daily-health-panel" className={`${styles.tab} ${active === index ? styles.active : ""}`}>
                 {tab.label}
               </button>
             ))}
           </div>
-          <div id="daily-health-panel" className={styles.panel} aria-live={paused ? "polite" : "off"} aria-atomic="true">
+          <div data-story-panel id="daily-health-panel" className={styles.panel} aria-live={paused ? "polite" : "off"} aria-atomic="true">
             <h3 key={`${current.label}-title`} className={styles.panelTitle}>{current.label}</h3>
             <div key={`${current.label}-copy`} className={styles.panelCopy}>
               <p className={styles.body}>{current.body}</p>

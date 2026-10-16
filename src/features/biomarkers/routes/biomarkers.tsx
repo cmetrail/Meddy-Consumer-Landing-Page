@@ -1,4 +1,7 @@
-import React from "react";
+"use client";
+
+import { useRef } from "react";
+import { useBiomarkersMotion } from "../components/useBiomarkersMotion";
 import BiomarkersHeroSection from "../components/sections/BiomarkersHeroSection";
 import BiomarkersAnnualLabsSection from "../components/sections/BiomarkersAnnualLabsSection";
 import BiomarkersDepthSection from "../components/sections/BiomarkersDepthSection";
@@ -8,8 +11,11 @@ import BiomarkersPhysicianLedSection from "../components/sections/BiomarkersPhys
 import BiomarkersFooterSection from "../components/sections/BiomarkersFooterSection";
 
 export const BiomarkersPage = () => {
+  const rootRef = useRef<HTMLElement>(null);
+  useBiomarkersMotion(rootRef);
+
   return (
-    <main>
+    <main ref={rootRef}>
       <BiomarkersHeroSection />
       <BiomarkersAnnualLabsSection />
       <BiomarkersBreadthSection />

@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Header from "@/components/Header";
+import NutritionHeadline from "../../../../../public/nutrition/hero/headline.svg";
+import NutritionHeadlineMobile from "../../../../../public/nutrition/hero/headline-m.svg";
 import { useNutritionHeroMotion } from "./useNutritionHeroMotion";
 
 // Figma: desktop node 12659:28470 (1440 x 1024) + mobile node 12720:14088 (402 x 875). Dark-green -> light-green gradient with a
@@ -94,7 +96,7 @@ export default function NutritionHeroSection() {
               <p data-title-copy className="absolute whitespace-nowrap text-[16px] font-normal capitalize leading-[normal] text-[#7cb18f]" style={{ left: 0, top: 74.47 }}>is Doing</p>
               <p data-title-copy className="absolute whitespace-nowrap text-[16px] font-normal capitalize leading-[normal] text-[#7cb18f]" style={{ left: 269, top: 74.47 }}>To Your Body</p>
               <div data-headline className="absolute" style={{ left: 3.94, top: 22.04, width: 357.517, height: 52.431 }}>
-                <Image src={`${A}/headline-m.svg`} alt="Nutrition" fill unoptimized priority className="block max-w-none" />
+                <NutritionHeadlineMobile role="img" aria-label="Nutrition" viewBox="0 0 357.517 52.4308" className="block size-full overflow-visible" />
               </div>
             </div>
           </div>
@@ -137,7 +139,7 @@ export default function NutritionHeroSection() {
               <p data-title-copy key={p.t} className="absolute whitespace-nowrap text-[40px] font-medium leading-[1.5] text-[#7cb18f]" style={{ left: p.l, top: p.tp }}>{p.t}</p>
             ))}
             <div data-headline className="absolute" style={{ left: 720.5 - 470.5, top: 246, width: 941, height: 138 }}>
-              <Image src={`${A}/headline.svg`} alt="Nutrition" fill unoptimized priority className="block max-w-none" />
+              <NutritionHeadline role="img" aria-label="Nutrition" viewBox="0 0 941 138" className="block size-full overflow-visible" />
             </div>
           </div>
 

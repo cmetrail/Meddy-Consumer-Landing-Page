@@ -136,7 +136,7 @@ export function WhyMeddyFooterItems({ noTopMargin, className = "", referenceLayo
         <motion.div
           data-footer-legal
           className="mt-8 flex flex-col items-center gap-2 text-center text-[#F4F4F5] text-[12px] leading-[150%] lg:mt-5"
-          initial={{ opacity: 0, y: 20 }}
+          initial={referenceLayout ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.8, ease }}

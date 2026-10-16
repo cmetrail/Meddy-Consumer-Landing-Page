@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Header from "@/components/Header";
+import { useSleepHeroMotion } from "./useSleepHeroMotion";
 
 // Figma: desktop node 11279:3735 (1440 x 1024), mobile node 12115:22546 (402 x 874).
 // lg+: `u` scales the 1440 frame to the viewport (fits one screen). <lg: `m` scales the 402 frame.
@@ -20,6 +21,7 @@ const CLOUD_SRC = { c1: `${A}/d-cloud1.png`, c2: `${A}/d-cloud2.png`, big: `${A}
 function Cloud({ s, k }: { s: CloudSpec; k: K }) {
   return (
     <Image
+      data-sleep-cloud
       src={CLOUD_SRC[s.c]}
       alt=""
       width={800}
@@ -87,6 +89,7 @@ function Metric({ s, k, d }: { s: MetricSpec; k: K; d: boolean }) {
     s.id === "hr" ? `${A}/${prefix}-wave.svg` : s.id === "dur" ? `${A}/${prefix}-clock.svg` : `${A}/${prefix}-moon.svg`;
   return (
     <div
+      data-sleep-metric
       className="absolute overflow-hidden border border-white/40 bg-gradient-to-br from-white/25 to-white/5 backdrop-blur-[3px]"
       style={{ left: k(s.x), top: k(s.y), width: k(w), height: k(h), borderRadius: k(t.pr) }}
     >
@@ -110,7 +113,7 @@ function Metric({ s, k, d }: { s: MetricSpec; k: K; d: boolean }) {
 
 function Lines({ k, x, y, w, h }: { k: K; x: number; y: number; w: number; h: number }) {
   return (
-    <div className="absolute" style={{ left: k(x), top: k(y), width: k(w), height: k(h) }}>
+    <div data-sleep-lines className="absolute" style={{ left: k(x), top: k(y), width: k(w), height: k(h) }}>
       <Image src={`${A}/d-lines.svg`} alt="" width={53} height={85} unoptimized className="absolute max-w-none" style={{ left: "-2.5%", top: "-1.49%", width: "105%", height: "101.49%" }} />
     </div>
   );
@@ -118,27 +121,29 @@ function Lines({ k, x, y, w, h }: { k: K; x: number; y: number; w: number; h: nu
 
 function Person({ k, x, y, w, h }: { k: K; x: number; y: number; w: number; h: number }) {
   return (
-    <div data-node-id="12640:5064" className="absolute overflow-hidden" style={{ left: k(x), top: k(y), width: k(w), height: k(h) }}>
-      <Image
-        src={`${A}/d-person.png`}
-        alt=""
-        width={850}
-        height={640}
-        priority
-        sizes="1600px"
-        className="absolute max-w-none"
-        style={{ left: "-0.05%", top: "-83.1%", width: "100.09%", height: "213.36%" }}
-      />
-      {/* Latest Figma foreground, layered over the original cropped fill. */}
-      <Image
-        src={`${A}/person-clear.png`}
-        alt=""
-        width={2087}
-        height={753}
-        preload
-        unoptimized
-        className="absolute inset-0 size-full max-w-none object-cover"
-      />
+    <div data-sleep-person data-node-id="12640:5064" className="absolute overflow-hidden" style={{ left: k(x), top: k(y), width: k(w), height: k(h) }}>
+      <div data-sleep-person-reveal className="absolute inset-0">
+        <Image
+          src={`${A}/d-person.png`}
+          alt=""
+          width={850}
+          height={640}
+          priority
+          sizes="1600px"
+          className="absolute max-w-none"
+          style={{ left: "-0.05%", top: "-83.1%", width: "100.09%", height: "213.36%" }}
+        />
+        {/* Latest Figma foreground, layered over the original cropped fill. */}
+        <Image
+          src={`${A}/person-clear.png`}
+          alt=""
+          width={2087}
+          height={753}
+          preload
+          unoptimized
+          className="absolute inset-0 size-full max-w-none object-cover"
+        />
+      </div>
     </div>
   );
 }
@@ -155,8 +160,10 @@ const M_METRICS: MetricSpec[] = [
 ];
 
 export default function SleepHeroSection() {
+  const sectionRef = useSleepHeroMotion();
   return (
     <section
+      ref={sectionRef}
       id="sleep-hero"
       className="relative flex min-h-[calc(874*var(--m))] w-full flex-col overflow-hidden text-white lg:block lg:h-[calc(1024*var(--u))] lg:min-h-0"
       style={
@@ -172,7 +179,7 @@ export default function SleepHeroSection() {
       </div>
 
       {/* Desktop (lg+): copy inside the header container; scene on the 1440 frame */}
-      <div className="absolute inset-0 hidden lg:block">
+      <div data-sleep-desktop className="absolute inset-0 hidden lg:block">
         {/* the cloud bed runs edge to edge: extra banks pinned to both screen edges for viewports wider than the 1440 frame */}
         {[0, 70, 150].map((dy) => (
           <div key={`el${dy}`}>
@@ -214,14 +221,14 @@ export default function SleepHeroSection() {
             <div className="relative h-full">
               <h1 className="absolute left-0" style={{ top: u(191) }}>
                 <span className="block font-medium uppercase leading-[1.1241] text-[#E2DADA]" style={{ fontSize: `max(22px, ${u(36)})` }}>
-                  <span className="block whitespace-nowrap">Know how well</span>
-                  <span className="block whitespace-nowrap" style={{ marginTop: u(5) }}>your body is actually</span>
+                  <span data-sleep-title className="block whitespace-nowrap">Know how well</span>
+                  <span data-sleep-title className="block whitespace-nowrap" style={{ marginTop: u(5) }}>your body is actually</span>
                 </span>
               </h1>
-              <p className="comprehensive-serif absolute left-0 whitespace-nowrap italic leading-[normal] text-[#D8F5FF]" style={{ top: u(267), fontSize: `max(60px, ${u(120)})` }}>
+              <p data-sleep-headline className="comprehensive-serif absolute left-0 whitespace-nowrap italic leading-[normal] text-[#D8F5FF]" style={{ top: u(267), fontSize: `max(60px, ${u(120)})` }}>
                 recovering.
               </p>
-              <p className="absolute right-0 text-right leading-[normal] text-[#E2DADA]" style={{ top: u(342), width: u(418.5), fontSize: `max(13px, ${u(20)})` }}>
+              <p data-sleep-description className="absolute right-0 text-right leading-[normal] text-[#E2DADA]" style={{ top: u(342), width: u(418.5), fontSize: `max(13px, ${u(20)})` }}>
                 See the <strong className="font-bold text-white">quality of your sleep, understand your recovery,</strong> and discover what may be helping—or getting in the way.
               </p>
             </div>
@@ -230,19 +237,19 @@ export default function SleepHeroSection() {
       </div>
 
       {/* Mobile / tablet (<lg) */}
-      <div className="relative z-20 mx-auto flex w-full max-w-[500px] flex-col px-[var(--p20)] lg:hidden" style={{ ["--p20" as string]: m(20), gap: m(48), paddingTop: undefined } as React.CSSProperties}>
+      <div data-sleep-mobile className="relative z-20 mx-auto flex w-full max-w-[500px] flex-col px-[var(--p20)] lg:hidden" style={{ ["--p20" as string]: m(20), gap: m(48), paddingTop: undefined } as React.CSSProperties}>
         <div className="flex flex-col pt-[var(--pt)]" style={{ ["--pt" as string]: m(24) }}>
-          <h1 className="font-medium uppercase leading-[1.416] text-[#E2DADA]" style={{ fontSize: m(24) }}>
+          <h1 data-sleep-title className="font-medium uppercase leading-[1.416] text-[#E2DADA]" style={{ fontSize: m(24) }}>
             Know how well your body is actually
           </h1>
-          <p className="comprehensive-serif italic leading-none text-[#D8F5FF]" style={{ fontSize: m(48) }}>recovering.</p>
+          <p data-sleep-headline className="comprehensive-serif italic leading-none text-[#D8F5FF]" style={{ fontSize: m(48) }}>recovering.</p>
         </div>
-        <p className="text-right leading-[normal] text-[#E2DADA]" style={{ fontSize: m(16) }}>
+        <p data-sleep-description className="text-right leading-[normal] text-[#E2DADA]" style={{ fontSize: m(16) }}>
           See the <strong className="font-bold text-white">quality of your sleep, understand your recovery,</strong> and discover what may be helping—or getting in the way.
         </p>
       </div>
       {/* no transform / z-index here: that would create a stacking context and break mix-blend-screen */}
-      <div className="pointer-events-none absolute lg:hidden" style={{ left: `calc(50% - ${m(349.55)})`, top: m(706), width: m(699.1), height: m(159) }}>
+      <div data-sleep-mobile className="pointer-events-none absolute lg:hidden" style={{ left: `calc(50% - ${m(349.55)})`, top: m(706), width: m(699.1), height: m(159) }}>
         {M_BEHIND.map((s, i) => (
           <Cloud key={`mb${i}`} s={s} k={m} />
         ))}

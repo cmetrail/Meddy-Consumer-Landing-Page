@@ -17,11 +17,11 @@ const Y_LABELS = ["20:00", "00:00", "04:00", "08:00", "12:00"];
 /** white recovery card (358 x 278 design px) */
 function RecoveryScoreCard({ k }: { k: K }) {
   return (
-    <div className="flex flex-col border border-white/20 bg-[#596b40]/85 p-[var(--p)] backdrop-blur-md" style={{ width: k(358), height: k(278), gap: k(16), borderRadius: k(24), ["--p" as string]: k(16) }}>
+    <div data-story-card className="flex flex-col border border-white/20 bg-[#596b40]/85 p-[var(--p)] backdrop-blur-md" style={{ width: k(358), height: k(278), gap: k(16), borderRadius: k(24), ["--p" as string]: k(16) }}>
       <div className="flex flex-col" style={{ gap: k(2) }}>
         <span className="leading-[1.5] text-[#B3B3B3]" style={{ fontSize: `max(calc(8px * var(--fl, 1)), ${k(12)})` }}>Score</span>
         <div className="flex items-center" style={{ gap: k(4) }}>
-          <span className="whitespace-nowrap font-semibold leading-[1.2] tracking-[-0.015em] text-white" style={{ fontSize: `max(calc(18px * var(--fl, 1)), ${k(32)})` }}>93%</span>
+          <span className="whitespace-nowrap font-semibold leading-[1.2] tracking-[-0.015em] text-white" style={{ fontSize: `max(calc(18px * var(--fl, 1)), ${k(32)})` }} data-story-count="93" data-story-suffix="%">93%</span>
           <span className="flex items-center" style={{ gap: k(4) }}>
             <Image src={`${A}/icon-up.svg`} alt="" width={16} height={16} unoptimized style={{ width: k(16), height: k(16), transform: "scaleY(-1)" }} />
             <span className="whitespace-nowrap font-medium leading-[1.5] text-[#17925A]" style={{ fontSize: `max(calc(10px * var(--fl, 1)), ${k(14)})` }}> 10%</span>
@@ -52,7 +52,7 @@ function RecoveryScoreCard({ k }: { k: K }) {
             <Image src={`${A}/grid-bottom.svg`} alt="" width={285} height={19} unoptimized className="absolute max-w-none" style={{ left: 0, top: k(111), width: "100%", height: k(19) }} />
             <div className="absolute flex items-center" style={{ left: k(5), top: k(23), width: k(280), height: k(86), gap: k(5) }}>
               {BAR_H.map((h, i) => (
-                <span key={i} className="relative block flex-1" style={{ height: k(h), borderRadius: k(1), background: i === HI ? "#6EE7A0" : "#17925A" }}>
+                <span data-story-bar key={i} className="relative block flex-1" style={{ height: k(h), borderRadius: k(1), background: i === HI ? "#6EE7A0" : "#17925A" }}>
                   {i === HI && (
                     <>
                       <Image src={`${A}/marker.svg`} alt="" width={1} height={86} unoptimized className="absolute max-w-none" style={{ left: "50%", top: k(-5), width: 1, height: k(86) }} />
@@ -100,23 +100,23 @@ export default function SleepRecoveryScoreSection() {
         <div className="absolute inset-0">
           <div className="mx-auto h-full w-[83.08%]">
             <div className="relative h-full">
-              <span
+              <span data-story-number
                 className="pointer-events-none absolute left-0 select-none font-bold italic leading-[normal] text-[rgba(216,216,216,0.5)]"
                 style={{ top: u(136), fontSize: u(128), letterSpacing: u(2.56), transform: "rotate(-0.31deg)" }}
               >
                 04
               </span>
               <div className="absolute left-0 flex flex-col text-[#E6DFDF]" style={{ top: u(374), width: u(618), gap: u(50) }}>
-                <h2 className="font-normal leading-[1.416]" style={{ fontSize: u(42) }}>
+                <h2 data-story-copy className="font-normal leading-[1.416]" style={{ fontSize: u(42) }}>
                   Sleep is only part of <span className="comprehensive-serif italic">recovery</span>
                 </h2>
-                <p className="leading-[1.416]" style={{ fontSize: u(20) }}>
+                <p data-story-copy className="leading-[1.416]" style={{ fontSize: u(20) }}>
                   Meddy brings together the signals that help show how your body is <span className="text-white">responding to stress, activity, and rest.</span>
                 </p>
               </div>
 
               <div className="absolute right-0 flex flex-col items-end" style={{ top: u(136), gap: u(157) }}>
-                <div className="flex flex-col items-end text-right leading-[1.416] text-white" style={{ gap: u(5) }}>
+                <div data-story-copy className="flex flex-col items-end text-right leading-[1.416] text-white" style={{ gap: u(5) }}>
                   <span className="comprehensive-serif whitespace-nowrap italic" style={{ fontSize: u(104) }}>Recovery</span>
                   <span className="whitespace-nowrap font-normal" style={{ fontSize: u(20) }}>Know when your body is ready</span>
                 </div>
@@ -136,11 +136,11 @@ export default function SleepRecoveryScoreSection() {
 
         <div className="relative flex flex-col px-[var(--p20)] py-[var(--p64)]" style={{ ["--p20" as string]: m(20), ["--p64" as string]: m(64), gap: m(48) } as React.CSSProperties}>
           <div className="flex flex-col">
-            <span className="select-none font-bold italic leading-none text-[rgba(216,216,216,0.5)]" style={{ fontSize: m(120), letterSpacing: m(2.4), transform: "rotate(-0.31deg)", width: "fit-content", height: m(151.9), display: "flex", alignItems: "center" }}>
+            <span data-story-number className="select-none font-bold italic leading-none text-[rgba(216,216,216,0.5)]" style={{ fontSize: m(120), letterSpacing: m(2.4), transform: "rotate(-0.31deg)", width: "fit-content", height: m(151.9), display: "flex", alignItems: "center" }}>
               04
             </span>
             <div className="flex flex-col" style={{ gap: m(24) }}>
-              <div className="flex flex-col text-right uppercase leading-[1.416] text-white" style={{ gap: m(5) }}>
+              <div data-story-copy className="flex flex-col text-right uppercase leading-[1.416] text-white" style={{ gap: m(5) }}>
                 <span className="comprehensive-serif italic" style={{ fontSize: m(32) }}>Recovery</span>
                 <span className="font-medium" style={{ fontSize: m(20) }}>Know when your body is ready</span>
               </div>
@@ -151,10 +151,10 @@ export default function SleepRecoveryScoreSection() {
           </div>
 
           <div className="flex flex-col" style={{ gap: m(48) }}>
-            <p className="font-medium uppercase leading-[1.416] text-white" style={{ fontSize: m(20) }}>
+            <p data-story-copy className="font-medium uppercase leading-[1.416] text-white" style={{ fontSize: m(20) }}>
               Sleep is only part of <span className="font-bold italic">recovery.</span>
             </p>
-            <p className="leading-[1.416] text-[#E6DFDF]" style={{ fontSize: m(16) }}>
+            <p data-story-copy className="leading-[1.416] text-[#E6DFDF]" style={{ fontSize: m(16) }}>
               Meddy brings together the signals that help show how your body is <span className="text-white">responding to stress, activity, and rest.</span>
             </p>
           </div>

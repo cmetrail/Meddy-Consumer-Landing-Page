@@ -6,6 +6,7 @@ import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { FooterItems } from "@/features/home/components/sections/helper/FooterItems";
+import styles from "./WeightLossFooterSection.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -56,16 +57,16 @@ export default function WeightLossFooterSection() {
   );
 
   return (
-    <section ref={sectionRef} className="relative w-full overflow-hidden rounded-t-[22px]">
+    <section ref={sectionRef} className={`${styles.footer} relative w-full overflow-hidden rounded-t-[22px]`}>
       <Image
         src="/weight-loss/footer/footer-bg.png"
         alt=""
         fill
-        className="object-cover"
+        className={`${styles.background} object-cover`}
         sizes="100vw"
       />
       <div className="relative">
-        <FooterItems noTopMargin />
+        <FooterItems noTopMargin mobileReference mobileVariant="weight-loss" className={styles.glass} />
       </div>
     </section>
   );

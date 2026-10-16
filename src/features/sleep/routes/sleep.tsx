@@ -1,4 +1,5 @@
 import React from "react";
+import SleepStory from "../components/SleepStory";
 import SleepHeroSection from "../components/sections/SleepHeroSection";
 import SleepQualitySection from "../components/sections/SleepQualitySection";
 import SleepArchitectureSection from "../components/sections/SleepArchitectureSection";
@@ -10,15 +11,17 @@ import SleepFooterSection from "../components/sections/SleepFooterSection";
 
 export const SleepPage = () => {
   return (
-    <main>
+    <SleepStory>
       <SleepHeroSection />
       <SleepQualitySection />
       <SleepArchitectureSection />
-      <SleepConsistencySection />
+      <div data-story-pin-shell>
+        <SleepConsistencySection />
+      </div>
       <SleepRecoveryScoreSection />
       <SleepRecoverySection />
       <SleepSamePictureSection />
       <SleepFooterSection />
-    </main>
+    </SleepStory>
   );
 };

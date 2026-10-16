@@ -1,0 +1,95 @@
+.mobileChat { display: none; }
+
+@layer utilities {
+@media (max-width: 1023px) {
+  .hero { --care-u: calc(100vw / 297) !important; min-height: max(100svh, calc(640 * var(--care-u))) !important; }
+  .header header { padding: calc(13 * var(--care-u)) calc(16 * var(--care-u)) !important; }
+  .header img { width: calc(32 * var(--care-u)) !important; height: auto !important; }
+  .header button { width: calc(40 * var(--care-u)) !important; height: calc(30 * var(--care-u)) !important; border-color: rgba(255,255,255,.3) !important; }
+  .header button span { height: calc(2 * var(--care-u)) !important; }
+  .header button span:nth-child(1) { width: calc(24 * var(--care-u)) !important; }
+  .header button span:nth-child(2) { width: calc(16 * var(--care-u)) !important; }
+  .header button span:nth-child(3) { width: calc(8 * var(--care-u)) !important; }
+  .content { position: absolute !important; inset: calc(85 * var(--care-u)) 0 auto !important; padding: 0 calc(16 * var(--care-u)) !important; }
+  .content [data-care-copy] { margin-top: 0 !important; }
+  .content h1 { gap: calc(8 * var(--care-u)) !important; }
+  .content [data-care-line] { font-size: calc(28 * var(--care-u)) !important; line-height: 1.2 !important; }
+  .content .lineMask + .lineMask [data-care-line] { font-size: calc(24 * var(--care-u)) !important; font-weight: 400 !important; }
+  .content [data-care-description] { margin-top: calc(14 * var(--care-u)) !important; font-size: calc(12 * var(--care-u)) !important; line-height: 1.45 !important; }
+  .content [data-care-description] b { font-weight: 400 !important; color: inherit !important; }
+  .content [data-care-cta] { margin-top: calc(18 * var(--care-u)) !important; min-height: calc(32 * var(--care-u)) !important; padding: calc(7 * var(--care-u)) calc(14 * var(--care-u)) !important; font-size: calc(12 * var(--care-u)) !important; line-height: 1.5 !important; }
+  .hero .portraitPlacement { position: absolute !important; top: calc(234 * var(--care-u)) !important; right: calc(-71 * var(--care-u)) !important; width: calc(300 * var(--care-u)) !important; }
+  .mobileChat { display: block !important; position: absolute !important; z-index: 20 !important; top: calc(397 * var(--care-u)) !important; left: calc(16 * var(--care-u)) !important; width: calc(240 * var(--care-u)) !important; container-type: inline-size !important; }
+  .mobileChat > div { width: 100% !important; height: auto !important; aspect-ratio: 240 / 145 !important; border-radius: 8.33cqw !important; }
+  .mobileChat [data-care-phone] { left: 5% !important; top: 10.34% !important; width: 40% !important; height: 89.66% !important; border-radius: 4.2cqw 4.2cqw 0 0 !important; }
+  .mobileChat [data-care-float] > [data-care-message] { left: 50.4% !important; top: 8.3% !important; }
+  .mobileChat [data-care-float] > div:last-child { left: 50.4% !important; top: 37.9% !important; gap: 2.5cqw !important; }
+  .mobileChat [data-care-message] > div { width: 44.6cqw !important; gap: 1.25cqw !important; padding: 1.5cqw 2.08cqw !important; border-radius: 2.08cqw !important; }
+  .mobileChat [data-care-message] span:first-child { font-size: 3cqw !important; line-height: 1.4 !important; }
+  .mobileChat [data-care-message] span:last-child { font-size: 2.08cqw !important; line-height: 1.2 !important; }
+  .mobileChat [data-care-message] svg { width: 1.5cqw !important; height: 1.5cqw !important; }
+}
+}
+
+.portraitPlacement {
+  position: relative;
+  order: 1;
+  flex-shrink: 0;
+  width: min(440px, 90vw);
+  margin-left: auto !important;
+  z-index: 0;
+}
+
+.portrait {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 762 / 1027;
+}
+
+@media (min-width: 1024px) {
+  .portraitPlacement {
+    position: absolute;
+    order: 0;
+    right: 0;
+    top: 61px;
+    width: min(762px, 53vw);
+  }
+}
+
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.glow {
+  position: absolute;
+  inset: -25%;
+  background: radial-gradient(ellipse at 68% 32%, rgba(222, 255, 219, .19), transparent 56%);
+}
+
+.lineMask {
+  display: block;
+  overflow: clip;
+  /* Preserve the serif's overhang without changing the heading's line height. */
+  overflow-clip-margin: .14em;
+  perspective: 900px;
+}
+
+.button {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.buttonLabel { position: relative; }
+
+.shine {
+  position: absolute;
+  inset: 0 auto 0 -65%;
+  width: 45%;
+  pointer-events: none;
+  transform: skewX(-22deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.23), transparent);
+}

@@ -1,4 +1,4 @@
-.section { position: relative; width: 100%; overflow: hidden; background: #a87b46; --signal-unit: min(calc(100vw / 1920), 1px); }
+.section { position: relative; display: flex; align-items: center; width: 100%; min-height: var(--dvh); overflow: hidden; background: #a87b46; /* The desktop composition is 877 units tall, including its padding. */ --signal-unit: min(calc(100vw / 1920), calc(var(--dvh) / 877), 1px); }
 .backdrop { position: absolute; left: -141px; right: -141px; top: 50%; transform: translateY(-50%); aspect-ratio: 1672 / 941; min-height: 100%; pointer-events: none; }
 .photo { object-fit: cover; }
 .fade { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 15.937%, #030c16 100%); opacity: .6; pointer-events: none; }
@@ -27,11 +27,11 @@
 @media (max-width: 1023px) {
   .section { --signal-unit: 1px; }
   .backdrop { left: calc(50% + 35.5px); right: auto; top: 0; transform: translateX(-50%); width: 1605px; height: 903px; }
-  .content { padding-block: 64px !important; }
-  .heading { font-size: clamp(26px, 4.5vw, 44px); line-height: 1.5; }
+  .content { padding-block: clamp(16px, calc(var(--dvh) * .04), 64px) !important; }
+  .heading { font-size: min(clamp(26px, 4.5vw, 44px), calc(var(--dvh) * .05)); line-height: 1.5; }
   .firstLine { height: auto; white-space: normal; line-height: 1.5; }
   .heading em { font-size: 1.45em; }
-  .bottomRow { flex-direction: column; align-items: flex-start; gap: 28px; margin-top: 40px !important; }
+  .bottomRow { flex-direction: column; align-items: flex-start; gap: clamp(12px, calc(var(--dvh) * .03), 28px); margin-top: clamp(16px, calc(var(--dvh) * .04), 40px) !important; }
   .bottomRow > div { width: 100%; max-width: 482px; }
   .card { width: 100%; }
   .description { max-width: 600px; font-size: 17px; }
@@ -41,4 +41,10 @@
   .label, .result { font-size: max(9px, calc(12 * var(--signal-unit))); }
   .change { font-size: max(11px, calc(16 * var(--signal-unit))); }
   .result { white-space: normal; min-height: 27px; align-items: flex-start; }
+}
+@media (min-width: 541px) and (max-width: 1023px) and (max-height: 540px) {
+  .content { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); align-items: center; gap: 24px; }
+  .bottomRow { margin-top: 0 !important; }
+  .card { --signal-unit: min(1px, calc((100vw - 2 * var(--section-gutter) - 24px) / 826), calc(var(--dvh) / 480)); }
+  .description { font-size: 15px; }
 }

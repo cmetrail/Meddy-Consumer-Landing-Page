@@ -6,6 +6,7 @@ import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { FooterItems } from "@/features/home/components/sections/helper/FooterItems";
+import footerStyles from "./MedicationFooterSection.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -189,8 +190,8 @@ export default function MedicationFaqSection() {
           </div>
         </div>
       </div>
-      <div className="relative bg-[#0d1f16] text-white lg:hidden">
-        <FooterItems noTopMargin />
+      <div data-medication-footer className={`${footerStyles.footer} relative bg-[#0d1f16] text-white lg:hidden`}>
+        <FooterItems noTopMargin mobileReference mobileVariant="medication" className={footerStyles.glass} />
       </div>
     </section>
   );

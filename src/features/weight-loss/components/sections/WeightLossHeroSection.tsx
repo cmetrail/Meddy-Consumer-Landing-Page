@@ -2,17 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { useWeightLossHeroMotion } from "./useWeightLossHeroMotion";
 import Header from "@/components/Header";
 
 // Figma: desktop node 12593:12993 (1440 x 1024), mobile node 12722:8882 (402 x 875).
 // lg+: `u` scales the 1440 frame to the viewport (fits one screen). <lg: `m` scales the 402 frame.
 const u = (n: number) => `calc(${n} * var(--u))`;
-// fonts/button scale with width only (never shrink because the viewport is short)
-const w = (n: number) => `calc(${n} * var(--w))`;
 const m = (n: number) => `calc(${n} * var(--m))`;
 
-const ease = [0.22, 1, 0.36, 1] as const;
 const A = "/weight-loss/hero";
 
 // Serif accent gradient (Figma): linear-gradient(150deg, #FFF0D9 27%, #FFEBCD 171%)
@@ -26,14 +23,15 @@ const RINGS = [
 ] as const;
 
 export default function WeightLossHeroSection() {
+  const heroRef = useWeightLossHeroMotion();
   return (
     <section
+      ref={heroRef}
       id="weight-loss-hero"
       className="relative flex min-h-dvh w-full flex-col overflow-hidden bg-[#101010] lg:h-[calc(1024*var(--u))] lg:min-h-0"
       style={
         {
           "--u": "min(calc(min(100vw, 1440px) * 0.000694444), calc(100dvh * 0.000976562))",
-          "--w": "calc(min(100vw, 1440px) * 0.000694444)",
           "--m": "calc(min(100vw, 500px) / 402)",
         } as React.CSSProperties
       }
@@ -42,11 +40,11 @@ export default function WeightLossHeroSection() {
       <div className="absolute inset-0 lg:hidden" style={{ background: "linear-gradient(171deg, #517B5F 3.2%, #A4D2BC 96.8%)" }} />
 
       {/* Desktop: full-bleed photo */}
-      <Image src={`${A}/d-bg.png`} alt="" fill priority sizes="100vw" className="hidden object-cover lg:block" />
+      <Image data-wl-photo src={`${A}/d-bg.png`} alt="" fill priority sizes="100vw" className="hidden object-cover lg:block" />
 
       {/* Mobile: photo box 1234 x 875 pinned to the right edge, then a 20% black wash */}
       <div className="absolute right-0 top-0 overflow-hidden lg:hidden" style={{ width: m(1234), height: m(875) }}>
-        <Image src={`${A}/d-bg.png`} alt="" fill priority sizes="1234px" className="object-cover" />
+        <Image data-wl-photo src={`${A}/d-bg.png`} alt="" fill priority sizes="1234px" className="object-cover" />
       </div>
       <div className="absolute inset-0 bg-black/20 lg:hidden" />
 
@@ -54,7 +52,11 @@ export default function WeightLossHeroSection() {
       <div aria-hidden className="pointer-events-none absolute inset-0 z-10 hidden lg:block">
         <div className="absolute top-0 h-full" style={{ left: `calc(50% - ${u(720)})`, width: u(1440) }}>
           {RINGS.map((r) => (
-            <Image key={r.src} src={`${A}/${r.src}`} alt="" width={64} height={64} unoptimized className="absolute max-w-none" style={{ left: u(r.d[0]), top: u(r.d[1]), width: u(r.d[2]), height: u(r.d[2]) }} />
+            <span data-wl-ring key={r.src} className="absolute" style={{ left: u(r.d[0]), top: u(r.d[1]), width: u(r.d[2]), height: u(r.d[2]) }}>
+              <span data-wl-float className="absolute inset-0">
+                <Image data-wl-pointer src={`${A}/${r.src}`} alt="" width={64} height={64} unoptimized className="h-full w-full max-w-none" />
+              </span>
+            </span>
           ))}
         </div>
       </div>
@@ -63,7 +65,11 @@ export default function WeightLossHeroSection() {
       <div aria-hidden className="pointer-events-none absolute inset-0 z-10 lg:hidden">
         <div className="relative mx-auto h-full max-w-[500px]">
           {RINGS.map((r) => (
-            <Image key={r.src} src={`${A}/${r.src}`} alt="" width={64} height={64} unoptimized className="absolute max-w-none" style={{ left: m(r.m[0]), top: m(r.m[1]), width: m(r.m[2]), height: m(r.m[2]) }} />
+            <span data-wl-ring key={r.src} className="absolute" style={{ left: m(r.m[0]), top: m(r.m[1]), width: m(r.m[2]), height: m(r.m[2]) }}>
+              <span data-wl-float className="absolute inset-0">
+                <Image data-wl-pointer src={`${A}/${r.src}`} alt="" width={64} height={64} unoptimized className="h-full w-full max-w-none" />
+              </span>
+            </span>
           ))}
         </div>
       </div>
@@ -75,42 +81,43 @@ export default function WeightLossHeroSection() {
 
       {/* Content: vertically centred between the nav and the 120px bottom padding */}
       <div className="relative z-20 mx-auto flex w-full max-w-360 flex-1 flex-col justify-center px-5 pb-[var(--pbm)] pt-[var(--ptm)] lg:px-10 lg:pb-[var(--pb)] lg:pt-0" style={{ ["--pb" as string]: u(120), ["--pbm" as string]: m(64), ["--ptm" as string]: m(48) } as React.CSSProperties}>
-        <motion.div
-          className="flex w-full max-w-[565px] flex-col"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease }}
-        >
+        <div data-wl-copy className="flex w-full max-w-[565px] flex-col">
           {/* desktop paragraph has a trailing blank line in Figma (+20px above the button); desktop sizes are fixed px (Figma): H2 56 / hero serif 64 / body 16 / button 20, 16px gaps */}
           <div className="flex flex-col gap-[var(--g48)] lg:gap-4" style={{ ["--g48" as string]: m(48) } as React.CSSProperties}>
             <h1 className="flex flex-col font-medium text-[#F4F4F5]">
               <span className="flex flex-col gap-[5px] whitespace-nowrap text-[24px] leading-[1.5] lg:gap-0 lg:text-[56px]">
-                <span>Understand what&rsquo;s</span>
-                <span>Actually moving your</span>
+                <span className="block overflow-hidden"><span data-wl-line className="block">Understand what&rsquo;s</span></span>
+                <span className="block overflow-hidden"><span data-wl-line className="block">Actually moving your</span></span>
               </span>
-              <span
-                className="comprehensive-serif text-[44px] italic leading-[1.5] lg:text-[64px]"
-                style={{ background: SERIF_GRADIENT, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}
-              >
-                weight.
+              <span className="block overflow-hidden">
+                <span data-wl-line
+                  className="block comprehensive-serif text-[44px] italic leading-[1.5] lg:text-[64px]"
+                  style={{ background: SERIF_GRADIENT, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}
+                >
+                  weight.
+                </span>
               </span>
             </h1>
 
-            <p className="text-[16px] font-normal leading-[1.5] text-[#E2DADA] lg:max-w-[464px] lg:pb-5 lg:leading-[normal]">
+            <p data-wl-reveal className="text-[16px] font-normal leading-[1.5] text-[#E2DADA] lg:max-w-[464px] lg:pb-5 lg:leading-[normal]">
               Weight loss is more than a number on the scale. Meddy connects{" "}
               <strong className="font-bold text-[#F4F4F5]">what you eat, how you move, how you sleep, your medications, and your biomarkers</strong>
               —so you and your physician can understand what&rsquo;s working and what needs to change.
             </p>
 
-            <Link
-              href="/book-consultation"
-              className="inline-flex w-fit items-center justify-center rounded-[49px] bg-white px-[var(--px)] py-[var(--py)] text-[16px] font-normal leading-[normal] text-[#17925A] transition-opacity hover:opacity-90 lg:px-6 lg:py-4 lg:text-[20px]"
-              style={{ ["--px" as string]: m(20), ["--py" as string]: m(12) } as React.CSSProperties}
-            >
-              Book Free Consultation
-            </Link>
+            <div data-wl-reveal className="w-fit">
+              <Link
+                data-wl-cta
+                href="/book-consultation"
+                className="relative overflow-hidden inline-flex w-fit items-center justify-center rounded-[49px] bg-white px-[var(--px)] py-[var(--py)] text-[16px] font-normal leading-[normal] text-[#17925A] transition-opacity hover:opacity-90 lg:px-6 lg:py-4 lg:text-[20px]"
+                style={{ ["--px" as string]: m(20), ["--py" as string]: m(12) } as React.CSSProperties}
+              >
+                <span data-wl-shine aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-1/3 opacity-0 bg-gradient-to-r from-transparent via-[#17925A]/15 to-transparent" />
+                <span className="relative">Book Free Consultation</span>
+              </Link>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

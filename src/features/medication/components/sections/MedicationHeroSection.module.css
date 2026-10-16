@@ -5,6 +5,8 @@
 .hero [data-hero-heading] > span:first-child { display: block; }
 .desktopHeader { display: none; background: #577e63; }
 .desktop { display: none; }
+.word { display: inline-block; white-space: nowrap; font-family: inherit !important; }
+.letter { display: inline-block; transform-origin: 50% 90%; font-family: inherit !important; }
 
 @media (min-width: 1024px) {
   .desktopHeader { display: block; flex-shrink: 0; }

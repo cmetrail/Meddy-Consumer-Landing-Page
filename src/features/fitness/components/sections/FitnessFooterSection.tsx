@@ -5,6 +5,7 @@ import { desktopMotion, DESKTOP_MOTION } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { FooterItems } from "@/features/home/components/sections/helper/FooterItems";
+import styles from "./FitnessFooterSection.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -135,7 +136,7 @@ export default function FitnessFooterSection() {
   return (
     <footer
       ref={outerRef}
-      className="relative w-full"
+      className={`${styles.footer} relative w-full`}
       style={{
         height: isStickyActive && footerHeight ? `${footerHeight}px` : "auto",
         clipPath: isStickyActive ? "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" : "none",
@@ -153,7 +154,7 @@ export default function FitnessFooterSection() {
         }}
       >
         <div ref={contentRef} className="w-full">
-          <FooterItems noTopMargin />
+          <FooterItems noTopMargin mobileReference mobileVariant="fitness" className={styles.glass} />
         </div>
       </div>
     </footer>

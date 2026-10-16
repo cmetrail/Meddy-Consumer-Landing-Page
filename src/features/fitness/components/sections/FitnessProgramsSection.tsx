@@ -33,7 +33,7 @@ function ProgramCard({ program }: { program: (typeof PROGRAMS)[number] }) {
           src={program.image}
           alt={program.alt}
           fill
-          sizes="(max-width: 480px) 72vw, (max-width: 767px) 347px, (max-width: 1440px) 26vw, 371px"
+          sizes="(max-width: 767px) 76vw, (max-width: 1023px) calc((100vw - 74px) / 3), (max-width: 1440px) calc((100vw - 144px) / 3), 427px"
           className={styles.image}
         />
       </div>

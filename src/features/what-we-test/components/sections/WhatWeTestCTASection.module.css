@@ -1,0 +1,131 @@
+/* Scale the supplied mobile reference proportions without changing desktop. */
+@layer base {
+  @media (max-width: 767px) {
+    .section {
+      --test-footer-unit: calc(100vw / 227);
+      padding-top: 0 !important;
+    }
+
+    .footer {
+      margin-top: 0 !important;
+      border-radius: 0 !important;
+      background: #30251f;
+    }
+
+    .background {
+      bottom: auto !important;
+      height: calc(149 * var(--test-footer-unit));
+    }
+
+    .cta {
+      height: calc(149 * var(--test-footer-unit));
+      flex: none;
+      padding-top: calc(42 * var(--test-footer-unit)) !important;
+      gap: calc(17 * var(--test-footer-unit)) !important;
+    }
+
+    .heading { gap: calc(9 * var(--test-footer-unit)) !important; }
+    .title { flex-wrap: nowrap !important; gap: calc(4 * var(--test-footer-unit)) !important; }
+    .title > span { font-size: calc(18 * var(--test-footer-unit)) !important; line-height: 1 !important; }
+    .title > span:last-child { font-family: var(--font-dm-serif), Georgia, serif !important; }
+    .heading > span { font-size: calc(10 * var(--test-footer-unit)) !important; line-height: 1.4 !important; }
+    .cta > button {
+      width: calc(60 * var(--test-footer-unit)) !important;
+      height: calc(14 * var(--test-footer-unit));
+      padding: 0 !important;
+      font-size: calc(4.5 * var(--test-footer-unit)) !important;
+      line-height: 1 !important;
+    }
+
+    .footer .glass {
+      --footer-unit: var(--test-footer-unit);
+      background: #30251f !important;
+      border: 1px solid rgb(255 255 255 / 18%) !important;
+      box-shadow: inset 0 0 calc(16 * var(--footer-unit)) rgb(190 220 200 / 12%);
+    }
+
+    .footer .glass::before {
+      display: block;
+      background: radial-gradient(ellipse 55% 30% at 18% 16%, rgb(235 75 25 / 60%), transparent),
+        linear-gradient(rgb(85 65 55 / 25%), rgb(50 40 35 / 45%)),
+        url("/what-we-test/what-we-test-cta-bg.png") center / auto 100% no-repeat;
+      filter: blur(calc(25 * var(--footer-unit))) saturate(0.8);
+    }
+
+    .footer .glass [data-footer-inner] {
+      max-width: none !important;
+      padding: calc(36 * var(--footer-unit)) calc(11 * var(--footer-unit)) calc(33 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-mobile-nav] { gap: calc(11.6 * var(--footer-unit)) !important; }
+
+    .footer .glass [data-footer-mobile-nav] a {
+      font-size: calc(9 * var(--footer-unit));
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .footer .glass [data-footer-grid] { margin-top: calc(27 * var(--footer-unit)) !important; }
+
+    .footer .glass [data-footer-brand] > img {
+      width: calc(160 * var(--footer-unit)) !important;
+      height: calc(96 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-brand] > p {
+      display: block !important;
+      max-width: calc(190 * var(--footer-unit)) !important;
+      margin: calc(12 * var(--footer-unit)) auto 0 !important;
+      text-align: center;
+      font-size: calc(9 * var(--footer-unit)) !important;
+      font-weight: 400;
+      line-height: 1.5 !important;
+    }
+
+    .footer .glass [data-footer-stores] {
+      margin-top: calc(27 * var(--footer-unit)) !important;
+      gap: calc(5 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-stores] button {
+      flex: 1 1 0;
+      min-width: 0;
+      width: auto !important;
+      height: calc(33 * var(--footer-unit)) !important;
+      padding: calc(4 * var(--footer-unit)) !important;
+      gap: calc(4 * var(--footer-unit)) !important;
+      border-radius: calc(6 * var(--footer-unit)) !important;
+      background: rgb(0 0 0 / 12%) !important;
+    }
+
+    .footer .glass [data-footer-stores] button > img {
+      width: calc(19 * var(--footer-unit)) !important;
+      height: calc(23 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-stores] button > span > span:first-child {
+      font-size: calc(7.5 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-stores] button > span > span:nth-child(2) {
+      font-size: calc(14 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-stores] button > span > img {
+      width: calc(60 * var(--footer-unit)) !important;
+    }
+
+    .footer .glass [data-footer-divider] { margin-top: calc(14 * var(--footer-unit)) !important; }
+
+    .footer .glass [data-footer-legal] {
+      display: flex !important;
+      max-width: calc(190 * var(--footer-unit));
+      margin: calc(18 * var(--footer-unit)) auto 0 !important;
+      gap: calc(4 * var(--footer-unit)) !important;
+      font-size: calc(6.5 * var(--footer-unit)) !important;
+      line-height: 1.4 !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef } from "react";
+import { useId, useRef, type CSSProperties } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { SCROLL_MOTION } from "@/lib/motion";
@@ -76,6 +76,7 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
       const root = rootRef.current;
       if (!root) return;
       const mask = root.querySelector<SVGRectElement>("[data-graph-reveal]");
+      const summary = Array.from(root.querySelectorAll<HTMLElement>("[data-end-summary]"));
       const cards = Array.from(root.querySelectorAll<SVGElement | HTMLElement>("[data-reveal-x]"));
       // The mask, moving models, and cards all use the same reveal edge.
       const updateCards = () => {
@@ -88,6 +89,7 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
       const observer = new MutationObserver(updateCards);
       if (mask) observer.observe(mask, { attributes: true, attributeFilter: ["width"] });
       gsap.set(cards, { opacity: 0 });
+      if (summary.length) gsap.set(summary, { autoAlpha: 0 });
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: root,
@@ -100,6 +102,11 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
       timeline.fromTo(mask, { attr: { width: 0 } }, {
         attr: { width: 720 }, duration: 1, ease: "none", lazy: false,
       });
+      // Give the completed graph its own beat before revealing the takeaway.
+      if (summary.length) {
+        timeline.to(summary, { autoAlpha: 1, duration: 0.22, ease: "power1.out" }, "+=0.06");
+        timeline.to({}, { duration: 0.12 });
+      }
       return () => {
         observer.disconnect();
         cards.forEach(card => card.style.removeProperty("opacity"));
@@ -129,7 +136,8 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
             <p>{trend.subtitle}</p>
           </header>
           <div className={styles.chart}>
-            <svg viewBox="0 0 720 200" role="img" aria-labelledby={refId("title")}>
+            <div className={styles.plot}>
+            <svg viewBox="0 0 720 200" preserveAspectRatio="none" role="img" aria-labelledby={refId("title")}>
               <title id={refId("title")}>{`${trend.title}. ${trend.description}`}</title>
               <defs>
                 <clipPath id={refId("reveal")}><rect data-graph-reveal x="0" y="0" width="720" height="200" /></clipPath>
@@ -154,7 +162,7 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
                 <g key={index} data-marker={index} data-reveal-x={marker.x}>
                   <circle cx={marker.x} cy={marker.y} r={marker.green ? 9 : 5} fill={marker.green ? "#55c272" : "#fff"} opacity="0.65" filter={`url(#${refId("glow")})`} />
                   <circle cx={marker.x} cy={marker.y} r={marker.green ? 6.8 : 2.7} fill={marker.green ? `url(#${refId("dot")})` : "#fff"} />
-                  <g transform={groupIndex === 1 ? `translate(${marker.x} ${marker.y}) scale(1.5) translate(${-marker.x} ${-marker.y})` : undefined}>
+                  <g className={styles.markerCard}>
                   <path d={`M${marker.x - 7} ${marker.y - 16} L${marker.x} ${marker.y - 7} L${marker.x + 7} ${marker.y - 16}`} fill={marker.green ? "#1d4d32" : "#cad2ce"} />
                   <rect x={marker.x - marker.width / 2} y={marker.y - 41} width={marker.width} height="25" rx="2" fill={marker.green ? "#183225" : "#303b35"} stroke={marker.green ? "#17925a" : "#d4ddd7"} strokeWidth="0.65" />
                   <text x={marker.x - marker.width / 2 + 7} y={marker.y - 32} fill="#adadad" fontSize="6.3">Week {marker.week}</text>
@@ -170,15 +178,32 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
               <text data-reveal-x={trend.greenLabelX} className={`${styles.seriesLabel} ${styles.greenSeries}`} x={trend.greenLabelX} y={trend.greenLabelY} fill="#17925a" fontSize="8.5">{trend.greenLabel}</text>
             </svg>
             <TrendOrbs />
+            <div className={styles.mobileAnnotations} aria-hidden="true">
+              {mobileMarkers.map((marker, index) => (
+                <div key={index} data-marker-card={index} data-reveal-x={marker.x}
+                  className={`${styles.mobileCard} ${marker.green ? styles.mobileDriver : styles.mobileOutcome}`}
+                  style={{
+                    "--marker-x": `${marker.x / 720 * 100}%`,
+                    "--marker-y": `${marker.y / 200 * 100}%`,
+                    "--card-width": marker.width > 100 ? "112px" : marker.green ? "94px" : "76px",
+                  } as CSSProperties}>
+                  <span>Week {marker.week}</span>
+                  <p>{marker.label} <strong>{marker.value}</strong></p>
+                </div>
+              ))}
+              <span data-reveal-x={trend.whiteLabelX} className={styles.mobileWhiteLabel}>{trend.whiteLabel}</span>
+              <span data-reveal-x={trend.greenLabelX} className={styles.mobileGreenLabel}>{trend.greenLabel}</span>
+            </div>
+            </div>
             <div className={styles.chartMetrics}>
-              {trend.metrics.map(metric => <div key={metric.label} data-reveal-x={metric.green ? 648 : 678} className={metric.green ? styles.driverMetric : styles.outcomeMetric}>
+              {trend.metrics.map(metric => <div key={metric.label} data-reveal-x={variant === "nutrition" ? undefined : metric.green ? 648 : 678} data-end-summary={variant === "nutrition" ? "" : undefined} className={metric.green ? styles.driverMetric : styles.outcomeMetric}>
                 <p className={styles.metricLabel}>{metric.label}</p>
                 <p className={metric.green ? styles.green : styles.white}>{metric.change}</p>
                 <p className={styles.range}>{metric.range}</p>
               </div>)}
             </div>
           </div>
-          <div data-reveal-x="680" className={styles.summary}>
+          <div data-reveal-x={variant === "nutrition" ? undefined : "680"} data-end-summary={variant === "nutrition" ? "" : undefined} className={styles.summary}>
             <h4>{trend.headline}</h4>
             <div className={styles.metrics}>
               {trend.metrics.map(metric => <div key={metric.label}>

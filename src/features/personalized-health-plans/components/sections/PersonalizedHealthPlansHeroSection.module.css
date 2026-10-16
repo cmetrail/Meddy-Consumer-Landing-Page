@@ -1,5 +1,7 @@
 .hero { position: relative; min-height: max(1024px, 100dvh); overflow: hidden; background: linear-gradient(126.0828deg, #4e7959 3.1626%, #4a9990 104.37%); color: white; }
 .header { position: relative; z-index: 30; }
+.glow { position: absolute; pointer-events: none; inset: 5% -15% 0 30%; background: radial-gradient(ellipse at center, rgba(198,255,219,.13), transparent 65%); }
+.artworkLayer { position: absolute; inset: 0; }
 .content { position: relative; width: calc(100% - 240px); max-width: 1200px; min-height: 919px; margin-inline: auto !important; display: flex; align-items: center; }
 .copy { position: relative; z-index: 2; width: 100%; }
 .heading { display: flex; flex-direction: column; align-items: flex-start; font-weight: 400; }
@@ -7,8 +9,11 @@
 .serif { font-family: var(--font-dm-serif), Georgia, serif !important; font-size: 104px; font-style: italic; line-height: 1.5; color: #d8ffde; }
 .summary { font-size: 20px; line-height: 1.5; }
 .description { margin-top: 35px !important; color: #e2dada; font-size: 16px; line-height: 1.5; }
-.cta { display: inline-flex; align-items: center; justify-content: center; margin-top: 20px !important; padding: 16px 24px !important; border-radius: 49px; background: white; color: var(--color-accent); font-size: 20px; line-height: normal; transition: background 180ms, transform 180ms; }
-.cta:hover { background: #d8ffde; transform: translateY(-2px); }
+.ctaWrap { width: fit-content; }
+.cta { position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; margin-top: 20px !important; padding: 16px 24px !important; border-radius: 49px; background: white; color: var(--color-accent); font-size: 20px; line-height: normal; transition: background 240ms, box-shadow 240ms; }
+.cta:hover { background: #d8ffde; box-shadow: 0 8px 28px rgba(17,64,46,.18); }
+.ctaLabel { position: relative; }
+.ctaShine { position: absolute; inset: -60% auto -60% -50%; width: 40%; transform: skewX(-24deg); background: linear-gradient(90deg, transparent, rgba(114,207,158,.25), transparent); pointer-events: none; }
 .cta:focus-visible { outline: 2px solid white; outline-offset: 5px; }
 /* Artwork follows the 1440 × 1024 Figma canvas; text stays in normal flow. */
 .composition { position: absolute; bottom: 0; right: -155.93px; width: 809.844px; height: 1129px; pointer-events: none; }
@@ -18,12 +23,18 @@
 .portraitFrame { position: absolute; bottom: .65px; right: 18.59px; width: 658.99px; height: 887.819px; overflow: hidden; transform: scaleX(-1); }
 .portrait { position: absolute; height: 114.07%; left: -8.94%; top: -14.06%; width: 123.25%; max-width: none; }
 .dots { position: absolute; bottom: 108.11px; right: 101.6px; width: 412.345px; height: 269.225px; max-width: none; mix-blend-mode: soft-light; }
+/* Keep the overlays quiet when transformed artwork creates a blend context. */
+.grid { opacity: .35; }
+.ellipseA, .ellipseB { opacity: .5; }
+.dots { opacity: .8; }
 .portraitFade { position: absolute; bottom: 0; left: 0; width: 809.831px; height: 166.73px; background: linear-gradient(180deg, rgba(75,145,130,0) 20.268%, #4c9182 92.736%); }
-.badge { position: absolute; display: flex; align-items: center; gap: 8px; padding: 4px 8px !important; border-radius: 56px; background: rgba(255,255,255,.1); backdrop-filter: blur(10px); }
+.badge { position: absolute; }
+.badgeSurface { display: flex; align-items: center; gap: 8px; padding: 4px 8px !important; border-radius: 56px; background: rgba(255,255,255,.1); backdrop-filter: blur(10px); }
 .badgeLabel { font-family: var(--font-dm-serif), Georgia, serif !important; font-size: 16px; font-style: italic; line-height: 1.5; }
 .badgePhoto { position: relative; display: block; width: 51px; height: 40px; overflow: hidden; border-radius: 65px; }
 .badgePhoto img { position: absolute; max-width: none; width: 100%; height: 100%; object-fit: cover; }
-.nutrition { left: 110.918px; bottom: 310px; flex-direction: row-reverse; gap: 4px; }
+.nutrition { left: 110.918px; bottom: 310px; }
+.nutrition .badgeSurface { flex-direction: row-reverse; gap: 4px; }
 .nutrition .badgePhoto { height: 39px; }
 .fitness { left: 240.918px; bottom: 159px; }
 .fitness img { width: 111.51%; height: 148.68%; top: -44.96%; }

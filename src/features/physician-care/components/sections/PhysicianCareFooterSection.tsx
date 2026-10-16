@@ -7,11 +7,11 @@ const photo = "/physician-care/b68d00ff4cdc28d5a49a1c8fd12f2dcc8ccc5769.png";
 
 export default function PhysicianCareFooterSection() {
   return (
-    <section className={styles.section} aria-labelledby="physician-care-footer-heading">
-      <Image src={photo} alt="A physician accompanying her patient outdoors" fill sizes="100vw" className={styles.image} />
+    <section data-pc-chapter="Better care begins with you" className={styles.section} aria-labelledby="physician-care-footer-heading">
+      <Image data-pc-footer-photo src={photo} alt="A physician accompanying her patient outdoors" fill sizes="100vw" className={styles.image} />
       <div className={styles.photo}>
         <div className={styles.shade} aria-hidden="true" />
-        <div className={styles.content}>
+        <div data-pc-reveal className={styles.content}>
           <h2 id="physician-care-footer-heading" className={styles.heading}>
             <span>Because better care begins with</span>
             <em>knowing you.</em>
