@@ -28,7 +28,7 @@
 }
 .glass [data-footer-grid] { grid-template-columns: calc(440 * var(--unit)) minmax(0, 1fr) !important; gap: calc(120 * var(--unit)) !important; }
 .glass [data-footer-brand], .glass [data-footer-col] { opacity: 1 !important; transform: none !important; }
-.glass [data-footer-brand] > img { width: calc(358 * var(--unit)) !important; height: calc(215 * var(--unit)) !important; }
+.glass [data-footer-brand] > a > img { width: calc(358 * var(--unit)) !important; height: calc(215 * var(--unit)) !important; }
 .glass [data-footer-brand] > p {
   max-width: calc(380 * var(--unit)) !important;
   margin-top: calc(24 * var(--unit)) !important;
@@ -147,7 +147,7 @@
       line-height: calc(12 * var(--footer-unit)) !important;
       font-weight: 400 !important;
     }
-    .section .glass [data-footer-brand] > img {
+    .section .glass [data-footer-brand] > a > img {
       order: 2;
       margin-top: calc(23 * var(--footer-unit)) !important;
       width: calc(150 * var(--footer-unit)) !important;

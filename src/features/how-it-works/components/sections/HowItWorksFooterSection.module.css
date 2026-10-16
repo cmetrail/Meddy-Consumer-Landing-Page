@@ -34,7 +34,7 @@
       margin-top: calc(25 * var(--footer-unit)) !important;
     }
 
-    .footer.footer [data-footer-brand] > img {
+    .footer.footer [data-footer-brand] > a > img {
       width: calc(160 * var(--footer-unit)) !important;
       height: calc(96 * var(--footer-unit)) !important;
     }

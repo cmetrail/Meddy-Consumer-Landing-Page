@@ -45,7 +45,7 @@
 
     .footer .glass [data-footer-grid] { margin-top: calc(27 * var(--footer-unit)) !important; }
 
-    .footer .glass [data-footer-brand] > img {
+    .footer .glass [data-footer-brand] > a > img {
       width: calc(160 * var(--footer-unit)) !important;
       height: calc(96 * var(--footer-unit)) !important;
     }

@@ -41,13 +41,15 @@ export function FooterItems({ noTopMargin, className = "", omitSeo = false }: { 
       <div data-footer-inner className="mx-auto w-full max-w-360 px-5 lg:px-10 py-16 pb-4">
         <div data-footer-grid className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto] lg:gap-x-16 lg:gap-y-0">
           <div data-reveal data-footer-brand>
-            <Image
-              src="/app-logo.png"
-              alt="Meddy Health"
-              width={358}
-              height={215}
-              className="h-auto w-50 lg:w-89.5"
-            />
+            <Link href="/" aria-label="Meddy Health homepage" className="block w-fit">
+              <Image
+                src="/app-logo.png"
+                alt="Meddy Health"
+                width={358}
+                height={215}
+                className="h-auto w-50 lg:w-89.5"
+              />
+            </Link>
 
             <p className="max-w-174.75 text-[#F4F4F5] text-[16px] sm:text-[18px] lg:text-[20px] leading-[150%] mt-8">
               Calories, workouts, sleep, labs. Most people manage them separately. Meddy connects

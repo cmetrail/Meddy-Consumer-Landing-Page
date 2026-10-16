@@ -157,7 +157,7 @@
       grid-template-columns: calc(440 * var(--footer-unit)) minmax(0, 1fr) !important;
       gap: calc(100 * var(--footer-unit)) !important;
     }
-    .footerGlass [data-footer-brand] > img { width: calc(358 * var(--footer-unit)) !important; height: calc(215 * var(--footer-unit)) !important; }
+    .footerGlass [data-footer-brand] > a > img { width: calc(358 * var(--footer-unit)) !important; height: calc(215 * var(--footer-unit)) !important; }
     .footerGlass [data-footer-brand] > p {
       max-width: calc(380 * var(--footer-unit)) !important;
       margin-top: calc(28 * var(--footer-unit)) !important;

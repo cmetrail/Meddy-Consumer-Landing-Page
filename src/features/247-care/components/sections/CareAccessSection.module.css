@@ -24,7 +24,7 @@
     .footer .footerPanel [data-footer-grid] {
       margin-top: calc(25 * var(--footer-unit)) !important;
     }
-    .footer .footerPanel [data-footer-brand] > img {
+    .footer .footerPanel [data-footer-brand] > a > img {
       width: calc(160 * var(--footer-unit)) !important;
       height: calc(96 * var(--footer-unit)) !important;
     }
