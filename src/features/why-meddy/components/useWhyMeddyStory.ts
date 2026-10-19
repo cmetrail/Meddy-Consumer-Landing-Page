@@ -2,7 +2,7 @@
 
 import type { RefObject } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap, ScrollTrigger, createScrollRefresh } from "@/lib/gsap";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -137,14 +137,13 @@ export function useWhyMeddyStory(scope: RefObject<HTMLElement | null>) {
       });
 
       // Lazy images and web fonts affect trigger geometry. Keep cleanup route-local.
-      let disposed = false;
-      const refresh = () => { if (!disposed) ScrollTrigger.refresh(); };
+      const { refresh, dispose } = createScrollRefresh();
       const images = Array.from(root.querySelectorAll("img")).filter(img => !img.complete);
       images.forEach(img => img.addEventListener("load", refresh, { once: true }));
       document.fonts.ready.then(refresh);
       const frame = requestAnimationFrame(refresh);
       return () => {
-        disposed = true;
+        dispose();
         cancelAnimationFrame(frame);
         images.forEach(img => img.removeEventListener("load", refresh));
       };

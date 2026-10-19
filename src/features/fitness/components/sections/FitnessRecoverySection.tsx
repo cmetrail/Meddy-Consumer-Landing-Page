@@ -74,14 +74,14 @@ export default function FitnessRecoverySection() {
     >
       {/* mobile: plain cover */}
       <div className="absolute inset-0 md:hidden">
-        <Image src="/fitness/fitness-recovery-bg-351fee.png" alt="" fill priority sizes="100vw" className="object-cover" />
+        <Image src="/fitness/fitness-recovery-bg-351fee.png" alt="" fill sizes="100vw" className="object-cover" />
       </div>
       {/* md+: Figma placement (1875 wide, centred, 275px above the top edge) */}
       <div
         className="pointer-events-none absolute left-1/2 hidden -translate-x-1/2 md:block"
         style={{ width: `max(${u(1875)}, 100%)`, aspectRatio: "1875 / 1250", top: u(-275) }}
       >
-        <Image src="/fitness/fitness-recovery-bg-351fee.png" alt="" fill priority sizes="2000px" className="object-cover" />
+        <Image src="/fitness/fitness-recovery-bg-351fee.png" alt="" fill sizes="2000px" className="object-cover" />
       </div>
       <div
         className="absolute inset-x-0 bottom-0 h-full md:h-[calc(555*var(--u))]"

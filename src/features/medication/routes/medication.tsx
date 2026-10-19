@@ -1,6 +1,6 @@
 import React from "react";
 import MedicationHeroSection from "../components/sections/MedicationHeroSection";
-import MedicationTreatmentChangesSection from "../components/sections/MedicationTreatmentChangesSection";
+import MedicationTreatmentTimelineSection from "../components/sections/MedicationTreatmentTimelineSection";
 import MedicationWholeResponseSection from "../components/sections/MedicationWholeResponseSection";
 import MedicationConnectSection from "../components/sections/MedicationConnectSection";
 import MedicationOrbitalSection from "../components/sections/MedicationOrbitalSection";
@@ -11,7 +11,8 @@ export const MedicationPage = () => {
     <main>
       <MedicationHeroSection />
       <MedicationConnectSection />
-      <MedicationTreatmentChangesSection />
+      <MedicationTreatmentTimelineSection />
+      {/* <MedicationTreatmentChangesSection /> */}
       <MedicationWholeResponseSection />
       <MedicationOrbitalSection />
       <MedicationFaqSection />

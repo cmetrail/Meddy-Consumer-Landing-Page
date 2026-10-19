@@ -1,0 +1,24 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="682.415" height="306.721" viewBox="0 0 682.415 306.721" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 1707478174">
+<g id="Group 1707478173">
+<path id="Vector 7527" d="M17.3496 35.9569C73.3908 65.9847 126.759 76.6221 196.66 79.0349" stroke-width="1.73495" stroke="white"/>
+<path id="Vector 7529" d="M214.557 81.4394C214.557 81.4394 311.473 105.518 354.154 121C396.834 136.482 419.281 148.049 419.281 148.049" stroke-width="1.73495" stroke="white"/>
+<path id="Vector 7530" d="M443.859 164.789C506.709 203.194 611.425 238.815 671.427 244.629" stroke-width="1.73495" stroke="white"/>
+<circle id="Ellipse 2220" cx="430.847" cy="154.411" r="4.62654" fill="#BABABA"/>
+<circle id="Ellipse 2221" cx="205.881" cy="79.808" r="4.62654" fill="#BABABA"/>
+<circle id="Ellipse 2222" cx="8.0969" cy="30.651" r="4.62654" fill="#BABABA"/>
+<path id="Ellipse 2219" d="M681.259 245.785C681.259 248.979 678.67 251.568 675.476 251.568C672.282 251.568 669.692 248.979 669.692 245.785C669.692 242.591 672.282 240.002 675.476 240.002C678.67 240.002 681.259 242.591 681.259 245.785Z" fill="#BABABA" stroke-width="2.31327" stroke="#4D9076"/>
+</g>
+<path id="Vector 7531" d="M118.929 74.8835C63.278 63.1 6.86322 36.434 6.86322 36.434L6.8441 288.526L675.148 288.475L675.148 251.279L622.671 238.798L552.315 218.851L427.75 161.029L385.364 139.635L333.173 119.976L206.877 84.7082C206.877 84.7082 148.629 81.1722 118.929 74.8835Z" fill="url(#paint0_linear_0_27)" fill-opacity="0.53"/>
+<path id="Line 196" d="M7.2291 36.434L7.22909 269.496" stroke-width="0.578318" stroke="white" stroke-opacity="0.2"/>
+<path id="Line 197" d="M206.171 86.1696L206.171 269.496" stroke-width="0.578318" stroke="white" stroke-opacity="0.2"/>
+<path id="Line 198" d="M431.136 162.507L431.136 269.496" stroke-width="0.578318" stroke="white" stroke-opacity="0.2"/>
+<path id="Line 199" d="M675.186 250.99L675.186 271.231" stroke-width="0.578318" stroke="white" stroke-opacity="0.2"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_27" x1="369.973" y1="111.532" x2="355.131" y2="398.222" gradientUnits="userSpaceOnUse">
+<stop offset="0.182189" stop-color="#CFFFD8" stop-opacity="0.3"/>
+<stop offset="0.562866" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>

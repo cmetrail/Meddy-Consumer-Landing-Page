@@ -11,13 +11,14 @@ import styles from "./FullScreenMenu.module.css";
 
 const COLUMNS = [
   [
-    { label: "Pricing", href: "/pricing" },
+    { label: "Physician Care", href: "/physician-care" },
     { label: "Personalized health plans", href: "/personalized-health-plans" },
     { label: "Medication management", href: "/medication" },
     { label: "Longevity and preventive health", href: "/longevity" },
   ],
   [
     { label: "Labs and biomarkers tracking", href: "/biomarkers" },
+    { label: "What We Test", href: "/what-we-test" },
     { label: "Weight loss & metabolic", href: "/weight-loss" },
     { label: "Wearables & health data", href: "/wearables" },
     { label: "24/7 Primary care access", href: "/247-care" },
@@ -36,10 +37,10 @@ const DEFAULT_PREVIEW = {
 
 const PREVIEWS: Record<string, typeof DEFAULT_PREVIEW> = {
   default: DEFAULT_PREVIEW,
-  "/pricing": {
-    src: "/longevity/prev-photo.jpg",
-    title: "Care with clarity.",
-    description: "Explore your Meddy membership.",
+  "/physician-care": {
+    src: "/physician-care/physician-hug-28a6d9.png",
+    title: "Care that knows you.",
+    description: "A physician by your side.",
   },
   "/personalized-health-plans": {
     src: "/physician-care/physician-hug-28a6d9.png",
@@ -56,6 +57,11 @@ const PREVIEWS: Record<string, typeof DEFAULT_PREVIEW> = {
     src: "/biomarkers/annual-labs-new.png",
     title: "Know yourself better.",
     description: "Deeper insights into your health.",
+  },
+  "/what-we-test": {
+    src: "/what-we-test/labs-hero-card-5060b1.png",
+    title: "See the full picture.",
+    description: "Explore the markers behind your health.",
   },
   "/weight-loss": {
     src: "/weight-loss/whole/bg.png",

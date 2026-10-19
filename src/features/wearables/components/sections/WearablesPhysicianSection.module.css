@@ -2,7 +2,7 @@
   --physician-unit: min(0.0590632vw, 1px);
   display: flex;
   justify-content: center;
-  padding: calc(40 * var(--physician-unit)) 0 calc(140 * var(--physician-unit)) !important;
+  padding: calc(40 * var(--physician-unit) + 40px) 0 calc(140 * var(--physician-unit)) !important;
   background: #fafafa;
 }
 

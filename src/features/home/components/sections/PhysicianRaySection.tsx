@@ -73,7 +73,7 @@ export default function PhysicianRaySection() {
 
         <div data-ray-social className={styles.social}>
           <Image
-            src="/home/one-physician.svg"
+            src="/home/one-physician.optimized.svg"
             alt=""
             width={337}
             height={268}

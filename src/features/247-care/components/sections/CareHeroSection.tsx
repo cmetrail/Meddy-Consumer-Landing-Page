@@ -49,6 +49,7 @@ function ChatMockup() {
           src="/247-care/hero-phone-d58c1b.png"
           alt="Meddy app"
           fill
+          loading="eager"
           sizes="203px"
           className="object-cover"
         />
@@ -118,8 +119,9 @@ export default function CareHeroSection() {
               src="/247-care/hero-doctor-77e094.png"
               alt="Meddy physician"
               fill
-              priority
-              sizes="(min-width: 1024px) min(762px, 53vw), 100vw"
+              loading="eager"
+              fetchPriority="high"
+              sizes="(min-width: 1440px) 762px, (min-width: 1024px) 53vw, 101vw"
               className="object-cover object-bottom"
             />
           </div>
@@ -127,7 +129,7 @@ export default function CareHeroSection() {
       </div>
 
       {/* Text content */}
-      <div className={`${motionStyles.content} relative z-20 mx-auto flex w-full max-w-360 flex-none flex-col px-5 pb-10 lg:flex-1 lg:px-[75px]`}>
+      <div className={`${motionStyles.content} relative z-20 mx-auto flex w-full max-w-360 flex-none flex-col px-5 pb-10 lg:flex-1 lg:px-10`}>
         <div
           data-care-copy
           className="mt-8 flex max-w-[721px] flex-col lg:mt-10"

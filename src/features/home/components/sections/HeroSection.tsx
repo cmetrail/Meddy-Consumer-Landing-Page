@@ -15,7 +15,7 @@ gsap.registerPlugin(useGSAP);
 const SLIDES = [
   {
     bg: "radial-gradient(49.4% 83.3% at 53.93% 56.81%, #2FC380 0%, #1D6B40 100%)",
-    image: "/doctor.png",
+    image: "/doctor.lossless.webp",
     rightImage: "/right-doctor.png",
     arrow: "#17925A",
     width: 1200,
@@ -26,7 +26,7 @@ const SLIDES = [
   },
   {
     bg: "radial-gradient(49.4% 83.3% at 53.93% 56.81%, #E6B27D 0%, #B48037 100%)",
-    image: "/womenn.png",
+    image: "/womenn.lossless.webp",
     rightImage: "/right-nutrition.png",
     arrow: "#B48037",
     width: 835,
@@ -37,7 +37,7 @@ const SLIDES = [
   },
   {
     bg: "radial-gradient(49.4% 83.3% at 53.93% 56.81%, #DDD1B9 0%, #B3A07E 100%)",
-    image: "/runner.png",
+    image: "/runner.lossless.webp",
     rightImage: "/right-workout.png",
     arrow: "#B3A07E",
     width: 757,
@@ -48,7 +48,7 @@ const SLIDES = [
   },
   {
     bg: "radial-gradient(49.4% 83.3% at 53.93% 56.81%, #B8DCED 0%, #8BA9B8 100%)",
-    image: "/women-with-pillow.png",
+    image: "/women-with-pillow.lossless.webp",
     rightImage: "/right-sleep.png",
     arrow: "#547B93",
     width: 942,
@@ -190,7 +190,12 @@ export default function HeroSection() {
     // Load the next image during the reading interval, before its entrance.
     const nextImage =
       imageRefs.current[(from + 1) % SLIDES.length]?.querySelector("img");
-    if (nextImage) nextImage.loading = "eager";
+    if (nextImage) {
+      nextImage.loading = "eager";
+      // Decode during the reading interval instead of during its entrance.
+      // A failed request must not interrupt the carousel or change its timing.
+      void nextImage.decode().catch(() => {});
+    }
 
     gsap.fromTo(
       fill,

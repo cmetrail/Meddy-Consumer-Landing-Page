@@ -24,28 +24,20 @@ export function useCareHeroMotion() {
       const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       intro.from(select("[data-care-line]"), {
-        yPercent: 105, rotationX: -20, autoAlpha: 0, duration: 1.3,
-        stagger: .16, transformOrigin: "50% 100%",
-      }, .12)
-        .from(select("[data-care-description]"), { y: 18, autoAlpha: 0, duration: 1 }, .58)
-        .from(select("[data-care-cta]"), { y: 14, autoAlpha: 0, duration: .85 }, .78);
+        y: 10, duration: .5, stagger: .06, clearProps: "transform",
+      }, 0)
+        .from(select("[data-care-description]"), { y: 8, duration: .45, clearProps: "transform" }, .06)
+        .from(select("[data-care-cta]"), { y: 6, duration: .4, clearProps: "transform" }, .1);
 
+      // Keep the LCP image visible while it loads; animate only a small translation.
       intro.from(select("[data-care-portrait]"), {
-          x: desktop ? 38 : 0, y: 28, scale: 1.045, autoAlpha: 0, duration: 1.9,
-          transformOrigin: "70% 80%",
-        }, desktop ? 0 : .65);
+          x: desktop ? 10 : 0, y: 8, duration: .6, clearProps: "transform",
+        }, 0);
 
-      if (desktop) {
-        intro.from(select("[data-care-chat]"), {
-            y: 32, rotationX: 7, autoAlpha: 0, duration: 1.2,
-            transformPerspective: 1000, transformOrigin: "50% 100%",
-          }, .65)
-          .from(select("[data-care-phone]"), { y: 22, duration: 1.1 }, .9)
-          .from(select("[data-care-message]"), {
-            y: 12, scale: .94, autoAlpha: 0, duration: .65,
-            stagger: .24, transformOrigin: "50% 100%",
-          }, 1.12);
-      }
+      intro.from(select("[data-care-float]"), {
+        autoAlpha: 0, duration: 1.2, ease: "power1.out",
+        clearProps: "opacity,visibility",
+      }, .1);
 
       // Dedicated layers keep entrance, scroll and pointer transforms independent.
       gsap.timeline({ scrollTrigger: {
@@ -54,21 +46,14 @@ export function useCareHeroMotion() {
         .to(select("[data-care-copy]"), { y: desktop ? -40 : -16, ease: "none" }, 0)
         .to(select("[data-care-depth]"), { y: desktop ? -75 : 0, ease: "none" }, 0);
 
-      const ambient = gsap.timeline({ repeat: -1, yoyo: true, paused: true,
-        defaults: { duration: 5, ease: "sine.inOut" },
-      }).to(select("[data-care-glow]"), { xPercent: 3, scale: 1.05 }, 0);
-      if (desktop) ambient.to(select("[data-care-float]"), { y: -4 }, 0);
-
       const shine = gsap.fromTo(select("[data-care-shine]"), { xPercent: 0 }, {
-        xPercent: 480, duration: 1.1, ease: "power2.inOut", paused: true,
+        xPercent: 480, duration: .65, ease: "power2.inOut", paused: true,
       });
-      intro.call(() => { shine.restart(); }, [], 1.45);
 
       const syncMotion = () => {
         const bounds = root.getBoundingClientRect();
         const visible = !document.hidden && bounds.bottom > 0 && bounds.top < innerHeight;
         intro.paused(!visible);
-        ambient.paused(!visible);
         if (!visible) shine.pause();
       };
       ScrollTrigger.create({ trigger: root, start: "top bottom", end: "bottom top", onToggle: syncMotion });

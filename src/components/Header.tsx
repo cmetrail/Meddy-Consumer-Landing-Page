@@ -10,7 +10,7 @@ import FullScreenMenu from "./FullScreenMenu";
 
 const NAV_ITEMS = [
   { label: "How it works", href: "/how-it-works" },
-  { label: "Physician Care", href: "/physician-care" },
+  { label: "Pricing", href: "/pricing" },
   { label: "WHY MEDDY", href: "/why-meddy" },
   { label: "Nutrition", href: "/nutrition" },
   { label: "Fitness", href: "/fitness" },

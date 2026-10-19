@@ -1,0 +1,74 @@
+.section {
+  width: 100%;
+  overflow: hidden;
+  color: #f4f4f5;
+  background: linear-gradient(118.26deg, #203c31 0.17%, #56a284 99.83%);
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 17.733px;
+  width: calc(100% - 80px);
+  max-width: 1200px;
+  margin-inline: auto !important;
+  padding-block: 120px !important;
+}
+.header { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+.title { font-size: 32px; font-weight: 400; line-height: 1.5; color: #d2d2d2; }
+.title span, .title em { display: block; }
+.lineMask { overflow: clip; }
+.title em { font-size: 64px; font-weight: 400; color: #f4f4f5; }
+.intro { display: flex; flex-direction: column; gap: 8px; text-align: right; }
+.subtitle { font-size: 32px; line-height: 1.5; }
+.description { font-size: 16px; line-height: 1.5; }
+.plot { position: relative; width: min(730.994px, 100%); aspect-ratio: 730.994 / 428.533; container-type: inline-size; }
+.plotCanvas { position: absolute; width: 730.994px; height: 428.533px; transform: scale(calc(100cqw / 730.994px)); transform-origin: top left; }
+.curve { position: absolute; left: 4.63px; top: 116.24px; max-width: none; }
+.card { position: absolute; width: 111.615px; height: 133.591px; perspective: 700px; }
+.cardSurface { position: absolute; inset: 0; overflow: hidden; border-radius: 10.988px; background: rgb(255 255 255 / 10%); transform-style: preserve-3d; }
+.shine { position: absolute; inset: -50% -100%; pointer-events: none; opacity: 0; background: linear-gradient(115deg, transparent 35%, rgb(255 255 255 / 30%) 50%, transparent 65%); transform: translateX(-65%); }
+.photo { position: absolute; left: 5.784px; top: 5.783px; width: 100.627px; height: 94.266px; border-radius: 4.048px; overflow: hidden; }
+.photoImage { position: absolute; width: 100%; height: 100%; object-fit: cover; }
+.photoImage.start, .photoImage.end { height: 133.39% !important; object-fit: fill; }
+.photoImage.start { top: 0.07% !important; }
+.photoImage.end { top: -0.27% !important; }
+.cardLabel { position: absolute; top: 107.57px; left: 5.784px; width: 100.627px; display: flex; align-items: center; justify-content: space-between; font-size: 6.94px; line-height: 1.5; color: #bdbdbd; }
+.cardLabel span:last-child { font-size: 11.566px; color: #fff; }
+.milestone { position: absolute; top: 382.27px; display: flex; flex-direction: column; gap: 4.627px; font-size: 11.566px; line-height: 1.5; }
+.milestone p:last-child { color: #b3b3b7; font-size: 8.096px; }
+.footer { display: flex; align-items: flex-end; gap: 48px; width: 100%; }
+.alongside { flex: 1; min-width: 0; }
+.alongside h3 { font-size: 32px; line-height: 1.5; font-weight: 400; }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; list-style: none; margin-top: 20px !important; font-size: 16px; line-height: 1.5; }
+.legend li { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.legend img { flex: none; }
+.calories { flex: none; font-size: 20px; line-height: 1.5; color: #d2d2d2; }
+.values { display: flex; align-items: center; gap: 8px; margin-top: 8px !important; font-size: 56px; font-weight: 500; color: #f4f4f5; }
+.values img { flex: none; }
+.values span { font-variant-numeric: tabular-nums; }
+.calorieNote { margin-top: 16px !important; }
+@media (max-width: 1100px) {
+  .content { padding-block: 80px !important; }
+  .title, .subtitle, .alongside h3 { font-size: 28px; }
+  .title em { font-size: 54px; }
+  .footer { gap: 24px; }
+  .values { font-size: 48px; }
+}
+@media (max-width: 1023px) {
+  .section { background: linear-gradient(102.95deg, #203c31 0.17%, #56a284 99.83%); }
+  .content { width: calc(100% - 40px); padding-block: 64px !important; gap: 32px; }
+  .header { grid-template-columns: 1fr; gap: 20px; }
+  .title { font-size: 24px; }
+  .title em { font-size: 44px; }
+  .intro { text-align: left; }
+  .subtitle { font-size: 24px; }
+  .description { font-size: 14px; }
+  .footer { flex-direction: column; align-items: stretch; gap: 32px; }
+  .alongside h3 { font-size: 24px; }
+  .legend { font-size: 12px; gap: 6px; margin-top: 12px !important; }
+  .legend li { gap: 6px; }
+  .calories { align-self: center; font-size: 16px; text-align: center; }
+  .values { justify-content: center; font-size: 40px; }
+  .calorieNote { margin-top: 8px !important; }
+}

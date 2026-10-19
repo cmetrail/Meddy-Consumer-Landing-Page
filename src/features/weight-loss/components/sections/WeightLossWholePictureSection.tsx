@@ -22,9 +22,9 @@ const M_GREEN = [
 ] as const;
 
 const D_GREEN = [
-  { icon: "utensils.svg", title: "Nutrition", sub: "Calories • Macros • Hydration", style: { left: "calc(50% - 600px + 733px)", top: 340 }, w: 335, gap: 61 },
-  { icon: "footprints.svg", title: "Activity", sub: "Workouts • Cardio • Daily activity", style: { left: "calc(50% - 600px + 857px)", top: 536 }, w: 313, gap: 15 },
-  { icon: "moon.svg", title: "Sleep", sub: "Sleep quality • Consistency • Recovery", style: { left: "calc(50% - 600px + 103px)", top: 467 }, w: 352, gap: 15 },
+  { icon: "utensils.svg", title: "Nutrition", sub: "Calories • Macros • Hydration", style: { left: "calc(50% - 600px + 733px)", top: "12%" }, w: 335, gap: 61 },
+  { icon: "footprints.svg", title: "Activity", sub: "Workouts • Cardio • Daily activity", style: { left: "calc(50% - 600px + 857px)", top: "58%" }, w: 313, gap: 15 },
+  { icon: "moon.svg", title: "Sleep", sub: "Sleep quality • Consistency • Recovery", style: { left: "calc(50% - 600px + 103px)", top: "42%" }, w: 352, gap: 15 },
 ] as const;
 
 function DMetric({ m }: { m: (typeof METRICS)[number] }) {
@@ -55,18 +55,18 @@ function DMetric({ m }: { m: (typeof METRICS)[number] }) {
 export default function WeightLossWholePictureSection() {
   return (
     <section id="weight-loss-whole-picture" className="relative w-full overflow-hidden bg-white">
-      {/* ===================== DESKTOP: fixed px, content box 1200 x 1083 ===================== */}
-      <div className="relative hidden lg:block">
-        {/* full-bleed photo pinned to the bottom (aspect 1672:941) */}
-        <div className="absolute inset-x-0 bottom-0" style={{ aspectRatio: "1672 / 941" }}>
-          <Image src={`${W}/bg.png`} alt="" fill sizes="100vw" className="object-cover" />
+      {/* Desktop keeps all content within one viewport; the photo crops at the bottom. */}
+      <div className="relative hidden h-[min(960px,100svh)] lg:block">
+        {/* Preserve the top of the photo as the available height changes. */}
+        <div className="absolute inset-x-0 bottom-0 top-[25%]">
+          <Image src={`${W}/bg.png`} alt="" fill sizes="100vw" className="object-cover object-top" />
         </div>
 
-        <div className="relative mx-auto w-full max-w-[1200px] py-[120px]">
-          <div className="relative" style={{ height: 1083 }}>
+        <div className="relative mx-auto h-full w-full max-w-[1200px] py-[clamp(20px,4svh,48px)]">
+          <div className="relative flex h-full flex-col gap-4">
             <motion.div
-              className="absolute left-1/2 flex -translate-x-1/2 flex-col items-center whitespace-nowrap"
-              style={{ top: 0, width: 811, gap: 16 }}
+              className="relative mx-auto flex shrink-0 flex-col items-center whitespace-nowrap"
+              style={{ width: 811, gap: 16 }}
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
@@ -82,21 +82,24 @@ export default function WeightLossWholePictureSection() {
               <p className="text-center text-[20px] font-normal leading-[1.5] text-[#6E7A72]">Meddy brings the factors that influence your progress together in one place.</p>
             </motion.div>
 
-            {D_GREEN.map((g) => (
-              <div
-                key={g.title}
-                className="absolute flex items-center overflow-hidden rounded-[12px] bg-[rgba(23,146,90,0.2)] p-4"
-                style={{ ...g.style, height: 99, width: g.w, gap: g.gap }}
-              >
-                <Image src={`${W}/${g.icon}`} alt="" width={48} height={48} unoptimized className="shrink-0" style={{ width: 48, height: 48 }} />
-                <div className="flex flex-col justify-between leading-[1.5] text-[#46524B]" style={{ height: 67 }}>
-                  <span className="comprehensive-serif text-[32px] italic">{g.title}</span>
-                  <span className="whitespace-nowrap text-[14px] font-normal">{g.sub}</span>
+            <div className="relative min-h-0 flex-1">
+              {D_GREEN.map((g) => (
+                <div
+                  key={g.title}
+                  className="absolute flex items-center overflow-hidden rounded-[12px] bg-[rgba(23,146,90,0.2)] p-4"
+                  style={{ ...g.style, height: 99, width: g.w, gap: g.gap }}
+                >
+                  <Image src={`${W}/${g.icon}`} alt="" width={48} height={48} unoptimized className="shrink-0" style={{ width: 48, height: 48 }} />
+                  <div className="flex flex-col justify-between leading-[1.5] text-[#46524B]" style={{ height: 67 }}>
+                    <span className="comprehensive-serif text-[32px] italic">{g.title}</span>
+                    <span className="whitespace-nowrap text-[14px] font-normal">{g.sub}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
 
-            <div className="absolute left-1/2 flex -translate-x-1/2 items-center" style={{ top: 925, width: 912, gap: 16 }}>
+            </div>
+
+            <div className="relative mx-auto flex shrink-0 items-center" style={{ width: 912, gap: 16 }}>
               {METRICS.map((m) => (
                 <DMetric key={m.title} m={m} />
               ))}
@@ -106,7 +109,7 @@ export default function WeightLossWholePictureSection() {
       </div>
 
       {/* ===================== MOBILE (<lg): Figma 12722:8904, 402 x 874 ===================== */}
-      <div className="relative overflow-hidden bg-[#F5F5F0] lg:hidden" style={{ "--m": "calc(min(100vw, 500px) / 402)", height: m(874) } as React.CSSProperties}>
+      <div className="relative overflow-hidden bg-[#F5F5F0] lg:hidden" style={{ "--m": "min(calc(min(100vw, 500px) / 402), calc(100svh / 874))", height: m(874) } as React.CSSProperties}>
         <div className="absolute inset-x-0 bottom-0" style={{ height: m(226) }}>
           <Image src={`${W}/bg.png`} alt="" fill sizes="100vw" className="object-cover" />
         </div>

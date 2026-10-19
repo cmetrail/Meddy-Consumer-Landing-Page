@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 import { DESKTOP_MOTION } from "@/lib/motion";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap, ScrollTrigger, createScrollRefresh } from "@/lib/gsap";
 import { setLenis } from "@/lib/lenis";
 
 if (typeof window !== "undefined") {
@@ -38,12 +38,12 @@ export default function SmoothScrollProvider({
       gsap.ticker.lagSmoothing(500, 33);
 
       let refreshTimer: ReturnType<typeof setTimeout>;
+      const batchedRefresh = createScrollRefresh(() => lenis.resize());
       const refresh = () => {
         if (disposed) return;
         clearTimeout(refreshTimer);
         refreshTimer = setTimeout(() => {
-          lenis.resize();
-          ScrollTrigger.refresh();
+          batchedRefresh.refresh();
         }, 150);
       };
 
@@ -58,6 +58,7 @@ export default function SmoothScrollProvider({
         window.removeEventListener("load", refresh);
         observer.disconnect();
         clearTimeout(refreshTimer);
+        batchedRefresh.dispose();
         gsap.ticker.remove(ticker);
         lenis.destroy();
         setLenis(null);

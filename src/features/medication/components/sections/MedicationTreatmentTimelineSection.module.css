@@ -1,0 +1,64 @@
+.section { overflow: hidden; background: #effff2; color: #6e7a72; }
+.scene { position: relative; max-width: 1440px; aspect-ratio: 3 / 2; margin: 0 auto !important; }
+.heading { position: absolute; top: 12.7%; left: max(40px, calc((100% - 1440px) / 2 + 40px)); font-size: clamp(24px, 2.5vw, 36px); font-weight: 400; line-height: 1.55; text-transform: uppercase; letter-spacing: -.015em; }
+.heading span, .heading em { display: block; }
+.heading em { font-weight: 500; color: #46524b; }
+.question { position: absolute; right: 8.333%; top: 23%; font-size: clamp(22px, 2.36vw, 34px); line-height: 1.3; text-align: right; letter-spacing: -.035em; }
+.question em { font-family: var(--font-dm-serif), Georgia, serif; color: #46524b; }
+.timeline { position: absolute; top: 36.458333%; left: 0; width: 100%; height: 21.875%; }
+.timelineCurve { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mobileCurve { display: none; }
+.milestones { position: absolute; inset: 0; list-style: none; }
+.milestone { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 4px; transform: translateX(-50%); white-space: nowrap; font-size: clamp(11px, 1.111vw, 16px); line-height: 1.3; color: #86c99d; }
+.milestone:nth-child(1) { left: 10.277778%; top: calc(49.52381% - 9px); }
+.milestone:nth-child(2) { left: 40.486111%; top: calc(10% - 9px); }
+.milestone:nth-child(3) { left: 73.402778%; top: calc(59.047619% - 9px); }
+.milestone:nth-child(4) { left: 94.583333%; top: calc(28.095238% - 9px); }
+.dot { display: block; width: 18px; height: 18px; border-radius: 50%; background: #8ccba2; margin-bottom: 6px !important; }
+.milestone:nth-child(3) .dot { background: radial-gradient(circle at 45% 40%, #8ccba2, #17925a); }
+.milestone time { color: #009b52; }
+.card { position: absolute; right: 8.333%; bottom: 5.5%; width: 33.472222%; height: 38.2%; border-radius: 12px; padding: 1.666667% !important; background: #83c17e; color: #fffef2; display: flex; flex-direction: column; }
+.metrics { display: grid; grid-template-columns: 1.1fr 1fr; }
+.metrics > div { border-left: 1px solid #e3f0df; padding: 0 8px !important; }
+.metrics span { font-size: clamp(11px, 1.111vw, 16px); white-space: nowrap; }
+.metrics strong { display: block; font-size: clamp(25px, 2.778vw, 40px); font-weight: 700; line-height: 1.5; white-space: nowrap; }
+.result { text-align: right; color: #17925a; font-size: clamp(24px, 2.778vw, 40px); font-weight: 500; font-style: italic; margin-top: auto !important; margin-bottom: 0 !important; }
+.result span { font-style: normal; }
+.chart { display: block; width: 100%; height: 38%; overflow: visible; }
+.axis { display: flex; justify-content: space-between; font-size: clamp(10px, .973vw, 14px); }
+.note { position: absolute; left: 8.333%; bottom: 7.4%; border-left: 7px solid #17925a; padding-left: 9px !important; font-size: clamp(12px, 1.111vw, 16px); line-height: 1.5; font-style: italic; }
+
+@media (max-width: 1023px) {
+  .desktopCurve { display: none; }
+  .mobileCurve { display: block; }
+  .scene { aspect-ratio: auto; padding: 64px 20px 40px !important; display: flex; flex-direction: column; }
+  .heading { position: static; font-size: clamp(22px, 3.6vw, 32px); line-height: 1.5; }
+  .question { position: static; align-self: flex-end; margin-top: 32px !important; font-size: 24px; }
+  .timeline { position: relative; top: auto; width: calc(100% + 40px); margin: 24px -20px 12px !important; height: 200px; }
+  .milestone { font-size: 11px; gap: 5px; }
+  .milestone:nth-child(1) { left: 13%; top: calc(49.52381% - 6.5px); }
+  .milestone:nth-child(2) { left: 37%; top: calc(10% - 6.5px); }
+  .milestone:nth-child(3) { left: 61%; top: calc(59.047619% - 6.5px); }
+  .milestone:nth-child(4) { left: 84%; top: calc(28.095238% - 6.5px); }
+  .dot { width: 13px; height: 13px; }
+  .card { position: relative; right: auto; bottom: auto; align-self: flex-end; width: min(100%, 430px); height: 326px; padding: 22px !important; }
+  .metrics span { font-size: 12px; }
+  .metrics strong { font-size: 34px; }
+  .result { font-size: 34px; }
+  .axis { font-size: 11px; }
+  .note { position: static; margin-top: 32px !important; align-self: flex-start; font-size: 13px; }
+  .desktopBreak { display: none; }
+}
+
+@media (max-width: 360px) {
+  .scene { padding: 48px 20px 32px !important; }
+  .heading { font-size: 21px; }
+  .question { font-size: 22px; }
+  .timeline { width: calc(100% + 40px); margin-left: -20px !important; margin-right: -20px !important; }
+  .milestone { font-size: 10px; }
+  .card { height: 290px; padding: 18px !important; }
+  .metrics span { font-size: 10px; }
+  .metrics strong { font-size: 30px; }
+}
+
+

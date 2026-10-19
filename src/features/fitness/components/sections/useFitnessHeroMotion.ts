@@ -26,21 +26,21 @@ export function useFitnessHeroMotion() {
       // Each transform has its own layer so scroll and pointer motion can overlap the entrance.
       const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
       intro.from(select("[data-fitness-reveal]"), {
-        autoAlpha: 0, scale: 1.09, x: desktop ? 45 : 15, y: 24,
-        transformOrigin: "70% 55%", duration: 2.1,
+        scale: 1.04, x: desktop ? 20 : 8, y: 12,
+        transformOrigin: "70% 55%", duration: 0.7,
       }, 0)
         .from(select("[data-fitness-line]"), {
-          yPercent: 110, rotationX: -35, autoAlpha: 0,
-          transformOrigin: "50% 100%", stagger: 0.14,
-          duration: 1.25, ease: "power4.out",
-        }, 0.2)
-        .from(select("[data-fitness-description]"), { y: 18, autoAlpha: 0, duration: 1 }, 0.75)
-        .from(select("[data-fitness-cta]"), { y: 14, autoAlpha: 0, duration: 0.85 }, 0.95);
+          yPercent: 35, rotationX: -10, autoAlpha: 0.6,
+          transformOrigin: "50% 100%", stagger: 0.06,
+          duration: 0.55, ease: "power4.out",
+        }, 0)
+        .from(select("[data-fitness-description]"), { y: 8, autoAlpha: 0.6, duration: 0.4 }, 0.1)
+        .from(select("[data-fitness-cta]"), { y: 6, autoAlpha: 0.6, duration: 0.4 }, 0.2);
 
       const shine = gsap.fromTo(select("[data-fitness-shine]"), { xPercent: 0 }, {
         xPercent: 460, duration: 1.15, ease: "power2.inOut", paused: true,
       });
-      intro.call(() => shine.restart(), [], 1.6);
+      intro.call(() => shine.restart(), [], 0.65);
 
       gsap.timeline({ scrollTrigger: {
         trigger: root, start: "top top", end: "bottom top", scrub: 1.2,

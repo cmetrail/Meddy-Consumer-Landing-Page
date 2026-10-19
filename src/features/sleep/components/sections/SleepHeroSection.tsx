@@ -119,9 +119,14 @@ function Lines({ k, x, y, w, h }: { k: K; x: number; y: number; w: number; h: nu
   );
 }
 
-function Person({ k, x, y, w, h }: { k: K; x: number; y: number; w: number; h: number }) {
+function Person({ k, x, y, w, h, fullWidth = false }: { k: K; x: number; y: number; w: number; h: number; fullWidth?: boolean }) {
+  // Overscan the viewport so the cloud image's straight edges stay offscreen.
+  const width = fullWidth ? `max(${k(w)}, calc(100vw + 80px))` : k(w);
+  const height = fullWidth ? `calc(${width} * 753 / 2087)` : k(h);
+  // Keep the cloud bed near its original floor without lifting it into the copy on wide screens.
+  const top = fullWidth ? `max(${k(y - 100)}, calc(${k(y + h)} - ${height}))` : k(y);
   return (
-    <div data-sleep-person data-node-id="12640:5064" className="absolute overflow-hidden" style={{ left: k(x), top: k(y), width: k(w), height: k(h) }}>
+    <div data-sleep-person data-node-id="12640:5064" className="absolute overflow-hidden" style={{ left: fullWidth ? `calc(${k(x + w / 2)} - ${width} / 2)` : k(x), top, width, height }}>
       <div data-sleep-person-reveal className="absolute inset-0">
         <Image
           src={`${A}/d-person.png`}
@@ -205,7 +210,7 @@ export default function SleepHeroSection() {
             {D_BEHIND.map((s, i) => (
               <Cloud key={`b${i}`} s={s} k={u} />
             ))}
-            <Person k={u} x={373} y={-8} w={1507} h={532} />
+            <Person k={u} x={373} y={-8} w={1507} h={532} fullWidth />
             {D_METRICS.map((s) => (
               <Metric key={s.id} s={s} k={u} d />
             ))}

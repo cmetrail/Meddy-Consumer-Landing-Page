@@ -2,7 +2,7 @@
 
 import type { RefObject } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap, ScrollTrigger, createScrollRefresh } from "@/lib/gsap";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -69,14 +69,13 @@ export function useHowItWorksStory(scope: RefObject<HTMLElement | null>) {
         scrollTrigger: { trigger: chapter("footer"), start: "top bottom", end: "bottom bottom", scrub: 1.4 } });
 
       // Images/fonts can change section geometry after hydration, including on touch.
-      let disposed = false;
-      const refresh = () => { if (!disposed) ScrollTrigger.refresh(); };
+      const { refresh, dispose } = createScrollRefresh();
       const images = Array.from(root.querySelectorAll("img")).filter(img => !img.complete);
       images.forEach(img => img.addEventListener("load", refresh, { once: true }));
       document.fonts.ready.then(refresh);
       const frame = requestAnimationFrame(refresh);
       return () => {
-        disposed = true;
+        dispose();
         cancelAnimationFrame(frame);
         images.forEach(img => img.removeEventListener("load", refresh));
       };

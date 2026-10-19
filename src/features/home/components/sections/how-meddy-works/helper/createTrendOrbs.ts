@@ -55,28 +55,32 @@ export async function createTrendOrbs(
   renderer.domElement.setAttribute("aria-hidden", "true");
   renderer.domElement.style.display = "block";
   const lengths = paths.map(path => path.getTotalLength());
+  let width = 0;
+  let height = 0;
+  let view = { x: 0, y: 0, width: 1, height: 1 };
+  let curves: { pointAt: (length: number) => DOMPoint; samples: DOMPoint[] }[] = [];
   const render = () => {
-    const { width, height } = host.getBoundingClientRect();
     if (!width || !height) return;
-    const view = svg.viewBox.baseVal;
     const progress = Math.max(0, Math.min(1, Number(mask.getAttribute("width")) / view.width));
     const revealX = view.x + progress * view.width;
     groups.forEach((group, index) => {
-      const path = paths[index];
-      const svgMatrix = svg.getCTM();
-      const pathMatrix = path.getCTM();
-      const transform = svgMatrix && pathMatrix ? svgMatrix.inverse().multiply(pathMatrix) : undefined;
-      const pointAt = (length: number) => {
-        const point = path.getPointAtLength(length);
-        return transform ? point.matrixTransform(transform) : point;
-      };
-      const start = pointAt(0);
-      const end = pointAt(lengths[index]);
+      const { pointAt, samples } = curves[index];
+      const start = samples[0];
+      const end = samples[256];
       group.visible = revealX >= start.x && revealX <= end.x && progress > 0 && progress < 1;
       // Find the intersection with the horizontal reveal edge on the SVG curve.
-      let lo = 0;
-      let hi = lengths[index];
-      for (let step = 0; step < 22; step++) {
+      // The first eight of the original 22 bisections use cached samples.
+      // Finish on the actual curve, preserving the original precision/motion.
+      let left = 0;
+      let right = 256;
+      while (right - left > 1) {
+        const mid = (left + right) / 2;
+        if (samples[mid].x < revealX) left = mid;
+        else right = mid;
+      }
+      let lo = lengths[index] * left / 256;
+      let hi = lengths[index] * right / 256;
+      for (let step = 0; step < 14; step++) {
         const mid = (lo + hi) / 2;
         if (pointAt(mid).x < revealX) lo = mid;
         else hi = mid;
@@ -91,7 +95,23 @@ export async function createTrendOrbs(
     renderer.render(scene, camera);
   };
   const resize = () => {
-    const { width, height } = host.getBoundingClientRect();
+    ({ width, height } = host.getBoundingClientRect());
+    const box = svg.viewBox.baseVal;
+    view = { x: box.x, y: box.y, width: box.width, height: box.height };
+    const svgMatrix = svg.getCTM();
+    const inverse = svgMatrix?.inverse();
+    curves = paths.map((path, index) => {
+      const pathMatrix = path.getCTM();
+      const transform = inverse && pathMatrix ? inverse.multiply(pathMatrix) : undefined;
+      const pointAt = (length: number) => {
+        const point = path.getPointAtLength(length);
+        return transform ? point.matrixTransform(transform) : point;
+      };
+      return {
+        pointAt,
+        samples: Array.from({ length: 257 }, (_, step) => pointAt(lengths[index] * step / 256)),
+      };
+    });
     renderer.setSize(width, height);
     camera.right = width;
     camera.top = height;

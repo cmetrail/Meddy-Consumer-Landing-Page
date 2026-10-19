@@ -2,7 +2,7 @@
 
 import { useRef, type ReactNode } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap, ScrollTrigger, createScrollRefresh } from "@/lib/gsap";
 import styles from "./PhysicianCareStory.module.css";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -100,12 +100,11 @@ export default function PhysicianCareStory({ children }: { children: ReactNode }
       }
 
       // Refresh after font/image layout settles; never touch triggers owned by other routes.
-      let disposed = false;
-      const refresh = () => { if (!disposed) ScrollTrigger.refresh(); };
+      const { refresh, dispose } = createScrollRefresh();
       document.fonts.ready.then(refresh);
       root.addEventListener("load", refresh, true);
       return () => {
-        disposed = true;
+        dispose();
         root.removeEventListener("load", refresh, true);
       };
     });

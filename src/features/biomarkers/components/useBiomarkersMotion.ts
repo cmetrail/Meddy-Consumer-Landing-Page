@@ -2,7 +2,7 @@
 
 import type { RefObject } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap, ScrollTrigger, createScrollRefresh } from "@/lib/gsap";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -100,13 +100,12 @@ export function useBiomarkersMotion(rootRef: RefObject<HTMLElement | null>) {
         });
       };
       root.addEventListener("focusin", onFocus);
-      let disposed = false;
-      const refresh = () => { if (!disposed) ScrollTrigger.refresh(); };
+      const { refresh, dispose } = createScrollRefresh();
       const frame = requestAnimationFrame(refresh);
       void document.fonts.ready.then(refresh);
       root.addEventListener("load", refresh, true);
       return () => {
-        disposed = true;
+        dispose();
         cancelAnimationFrame(frame);
         root.removeEventListener("load", refresh, true);
         root.removeEventListener("focusin", onFocus);

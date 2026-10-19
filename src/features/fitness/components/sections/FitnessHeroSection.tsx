@@ -18,13 +18,12 @@ export default function FitnessHeroSection() {
         <div className={styles.artworkLayer} data-fitness-pointer>
           <div className={styles.artworkLayer} data-fitness-reveal>
             <Image
-              src="/fitness/fitness-hero-muscle-fb16b.png"
+              src="/fitness/fitness-hero-muscle.webp"
               alt=""
               width={2752}
               height={1536}
-              priority
-              unoptimized
-              sizes="133vw"
+              preload
+              sizes="(max-width: 767px) 215vw, 133vw"
               className={styles.muscle}
             />
           </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/FooterLink";
 import { motion } from "framer-motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;

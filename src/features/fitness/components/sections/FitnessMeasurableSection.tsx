@@ -11,7 +11,7 @@ export default function FitnessMeasurableSection() {
     >
       {/* mobile: plain cover */}
       <div className="pointer-events-none absolute left-[-104%] top-0 w-[342%] lg:hidden" style={{ aspectRatio: "1536 / 1024" }}>
-        <Image src="/fitness/fitness-measurable-bg.png" alt="" fill priority sizes="342vw" className="object-cover" />
+        <Image src="/fitness/fitness-measurable-bg.lossless.webp" alt="" fill sizes="342vw" className="object-cover" />
       </div>
       {/* lg+: Figma placement (1991 wide, 445px off the left, anchored to the top so the head stays in view) */}
       <div
@@ -23,7 +23,7 @@ export default function FitnessMeasurableSection() {
           transform: "translateX(calc(-50% - 170 * var(--u)))",
         }}
       >
-        <Image src="/fitness/fitness-measurable-bg.png" alt="" fill priority sizes="2000px" className="object-cover" />
+        <Image src="/fitness/fitness-measurable-bg.lossless.webp" alt="" fill sizes="2000px" className="object-cover" />
       </div>
       <div className="absolute inset-0 bg-black/20" />
 
