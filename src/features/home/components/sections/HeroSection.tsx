@@ -541,7 +541,7 @@ export default function HeroSection() {
                 ref={(el) => {
                   ctaRefs.current[i] = el;
                 }}
-                href="/#how-it-works"
+                href="/book-consultation"
                 className={styles.consultation}
               >
                 Book Free Consultation

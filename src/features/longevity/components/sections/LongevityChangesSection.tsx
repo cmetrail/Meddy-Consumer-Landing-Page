@@ -18,260 +18,100 @@ const BLUE = "#148bd5";
 const GREEN = "#17925a";
 const INK = "#111110";
 
-function Svg({ src }: { src: string }) {
-  return <Image src={`${A}/${src}`} alt="" fill unoptimized className="block max-w-none" />;
-}
-
-const TXT = "whitespace-nowrap text-[15.169px] font-normal leading-[1.5]";
-
-/** x-axis: tick + month, six equal columns */
-function Months() {
-  return (
-    <div className="flex w-full items-start justify-between">
-      {MONTHS.map((m) => (
-        <div key={m} className="flex min-w-px flex-1 flex-col items-center justify-center gap-[3.034px]">
-          <div className="h-[12.14px] w-[1.516px] shrink-0 bg-[#111110]" />
-          <p className={`${TXT} shrink-0 text-[#111110]`}>{m}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/** the horizontal grid: 4 solid rows + the two bottom rows (own svgs) */
-function GridLines({ p, inset }: { p: "c1" | "c2"; inset: string }) {
-  return (
-    <div className="flex w-full flex-col items-start gap-[16.63px]">
-      {[0, 1, 2, 3].map((i) => (
-        <div key={i} className="relative h-[28.834px] w-full shrink-0">
-          <div className="absolute" style={{ inset }}>
-            <Svg src={`${p}-grid.svg`} />
-          </div>
-        </div>
-      ))}
-      <div className="relative h-[27.316px] w-full shrink-0">
-        <Svg src={`${p}-grid-a.svg`} />
-      </div>
-      <div className="relative h-[27.316px] w-full shrink-0">
-        <Svg src={`${p}-grid-b.svg`} />
-      </div>
-    </div>
-  );
-}
-
-/** plot box: 264.795px tall, grid pinned to the bottom, charts/pills absolutely placed on top */
-function Plot({ p, inset, children }: { p: "c1" | "c2"; inset: string; children: React.ReactNode }) {
-  return (
-    <div className="relative flex h-[264.795px] w-full shrink-0 flex-col items-end justify-end gap-[15.169px]">
-      <div className="h-[28.834px] w-full shrink-0" />
-      <GridLines p={p} inset={inset} />
-      {children}
-    </div>
-  );
-}
-
-function Pill({ text, style, bg, border }: { text: string; style: React.CSSProperties; bg: string; border: string }) {
-  return (
-    <div
-      className="absolute flex items-center justify-center rounded-[15.244px] border-[0.693px] border-solid px-[8.315px] backdrop-blur-[50px]"
-      style={{ ...style, background: bg, borderColor: border }}
-      data-pill=""
-    >
-      <p className="whitespace-nowrap text-[11.086px] font-normal leading-[1.5] text-black">{text}</p>
-    </div>
-  );
-}
-
-function Labels({ vals, color, className = "" }: { vals: string[]; color: string; className?: string }) {
-  return (
-    <>
-      {vals.map((v) => (
-        <p key={v} className={`relative shrink-0 ${className}`} style={{ color }}>
-          {v}
-        </p>
-      ))}
-    </>
-  );
-}
-
-const COL = "flex h-full flex-col justify-end gap-[23.559px] leading-[1.5] text-[15.169px] font-normal whitespace-nowrap";
-
-/* ------------------------------------------------------------------ card 1 */
-/** `glass` = the mobile card (same glass look + legend as cards 2/3, dark axes); default = desktop card with a title */
-function Card1({ glass }: { glass?: boolean }) {
-  const axL = glass ? INK : BLUE;
-  const axR = glass ? INK : GREEN;
-  const dim = glass ? "" : "opacity-80";
-  const pills = glass
-    ? [
-        { text: "28", style: { left: 396.08, top: 81.61 }, bg: "#b8aeab", border: "#fff" },
-        { text: "112", style: { left: 394.69, top: 172.47 }, bg: "#99a6ae", border: BLUE },
-        { text: "145", style: { left: 17.91, top: 69.88 }, bg: "rgba(90,144,180,0.3)", border: BLUE },
-        { text: "18", style: { left: 16.53, top: 200.83 }, bg: "#b8aeab", border: "#fff" },
-      ]
-    : [
-        { text: "28", style: { left: 396.08, top: 81.61 }, bg: "rgba(23,146,90,0.2)", border: GREEN },
-        { text: "145", style: { left: 17.91, top: 69.88 }, bg: "rgba(90,144,180,0.2)", border: BLUE },
-        { text: "18", style: { left: 16.53, top: 200.83 }, bg: "rgba(23,146,90,0.2)", border: GREEN },
-        { text: "112", style: { left: 394.69, top: 172.47 }, bg: "rgba(20,139,213,0.2)", border: BLUE },
-      ];
-  return (
-    <div
-      data-card-box
-      className={glass ? GLASS : "flex w-full flex-col items-center gap-4 rounded-[12px] border border-solid border-white bg-white/60 p-4 backdrop-blur-[5px]"}
-      style={glass ? { backgroundImage: "linear-gradient(270deg, rgba(255,255,255,0.7) 0%, rgba(20,139,213,0.7) 100%), linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 100%)" } : undefined}
-    >
-      {glass ? (
-        <Legend items={[{ dot: "dot-blue.svg", label: "LDL", upper: true }, { dot: "dot-white.svg", label: "Fiber" }]} />
-      ) : (
-        <p className="comprehensive-serif shrink-0 whitespace-nowrap text-[14px] font-normal not-italic leading-[1.5] text-[#111110]">Tracking Fiber and Cholesterol</p>
-      )}
-      <div className="flex w-full items-end gap-[6.068px]">
-        {/* left axis */}
-        <div className="flex items-end self-stretch">
-          <div className="flex h-full w-[59.136px] shrink-0 items-center gap-[11.086px] pb-[39.44px]">
-            <div className="flex h-[49px] w-[23px] shrink-0 items-center justify-center">
-              <p className={`${TXT} -rotate-90`} style={{ color: axL }}>mg/dL</p>
-            </div>
-            <div className={`${COL} relative items-start`} style={{ color: axL }}>
-              <Labels vals={["180", "150", "140", "120", "100", "80"]} color={axL} className={dim} />
-              <p className={`absolute left-[0.13px] top-[0.21px] ${dim}`}>{glass ? "X" : "(LDL)"}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* plot */}
-        <div className="flex min-w-px flex-1 flex-col items-start pt-[18.203px]">
-          <Plot p="c1" inset="0 -0.17%">
-            <div data-wipe="1" className="absolute left-[31.77px] top-[91.31px] h-[160.929px] w-[378.167px]">
-              <div className="absolute" style={{ inset: "-1.25% -0.53% 0 -0.53%" }}>
-                <Svg src="c1-area1.svg" />
-              </div>
-            </div>
-            <div data-wipe="1" className="absolute left-[31.77px] top-[105.18px] flex h-[147.066px] w-[378.167px] items-center justify-center">
-              <div className="flex-none -scale-y-100 rotate-180">
-                <div className="relative h-[147.066px] w-[378.167px]">
-                  <div className="absolute" style={{ inset: "-1.37% -0.53% 0 -0.53%", filter: glass ? "brightness(0) invert(1)" : undefined }}>
-                    <Svg src="c1-area2.svg" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            {pills.map((pl) => (
-              <Pill key={pl.text} text={pl.text} style={pl.style} bg={pl.bg} border={pl.border} />
-            ))}
-          </Plot>
-          <Months />
-        </div>
-
-        {/* right axis */}
-        <div className="flex items-end self-stretch">
-          <div className="flex h-full shrink-0 items-center gap-[9.102px] pb-[39.44px]">
-            <div className={`${COL} relative items-end text-right`} style={{ color: axR }}>
-              <Labels vals={["35", "30", "25", "20", "15", "10"]} color={axR} className={dim} />
-              <p className={`absolute left-[21px] top-[0.21px] -translate-x-full ${dim}`}>{glass ? "Y" : "(Fiber)"}</p>
-            </div>
-            <div className="flex h-[44px] w-[23px] shrink-0 items-center justify-center">
-              <p className={`${TXT} rotate-90`} style={{ color: axR }}>g/day</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ cards 2 + 3 */
-const GLASS = "backdrop-blur-[62.361px] flex w-full flex-col items-end gap-3 rounded-[16.63px] p-[20.787px]";
-
-function Legend({ items }: { items: { dot: string; label: string; upper?: boolean }[] }) {
-  return (
-    <div className="flex shrink-0 items-center justify-center gap-[11.086px]">
-      {items.map((it) => (
-        <div key={it.label} className="flex shrink-0 items-center gap-[11.086px]">
-          <div className="relative h-[8.318px] w-[8.311px] shrink-0">
-            <Svg src={it.dot} />
-          </div>
-          <p className={`shrink-0 whitespace-nowrap text-[27.716px] font-normal leading-[normal] text-white ${it.upper ? "uppercase" : ""}`}>{it.label}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/** Shared geometry keeps both descending series aligned with their own axes. */
-function TrackingCard({ kind }: { kind: 2 | 3 }) {
+/** Fixed SVG geometry keeps the axes, curves and endpoint labels aligned at every size. */
+function TrackingCard({ kind }: { kind: 1 | 2 | 3 }) {
   const id = useId().replace(/:/g, "");
+  const fiber = kind === 1;
   const pressure = kind === 2;
-  const leftColor = pressure ? BLUE : GREEN;
-  const rightColor = pressure ? GREEN : BLUE;
-  const leftValues = pressure ? [220, 200, 180, 160, 140, 120] : [9, 8, 7, 6, 5, 4];
-  const rightValues = pressure ? [150, 140, 130, 120, 110, 100] : [220, 200, 180, 160, 140, 120];
-  const weightStart = 131;
-  const weightEnd = pressure ? 251 : 224;
-  const greenStart = pressure ? 157 : 144;
-  const greenEnd = pressure ? 270 : 260;
-  const weightCurve = `M118 ${weightStart} C190 156 263 188 337 207 S440 ${weightEnd - 9} 496 ${weightEnd}`;
-  const greenCurve = `M118 ${greenStart} C190 189 263 217 337 235 S440 ${greenEnd - 6} 496 ${greenEnd}`;
-  const caption = pressure
-    ? "As weight decreased from 205 to 152 lbs, blood pressure dropped from 138 to 112 mmHg over six months."
-    : "As weight decreased from 204 to 162 lbs, A1c levels dropped from 8% to 5.6% over six months.";
-  const valuePill = (text: string, x: number, y: number, color: string) => (
-    <g key={text} data-pill="" style={{ transformBox: "fill-box", transformOrigin: "center" }}>
-      <rect x={x - (text.length === 1 ? 12 : 19)} y={y - 9} width={text.length === 1 ? 24 : 38} height="18" rx="9" fill={color} fillOpacity="0.2" stroke={color} strokeWidth="0.7" />
-      <text x={x} y={y + 4} textAnchor="middle" fill={INK} fontSize="12">{text}</text>
-    </g>
-  );
+  const leftColor = kind === 3 ? GREEN : BLUE;
+  const rightColor = kind === 3 ? BLUE : GREEN;
+  const leftValues = fiber ? [180, 150, 140, 120, 100, 80] : pressure ? [220, 200, 180, 160, 140, 120] : [9, 8, 7, 6, 5, 4];
+  const rightValues = fiber ? [35, 30, 25, 20, 15, 10] : pressure ? [150, 140, 130, 120, 110, 100] : [220, 200, 180, 160, 140, 120];
+  const xStart = fiber ? 126 : 131;
+  const xEnd = fiber ? 545 : 550;
+  const blueStart = fiber ? 140 : 104;
+  const blueEnd = fiber ? 257 : pressure ? 236 : 205;
+  const greenStart = fiber ? 255 : pressure ? 137 : 117;
+  const greenEnd = fiber ? 155 : pressure ? 254 : 247;
+  const blueCurve = fiber
+    ? "M126 140 C208 175 275 201 335 220 S421 229 461 238 S514 250 545 257"
+    : pressure
+      ? "M131 104 C204 132 274 163 338 181 S469 215 550 236"
+      : "M131 104 C209 125 277 152 338 170 S471 204 550 205";
+  const greenCurve = fiber
+    ? "M126 255 C210 244 277 232 335 219 S473 191 545 155"
+    : pressure
+      ? "M131 137 C205 164 273 188 338 208 S471 236 550 254"
+      : "M131 117 C204 164 273 184 338 209 S470 239 550 247";
+  const caption = fiber
+    ? "As fiber intake rose from 18g to 28g, LDL dropped from 145 to 112 mg/dL in six months."
+    : pressure
+      ? "As weight fell from 205 to 152 lbs, blood pressure dropped from 138 to 112 mmHg in six months."
+      : "As weight decreased from 204 to 162 lbs, A1c levels dropped from 8% to 5.6% over six months.";
+  const valuePill = (text: string, x: number, y: number, color: string) => {
+    const width = text.length === 1 ? 26 : text.length === 2 ? 34 : 39;
+    return (
+      <g data-pill="" style={{ transformBox: "fill-box", transformOrigin: "center" }}>
+        <rect x={x - width / 2} y={y - 9.5} width={width} height="19" rx="9.5" fill={color} fillOpacity="0.2" stroke={color} strokeWidth="0.7" />
+        <text x={x} y={y + 4} textAnchor="middle" fill={INK} fontSize="12">{text}</text>
+      </g>
+    );
+  };
   return (
     <div className="tracking-card-wrap relative w-full pb-[66px]">
-      <div data-card-box className="h-[390px] w-full overflow-hidden rounded-[12px] border border-white bg-white/60 backdrop-blur-[5px]">
-        <svg viewBox="0 0 609.5 390" className="block h-full w-full" role="img" aria-label={caption}>
+      <div data-card-box className="w-full overflow-hidden rounded-[12px] border border-white bg-white/60 backdrop-blur-[5px]">
+        <svg viewBox="0 0 676 392" className="block h-auto w-full" role="img" aria-label={caption}>
           <defs>
-            <linearGradient id={`${id}-weight`} x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id={`${id}-blue`} x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#2a80b8" /><stop offset="100%" stopColor="#2a80b8" stopOpacity="0" />
             </linearGradient>
             <linearGradient id={`${id}-green`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#008b7e" stopOpacity="0.85" /><stop offset="100%" stopColor="#17925a" stopOpacity="0" />
+              <stop offset="0%" stopColor={fiber ? GREEN : "#008b7e"} stopOpacity={fiber ? "0.6" : "0.85"} /><stop offset="100%" stopColor={GREEN} stopOpacity="0" />
             </linearGradient>
           </defs>
-          <text x="304.75" y="32" textAnchor="middle" fill={INK} style={{ fontFamily: "Georgia, serif" }} fontWeight="600" fontSize="14">
-            {pressure ? "Tracking Weight and Blood Pressure" : "Tracking A1C and Weight"}
-          </text>
-          <g fontSize="16" fontWeight="400">
-            <text x="49" y="72" fill={leftColor}>{pressure ? "Weight" : "A1C"}</text>
-            <text x="562" y="72" textAnchor="end" fill={rightColor}>{pressure ? "Blood pressure" : "Weight"}</text>
+          <g fontSize="17" fontWeight="400">
             {leftValues.map((value, i) => (
               <g key={value}>
-                <line x1="85" x2="528" y1={97 + i * 45} y2={97 + i * 45} stroke="#111110" strokeOpacity="0.3" strokeWidth="1.5" />
-                <text x="49" y={97 + i * 45} fill={leftColor}>{value}</text>
-                <text x="535" y={97 + i * 45} fill={rightColor}>{rightValues[i]}</text>
+                <line x1="90" x2="594" y1={66 + i * 50} y2={66 + i * 50} stroke={INK} strokeOpacity="0.3" strokeWidth="1.5" />
+                <text x="84" y={66 + i * 50} textAnchor="end" fill={leftColor}>{value}</text>
+                <text x="603" y={66 + i * 50} fill={rightColor}>{rightValues[i]}</text>
               </g>
             ))}
-            <text transform="translate(33 195) rotate(-90)" textAnchor="middle" fill={leftColor}>{pressure ? "lbs" : "%"}</text>
-            <text transform="translate(577 195) rotate(90)" textAnchor="middle" fill={rightColor}>{pressure ? "mmHg" : "lbs"}</text>
+            <text transform="translate(38 174) rotate(-90)" textAnchor="middle" fill={leftColor}>{fiber ? "mg/dL" : pressure ? "lbs" : "%"}</text>
+            <text transform="translate(638 174) rotate(90)" textAnchor="middle" fill={rightColor}>{fiber ? "g/day" : pressure ? "mmHg" : "lbs"}</text>
           </g>
           <g data-wipe={kind}>
-            <path d={`${weightCurve} L496 322 L118 322 Z`} fill={`url(#${id}-weight)`} />
-            <path d={`${greenCurve} L496 322 L118 322 Z`} fill={`url(#${id}-green)`} />
-            <path d={weightCurve} fill="none" stroke="white" strokeWidth="1" />
-            <path d={greenCurve} fill="none" stroke="white" strokeWidth="1" strokeDasharray="7 5" />
-            {[ [118, weightStart], [496, weightEnd], [118, greenStart], [496, greenEnd] ].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="2.2" fill="white" />)}
+            <path d={`${blueCurve} L${xEnd} 316 L${xStart} 316 Z`} fill={`url(#${id}-blue)`} />
+            <path d={`${greenCurve} L${xEnd} 316 L${xStart} 316 Z`} fill={`url(#${id}-green)`} />
+            <path d={blueCurve} fill="none" stroke={fiber ? BLUE : "white"} strokeWidth="1" />
+            <path d={greenCurve} fill="none" stroke={fiber ? GREEN : "white"} strokeWidth="1" strokeDasharray="8 7" />
+            {[[xStart, blueStart], [xEnd, blueEnd], [xStart, greenStart], [xEnd, greenEnd]].map(([x, y], i) => (
+              <circle key={i} cx={x} cy={y} r="2.2" fill={fiber ? i < 2 ? BLUE : GREEN : "white"} />
+            ))}
           </g>
-          {valuePill(pressure ? "205" : "204", 118, weightStart - 16, BLUE)}
-          {valuePill(pressure ? "152" : "162", 496, weightEnd - 16, BLUE)}
-          {valuePill(pressure ? "138" : "8", 110, greenStart + 17, GREEN)}
-          {valuePill(pressure ? "112" : "5.6", 496, greenEnd + (pressure ? 16 : -13), GREEN)}
+          <g fill="white" fillOpacity="0.85" fontSize="17">
+            <text x={xStart + 8} y={blueStart + (fiber ? 39 : 23)}>{fiber ? "LDL" : "lbs"}</text>
+            <text x={fiber ? xEnd - 45 : xStart + 8} y={fiber ? greenEnd + 40 : greenStart + 40}>{fiber ? "Fiber" : pressure ? "mmHg" : "%"}</text>
+          </g>
+          {valuePill(fiber ? "145" : pressure ? "205" : "204", xStart + (fiber ? 3 : 0), blueStart - 16, BLUE)}
+          {valuePill(fiber ? "112" : pressure ? "152" : "162", xEnd, blueEnd - 17, BLUE)}
+          {valuePill(fiber ? "18" : pressure ? "138" : "8", xStart - 2, greenStart + (fiber ? 15 : 17), GREEN)}
+          {valuePill(fiber ? "28" : pressure ? "112" : "5.6", xEnd, greenEnd + (pressure ? 17 : -17), GREEN)}
           {MONTHS.map((month, i) => (
-            <g key={month} fill={INK} fontSize="16">
-              <line x1={122 + i * 74} x2={122 + i * 74} y1="336" y2="348" stroke={INK} strokeWidth="1.5" />
-              <text x={122 + i * 74} y="369" textAnchor="middle">{month}</text>
+            <g key={month} fill={INK} fontSize="17">
+              <line x1={132 + i * 84} x2={132 + i * 84} y1="331" y2="344" stroke={INK} strokeWidth="1.5" />
+              <text x={132 + i * 84} y="368" textAnchor="middle">{month}</text>
             </g>
           ))}
         </svg>
       </div>
-      <p className="tracking-card-note absolute top-[374px] w-[360px] rounded-[12px] border border-black/20 bg-white/30 px-4 py-2 text-[14px] font-normal leading-[1.5] text-[#111110] backdrop-blur-[10px]">{caption}</p>
+      <p className={`tracking-card-note absolute top-[344px] rounded-[12px] border border-black/20 bg-white/30 px-4 py-2 text-[14px] font-normal leading-[1.5] text-[#111110] backdrop-blur-[10px] ${fiber ? "w-[328px]" : "w-[360px]"}`}>{caption}</p>
     </div>
   );
+}
+
+function Card1() {
+  return <TrackingCard kind={1} />;
 }
 
 function Card2() {
@@ -372,13 +212,12 @@ export default function LongevityChangesSection() {
         const rails = q("[data-change-rail]");
         gsap.set([cardSel(1), cardSel(2)].join(","), { autoAlpha: 0 });
         let cur = 0;
-        // rail column is a fixed 392px (card 1's height); cards 2/3 are taller, so nudge it down by half the difference
-        // to keep the three bars centred on the active card (Tailwind !important beats inline height, so use a transform)
+        // Keep the rail centred beside the card, including when the fixed geometry is resized.
         const railBox = q("[data-change-rails]")[0];
         const boxH = (i: number) => q(`${cardSel(i)} [data-card-box]`)[0]?.offsetHeight;
         const fitRails = (i: number, animate: boolean) => {
           const h = boxH(i);
-          if (railBox && h) gsap.to(railBox, { y: (h - 392) / 2, duration: animate ? 0.4 : 0, ease: "power2.out" });
+          if (railBox && h) gsap.to(railBox, { y: (h - 354) / 2, duration: animate ? 0.4 : 0, ease: "power2.out" });
         };
         fitRails(0, false);
 
@@ -438,7 +277,7 @@ export default function LongevityChangesSection() {
             .changes-scroll { min-height: 260svh; }
             .changes-sticky { position: sticky; top: 0; }
             [data-change-card='2'], [data-change-card='3'] { opacity: 0; visibility: hidden; }
-            .tracking-card-note { right: -104px; }
+            .tracking-card-note { right: -84px; }
             .changes-cards { gap: 0; }
             .changes-cards > * { grid-area: 1 / 1; }
           }
@@ -479,7 +318,7 @@ export default function LongevityChangesSection() {
             <div className="changes-mobile-carousel -mx-5 w-[calc(100%+40px)] overflow-x-auto px-5 [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden">
               <div className="flex w-max items-start gap-2">
                 <MobileCard>
-                  <Card1 glass />
+                  <Card1 />
                 </MobileCard>
                 <MobileCard>
                   <Card2 />
@@ -492,7 +331,7 @@ export default function LongevityChangesSection() {
 
             <div className="relative hidden w-full flex-col items-center gap-4 lg:flex lg:w-auto">
               <div className="flex w-full items-start gap-4 lg:w-auto">
-                <div data-change-rails className="hidden h-[392px] shrink-0 flex-col items-start justify-center gap-2 lg:flex">
+                <div data-change-rails className="hidden h-[354px] shrink-0 flex-col items-start justify-center gap-2 lg:flex">
                   {[0, 1, 2].map((i) => (
                     <span key={i} data-change-rail={i} className="block h-[100px] w-[6px] shrink-0 rounded-[22px]" style={{ background: i === 0 ? BLUE : "#d9d9d9" }} />
                   ))}
@@ -514,18 +353,6 @@ export default function LongevityChangesSection() {
                       <Card3 />
                     </FitBox>
                   </div>
-                </div>
-              </div>
-
-              {/* note over the bottom of card 1 */}
-              <div
-                data-change-card="1"
-                className="flex items-center justify-center rounded-[12px] border border-solid border-[rgba(17,17,16,0.2)] bg-white/30 px-4 py-2 backdrop-blur-[10px] lg:absolute lg:left-[353px] lg:top-[380px]"
-              >
-                <div className="text-[14px] font-normal leading-[1.5] text-[#111110] lg:whitespace-nowrap">
-                  <p>As daily fiber intake increased from 18g to 28g, </p>
-                  <p>LDL cholesterol decreased from 145 to 112 mg/dL </p>
-                  <p>over six months.</p>
                 </div>
               </div>
             </div>
