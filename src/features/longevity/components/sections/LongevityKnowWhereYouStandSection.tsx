@@ -46,7 +46,7 @@ export default function LongevityKnowWhereYouStandSection() {
           <div
             className="order-1 flex w-full flex-col items-end gap-8 text-right lg:order-none lg:min-w-px lg:flex-1 lg:gap-[211px]"
           >
-            <h2 data-stand-reveal className="comprehensive-serif whitespace-nowrap text-[32px] font-normal italic leading-[1.5] text-[#46524B] lg:text-[36px] lg:leading-[normal]">
+            <h2 data-stand-reveal className="comprehensive-serif text-[32px] font-normal italic leading-[1.5] text-[#46524B] lg:whitespace-nowrap lg:text-[36px] lg:leading-[normal]">
               Know where you stand.
             </h2>
 

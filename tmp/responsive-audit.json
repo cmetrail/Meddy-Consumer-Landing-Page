@@ -1,0 +1,1288 @@
+[
+  {
+    "width": 768,
+    "route": "/",
+    "scrollWidth": 768,
+    "height": 13941,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative w-full overflow-hidden HeroSection-module___BbokG__hero",
+        "height": 1024
+      },
+      {
+        "cls": "ProblemSection-module__Vi3GIq__section",
+        "title": "Your healthis scattered.",
+        "height": 512
+      },
+      {
+        "cls": "relative w-full bg-[#17231D] text-white overflow-clip",
+        "title": "Your health systemall in one place.",
+        "height": 7457
+      },
+      {
+        "cls": "MedicationStorySection-module__06Ifka__section",
+        "title": "Every medicationchange tells a story.",
+        "height": 904
+      },
+      {
+        "cls": "MostCareSection-module__0aVA6W__section",
+        "title": "Most care happens in 15-minute visits.",
+        "height": 705
+      },
+      {
+        "cls": "relative w-full overflow-hidden TestimonialsSection-module__clfb6G__section",
+        "title": "REAL PEOPLE.BETTER HEALTH.",
+        "height": 920
+      },
+      {
+        "cls": "Comprehensive-module__0OsKoW__section",
+        "title": "Comprehensive primary care services across New York",
+        "height": 721
+      },
+      {
+        "cls": "PhysicianRaySection-module__UA74MW__section",
+        "title": "One physician.",
+        "height": 1024
+      },
+      {
+        "cls": "Pricing-module__UeIRMG__section relative w-full overflow-hidden text-white",
+        "title": "Optimize your health.",
+        "height": 1579
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/how-it-works",
+    "scrollWidth": 768,
+    "height": 6136,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex min-h-dvh w-full flex-col overflow-hidden bg-white lg:min-h-[1024px]",
+        "title": "Understand your health.not just yourData.",
+        "height": 1024
+      },
+      {
+        "cls": "HowItWorksTrackYourDaySection-module__NMTQUa__section",
+        "title": "TrackYour Day",
+        "height": 549
+      },
+      {
+        "cls": "HowItWorksSignalSection-module__M0yuqG__section",
+        "title": "See what matters withless noise and moresignal",
+        "height": 1024
+      },
+      {
+        "cls": "HowItWorksInsightsSection-module__GwfXsa__section",
+        "title": "Know What’s working.Change What Isn’t",
+        "height": 587
+      },
+      {
+        "cls": "flex min-h-dvh w-full flex-col justify-center overflow-hidden bg-white",
+        "title": "Your physician builds the plan",
+        "height": 1024
+      },
+      {
+        "cls": "relative flex min-h-dvh w-full flex-col justify-center overflow-hidden bg-white",
+        "title": "Progress is built over time.",
+        "height": 1024
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-white lg:pt-[488px]",
+        "height": 904
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/why-meddy",
+    "scrollWidth": 768,
+    "height": 4263,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "WhyMeddyHeroSection-module__-o6A_G__hero relative flex min-h-[max(720px,var(--dvh))] w-full flex-col gap-8 overflow-hidden md:min-h-[max(780px,var(--dvh))] md:gap-12",
+        "title": "Healthcare wasn't designed to see everyday life.",
+        "height": 1024
+      },
+      {
+        "cls": "WhyMeddySecondSection-module__Dk0Kha__section relative w-full overflow-hidden bg-[#2B2B2B] py-8! md:pt-10! md:pb-9!",
+        "title": "Your daily habits need clinical attention.",
+        "height": 624
+      },
+      {
+        "cls": "WhyMeddyThirdSection-module__4REOMq__section relative w-full overflow-hidden bg-[radial-gradient(84.22%_84.22%_at_50%_50%,#5A8972_0%,#20352B_100%)] pt-8! pb-12! md:pt-10! md:pb-20!",
+        "title": "We built Meddy to give physicians the complete picture.",
+        "height": 671
+      },
+      {
+        "cls": "relative w-full overflow-hidden",
+        "title": "A different philosophyof primary care.",
+        "height": 1239
+      },
+      {
+        "cls": "WhyMeddyFooter-module__J4c2wq__section",
+        "title": "Better care startswith understanding you.",
+        "height": 704
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/physician-care",
+    "scrollWidth": 768,
+    "height": 7427,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "PhysicianCareHeroSection-module__7y4cRG__hero",
+        "title": "Primary care",
+        "height": 1024
+      },
+      {
+        "cls": "relative w-full min-h-[var(--dvh)] overflow-hidden bg-[#FFFFF9] px-5 py-14 lg:px-[75px] lg:py-0",
+        "title": "Stay ahead",
+        "height": 1439
+      },
+      {
+        "cls": "relative w-full overflow-hidden",
+        "title": "Care that’s unique for you",
+        "height": 720
+      },
+      {
+        "cls": "PhysicianCareProfileSection-module__BVPsSa__section",
+        "title": "Your physicianOne Doctor.Your whole picture",
+        "height": 1024
+      },
+      {
+        "cls": "PhysicianCareJourneySection-module__VVY0Ta__section",
+        "title": "Care thatgrows with you.",
+        "height": 596
+      },
+      {
+        "cls": "w-full bg-[#F9F9F9]",
+        "title": "All included.",
+        "height": 994
+      },
+      {
+        "cls": "PhysicianCareFAQSection-module__DM6RHq__section",
+        "title": "Frequently AskedQuestions",
+        "height": 983
+      },
+      {
+        "cls": "PhysicianCareFooterSection-module__W9CwZW__section",
+        "title": "Because better care begins withknowing you.",
+        "height": 647
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/biomarkers",
+    "scrollWidth": 768,
+    "height": 8768,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex w-full flex-col overflow-hidden lg:min-h-[calc(1025*var(--u))]",
+        "title": "Go beyond",
+        "height": 613
+      },
+      {
+        "cls": "relative flex w-full items-center overflow-hidden bg-white py-[80px] lg:min-h-[calc(1043*var(--u))] lg:py-0",
+        "title": "More Than Annual Labs",
+        "height": 1206
+      },
+      {
+        "cls": "BiomarkersBreadthSection-module__OPMoNq__section",
+        "title": "Breadth",
+        "height": 428
+      },
+      {
+        "cls": "relative bg-[#17231D]",
+        "title": "Longitudinal",
+        "height": 4096
+      },
+      {
+        "cls": "CauseEffectSection-module__XHEpNq__section",
+        "title": "Your biomarkerschanged.Understand why.",
+        "height": 546
+      },
+      {
+        "cls": "relative flex w-full flex-col justify-center overflow-hidden bg-[#17231D] py-[80px] lg:h-[calc(1024*var(--u))] lg:py-0",
+        "title": "Physician-Led",
+        "height": 961
+      },
+      {
+        "cls": "BiomarkersFooterSection-module__zJbyza__footer w-full bg-[#17231D]",
+        "height": 914
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/fitness",
+    "scrollWidth": 768,
+    "height": 6253,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "FitnessHeroSection-module__oJpJ7G__hero",
+        "title": "SEE WHAT WORKOUTSARE DOING TO YOURBODY",
+        "height": 1024
+      },
+      {
+        "cls": "FitnessProgramsSection-module__rnP6da__section",
+        "title": "Sets, Reps and Minutes.Sets, Reps, and Minutes.",
+        "height": 530
+      },
+      {
+        "cls": "w-full bg-white px-5 py-16 md:px-[var(--p100)] md:py-10",
+        "title": "Know",
+        "height": 526
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-white",
+        "height": 1087
+      },
+      {
+        "cls": "relative flex w-full flex-col justify-end overflow-hidden bg-[#171718] md:h-[calc(1025*var(--u))]",
+        "title": "Recovery",
+        "height": 547
+      },
+      {
+        "cls": "w-full bg-[#171718] lg:flex lg:min-h-[calc(1029*var(--u))] lg:flex-col lg:justify-end",
+        "title": "Your workout plan is built by a physician who sees how you train.",
+        "height": 926
+      },
+      {
+        "cls": "relative z-10 w-full bg-[#171718] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)]",
+        "title": "Frequently Asked Questions",
+        "height": 694
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/nutrition",
+    "scrollWidth": 768,
+    "height": 7675,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex min-h-[875px] w-full flex-col overflow-hidden lg:min-h-[1024px]",
+        "height": 875
+      },
+      {
+        "cls": "relative w-full bg-[#faf9f5] h-[500vh]",
+        "height": 5120
+      },
+      {
+        "cls": "relative w-full bg-[#F5F5F0] max-lg:bg-[#fafafa]",
+        "title": "FAQ",
+        "height": 766
+      },
+      {
+        "cls": "NutritionFooterSection-module__QP1rRG__footer relative w-full overflow-hidden rounded-t-[22px] text-white",
+        "height": 914
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/sleep",
+    "scrollWidth": 768,
+    "height": 8170,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex min-h-[calc(874*var(--m))] w-full flex-col overflow-hidden text-white lg:block lg:h-[calc(1024*var(--u))] lg:min-h-0",
+        "title": "Know how wellyour body is actually",
+        "height": 1087
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#DAD7CF] lg:h-[calc(1113*var(--u))]",
+        "title": "Sleep Quality",
+        "height": 1520
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#DAD7CF] lg:h-[calc(1060*var(--u))]",
+        "title": "Sleep Architecture",
+        "height": 1211
+      },
+      {
+        "cls": "relative w-full bg-[#FAF9F5]",
+        "title": "Consistency",
+        "height": 947
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FAF9F5]",
+        "title": "Sleep is only part of recovery",
+        "height": 557
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FAF9F5] lg:h-[calc(1074*var(--u))]",
+        "title": "Find out what’s helping you recover and what isn’t",
+        "height": 1044
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FAF9F5] lg:h-[calc(1024*var(--u))]",
+        "height": 889
+      },
+      {
+        "cls": "SleepFooterSection-module__u30RmW__footer relative w-full overflow-hidden rounded-t-[22px]",
+        "height": 914
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/weight-loss",
+    "scrollWidth": 768,
+    "height": 8742,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex min-h-dvh w-full flex-col overflow-hidden bg-[#101010] lg:h-[calc(1024*var(--u))] lg:min-h-0",
+        "title": "Understand what’sActually moving yourweight.",
+        "height": 1024
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-white",
+        "title": "See the whole picture.",
+        "height": 1024
+      },
+      {
+        "cls": "WeightLossProgressSection-module__Kc2pMW__section",
+        "title": "Know whether you’re actuallymaking progress.",
+        "height": 1085
+      },
+      {
+        "cls": "relative w-full bg-[#FFFEF2]",
+        "title": "FIND OUT WHAT’S ACTUALLY MAKING A DIFFERENCE.",
+        "height": 2308
+      },
+      {
+        "cls": "relative w-full overflow-hidden",
+        "title": "A weight-loss plan that changes when you do. ",
+        "height": 843
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#E4FAE1]",
+        "height": 873
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FFFEF2]",
+        "title": "FAQ",
+        "height": 671
+      },
+      {
+        "cls": "WeightLossFooterSection-module__Mwinvq__footer relative w-full overflow-hidden rounded-t-[22px]",
+        "height": 914
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/longevity",
+    "scrollWidth": 768,
+    "height": 7559,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex min-h-dvh w-full flex-col overflow-hidden bg-[#FFF8E4] lg:min-h-[1096px]",
+        "title": "Stay healthier longer.",
+        "height": 1024
+      },
+      {
+        "cls": "w-full bg-[#FAFFF9]",
+        "title": "Know where you stand.",
+        "height": 898
+      },
+      {
+        "cls": "relative w-full overflow-clip bg-[#2A80B8]",
+        "height": 1024
+      },
+      {
+        "cls": "relative flex w-full flex-col items-center overflow-hidden bg-[#FAF9F5] lg:min-h-[1040px] lg:bg-[#FAFFF9]",
+        "title": "Your long-term health deserves more than an annual checkup.",
+        "height": 748
+      },
+      {
+        "cls": "LongevityPhysicianPreventionSection-module__zp5Hyq__section",
+        "title": "Physician prevention",
+        "height": 2078
+      },
+      {
+        "cls": "relative overflow-hidden text-white",
+        "title": "FAQ",
+        "height": 869
+      },
+      {
+        "cls": "relative w-full",
+        "height": 914
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/medication",
+    "scrollWidth": 768,
+    "height": 7248,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "MedicationHeroSection-module__9RDuCW__hero relative flex min-h-0 w-full flex-col overflow-hidden text-white lg:block",
+        "title": "Know what your medications are actually doing.",
+        "height": 1024
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FFFEF2]",
+        "height": 1102
+      },
+      {
+        "cls": "MedicationTreatmentTimelineSection-module__-klYQq__section",
+        "title": "See what happenswhen your treatment changes.",
+        "height": 896
+      },
+      {
+        "cls": "relative w-full overflow-hidden text-white lg:h-[calc(1024*var(--u))]",
+        "title": "Understand",
+        "height": 1086
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FFFEF2] lg:h-[calc(1024*var(--u))]",
+        "title": "Medication management with a physicianwho knows your history.",
+        "height": 967
+      },
+      {
+        "cls": "relative overflow-hidden bg-[#FFFEF2]",
+        "height": 2174
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/wearables",
+    "scrollWidth": 768,
+    "height": 6048,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex w-full flex-col overflow-hidden text-white WearablesHeroSection-module__em3pga__hero",
+        "title": "Your health data",
+        "height": 1024
+      },
+      {
+        "cls": "WearablesPlatformsSection-module__EqS70G__section bg-[#FAF9F5] py-16 lg:py-[120px]",
+        "title": "Keep wearingwhat you already love.",
+        "height": 1525
+      },
+      {
+        "cls": "overflow-hidden WearablesHealthSignalsSection-module__4zWEGq__section",
+        "title": "One place for the signals",
+        "height": 546
+      },
+      {
+        "cls": "relative overflow-hidden bg-[#FAFAFA]",
+        "title": "Connect the signal",
+        "height": 546
+      },
+      {
+        "cls": "WearablesPhysicianSection-module___xNhmG__section",
+        "title": "Give your physician thebigger picture.",
+        "height": 563
+      },
+      {
+        "cls": "relative overflow-hidden text-white",
+        "title": "FAQ",
+        "height": 1844
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/247-care",
+    "scrollWidth": 768,
+    "height": 6166,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "CareHeroMotion-module__aftszq__hero relative flex min-h-dvh w-full flex-col overflow-hidden",
+        "title": "Primary carethat doesn’t clock out.",
+        "height": 1655
+      },
+      {
+        "cls": "CareQuestionsSection-module__EuPIPa__section",
+        "title": "Reach us when something comes up.",
+        "height": 955
+      },
+      {
+        "cls": "CareHealthChangesSection-module__JR8BJW__section",
+        "title": "Your healthchanges. Yourphysician doesn’t.",
+        "height": 542
+      },
+      {
+        "cls": "CareKnowsSection-module__bk_ILa__section relative min-h-dvh w-full overflow-hidden",
+        "title": "Your physician knows",
+        "height": 1024
+      },
+      {
+        "cls": "CareAccessSection-module__Sjsh9W__section w-full bg-[#FAF9F5]",
+        "height": 1161
+      },
+      {
+        "cls": "CareBusinessHoursSection-module__lyHWFa__section",
+        "title": "Business Hours (EST)",
+        "height": 463
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/personalized-health-plans",
+    "scrollWidth": 768,
+    "height": 7231,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "PersonalizedHealthPlansHeroSection-module__FweutG__hero",
+        "title": "A HEALTH PLAN BUILTaround you.",
+        "height": 1024
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FFFFF9]",
+        "title": "Everything starts withyour goals.",
+        "height": 1799
+      },
+      {
+        "cls": "w-full bg-[#FFFFF9] lg:min-h-[1024px]",
+        "title": "One plan for the way you actually live.",
+        "height": 854
+      },
+      {
+        "cls": "relative w-full overflow-hidden",
+        "title": "Your plan changes when you do.",
+        "height": 874
+      },
+      {
+        "cls": "relative w-full overflow-x-clip",
+        "height": 1766
+      },
+      {
+        "cls": "PersonalizedHealthPlansFooterSection-module__JXymNW__footer relative w-full overflow-hidden rounded-t-[22px] text-white",
+        "height": 914
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/pricing",
+    "scrollWidth": 768,
+    "height": 4976,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "PricingHeroSection-module__s__Vhq__hero",
+        "title": "ChooseThe level ofSupportThat’s rightFor you",
+        "height": 1024
+      },
+      {
+        "cls": "PricingPlansSection-module__jpnZgW__section",
+        "title": "Meddy",
+        "height": 1024
+      },
+      {
+        "cls": "relative flex flex-col overflow-hidden bg-[#F2EEE3]",
+        "title": "Your health is more than healthcare.",
+        "height": 808
+      },
+      {
+        "cls": "PricingLevelSection-module__CHd4xW__section relative overflow-hidden bg-[#17231D]",
+        "title": "Care that growsWith your goals.",
+        "height": 1269
+      },
+      {
+        "cls": "PricingFooterSection-module__fXoJYa__section",
+        "title": "Your Care.",
+        "height": 851
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/what-we-test",
+    "scrollWidth": 768,
+    "height": 18615,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "flex w-full flex-col bg-[#FEF9EF] lg:h-dvh lg:min-h-[640px]",
+        "title": "What wecommonly TEST",
+        "height": 798
+      },
+      {
+        "cls": "bg-[#FEF9EF] py-12 md:py-16 lg:py-[120px]",
+        "title": "Heart",
+        "height": 16541
+      },
+      {
+        "cls": "WhatWeTestCTASection-module__4p-ABq__section relative flex flex-col justify-end overflow-hidden bg-white pt-[60px] lg:pt-[120px]",
+        "height": 1275
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "route": "/book-consultation",
+    "scrollWidth": 768,
+    "height": 1149,
+    "overflow": [],
+    "sections": []
+  },
+  {
+    "width": 1032,
+    "route": "/",
+    "scrollWidth": 1032,
+    "height": 16829,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative w-full overflow-hidden HeroSection-module___BbokG__hero",
+        "height": 1376
+      },
+      {
+        "cls": "ProblemSection-module__Vi3GIq__section",
+        "title": "Your healthis scattered.",
+        "height": 688
+      },
+      {
+        "cls": "relative w-full bg-[#17231D] text-white overflow-clip",
+        "title": "Your health systemall in one place.",
+        "height": 9113
+      },
+      {
+        "cls": "MedicationStorySection-module__06Ifka__section",
+        "title": "Every medicationchange tells a story.",
+        "height": 1008
+      },
+      {
+        "cls": "MostCareSection-module__0aVA6W__section",
+        "title": "Most care happens in 15-minute visits.",
+        "height": 1015
+      },
+      {
+        "cls": "relative w-full overflow-hidden TestimonialsSection-module__clfb6G__section",
+        "title": "REAL PEOPLE.BETTER HEALTH.",
+        "height": 805
+      },
+      {
+        "cls": "Comprehensive-module__0OsKoW__section",
+        "title": "Comprehensive primary care services across New York",
+        "height": 968
+      },
+      {
+        "cls": "PhysicianRaySection-module__UA74MW__section",
+        "title": "One physician.",
+        "height": 1376
+      },
+      {
+        "cls": "Pricing-module__UeIRMG__section relative w-full overflow-hidden text-white",
+        "title": "Optimize your health.",
+        "height": 1487
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/how-it-works",
+    "scrollWidth": 1032,
+    "height": 7760,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex min-h-dvh w-full flex-col overflow-hidden bg-white lg:min-h-[1024px]",
+        "title": "Understand your health.not just yourData.",
+        "height": 1024
+      },
+      {
+        "cls": "HowItWorksTrackYourDaySection-module__NMTQUa__section",
+        "title": "TrackYour Day",
+        "height": 737
+      },
+      {
+        "cls": "HowItWorksSignalSection-module__M0yuqG__section",
+        "title": "See what matters withless noise and moresignal",
+        "height": 1376
+      },
+      {
+        "cls": "HowItWorksInsightsSection-module__GwfXsa__section",
+        "title": "Know What’s working.Change What Isn’t",
+        "height": 789
+      },
+      {
+        "cls": "flex min-h-dvh w-full flex-col justify-center overflow-hidden bg-white",
+        "title": "Your physician builds the plan",
+        "height": 1376
+      },
+      {
+        "cls": "relative flex min-h-dvh w-full flex-col justify-center overflow-hidden bg-white",
+        "title": "Progress is built over time.",
+        "height": 1376
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-white lg:pt-[488px]",
+        "height": 1082
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/why-meddy",
+    "scrollWidth": 1032,
+    "height": 4575,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "WhyMeddyHeroSection-module__-o6A_G__hero relative flex min-h-[max(720px,var(--dvh))] w-full flex-col gap-8 overflow-hidden md:min-h-[max(780px,var(--dvh))] md:gap-12",
+        "title": "Healthcare wasn't designed to see everyday life.",
+        "height": 1376
+      },
+      {
+        "cls": "WhyMeddySecondSection-module__Dk0Kha__section relative w-full overflow-hidden bg-[#2B2B2B] py-8! md:pt-10! md:pb-9!",
+        "title": "Your daily habits need clinical attention.",
+        "height": 723
+      },
+      {
+        "cls": "WhyMeddyThirdSection-module__4REOMq__section relative w-full overflow-hidden bg-[radial-gradient(84.22%_84.22%_at_50%_50%,#5A8972_0%,#20352B_100%)] pt-8! pb-12! md:pt-10! md:pb-20!",
+        "title": "We built Meddy to give physicians the complete picture.",
+        "height": 820
+      },
+      {
+        "cls": "relative w-full overflow-hidden",
+        "title": "A different philosophyof primary care.",
+        "height": 711
+      },
+      {
+        "cls": "WhyMeddyFooter-module__J4c2wq__section",
+        "title": "Better care startswith understanding you.",
+        "height": 946
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/physician-care",
+    "scrollWidth": 1032,
+    "height": 8631,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "PhysicianCareHeroSection-module__7y4cRG__hero",
+        "title": "Primary care",
+        "height": 1376
+      },
+      {
+        "cls": "relative w-full min-h-[var(--dvh)] overflow-hidden bg-[#FFFFF9] px-5 py-14 lg:px-[75px] lg:py-0",
+        "title": "Stay ahead",
+        "height": 1376
+      },
+      {
+        "cls": "relative w-full overflow-hidden",
+        "title": "Care that’s unique for you",
+        "height": 1024
+      },
+      {
+        "cls": "PhysicianCareProfileSection-module__BVPsSa__section",
+        "title": "Your physicianOne Doctor.Your whole picture",
+        "height": 1376
+      },
+      {
+        "cls": "PhysicianCareJourneySection-module__VVY0Ta__section",
+        "title": "Care thatgrows with you.",
+        "height": 801
+      },
+      {
+        "cls": "w-full bg-[#F9F9F9]",
+        "title": "All included.",
+        "height": 1104
+      },
+      {
+        "cls": "PhysicianCareFAQSection-module__DM6RHq__section",
+        "title": "Frequently AskedQuestions",
+        "height": 704
+      },
+      {
+        "cls": "PhysicianCareFooterSection-module__W9CwZW__section",
+        "title": "Because better care begins withknowing you.",
+        "height": 870
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/biomarkers",
+    "scrollWidth": 1032,
+    "height": 9642,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex w-full flex-col overflow-hidden lg:min-h-[calc(1025*var(--u))]",
+        "title": "Go beyond",
+        "height": 735
+      },
+      {
+        "cls": "relative flex w-full items-center overflow-hidden bg-white py-[80px] lg:min-h-[calc(1043*var(--u))] lg:py-0",
+        "title": "More Than Annual Labs",
+        "height": 747
+      },
+      {
+        "cls": "BiomarkersBreadthSection-module__OPMoNq__section",
+        "title": "Breadth",
+        "height": 575
+      },
+      {
+        "cls": "relative bg-[#17231D]",
+        "title": "Longitudinal",
+        "height": 5504
+      },
+      {
+        "cls": "CauseEffectSection-module__XHEpNq__section",
+        "title": "Your biomarkerschanged.Understand why.",
+        "height": 734
+      },
+      {
+        "cls": "relative flex w-full flex-col justify-center overflow-hidden bg-[#17231D] py-[80px] lg:h-[calc(1024*var(--u))] lg:py-0",
+        "title": "Physician-Led",
+        "height": 734
+      },
+      {
+        "cls": "BiomarkersFooterSection-module__zJbyza__footer w-full bg-[#17231D]",
+        "height": 610
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/fitness",
+    "scrollWidth": 1032,
+    "height": 6295,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "FitnessHeroSection-module__oJpJ7G__hero",
+        "title": "SEE WHAT WORKOUTSARE DOING TO YOURBODY",
+        "height": 1376
+      },
+      {
+        "cls": "FitnessProgramsSection-module__rnP6da__section",
+        "title": "Sets, Reps and Minutes.Sets, Reps, and Minutes.",
+        "height": 712
+      },
+      {
+        "cls": "w-full bg-white px-5 py-16 md:px-[var(--p100)] md:py-10",
+        "title": "Know",
+        "height": 680
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-white",
+        "height": 671
+      },
+      {
+        "cls": "relative flex w-full flex-col justify-end overflow-hidden bg-[#171718] md:h-[calc(1025*var(--u))]",
+        "title": "Recovery",
+        "height": 735
+      },
+      {
+        "cls": "w-full bg-[#171718] lg:flex lg:min-h-[calc(1029*var(--u))] lg:flex-col lg:justify-end",
+        "title": "Your workout plan is built by a physician who sees how you train.",
+        "height": 737
+      },
+      {
+        "cls": "relative z-10 w-full bg-[#171718] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)]",
+        "title": "Frequently Asked Questions",
+        "height": 770
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/nutrition",
+    "scrollWidth": 1032,
+    "height": 9851,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex min-h-[875px] w-full flex-col overflow-hidden lg:min-h-[1024px]",
+        "height": 1024
+      },
+      {
+        "cls": "relative w-full bg-[#faf9f5] h-[500vh]",
+        "height": 6880
+      },
+      {
+        "cls": "relative w-full bg-[#F5F5F0] max-lg:bg-[#fafafa]",
+        "title": "FAQ",
+        "height": 1337
+      },
+      {
+        "cls": "NutritionFooterSection-module__QP1rRG__footer relative w-full overflow-hidden rounded-t-[22px] text-white",
+        "height": 610
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/sleep",
+    "scrollWidth": 1032,
+    "height": 5866,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex min-h-[calc(874*var(--m))] w-full flex-col overflow-hidden text-white lg:block lg:h-[calc(1024*var(--u))] lg:min-h-0",
+        "title": "Know how wellyour body is actually",
+        "height": 734
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#DAD7CF] lg:h-[calc(1113*var(--u))]",
+        "title": "Sleep Quality",
+        "height": 798
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#DAD7CF] lg:h-[calc(1060*var(--u))]",
+        "title": "Sleep Architecture",
+        "height": 760
+      },
+      {
+        "cls": "relative w-full bg-[#FAF9F5]",
+        "title": "Consistency",
+        "height": 713
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FAF9F5]",
+        "title": "Sleep is only part of recovery",
+        "height": 748
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FAF9F5] lg:h-[calc(1074*var(--u))]",
+        "title": "Find out what’s helping you recover and what isn’t",
+        "height": 770
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FAF9F5] lg:h-[calc(1024*var(--u))]",
+        "height": 734
+      },
+      {
+        "cls": "SleepFooterSection-module__u30RmW__footer relative w-full overflow-hidden rounded-t-[22px]",
+        "height": 610
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/weight-loss",
+    "scrollWidth": 1032,
+    "height": 10060,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex min-h-dvh w-full flex-col overflow-hidden bg-[#101010] lg:h-[calc(1024*var(--u))] lg:min-h-0",
+        "title": "Understand what’sActually moving yourweight.",
+        "height": 734
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-white",
+        "title": "See the whole picture.",
+        "height": 960
+      },
+      {
+        "cls": "WeightLossProgressSection-module__Kc2pMW__section",
+        "title": "Know whether you’re actuallymaking progress.",
+        "height": 920
+      },
+      {
+        "cls": "relative w-full bg-[#FFFEF2]",
+        "title": "FIND OUT WHAT’S ACTUALLY MAKING A DIFFERENCE.",
+        "height": 3620
+      },
+      {
+        "cls": "relative w-full overflow-hidden",
+        "title": "A weight-loss plan that changes when you do. ",
+        "height": 1362
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#E4FAE1]",
+        "height": 1022
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FFFEF2]",
+        "title": "FAQ",
+        "height": 833
+      },
+      {
+        "cls": "WeightLossFooterSection-module__Mwinvq__footer relative w-full overflow-hidden rounded-t-[22px]",
+        "height": 610
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/longevity",
+    "scrollWidth": 1032,
+    "height": 9550,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex min-h-dvh w-full flex-col overflow-hidden bg-[#FFF8E4] lg:min-h-[1096px]",
+        "title": "Stay healthier longer.",
+        "height": 1096
+      },
+      {
+        "cls": "w-full bg-[#FAFFF9]",
+        "title": "Know where you stand.",
+        "height": 1200
+      },
+      {
+        "cls": "relative w-full overflow-clip bg-[#2A80B8]",
+        "height": 2009
+      },
+      {
+        "cls": "relative flex w-full flex-col items-center overflow-hidden bg-[#FAF9F5] lg:min-h-[1040px] lg:bg-[#FAFFF9]",
+        "title": "Your long-term health deserves more than an annual checkup.",
+        "height": 1040
+      },
+      {
+        "cls": "LongevityPhysicianPreventionSection-module__zp5Hyq__section",
+        "title": "Physician prevention",
+        "height": 2636
+      },
+      {
+        "cls": "relative overflow-hidden text-white",
+        "title": "FAQ",
+        "height": 955
+      },
+      {
+        "cls": "relative w-full",
+        "height": 610
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/medication",
+    "scrollWidth": 1032,
+    "height": 6115,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "MedicationHeroSection-module__9RDuCW__hero relative flex min-h-0 w-full flex-col overflow-hidden text-white lg:block",
+        "title": "Know what your medications are actually doing.",
+        "height": 1295
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FFFEF2]",
+        "height": 1111
+      },
+      {
+        "cls": "MedicationTreatmentTimelineSection-module__-klYQq__section",
+        "title": "See what happenswhen your treatment changes.",
+        "height": 688
+      },
+      {
+        "cls": "relative w-full overflow-hidden text-white lg:h-[calc(1024*var(--u))]",
+        "title": "Understand",
+        "height": 734
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FFFEF2] lg:h-[calc(1024*var(--u))]",
+        "title": "Medication management with a physicianwho knows your history.",
+        "height": 734
+      },
+      {
+        "cls": "relative overflow-hidden bg-[#FFFEF2]",
+        "height": 1473
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/wearables",
+    "scrollWidth": 1032,
+    "height": 7230,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "relative flex w-full flex-col overflow-hidden text-white WearablesHeroSection-module__em3pga__hero",
+        "title": "Your health data",
+        "height": 1376
+      },
+      {
+        "cls": "WearablesPlatformsSection-module__EqS70G__section bg-[#FAF9F5] py-16 lg:py-[120px]",
+        "title": "Keep wearingwhat you already love.",
+        "height": 1666
+      },
+      {
+        "cls": "overflow-hidden WearablesHealthSignalsSection-module__4zWEGq__section",
+        "title": "One place for the signals",
+        "height": 734
+      },
+      {
+        "cls": "relative overflow-hidden bg-[#FAFAFA]",
+        "title": "Connect the signal",
+        "height": 734
+      },
+      {
+        "cls": "WearablesPhysicianSection-module___xNhmG__section",
+        "title": "Give your physician thebigger picture.",
+        "height": 742
+      },
+      {
+        "cls": "relative overflow-hidden text-white",
+        "title": "FAQ",
+        "height": 1979
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/247-care",
+    "scrollWidth": 1032,
+    "height": 6087,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "CareHeroMotion-module__aftszq__hero relative flex min-h-dvh w-full flex-col overflow-hidden",
+        "title": "Primary carethat doesn’t clock out.",
+        "height": 1376
+      },
+      {
+        "cls": "CareQuestionsSection-module__EuPIPa__section",
+        "title": "Reach us when something comes up.",
+        "height": 955
+      },
+      {
+        "cls": "CareHealthChangesSection-module__JR8BJW__section",
+        "title": "Your healthchanges. Yourphysician doesn’t.",
+        "height": 728
+      },
+      {
+        "cls": "CareKnowsSection-module__bk_ILa__section relative min-h-dvh w-full overflow-hidden",
+        "title": "Your physician knows",
+        "height": 1376
+      },
+      {
+        "cls": "CareAccessSection-module__Sjsh9W__section w-full bg-[#FAF9F5]",
+        "height": 699
+      },
+      {
+        "cls": "CareBusinessHoursSection-module__lyHWFa__section",
+        "title": "Business Hours (EST)",
+        "height": 462
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/personalized-health-plans",
+    "scrollWidth": 1032,
+    "height": 7520,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "PersonalizedHealthPlansHeroSection-module__FweutG__hero",
+        "title": "A HEALTH PLAN BUILTaround you.",
+        "height": 1376
+      },
+      {
+        "cls": "relative w-full overflow-hidden bg-[#FFFFF9]",
+        "title": "Everything starts withyour goals.",
+        "height": 1688
+      },
+      {
+        "cls": "w-full bg-[#FFFFF9] lg:min-h-[1024px]",
+        "title": "One plan for the way you actually live.",
+        "height": 1024
+      },
+      {
+        "cls": "relative w-full overflow-hidden",
+        "title": "Your plan changes when you do.",
+        "height": 799
+      },
+      {
+        "cls": "relative w-full overflow-x-clip",
+        "height": 2023
+      },
+      {
+        "cls": "PersonalizedHealthPlansFooterSection-module__JXymNW__footer relative w-full overflow-hidden rounded-t-[22px] text-white",
+        "height": 610
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/pricing",
+    "scrollWidth": 1032,
+    "height": 5651,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "PricingHeroSection-module__s__Vhq__hero",
+        "title": "ChooseThe level ofSupportThat’s rightFor you",
+        "height": 1376
+      },
+      {
+        "cls": "PricingPlansSection-module__jpnZgW__section",
+        "title": "Meddy",
+        "height": 1376
+      },
+      {
+        "cls": "relative flex flex-col overflow-hidden bg-[#F2EEE3]",
+        "title": "Your health is more than healthcare.",
+        "height": 975
+      },
+      {
+        "cls": "PricingLevelSection-module__CHd4xW__section relative overflow-hidden bg-[#17231D]",
+        "title": "Care that growsWith your goals.",
+        "height": 781
+      },
+      {
+        "cls": "PricingFooterSection-module__fXoJYa__section",
+        "title": "Your Care.",
+        "height": 1143
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/what-we-test",
+    "scrollWidth": 1032,
+    "height": 19944,
+    "overflow": [],
+    "sections": [
+      {
+        "cls": "flex w-full flex-col bg-[#FEF9EF] lg:h-dvh lg:min-h-[640px]",
+        "title": "What wecommonly TEST",
+        "height": 1376
+      },
+      {
+        "cls": "bg-[#FEF9EF] py-12 md:py-16 lg:py-[120px]",
+        "title": "Heart",
+        "height": 17399
+      },
+      {
+        "cls": "WhatWeTestCTASection-module__4p-ABq__section relative flex flex-col justify-end overflow-hidden bg-white pt-[60px] lg:pt-[120px]",
+        "height": 1169
+      }
+    ]
+  },
+  {
+    "width": 1032,
+    "route": "/book-consultation",
+    "scrollWidth": 1032,
+    "height": 1376,
+    "overflow": [],
+    "sections": []
+  }
+]

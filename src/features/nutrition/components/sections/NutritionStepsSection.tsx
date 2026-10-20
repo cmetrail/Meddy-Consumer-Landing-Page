@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-motion";
+import styles from "./NutritionStepsSection.module.css";
 
 // Figma: component set 12659:26984 "Nutrition" (5 variants, 1200 x 500 each) / default 12659:29889. A numbered rail (01-05) with a
 // green fill, a 600 x 500 blue card whose contents change per step, a big ghost number and a 32px title. Scrolling the pinned
@@ -435,9 +436,9 @@ export default function NutritionStepsSection() {
   useMotionValueEvent(scrollYProgress, "change", (v) => setActive(Math.max(0, Math.min(STEPS - 1, Math.floor(v * STEPS * 0.999)))));
 
   return (
-    <section ref={ref} className="relative w-full bg-[#faf9f5] h-[500vh]">
+    <section ref={ref} className={`${styles.track} relative w-full bg-[#faf9f5]`}>
       {/* desktop: pinned stage, same container as the header */}
-      <div className="sticky top-0 hidden h-dvh items-center lg:flex">
+      <div className={`${styles.stage} sticky top-0 hidden items-center lg:flex`}>
         <div className="mx-auto flex w-full max-w-360 items-center gap-[43px] px-10">
           <Rail active={active} onPick={setActive} />
           <div className="flex min-w-px flex-1 items-center gap-12">
@@ -448,7 +449,7 @@ export default function NutritionStepsSection() {
       </div>
 
       {/* mobile (node 12720:15490): same pinned step-through, rail + ghost number + scaled card + 16px serif title */}
-      <div className="sticky top-0 flex h-dvh items-center lg:hidden">
+      <div className={`${styles.stage} sticky top-0 flex items-center lg:hidden`}>
         <div className="flex w-full items-center gap-4 px-5">
           <Rail active={active} onPick={setActive} m />
           <div className="flex min-w-px flex-1 flex-col items-end gap-4">

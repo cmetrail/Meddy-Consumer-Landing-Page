@@ -12,8 +12,8 @@ export function useWearablesHeroMotion() {
   useGSAP(() => {
     const media = gsap.matchMedia();
     media.add({
-      desktop: "(min-width: 768px)",
-      mobile: "(max-width: 767px)",
+      desktop: "(min-width: 744px)",
+      mobile: "(max-width: 743px)",
       pointer: "(hover: hover) and (pointer: fine)",
       reduce: "(prefers-reduced-motion: reduce)",
     }, (context) => {

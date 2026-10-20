@@ -45,7 +45,7 @@
 @media (min-width: 1441px) {
   .content { min-height: max(919px, calc(100dvh - 105px)); }
 }
-@media (min-width: 768px) and (max-width: 1279px) {
+@media (min-width: 744px) and (max-width: 1279px) {
   .content { width: calc(100% - 80px); }
   .title { font-size: 50px; }
   .serif { font-size: 90px; }
@@ -54,7 +54,15 @@
   .desktopBreak { display: none; }
   .composition { right: -150px; transform: scale(.8); transform-origin: bottom right; }
 }
-@media (max-width: 767px) {
+@media (min-width: 744px) and (max-width: 1366px) and (orientation: portrait) {
+  .hero { min-height: 0; }
+  .content { min-height: clamp(740px, 80vw, 1024px); }
+  .copy { width: 55%; }
+  .title { white-space: normal; font-size: clamp(32px, 4vw, 50px); margin-bottom: -12px !important; }
+  .serif { font-size: clamp(56px, 7vw, 90px); }
+}
+
+@media (max-width: 743px) {
   .hero { min-height: max(850px, 100dvh); }
   .content { width: calc(100% - 40px); min-height: 769px; align-items: flex-start; }
   .copy { padding-top: 34px !important; }

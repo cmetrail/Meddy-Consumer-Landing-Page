@@ -111,6 +111,20 @@
   .progress > div { gap: 12px; }
 }
 /* Important base-layer spacing takes precedence over the header utilities. */
+/* Tablet portraits need a bounded stage, rather than a phone-sized layout
+   stretched to the full height of a tall screen. */
+@media (min-width: 744px) and (max-width: 1366px) and (orientation: portrait) {
+  .hero { height: clamp(820px, 90vw, 1100px) !important; min-height: 0; }
+  .content { top: 110px; }
+  .copy { width: 46%; }
+  .tagline { height: auto; min-height: 2.8em; font-size: 24px; }
+  .body { min-height: 0; font-size: 17px; }
+  .consultation { margin-top: 24px !important; font-size: 17px; }
+  .card { margin-top: 30px !important; width: min(350px, 100%); }
+  .enrollmentTitle { font-size: 12px; white-space: normal; }
+  :global(#hero).hero .person { height: 72% !important; left: 75%; }
+}
+
 @layer base {
   @media (max-width: 540px) {
     :global(#hero).hero :global(header) { padding: 19px 16px !important; }

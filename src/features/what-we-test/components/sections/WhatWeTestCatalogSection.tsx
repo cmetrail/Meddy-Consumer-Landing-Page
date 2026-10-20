@@ -140,19 +140,19 @@ export default function WhatWeTestCatalogSection() {
             >
               {/* Header */}
               <div className="flex flex-wrap items-end justify-end gap-x-4 gap-y-2">
-                <div className="flex items-center gap-[11px]">
+                <div className="flex min-w-0 items-center gap-[11px]">
                   <Image
                     src={`/what-we-test/icons/category-icon-${category.icon.filenameSuffix}.png`}
                     alt=""
                     width={category.icon.width}
                     height={category.icon.height}
-                    className="h-auto w-[48px] object-contain sm:w-[64px]"
+                    className="h-auto w-[48px] shrink-0 object-contain sm:w-[64px]"
                   />
-                  <div className="flex items-center gap-[13px]">
-                    <h3 className="whitespace-nowrap text-[24px] font-bold leading-none text-[#46524B] sm:text-[30px] lg:text-[34px]">
+                  <div className="flex min-w-0 items-center gap-[13px]">
+                    <h3 className="min-w-0 text-[24px] font-bold leading-tight text-[#46524B] sm:text-[30px] lg:text-[34px]">
                       {category.title}
                     </h3>
-                    <span className="font-medium leading-none text-[#46524B]">
+                    <span className="shrink-0 font-medium leading-none text-[#46524B]">
                       <span className="text-[18px] lg:text-[24px]">(</span>
                       <span className="text-[16px] lg:text-[20px]">{category.count}</span>
                       <span className="text-[18px] lg:text-[24px]">)</span>

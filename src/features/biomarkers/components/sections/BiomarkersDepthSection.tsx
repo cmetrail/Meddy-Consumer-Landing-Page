@@ -4,7 +4,6 @@ import { useRef } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-import { desktopMotion } from "@/lib/motion";
 import styles from "./BiomarkersDepthSection.module.css";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -124,8 +123,13 @@ export default function BiomarkersDepthSection() {
   const rootRef = useRef<HTMLElement>(null);
 
   useGSAP(
-    () =>
-      desktopMotion(() => {
+    () => {
+      const media = gsap.matchMedia();
+      // This native sticky sequence also runs on large touch tablets. Its
+      // scroll track must never outlive the animation that consumes it.
+      media.add({ wide: "(min-width: 1024px)", reduced: "(prefers-reduced-motion: reduce)" }, (context) => {
+        if (!context.conditions?.wide) return;
+        const reduced = Boolean(context.conditions.reduced);
         const root = rootRef.current;
         if (!root) return;
         const select = gsap.utils.selector(root);
@@ -138,7 +142,7 @@ export default function BiomarkersDepthSection() {
         }
 
         // later months wait slightly below, then glide up as they cross-fade in
-        gsap.set([...snapshots.slice(1), ...numbers.slice(1)], { opacity: 0, yPercent: 5 });
+        gsap.set([...snapshots.slice(1), ...numbers.slice(1)], { opacity: 0, yPercent: reduced ? 0 : 5 });
         gsap.set(fill, { attr: { height: FILL[0] } });
 
         const timeline = gsap.timeline({
@@ -147,17 +151,17 @@ export default function BiomarkersDepthSection() {
             trigger: root.querySelector("[data-depth-track]"),
             start: "top top",
             end: "bottom bottom",
-            scrub: 1,
+            scrub: reduced ? true : 1,
             invalidateOnRefresh: true,
           },
         });
 
-        // each month holds, then one 0.5 long hand-off (fill grows in the same beat)
+        // each month holds, then one hand-off (discrete with reduced motion)
         for (let i = 1; i < MONTHS.length; i++) {
           const at = i - 0.25;
-          const d = 0.5;
+          const d = reduced ? 0.001 : 0.5;
           for (const group of [snapshots, numbers]) {
-            timeline.to(group[i - 1], { opacity: 0, yPercent: -5, duration: d }, at);
+            timeline.to(group[i - 1], { opacity: 0, yPercent: reduced ? 0 : -5, duration: d }, at);
             timeline.to(group[i], { opacity: 1, yPercent: 0, duration: d }, at);
           }
           timeline.to(fill, { attr: { height: FILL[i] }, duration: d }, at);
@@ -168,7 +172,9 @@ export default function BiomarkersDepthSection() {
           timeline.scrollTrigger?.kill();
           timeline.kill();
         };
-      }),
+      });
+      return () => media.revert();
+    },
     { scope: rootRef },
   );
 
@@ -258,7 +264,7 @@ export default function BiomarkersDepthSection() {
       </div>
 
       {/* Desktop: sticky 1440 x 1024 canvas scrubbed across four months. */}
-      <div data-depth-track className="relative hidden h-[400vh] lg:block">
+      <div data-depth-track className={`${styles.desktopTrack} relative hidden h-[400vh] lg:block`}>
         <div
           className="sticky top-0 flex h-[100dvh] items-center justify-center overflow-hidden"
           style={{ "--u": "min(calc(min(100vw, 1440px) * 0.000694444), calc(100dvh * 0.0009765625))" } as React.CSSProperties}

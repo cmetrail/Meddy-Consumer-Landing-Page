@@ -8,6 +8,12 @@
   padding: 14px 24px !important;
 }
 
+@layer base {
+  @media (min-width: 744px) and (max-width: 1366px) and (orientation: portrait) {
+    .hero { min-height: 0 !important; }
+  }
+}
+
 .item {
   display: flex;
   flex-direction: column;

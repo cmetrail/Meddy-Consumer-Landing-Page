@@ -7,7 +7,13 @@
     height: var(--dvh);
   }
 
-  @media (max-width: 767px) {
+  @media (min-width: 744px) and (max-width: 1366px) and (orientation: portrait) {
+    .hero {
+      --dvh: clamp(640px, 80vw, 1000px);
+    }
+  }
+
+  @media (max-width: 743px) {
     .hero { min-height: 560px; }
     .hero header { padding: 14px !important; }
     .hero header > div > a { display: none !important; }

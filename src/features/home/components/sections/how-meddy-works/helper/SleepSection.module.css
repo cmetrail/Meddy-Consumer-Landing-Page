@@ -56,6 +56,10 @@
   .visual { position: relative; left: auto; top: auto; width: 631px; height: 702px; align-self: flex-end; margin-top: 20px !important; }
 }
 
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
+  .content { height: calc(702px * var(--sleep-scale)); }
+}
+
 @media (max-width: 599px) {
   .content { padding-inline: 20px !important; }
   .copy h3 { font-size: 35px; }
@@ -68,7 +72,7 @@
   .visual { zoom: calc((100vw - 32px) / 631px); }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 743px) {
   .content { --feature-scale: min(calc((100vw - 40px) / 360px), 1.4); padding: 48px 20px 32px !important; }
   .content::before { content: "03"; position: absolute; top: 32px; left: 20px; color: #203425; opacity: .32; font-size: 260px; font-weight: 600; line-height: 1; letter-spacing: -18px; pointer-events: none; }
   .copy { z-index: 1; }

@@ -1,0 +1,12 @@
+.track {
+  --nutrition-stage-height: 100dvh;
+  height: calc(5 * var(--nutrition-stage-height));
+}
+
+.stage { height: var(--nutrition-stage-height); }
+
+/* Each of the five steps keeps its scroll interval without filling a tall
+   tablet screen with space around a 500px illustration. */
+@media (min-width: 744px) and (max-width: 1366px) and (orientation: portrait) {
+  .track { --nutrition-stage-height: clamp(720px, 75vw, 1024px); }
+}

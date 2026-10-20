@@ -3,6 +3,14 @@
   height: 400svh;
 }
 
+/* Keep the scroll distance proportional to the artwork on tall tablets. */
+@layer base {
+  @media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
+    .desktopTrack { height: calc(4 * clamp(720px, 75vw, 1024px)) !important; }
+    .desktopTrack > div { height: clamp(720px, 75vw, 1024px) !important; }
+  }
+}
+
 .mobileStage {
   position: sticky;
   top: 0;

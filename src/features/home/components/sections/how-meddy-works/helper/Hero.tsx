@@ -129,7 +129,7 @@ export default function Hero() {
   );
 
   return (
-    <div ref={sectionRef} className="relative overflow-hidden lg:min-h-(--dvh)">
+    <div ref={sectionRef} className={`${styles.hero} relative overflow-hidden lg:min-h-(--dvh)`}>
       {/* Curtain background — recreated with CSS (dark base + blurred green glows) */}
       <div
         ref={bgRef}

@@ -40,6 +40,20 @@
   z-index: 0;
 }
 
+@layer base {
+  @media (min-width: 744px) and (max-width: 1023px) {
+    .hero {
+      --care-u: 1.5px !important;
+      min-height: 960px !important;
+    }
+    .hero .portraitPlacement { right: 0 !important; width: 560px !important; }
+    .hero .mobileChat { width: 360px !important; }
+  }
+  @media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
+    .hero { min-height: clamp(900px, 90vw, 1100px) !important; }
+  }
+}
+
 .portrait {
   position: relative;
   width: 100%;
