@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import Image from "next/image";
 import Link from "@/components/FooterLink";
 import { motion } from "framer-motion";
@@ -31,6 +32,14 @@ const FOOTER_COLUMNS: FooterLink[][] = [
     { label: "Personalized\nhealth plans", href: "/personalized-health-plans" },
     { label: "24/7 Primary care", href: "/247-care" },
   ],
+];
+
+const LEGAL_LINKS: FooterLink[] = [
+  { label: "Terms of Use", href: "/terms-of-use" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Patient Terms of Service", href: "/patient-terms-of-service" },
+  { label: "Notice of Privacy Practices", href: "/notice-of-privacy-practices" },
+  { label: "Telehealth Consent", href: "/telehealth-consent" },
 ];
 
 type Social = { label: string; path: string };
@@ -259,8 +268,23 @@ export function FooterItems({
             is not for emergencies. If you have a medical emergency, call 911.
             <br />
             © 2026 Meddy Health LLC. All rights reserved.
-            <br />
-            Privacy Policy · Terms of Service · Notice of Privacy Practices
+          </p>
+          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            {LEGAL_LINKS.map((link, i) => (
+              <Fragment key={link.href}>
+                <Link
+                  href={link.href}
+                  className="text-[#F4F4F5] underline-offset-2 transition-opacity hover:opacity-70 hover:underline"
+                >
+                  {link.label}
+                </Link>
+                {i < LEGAL_LINKS.length - 1 && (
+                  <span aria-hidden="true" className="opacity-60">
+                    ·
+                  </span>
+                )}
+              </Fragment>
+            ))}
           </p>
         </motion.div>
       </div>
