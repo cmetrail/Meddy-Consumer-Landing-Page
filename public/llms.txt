@@ -1,0 +1,39 @@
+# Meddy Health
+
+> Meddy Health is physician-guided primary care built around your nutrition, workouts, sleep, and labs. Now accepting our first 500 patients.
+
+Meddy connects your everyday health data — nutrition, workouts, sleep, and labs — into one personalized plan your physician can actually act on. All medical services are provided by Sameer Aggarwal Medical PLLC and its licensed clinicians.
+
+## Key pages
+
+- [Home](https://getmeddyhealth.com/): Physician-guided primary care that connects nutrition, workouts, sleep, and labs into one plan.
+- [Why Meddy](https://getmeddyhealth.com/why-meddy): Why primary care built around everyday life beats occasional appointments.
+- [How It Works](https://getmeddyhealth.com/how-it-works): Track your health, surface what matters, get a physician-built plan, and watch progress build.
+- [Longevity](https://getmeddyhealth.com/longevity): Stay healthier longer with preventive care that acts earlier.
+- [Biomarkers](https://getmeddyhealth.com/biomarkers): Comprehensive lab testing and biomarker tracking over time.
+- [Sleep](https://getmeddyhealth.com/sleep): See the quality of your sleep and understand your recovery.
+- [Fitness](https://getmeddyhealth.com/fitness): See what your workouts are doing to your body.
+- [Nutrition](https://getmeddyhealth.com/nutrition): See what your nutrition is doing to your body.
+- [Weight Loss](https://getmeddyhealth.com/weight-loss): Understand what's actually moving your weight.
+- [Medication](https://getmeddyhealth.com/medication): Know what your medications are actually doing.
+- [Physician Care](https://getmeddyhealth.com/physician-care): Primary care that knows you beyond the office visit.
+- [Pricing](https://getmeddyhealth.com/pricing): Three levels of physician-led support starting at $99/month.
+- [Wearables](https://getmeddyhealth.com/wearables): Connect your Apple Watch, Oura, Fitbit, and more.
+- [What We Test](https://getmeddyhealth.com/what-we-test): The labs a Meddy physician most commonly orders.
+- [24/7 Care](https://getmeddyhealth.com/247-care): Primary care that doesn't clock out.
+- [Book a Consultation](https://getmeddyhealth.com/book-consultation): Book a free 30-minute video visit.
+- [Personalized Health Plans](https://getmeddyhealth.com/personalized-health-plans): A plan built around you.
+
+## Legal
+
+- [Terms of Use](https://getmeddyhealth.com/terms-of-use)
+- [Privacy Policy](https://getmeddyhealth.com/privacy-policy)
+- [Patient Terms of Service](https://getmeddyhealth.com/patient-terms-of-service)
+- [Notice of Privacy Practices](https://getmeddyhealth.com/notice-of-privacy-practices)
+- [Telehealth Informed Consent](https://getmeddyhealth.com/telehealth-consent)
+
+## Contact
+
+- Email: support@meddyhealth.ai
+- Phone: +1-516-925-3997
+- Address: Meddy Health LLC, 515 W 38th Street, Apt 11J, New York, NY 10018
