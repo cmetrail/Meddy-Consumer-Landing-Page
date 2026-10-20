@@ -128,7 +128,7 @@ export const BookConsultationPage = () => {
 
   return (
     <FormProvider {...methods}>
-      <div className="flex min-h-dvh w-full flex-col bg-[#f5f5f0] lg:h-dvh lg:overflow-hidden">
+      <div className="flex min-h-dvh w-full flex-col overflow-x-hidden bg-[#f5f5f0] lg:h-dvh lg:overflow-hidden">
         <main className="flex min-h-0 w-full flex-1 flex-col lg:flex-row">
           <aside
             data-lenis-prevent
@@ -140,7 +140,7 @@ export const BookConsultationPage = () => {
           <div
             ref={scrollRef}
             data-lenis-prevent
-            className="flex min-h-0 w-full flex-1 flex-col overflow-y-auto px-5 py-6 lg:px-10 lg:py-[clamp(16px,3dvh,32px)]"
+            className="flex min-h-0 w-full flex-1 flex-col overflow-x-hidden overflow-y-auto px-5 py-6 lg:px-10 lg:py-[clamp(16px,3dvh,32px)]"
           >
             <div className="mb-8 lg:hidden">
               <MobileStepper

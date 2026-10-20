@@ -1,11 +1,11 @@
 "use client";
 
+import { useRef } from "react";
 import type { Control, FieldError } from "react-hook-form";
 import { Controller, useFormContext } from "react-hook-form";
 import type { BookConsultationForm } from "../types";
 import type { SlotStartTime } from "../api";
 import { addMinutes, formatSlotTime } from "../datetime";
-import { useScrollHaptics } from "../useScrollHaptics";
 
 type TimeSlotsProps = {
   control: Control<BookConsultationForm>;
@@ -25,7 +25,7 @@ export default function TimeSlots({
   loadError,
 }: TimeSlotsProps) {
   const { setValue } = useFormContext<BookConsultationForm>();
-  const scrollRef = useScrollHaptics<HTMLDivElement>();
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
     <Controller
@@ -64,10 +64,10 @@ export default function TimeSlots({
                         { shouldValidate: true },
                       );
                     }}
-                    className={`flex h-[43px] w-[138px] shrink-0 items-center justify-center rounded-full transition-colors lg:h-auto lg:w-auto lg:px-[37px] lg:py-2 ${
+                    className={`flex h-[43px] w-[138px] shrink-0 items-center justify-center rounded-full transition-colors lg:h-auto lg:w-auto lg:px-[24px] lg:py-1 ${
                       on
-                        ? "bg-[rgba(23,146,90,0.10)] text-[18px] font-medium leading-[1.5] text-[#17925a] lg:text-[24px]"
-                        : "text-[14px] font-normal leading-[1.5] text-[#7b7b7b] hover:bg-[rgba(23,146,90,0.05)] hover:text-[#17925a] lg:text-[20px]"
+                        ? "bg-[rgba(23,146,90,0.10)] text-[18px] font-medium leading-[1.5] text-[#17925a] lg:text-[18px]"
+                        : "text-[14px] font-normal leading-[1.5] text-[#7b7b7b] hover:bg-[rgba(23,146,90,0.05)] hover:text-[#17925a] lg:text-[16px]"
                     }`}
                   >
                     {formatSlotTime(slot.startTime)}

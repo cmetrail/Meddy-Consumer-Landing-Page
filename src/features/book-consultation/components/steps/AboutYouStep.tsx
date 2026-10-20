@@ -1,9 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { Lock } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import type { BookConsultationForm } from "../../types";
-import { US_STATES } from "../../constants";
 import TextField from "../form/TextField";
 import SelectField from "../form/SelectField";
 import CheckboxField from "../form/CheckboxField";
@@ -65,23 +65,27 @@ export default function AboutYouStep() {
         helper="So we can reach you about your appointment."
         register={register("mobileNumber", {
           required: "Mobile number is required.",
-          pattern: { value: /^[+()\-\s\d]{7,}$/, message: "Enter a valid phone number." },
+          pattern: {
+            value: /^(\+?1[\s.-]?)?(\(\d{3}\)|\d{3})[\s.-]?\d{3}[\s.-]?\d{4}$/,
+            message: "Enter a valid US phone number.",
+          },
         })}
         error={errors.mobileNumber}
       />
 
       <CheckboxField
-        label="Text me appointment reminders"
+        label="Text me appointment reminders at the number I provided."
         boxClassName="h-[20px] w-[20px] lg:h-[28px] lg:w-[28px]"
         checkSize={20}
         labelClassName="lg:text-[20px]"
-        helper="Msg & data rates may apply. Msg frequency varies. Reply STOP to opt out, HELP for help."
+        helper="Texts aren’t encrypted and contain no medical details. Msg & data rates may apply. Reply STOP to opt out. Not required to book."
         register={register("textReminders")}
       />
 
       <SelectField
         label="State of Residence"
-        options={US_STATES}
+        options={["New York"]}
+        disabled
         register={register("stateOfResidence", { required: "Select your state." })}
         error={errors.stateOfResidence}
       />
@@ -106,9 +110,14 @@ export default function AboutYouStep() {
         <Lock className="h-[14px] w-[14px] shrink-0 lg:h-[20px] lg:w-[20px]" />
         <span>
           Your information is private and protected.{" "}
-          <a href="#" className="text-[#17925a] underline">
+          <Link
+            href="/privacy-policy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#7b7b7b] font-bold underline"
+          >
             Privacy Policy
-          </a>
+          </Link>
         </span>
       </div>
     </div>

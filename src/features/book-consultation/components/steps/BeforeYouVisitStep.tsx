@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Check } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import type { BookConsultationForm } from "../../types";
@@ -47,14 +48,42 @@ export default function BeforeYouVisitStep({ submitting, error }: BeforeYouVisit
       <div className="flex w-full flex-col gap-[16px] rounded-[10px] border border-solid border-[#979797] bg-white p-[20px] lg:gap-[24px] lg:px-[27px] lg:py-[27px]">
         <div className="flex w-full flex-col gap-2">
           <CheckboxField
-            label="I've read and agree to the Telehealth Informed Consent."
+            label={
+              <span>
+                I&apos;ve read and agree to the{" "}
+                <Link
+                  href="/telehealth-consent"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="font-bold text-[#46524B] underline underline-offset-2 hover:opacity-80"
+                >
+                  Telehealth Informed Consent
+                </Link>
+                .
+              </span>
+            }
             boxClassName="h-[20px] w-[20px] lg:h-[30px] lg:w-[30px]"
             borderClassName="border-[#7b7b7b]"
             checkSize={20}
             register={register("telehealthConsent")}
           />
           <CheckboxField
-            label="I acknowledge I've received Meddy's Notice of Privacy Practices."
+            label={
+              <span>
+                I acknowledge I&apos;ve received the{" "}
+                <Link
+                  href="/notice-of-privacy-practices"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="font-bold text-[#46524B] underline underline-offset-2 hover:opacity-80"
+                >
+                  Notice of Privacy Practices
+                </Link>{" "}
+                of Sameer Aggarwal Medical PLLC.
+              </span>
+            }
             boxClassName="h-[20px] w-[20px] lg:h-[30px] lg:w-[30px]"
             borderClassName="border-[#7b7b7b]"
             checkSize={20}

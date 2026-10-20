@@ -14,12 +14,12 @@ export default function Stepper({ step }: StepperProps) {
     <div className="mx-auto flex w-full max-w-[280px] flex-1 flex-col items-start">
       <Link href="/" aria-label="Meddy Health home" className="shrink-0 pt-10">
         <Image
-          src="/meddy-logo-white.svg"
+          src="/meddy-emr-logo.svg"
           alt="Meddy Health"
-          width={44}
-          height={28}
+          width={148}
+          height={24}
           unoptimized
-          className="h-[28px] w-auto"
+          className="h-[24px] w-auto"
         />
       </Link>
 
@@ -88,12 +88,12 @@ export function MobileStepper({ step, onBack }: StepperProps & { onBack?: () => 
     <div className="flex w-full flex-col items-start gap-[16px]">
       <Link href="/" aria-label="Meddy Health home">
         <Image
-          src="/meddy-logo-white.svg"
+          src="/meddy-emr-logo.svg"
           alt="Meddy Health"
-          width={44}
-          height={28}
+          width={148}
+          height={24}
           unoptimized
-          className="h-[28px] w-auto"
+          className="h-[24px] w-auto"
         />
       </Link>
 

@@ -40,7 +40,7 @@ export default function CheckboxField({
             className="text-white opacity-0 transition-opacity group-has-[:checked]:opacity-100"
           />
         </span>
-        <span className={`text-[16px] font-normal leading-[1.5] text-[#46524b] ${labelClassName ?? ""}`}>
+        <span className={` text-[12px] sm:text-[16px] font-normal leading-[1.5] text-[#46524b] ${labelClassName ?? ""}`}>
           {label}
         </span>
       </label>

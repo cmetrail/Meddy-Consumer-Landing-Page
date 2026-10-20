@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import { useFormContext } from "react-hook-form";
 import { Info } from "lucide-react";
 import type { BookConsultationForm } from "../../types";
@@ -50,12 +51,12 @@ export default function ChooseTimeStep({ duration }: { duration: number }) {
           <span className="mx-auto hidden max-w-[433px] lg:block lg:text-center">
             Video visit on Google Meet
             <br />
-            {duration} minutes · Availability shown in EST
+            30 minutes · Availability shown in Eastern Time
           </span>
           <span className="lg:hidden">
-            Video visit on Google Meet · {duration} minutes
+            Video visit on Google Meet · 30 minutes
             <br />
-            Availability shown in EST
+            Availability shown in Eastern Time
           </span>
         </p>
       </div>
@@ -88,9 +89,27 @@ export default function ChooseTimeStep({ duration }: { duration: number }) {
       <CheckboxField
         label={
           <span>
-            I agree to the <a href="#" className="font-bold">Terms of Service</a> and{" "}
-            <a href="#" className="font-bold">Privacy Policy</a>, and to receive notices and records
-            electronically
+            I agree to the{" "}
+            <Link
+              href="/terms-of-use"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="font-bold text-[#7b7b7b] underline underline-offset-2 hover:opacity-80"
+            >
+              Terms of Service
+            </Link>{" "}
+            and{" "}
+            <Link
+              href="/privacy-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="font-bold text-[#7b7b7b] underline underline-offset-2 hover:opacity-80"
+            >
+              Privacy Policy
+            </Link>
+            , and to receive notices and records electronically
           </span>
         }
         register={register("agreeTerms", { validate: (v) => v === true || "You must agree to continue." })}
