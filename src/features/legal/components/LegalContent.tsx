@@ -1,4 +1,5 @@
 import type { LegalDoc, Bullet } from "../types";
+import { highlightText } from "./highlight";
 
 function renderBullet(b: Bullet, key: number) {
   const text = typeof b === "string" ? b : b.text;
@@ -11,7 +12,7 @@ function renderBullet(b: Bullet, key: number) {
       />
       <span>
         {lead && <span className="font-semibold text-[#f4f4f5]">{lead} </span>}
-        {text}
+        {highlightText(text)}
       </span>
     </li>
   );
@@ -52,7 +53,7 @@ export default function LegalContent({ doc }: { doc: LegalDoc }) {
               <div className="mt-4 flex flex-col gap-4">
                 {section.paragraphs?.map((p, j) => (
                   <p key={j} className="text-[16px] leading-[1.7] text-[#b6b6b1]">
-                    {p}
+                    {highlightText(p)}
                   </p>
                 ))}
 
@@ -62,7 +63,7 @@ export default function LegalContent({ doc }: { doc: LegalDoc }) {
                       {sub.heading && (
                         <span className="font-semibold text-[#f4f4f5]">{sub.heading} </span>
                       )}
-                      {sub.body}
+                      {sub.body && highlightText(sub.body)}
                     </p>
                     {sub.bullets && (
                       <ul className="flex flex-col gap-2.5">
@@ -73,7 +74,9 @@ export default function LegalContent({ doc }: { doc: LegalDoc }) {
                 ))}
 
                 {section.bulletIntro && (
-                  <p className="text-[16px] leading-[1.7] text-[#b6b6b1]">{section.bulletIntro}</p>
+                  <p className="text-[16px] leading-[1.7] text-[#b6b6b1]">
+                    {highlightText(section.bulletIntro)}
+                  </p>
                 )}
 
                 {section.bullets && (
@@ -89,7 +92,7 @@ export default function LegalContent({ doc }: { doc: LegalDoc }) {
                       : [section.trailing]
                     ).map((t, j) => (
                       <p key={j} className="text-[16px] leading-[1.7] text-[#b6b6b1]">
-                        {t}
+                        {highlightText(t)}
                       </p>
                     ))}
                   </>
@@ -120,7 +123,7 @@ export default function LegalContent({ doc }: { doc: LegalDoc }) {
                                   c === 0 ? "font-medium text-[#d4d4d0]" : ""
                                 }`}
                               >
-                                {cell}
+                                {highlightText(cell)}
                               </td>
                             ))}
                           </tr>
