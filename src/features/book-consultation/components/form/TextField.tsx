@@ -23,7 +23,7 @@ export default function TextField({
 }: TextFieldProps) {
   return (
     <div className="flex w-full flex-col items-start gap-[6px]">
-      <label className="text-[16px] font-normal leading-[1.5] text-[#46524b] lg:text-[20px] lg:font-medium">
+      <label className="text-[16px] font-normal leading-[1.5] text-[#46524b] lg:text-[16px] lg:font-medium">
         {label}
       </label>
       <input

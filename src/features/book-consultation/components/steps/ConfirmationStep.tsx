@@ -47,7 +47,7 @@ export default function ConfirmationStep({ booking }: ConfirmationStepProps) {
   const meetUrl = booking?.meetUrl ?? null;
 
   const ctaBase =
-    "flex w-full items-center justify-center rounded-[10px] px-12 py-3 text-[14px] font-bold uppercase leading-[1.5] lg:h-[65px] lg:py-[9px] lg:text-[20px] lg:font-medium";
+    "flex w-full items-center justify-center rounded-[10px] px-12 py-3 text-[14px] font-bold uppercase leading-[1.5] lg:h-[48px] lg:py-[9px] lg:text-[16px] lg:font-medium";
   const ctaPrimary =
     "bg-[#17925a] text-white shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90";
   const ctaSecondary =
@@ -58,10 +58,10 @@ export default function ConfirmationStep({ booking }: ConfirmationStepProps) {
       <div className="flex w-full flex-col items-center gap-4 lg:gap-2">
         <div className="flex w-full max-w-[399px] flex-col items-center gap-4 lg:gap-[23px]">
           <div className="lg:hidden"><Tick k={0.62} /></div>
-          <div className="hidden lg:block"><Tick k={1} /></div>
-          <h1 className="whitespace-nowrap text-center text-[24px] font-bold leading-[1.5] text-[#111110] lg:text-[40px] lg:text-[#46524b]">You&rsquo;re all set!</h1>
+          <div className="hidden lg:block"><Tick k={0.75} /></div>
+          <h1 className="whitespace-nowrap text-center text-[24px] font-bold leading-[1.5] text-[#111110] lg:text-[32px] lg:text-[#46524b]">You&rsquo;re all set!</h1>
         </div>
-        <p className="w-full max-w-[399px] text-center text-[14px] font-normal leading-[1.5] text-[#46524b] lg:text-[20px] lg:font-medium lg:text-[#7b7b7b]">
+        <p className="w-full max-w-[399px] text-center text-[14px] font-normal leading-[1.5] text-[#46524b] lg:text-[16px] lg:font-medium lg:text-[#7b7b7b]">
           We&apos;ve emailed your Google Meet link to <b className="break-words font-bold">{email || "your email"}</b>
         </p>
       </div>

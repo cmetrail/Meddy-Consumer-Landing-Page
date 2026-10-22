@@ -27,19 +27,19 @@ export default function BeforeYouVisitStep({ submitting, error }: BeforeYouVisit
   return (
     <div className="flex w-full flex-col items-center gap-6 sm:gap-11">
       <div className="flex w-full flex-col items-center gap-6">
-        <span className="flex h-[58px] w-[58px] items-center justify-center rounded-full bg-[#17925a] lg:h-[94.5px] lg:w-[94.5px]">
-          <Check size={33} strokeWidth={3} className="text-white lg:size-[54px]" />
+        <span className="flex h-[58px] w-[58px] items-center justify-center rounded-full bg-[#17925a] lg:h-[72px] lg:w-[72px]">
+          <Check size={33} strokeWidth={3} className="text-white lg:size-[40px]" />
         </span>
 
         <div className="flex w-full flex-col items-center gap-2 max-w-138.5 sm:mx-auto lg:max-w-none">
           <div className="flex flex-col items-center">
-            <h1 className="text-center text-[24px] font-medium leading-[1.5] text-[#7b7b7b] lg:text-[40px]">You&apos;re booked for</h1>
-            <p className="text-center text-[24px] font-medium leading-[1.5] text-[#111110] lg:text-[40px] lg:text-[#46524b]">
+            <h1 className="text-center text-[24px] font-medium leading-[1.5] text-[#7b7b7b] lg:text-[32px]">You&apos;re booked for</h1>
+            <p className="text-center text-[24px] font-medium leading-[1.5] text-[#111110] lg:text-[32px] lg:text-[#46524b]">
               {formatLongDate(date)}
               <span className="lg:hidden">{time ? ` at ${formatSlotTime(time)}` : ""}</span>
             </p>
           </div>
-          <p className="text-center text-[14px] font-normal leading-normal text-[#7b7b7b] lg:text-[20px] lg:font-medium">
+          <p className="text-center text-[14px] font-normal leading-normal text-[#7b7b7b] lg:text-[16px] lg:font-medium">
             Two quick steps before you visit.
           </p>
         </div>
@@ -63,7 +63,7 @@ export default function BeforeYouVisitStep({ submitting, error }: BeforeYouVisit
                 .
               </span>
             }
-            boxClassName="h-[20px] w-[20px] lg:h-[30px] lg:w-[30px]"
+            boxClassName="h-[20px] w-[20px] lg:h-[22px] lg:w-[22px]"
             borderClassName="border-[#7b7b7b]"
             checkSize={20}
             register={register("telehealthConsent")}
@@ -84,7 +84,7 @@ export default function BeforeYouVisitStep({ submitting, error }: BeforeYouVisit
                 of Sameer Aggarwal Medical PLLC.
               </span>
             }
-            boxClassName="h-[20px] w-[20px] lg:h-[30px] lg:w-[30px]"
+            boxClassName="h-[20px] w-[20px] lg:h-[22px] lg:w-[22px]"
             borderClassName="border-[#7b7b7b]"
             checkSize={20}
             register={register("privacyPractices")}
@@ -94,7 +94,7 @@ export default function BeforeYouVisitStep({ submitting, error }: BeforeYouVisit
         <button
           type="submit"
           disabled={!canSubmit}
-          className={`flex h-[45px] w-full items-center justify-center rounded-[10px] text-[14px] font-bold uppercase leading-[1.5] shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-colors lg:h-[65px] lg:text-[20px] ${
+          className={`flex h-[45px] w-full items-center justify-center rounded-[10px] text-[14px] font-bold uppercase leading-[1.5] shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-colors lg:h-[48px] lg:text-[16px] ${
             canSubmit ? "cursor-pointer bg-[#17925a] text-white hover:opacity-90" : "cursor-not-allowed bg-[#8a8a82] text-white"
           }`}
         >

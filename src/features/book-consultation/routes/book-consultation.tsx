@@ -132,7 +132,7 @@ export const BookConsultationPage = () => {
         <main className="flex min-h-0 w-full flex-1 flex-col lg:flex-row">
           <aside
             data-lenis-prevent
-            className="hidden shrink-0 lg:flex lg:h-dvh lg:w-[444px] lg:flex-col lg:items-center lg:overflow-y-auto lg:bg-[rgba(23,146,90,0.10)] lg:px-10"
+            className="hidden shrink-0 lg:flex lg:h-dvh lg:w-[340px] lg:flex-col lg:items-center lg:overflow-y-auto lg:bg-[rgba(23,146,90,0.10)] lg:px-10"
           >
             <Stepper step={submitted ? STEPS.length : step} />
           </aside>
@@ -171,7 +171,7 @@ export const BookConsultationPage = () => {
                     <button
                       type="button"
                       onClick={back}
-                      className="hidden items-center gap-[8px] py-[12px] text-[16px] font-medium uppercase leading-[1.5] text-[#17925a] transition-colors hover:text-[#17925a]/80 lg:flex lg:h-[65px] lg:px-6 lg:py-[9px] xl:px-12 lg:text-[20px] lg:underline"
+                      className="hidden items-center gap-[8px] py-[12px] text-[16px] font-medium uppercase leading-[1.5] text-[#17925a] transition-colors hover:text-[#17925a]/80 lg:flex lg:h-[48px] lg:px-6 lg:py-[9px] xl:px-12 lg:text-[16px] lg:underline"
                     >
                       <ArrowLeft size={20} className="lg:hidden" />
                       <ArrowLeft size={24} className="hidden lg:block" />
@@ -183,7 +183,7 @@ export const BookConsultationPage = () => {
                   <button
                     type="button"
                     onClick={next}
-                    className="w-full rounded-[10px] bg-[#17925a] px-[20px] py-[12px] text-[16px] font-medium uppercase leading-[1.5] text-white shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90 lg:w-auto lg:h-[65px] lg:min-w-[280px] xl:min-w-[377px] lg:px-[24px] lg:py-[9px] lg:text-[20px] lg:font-bold"
+                    className="w-full rounded-[10px] bg-[#17925a] px-[20px] py-[12px] text-[16px] font-medium uppercase leading-[1.5] text-white shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90 lg:w-auto lg:h-[48px] lg:min-w-[220px] xl:min-w-[280px] lg:px-[24px] lg:py-[9px] lg:text-[16px] lg:font-bold"
                   >
                     {step === STEPS.length - 1
                       ? "Get my visit link"

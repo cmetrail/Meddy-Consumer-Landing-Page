@@ -40,13 +40,13 @@ export default function TimeSlots({
             className="flex max-h-[176px] w-full flex-col items-center gap-[10px] overflow-x-hidden overflow-y-auto pr-1 [scrollbar-width:thin] lg:max-h-[232px] lg:gap-[16px]"
           >
             {loading ? (
-              <p className="text-[14px] leading-[1.5] text-[#7b7b7b] lg:text-[18px]">
+              <p className="text-[14px] leading-[1.5] text-[#7b7b7b] lg:text-[16px]">
                 Loading available times…
               </p>
             ) : loadError ? (
               <p className="text-[12px] leading-[1.5] text-[#d92d20]">{loadError}</p>
             ) : slots.length === 0 ? (
-              <p className="text-[14px] leading-[1.5] text-[#7b7b7b] lg:text-[18px]">
+              <p className="text-[14px] leading-[1.5] text-[#7b7b7b] lg:text-[16px]">
                 No times available on this day.
               </p>
             ) : (
@@ -66,7 +66,7 @@ export default function TimeSlots({
                     }}
                     className={`flex h-[43px] w-[138px] shrink-0 items-center justify-center rounded-full transition-colors lg:h-auto lg:w-auto lg:px-[24px] lg:py-1 ${
                       on
-                        ? "bg-[rgba(23,146,90,0.10)] text-[18px] font-medium leading-[1.5] text-[#17925a] lg:text-[18px]"
+                        ? "bg-[rgba(23,146,90,0.10)] text-[18px] font-medium leading-[1.5] text-[#17925a] lg:text-[16px]"
                         : "text-[14px] font-normal leading-[1.5] text-[#7b7b7b] hover:bg-[rgba(23,146,90,0.05)] hover:text-[#17925a] lg:text-[16px]"
                     }`}
                   >

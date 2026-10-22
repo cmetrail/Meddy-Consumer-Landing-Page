@@ -31,7 +31,7 @@ export default function CheckboxField({
         <input type="checkbox" {...register} className="absolute h-0 w-0 opacity-0" />
         <span
           className={`mt-[1px] flex shrink-0 items-center justify-center rounded-[4px] border border-solid bg-white transition-colors group-focus-within:ring-2 group-focus-within:ring-[#17925a]/40 group-has-[:checked]:border-[#17925a] group-has-[:checked]:bg-[#17925a] ${
-            boxClassName ?? "h-[20px] w-[20px] lg:h-[24px] lg:w-[24px]"
+            boxClassName ?? "h-[20px] w-[20px] lg:h-[22px] lg:w-[22px]"
           } ${error ? "border-[#d92d20]" : (borderClassName ?? "border-[#d9d9d9]")}`}
         >
           <Check

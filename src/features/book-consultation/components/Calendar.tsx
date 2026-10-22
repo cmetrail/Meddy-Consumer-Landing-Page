@@ -93,7 +93,7 @@ export default function Calendar({ control, error, availability, onViewChange }:
       render={({ field }) => (
         <div className="flex w-full flex-col items-start gap-[16px]">
           <div className="flex w-full items-center justify-between">
-            <p className="text-[20px] font-medium leading-[1.5] text-[#212121] lg:text-[32px]">
+            <p className="text-[20px] font-medium leading-[1.5] text-[#212121] lg:text-[24px]">
               {MONTHS[viewMonth]} {viewYear}
             </p>
             <div className="flex items-center gap-[12px] lg:gap-[35px]">
@@ -147,7 +147,7 @@ export default function Calendar({ control, error, availability, onViewChange }:
                     type="button"
                     disabled={disabled && !selected}
                     onClick={() => field.onChange(iso)}
-                    className={`mx-auto flex h-[40px] w-[40px] items-center justify-center rounded-full text-[14px] leading-[1.5] transition-colors lg:h-[56px] lg:w-[56px] lg:text-[18px] ${
+                    className={`mx-auto flex h-[40px] w-[40px] items-center justify-center rounded-full text-[14px] leading-[1.5] transition-colors lg:h-[44px] lg:w-[44px] lg:text-[16px] ${
                       selected
                         ? "bg-[#17925a] font-bold text-white"
                         : disabled

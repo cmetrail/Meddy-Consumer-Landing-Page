@@ -18,10 +18,10 @@ export default function AboutYouStep() {
   return (
     <div className={`${styles.form} flex w-full flex-col items-start gap-6 sm:gap-11`}>
       <div className="flex w-full flex-col  flex-1 gap-2 max-w-138.5 sm:mx-auto sm:items-center">
-        <h1 className="text-left text-[24px] font-medium leading-[1.3] text-[#111110] sm:text-center lg:text-[40px] lg:text-[#46524b]">
+        <h1 className="text-left text-[24px] font-medium leading-[1.3] text-[#111110] sm:text-center lg:text-[32px] lg:text-[#46524b]">
           Book your free consultation
         </h1>
-        <p className="text-left text-[14px] font-normal leading-normal text-[#7b7b7b] sm:text-center lg:text-[20px] lg:font-medium">
+        <p className="text-left text-[14px] font-normal leading-normal text-[#7b7b7b] sm:text-center lg:text-[16px] lg:font-medium">
           30 minute video visit with a board certified
           internal medicine physician.
         </p>
@@ -75,9 +75,9 @@ export default function AboutYouStep() {
 
       <CheckboxField
         label="Text me appointment reminders at the number I provided."
-        boxClassName="h-[20px] w-[20px] lg:h-[28px] lg:w-[28px]"
+        boxClassName="h-[20px] w-[20px] lg:h-[22px] lg:w-[22px]"
         checkSize={20}
-        labelClassName="lg:text-[20px]"
+        labelClassName="lg:text-[16px]"
         helper="Texts aren’t encrypted and contain no medical details. Msg & data rates may apply. Reply STOP to opt out. Not required to book."
         register={register("textReminders")}
       />
@@ -92,22 +92,22 @@ export default function AboutYouStep() {
 
       <CheckboxField
         label="I'm 18 or older"
-        boxClassName="h-[20px] w-[20px] lg:h-[28px] lg:w-[28px]"
+        boxClassName="h-[20px] w-[20px] lg:h-[22px] lg:w-[22px]"
         checkSize={20}
-        labelClassName="lg:text-[20px] lg:font-medium"
+        labelClassName="lg:text-[16px] lg:font-medium"
         register={register("is18OrOlder", { validate: (v) => v === true || "You must be 18 or older to book." })}
         error={errors.is18OrOlder}
       />
 
       <button
         type="submit"
-        className="flex h-[45px] w-full items-center justify-center rounded-[10px] bg-[#17925a] text-[14px] font-medium uppercase leading-[1.5] text-white shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90 lg:h-[65px] lg:text-[20px]"
+        className="flex h-[45px] w-full items-center justify-center rounded-[10px] bg-[#17925a] text-[14px] font-medium uppercase leading-[1.5] text-white shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90 lg:h-[48px] lg:text-[16px]"
       >
         Continue
       </button>
 
       <div className="flex w-full items-center justify-center gap-[8px] text-[12px] leading-[1.5] text-[#7b7b7b] lg:text-[16px]">
-        <Lock className="h-[14px] w-[14px] shrink-0 lg:h-[20px] lg:w-[20px]" />
+        <Lock className="h-[14px] w-[14px] shrink-0 lg:h-[16px] lg:w-[16px]" />
         <span>
           Your information is private and protected.{" "}
           <Link

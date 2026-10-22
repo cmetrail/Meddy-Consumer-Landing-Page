@@ -15,10 +15,10 @@ export default function YourGoalsStep() {
   return (
     <div className="flex w-full flex-col items-start gap-6 sm:gap-11">
       <div className="flex w-full flex-col flex-1 gap-2 max-w-138.5 sm:mx-auto sm:items-center xl:max-w-none xl:flex-none">
-        <h1 className="text-left text-[24px] font-medium leading-[1.3] text-[#111110] sm:text-center lg:text-[32px] xl:whitespace-nowrap xl:text-[40px] lg:font-bold lg:leading-[1.5] lg:text-[#46524b]">
+        <h1 className="text-left text-[24px] font-medium leading-[1.3] text-[#111110] sm:text-center lg:text-[28px] xl:whitespace-nowrap xl:text-[32px] lg:font-bold lg:leading-[1.5] lg:text-[#46524b]">
           What would you most like help with?
         </h1>
-        <p className="text-left text-[14px] font-normal leading-normal text-[#7b7b7b] sm:text-center lg:text-[20px] lg:font-medium">
+        <p className="text-left text-[14px] font-normal leading-normal text-[#7b7b7b] sm:text-center lg:text-[16px] lg:font-medium">
           <span className="lg:hidden">Select that apply</span>
           <span className="hidden lg:inline">Select all that apply</span>
         </p>
@@ -27,7 +27,7 @@ export default function YourGoalsStep() {
       <GoalSelect control={control} error={errors.goals} />
         <div className="flex flex-col gap-2">
       <div className="flex w-full flex-col items-start gap-[6px]">
-        <label className="text-[16px] font-normal leading-[1.5] text-[#46524b] lg:text-[20px] lg:font-medium">
+        <label className="text-[16px] font-normal leading-[1.5] text-[#46524b] lg:text-[16px] lg:font-medium">
           Anything you&apos;d like us to know?
         </label>
         <textarea

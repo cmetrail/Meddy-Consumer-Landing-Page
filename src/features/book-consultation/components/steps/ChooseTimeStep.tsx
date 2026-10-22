@@ -44,10 +44,10 @@ export default function ChooseTimeStep({ duration }: { duration: number }) {
   return (
     <div className="flex w-full flex-col items-start gap-6 sm:gap-11 lg:gap-6">
       <div className="flex w-full flex-col flex-1 gap-2 max-w-138.5 sm:mx-auto sm:items-center xl:max-w-none xl:flex-none">
-        <h1 className="text-left text-[24px] font-medium leading-[1.3] text-[#111110] sm:text-center lg:text-[32px] lg:font-bold lg:leading-[1.5] lg:text-[#46524b] xl:whitespace-nowrap xl:text-[40px]">
+        <h1 className="text-left text-[24px] font-medium leading-[1.3] text-[#111110] sm:text-center lg:text-[28px] lg:font-bold lg:leading-[1.5] lg:text-[#46524b] xl:whitespace-nowrap xl:text-[32px]">
           Choose a time for your free consultation
         </h1>
-        <p className="w-full text-left text-[14px] font-normal leading-normal text-[#7b7b7b] sm:text-center lg:text-[20px] lg:font-medium">
+        <p className="w-full text-left text-[14px] font-normal leading-normal text-[#7b7b7b] sm:text-center lg:text-[16px] lg:font-medium">
           <span className="mx-auto hidden max-w-[433px] lg:block lg:text-center">
             Video visit on Google Meet
             <br />
@@ -72,7 +72,7 @@ export default function ChooseTimeStep({ duration }: { duration: number }) {
         </div>
         <div className="hidden lg:block lg:h-[299px] lg:w-[1px] lg:shrink-0 lg:bg-[#d9d9d9]" />
         <div className="flex w-full flex-col items-center gap-[24px] lg:w-[200px] lg:shrink-0 lg:gap-[56px]">
-          <p className="w-full text-left text-[16px] font-normal leading-[1.5] text-[#7b7b7b] lg:text-center lg:text-[20px] lg:font-bold">
+          <p className="w-full text-left text-[16px] font-normal leading-[1.5] text-[#7b7b7b] lg:text-center lg:text-[16px] lg:font-bold">
             {formatLongDate(date)}
           </p>
           <TimeSlots

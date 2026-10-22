@@ -33,7 +33,7 @@ export default function GoalSelect({ control, error }: GoalSelectProps) {
                     key={g}
                     type="button"
                     onClick={() => toggle(g)}
-                    className={`flex h-[50px] w-full items-center gap-[16px] rounded-[10px] border border-solid px-[25px] text-left transition-colors ${
+                    className={`flex h-[50px] w-full items-center gap-[12px] rounded-[10px] border border-solid px-[16px] lg:h-[44px] lg:px-[20px] text-left transition-colors ${
                       on
                         ? "border-[#33674f] bg-[rgba(23,146,90,0.10)]"
                         : "border-[#979797] bg-white"
