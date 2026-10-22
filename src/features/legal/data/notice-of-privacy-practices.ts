@@ -11,7 +11,7 @@ export const noticeOfPrivacyPractices: LegalDoc = {
       title: "Who this notice covers",
       paragraphs: [
         "This notice applies to Sameer Aggarwal Medical PLLC (“the Practice,” “we,” “us”), which provides your medical care. The Practice offers its services through the Meddy website and app, which are owned and operated by Meddy Health LLC (“Meddy”), a company also owned by Dr. Aggarwal. Meddy is the Practice’s business associate: it handles your health information only on the Practice’s behalf, as described in this notice.",
-        "This notice covers your protected health information held by or for the Practice. Information you give Meddy before becoming a patient, and general website data, are covered by Meddy Health LLC’s Privacy Policy.",
+        "This notice covers your protected health information held by or for the Practice, starting from the moment you request a free consultation. That includes the health goals, concerns, or measurements you share when you book. General website data and account details unrelated to your care are covered by Meddy Health LLC’s Privacy Policy.",
       ],
     },
     {
@@ -37,7 +37,7 @@ export const noticeOfPrivacyPractices: LegalDoc = {
         },
         {
           heading: "Information you share through the app.",
-          body: "Health data you log or share from your own devices (such as weight, sleep, or heart rate) becomes part of your medical record and is protected under this notice. The device maker’s own privacy policy governs data held by that company.",
+          body: "Health data you log or share from your own devices (such as weight, sleep, or heart rate) is protected under this notice. Data your clinicians review or rely on for your care becomes part of your medical record. Other device data is stored securely but is not part of your medical record. The device maker’s own privacy policy governs data held by that company.",
         },
         {
           heading: "Payment.",
@@ -45,7 +45,7 @@ export const noticeOfPrivacyPractices: LegalDoc = {
         },
         {
           heading: "Health care operations.",
-          body: "We use your information to run the Practice and improve your care. Example: We review records to evaluate care quality. We may use software, including artificial intelligence tools, to help with tasks such as transcribing calls, summarizing messages, or drafting notes. Our clinicians review this work before relying on it for your care. These tools are used only under Business Associate Agreements, and your information is never used to train artificial intelligence models.",
+          body: "We use your information to run the Practice and improve your care. Example: We review records to evaluate care quality. We may use software, including artificial intelligence tools, to help with tasks such as transcribing calls, summarizing messages, or drafting notes. Our clinicians review this work before relying on it for your care. These tools are used only under Business Associate Agreements, and our vendors may not use your information to train their artificial intelligence models. Meddy may use information that has been de-identified, so that it can no longer identify you, to improve its services, including to develop artificial intelligence models, as HIPAA permits.",
         },
         {
           heading: "Business associates.",
@@ -136,10 +136,6 @@ export const noticeOfPrivacyPractices: LegalDoc = {
           text: "is protected under New York Public Health Law Article 27-F. We will not share it without your specific written consent, except as that law allows.",
         },
         {
-          lead: "Mental health information",
-          text: "may receive additional protection under New York Mental Hygiene Law §33.13.",
-        },
-        {
           lead: "Genetic test results",
           text: "are protected under New York Civil Rights Law §79-l and will not be disclosed without your written consent, except as that law allows.",
         },
@@ -156,8 +152,8 @@ export const noticeOfPrivacyPractices: LegalDoc = {
       ],
       bullets: [
         {
-          lead: "Get a copy of your records.",
-          text: "You can ask to see or get an electronic or paper copy of your medical record. We will provide it, usually within 30 days, and may charge a reasonable, cost-based fee, not to exceed the limits set by New York law.",
+          lead: "See or get a copy of your records.",
+          text: "You can ask to inspect, or get an electronic or paper copy of, your medical record. We will let you inspect your record within 10 days of your request and provide copies within 30 days. Paper copies cost no more than 75 cents per page. Electronic copies are provided for a reasonable, cost-based fee.",
         },
         {
           lead: "Ask us to correct your record.",
@@ -185,12 +181,12 @@ export const noticeOfPrivacyPractices: LegalDoc = {
         },
       ],
       trailing:
-        "This notice is posted on the Meddy website and in the patient app, and patients acknowledge receiving it at enrollment.",
+        "This notice is posted on the Meddy website and in the patient app, and you acknowledge receiving it when you request a consultation.",
     },
     {
       title: "Complaints",
       paragraphs: [
-        "If you believe your privacy rights have been violated, you can file a complaint with us by contacting our Privacy Officer (below). You can also file a complaint with the U.S. Department of Health and Human Services Office for Civil Rights at 200 Independence Avenue SW, Washington, DC 20201, by calling 1-877-696-6775, or online at www.hhs.gov/ocr/privacy/hipaa/complaints/.",
+        "If you believe your privacy rights have been violated, you can file a complaint with our Privacy Officer at support@meddypartners.com or by mail at the address below. You can also file a complaint with the U.S. Department of Health and Human Services Office for Civil Rights at 200 Independence Avenue SW, Washington, DC 20201, by calling 1-877-696-6775, or online at www.hhs.gov/ocr/privacy/hipaa/complaints/.",
         "We will not retaliate against you for filing a complaint.",
       ],
     },
@@ -198,8 +194,9 @@ export const noticeOfPrivacyPractices: LegalDoc = {
       title: "Contact",
       paragraphs: [
         "Privacy Officer: Dr. Sameer Aggarwal",
-        "Sameer Aggarwal Medical PLLC, 515 W 38th Street, Apt 11J, New York, NY 10018",
-        "support@getmeddyhealth.com · 516-925-3997",
+        "Sameer Aggarwal Medical PLLC, 307 W 38th St 16th Floor # 255 New York, NY 10018",
+        "Privacy complaints: support@meddypartners.com",
+        "All other questions: support@getmeddyhealth.com · 516-925-3997",
       ],
     },
   ],

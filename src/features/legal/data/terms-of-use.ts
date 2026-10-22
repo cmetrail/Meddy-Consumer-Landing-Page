@@ -4,6 +4,8 @@ export const termsOfUse: LegalDoc = {
   title: "Terms of Use",
   org: "Meddy Health LLC",
   effectiveDate: "October 17, 2026",
+  notice:
+    "Please read Section 17 carefully. It requires you and Meddy to resolve most disputes through individual arbitration instead of in court, and it waives your right to bring or join a class action. You can opt out of arbitration within 30 days, as Section 17 explains.",
   sections: [
     {
       number: 1,
@@ -21,7 +23,7 @@ export const termsOfUse: LegalDoc = {
           body: "If you become a patient, your membership, fees, and medical care are governed by the Practice’s Patient Terms of Service, Telehealth Informed Consent, and Notice of Privacy Practices. If these Terms conflict with those documents on any matter involving your medical care, membership, fees, or medical records, those documents control. Our Privacy Policy explains how Meddy handles information that is not part of your medical care.",
         },
         {
-          body: "You accept these Terms by using the Services or by checking “I agree” when you book a consultation or create an account. If you do not agree, do not use the Services.",
+          body: "You accept these Terms by checking “I agree” when you book a consultation or create an account. If you do not agree, do not use the Services.",
         },
       ],
     },
@@ -54,10 +56,11 @@ export const termsOfUse: LegalDoc = {
     },
     {
       number: 4,
-      title: "Free consultation requests",
+      title: "Free consultations",
       paragraphs: [
-        "When you request a free consultation, Meddy schedules it with the Practice on the Practice’s behalf and shares the information you provide, such as your contact details and health goals, with the Practice so it can prepare for your consultation.",
-        "A free consultation is informational. It does not create a provider-patient relationship with the Practice, and no provider-patient relationship ever exists between you and Meddy. A provider-patient relationship with the Practice begins only as described in the Practice’s Patient Terms of Service.",
+        "A free consultation is a video visit with a licensed clinician of the Practice. It is a medical service provided by the Practice, not by Meddy. Meddy schedules it on the Practice’s behalf and shares the information you provide, such as your contact details and health goals, with the Practice so it can prepare for your visit.",
+        "Before your consultation, you will be asked to accept the Practice’s Telehealth Informed Consent and to acknowledge its Notice of Privacy Practices. Health information you share when you request a consultation is protected health information of the Practice from the moment you share it, and is covered by that Notice.",
+        "A free consultation does not require you to become a member, and the Practice’s clinician decides what care, if any, is appropriate for you. No provider-patient relationship ever exists between you and Meddy.",
       ],
     },
     {
@@ -66,7 +69,7 @@ export const termsOfUse: LegalDoc = {
       bullets: [
         "Your account is for you only. Do not create an account for someone else or share your account.",
         "Keep your login credentials private and use the security features we offer, such as multi-factor authentication.",
-        "Tell us right away at support@meddyhealth.ai if you believe your account has been accessed without permission.",
+        "Tell us right away at support@getmeddyhealth.com if you believe your account has been accessed without permission.",
         "You are responsible for activity under your account unless it results from our failure to protect it.",
       ],
     },
@@ -115,7 +118,7 @@ export const termsOfUse: LegalDoc = {
       number: 8,
       title: "Privacy",
       paragraphs: [
-        "Our Privacy Policy explains how Meddy collects, uses, and shares information that is not part of your medical care. If you become a patient, your health information is protected health information of the Practice, and Meddy handles it only on the Practice’s behalf as its business associate under HIPAA. The Practice’s Notice of Privacy Practices describes how that information is used and your rights over it.",
+        "Our Privacy Policy explains how Meddy collects, uses, and shares information that is not part of your medical care. Health information you share when you request a consultation, and all health information you share as a patient, is protected health information of the Practice, and Meddy handles it only on the Practice’s behalf as its business associate under HIPAA. The Practice’s Notice of Privacy Practices describes how that information is used and your rights over it.",
       ],
     },
     {
@@ -146,6 +149,7 @@ export const termsOfUse: LegalDoc = {
       paragraphs: [
         "Information you enter as a patient becomes part of your medical record with the Practice. You allow Meddy to use it only to provide the Services and as described in our Privacy Policy and, for patients, the Practice’s Notice of Privacy Practices.",
         "If you send us suggestions or feedback about the Services, we may use them to improve the Services without any obligation to you. We will not use your health information to do so except as HIPAA and the Practice’s Business Associate Agreement allow.",
+        "We may use de-identified information, which cannot be used to identify you, to improve the Services, including to develop and train our own analytics and artificial intelligence models.",
       ],
     },
     {
@@ -186,9 +190,40 @@ export const termsOfUse: LegalDoc = {
     },
     {
       number: 17,
-      title: "Governing law and disputes",
-      paragraphs: [
-        "These Terms are governed by New York law. Before filing any legal action, you and Meddy agree to try to resolve the dispute through good-faith mediation. Any legal action will be brought in the state or federal courts located in New York County, New York. Disputes about your medical care, membership, or fees are governed by the Practice’s Patient Terms of Service.",
+      title: "Disputes, arbitration, and class action waiver",
+      subsections: [
+        {
+          heading: "Try to resolve it with us first.",
+          body: "Before starting any arbitration or court case, contact us at support@getmeddyhealth.com with a description of the dispute. You and Meddy agree to try in good faith to resolve it within 30 days.",
+        },
+        {
+          heading: "Individual arbitration.",
+          body: "If the dispute is not resolved, you and Meddy agree that any dispute arising from these Terms or the Services will be resolved by binding arbitration on an individual basis, administered by the American Arbitration Association under its Consumer Arbitration Rules. The arbitration will take place in New York County, New York, or by video or phone if you prefer. Meddy will pay any filing and administrative fees beyond what you would pay to file a case in court, as those rules provide. The arbitrator may award the same individual relief a court could.",
+        },
+        {
+          heading: "What is not covered.",
+          body: "Either party may bring an individual claim in small claims court if it qualifies. Either party may ask a court to stop infringement or misuse of its intellectual property. This Section does not cover claims about medical care or medical services provided by the Practice, which are governed by the Practice’s Patient Terms of Service and applicable law.",
+        },
+        {
+          heading: "No class actions.",
+          body: "You and Meddy may bring claims only on an individual basis, not as a plaintiff or class member in any class, collective, consolidated, or representative action. The arbitrator may not combine claims of more than one person. If this class action waiver is found unenforceable for a particular claim, that claim will proceed in court, and the arbitration agreement will not apply to it.",
+        },
+        {
+          heading: "Mass filings.",
+          body: "If 25 or more similar arbitration demands are filed against Meddy by or with the help of the same law firm or coordinated group, they will be handled in batches of up to 25 demands at a time, with the rest held until earlier batches are resolved. Fees will be charged per batch where the arbitration rules allow, and the time limits for the held claims will be paused while they wait.",
+        },
+        {
+          heading: "Your right to opt out.",
+          body: "You may opt out of this arbitration agreement by emailing support@getmeddyhealth.com within 30 days after you first accept these Terms, with your name and a statement that you are opting out of arbitration. Opting out does not affect the rest of these Terms.",
+        },
+        {
+          heading: "Changes to this Section.",
+          body: "If we change this Section, the change will not apply to a dispute that arose before it, and you may reject the change by notifying us within 30 days.",
+        },
+        {
+          heading: "Governing law and venue.",
+          body: "The Federal Arbitration Act governs this Section. Otherwise, these Terms are governed by New York law. Any claim that proceeds in court will be brought in the state or federal courts located in New York County, New York.",
+        },
       ],
     },
     {
@@ -202,7 +237,7 @@ export const termsOfUse: LegalDoc = {
       number: 19,
       title: "Contact",
       paragraphs: [
-        "Meddy Health LLC · 515 W 38th Street, Apt 11J, New York, NY 10018 · support@meddyhealth.ai · 516-925-3997",
+        "Meddy Health LLC · 2248 Broadway #1071, New York, NY 10024 · support@getmeddyhealth.com · 516-925-3997",
         "For questions about your medical care or medical records, contact Sameer Aggarwal Medical PLLC at support@getmeddyhealth.com or 516-925-3997.",
       ],
     },

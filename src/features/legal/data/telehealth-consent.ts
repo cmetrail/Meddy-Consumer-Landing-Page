@@ -11,7 +11,7 @@ export const telehealthConsent: LegalDoc = {
       paragraphs: [
         "Sameer Aggarwal Medical PLLC (“the Practice”) provides primary care services through telehealth. Telehealth means receiving medical care from a licensed provider using secure video, audio, messaging, and electronic health records, instead of an in-person visit. Your provider is a physician or other licensed health care professional employed or contracted by the Practice.",
         "You access the Practice’s services through the Meddy app, patient portal, and website, which are owned and operated by Meddy Health LLC. All medical care is provided by the Practice, not by Meddy.",
-        "This form explains how telehealth works at the Practice, its benefits and limitations, and your rights. Please read it carefully and ask us any questions before you sign.",
+        "This consent applies to every telehealth visit with the Practice, including a free consultation or your first visit. This form explains how telehealth works at the Practice, its benefits and limitations, and your rights. Please read it carefully and ask us any questions before you agree.",
       ],
     },
     {
@@ -33,7 +33,7 @@ export const telehealthConsent: LegalDoc = {
             "Your provider cannot perform a physical examination. Some conditions cannot be fully evaluated without one, which may lead to a delayed or missed diagnosis.",
             "Your provider may decide telehealth is not appropriate for your condition and refer you to in-person care, urgent care, or a specialist.",
             "Technology can fail. A poor connection, equipment problems, or service outages may interrupt or delay your visit.",
-            "Although we use secure, HIPAA-compliant systems, no electronic system is completely secure, and there is a small risk of unauthorized access to your information.",
+            "Although we use secure systems covered by Business Associate Agreements, no electronic system is completely secure, and there is a small risk of unauthorized access to your information.",
             "Care depends on the information you provide being complete and accurate.",
             "Exercise and nutrition changes carry risks, including injury, low blood sugar, dizziness, or worsening of existing conditions. Follow your plan as written, progress gradually, and stop and seek care if you experience chest pain, shortness of breath, fainting, or other concerning symptoms. Tell us about any injuries, conditions, or limitations before starting a new plan.",
           ],
@@ -84,7 +84,7 @@ export const telehealthConsent: LegalDoc = {
       title: "Privacy, technology, and communications",
       paragraphs: [
         "Your health information is protected under HIPAA and applicable state law, as described in our Notice of Privacy Practices.",
-        "Visits take place through secure, HIPAA-compliant video (currently Google Meet) and the Meddy electronic health record and patient portal. Video visits are not recorded. You agree not to record visits without your provider’s written consent.",
+        "Visits take place through secure video covered by a Business Associate Agreement (currently Google Meet) and the Meddy electronic health record and patient portal. Video visits are not recorded. You agree not to record visits without your provider’s written consent.",
         "Please join visits from a private location, using your own device and a secure internet connection, not public Wi-Fi.",
       ],
       subsections: [
@@ -94,7 +94,7 @@ export const telehealthConsent: LegalDoc = {
         },
         {
           heading: "Phone calls and artificial intelligence.",
-          body: "Calls to our phone line (516-925-3997) may be answered by Meddy’s automated assistant, which uses artificial intelligence. It will tell you at the start of each call that you are speaking with an automated assistant and that the call is recorded and transcribed. Unlike video visits, these calls are recorded, and recordings, transcripts, and voicemails are kept with your records. We also use artificial intelligence tools, under Business Associate Agreements, to help transcribe conversations, summarize messages, and draft notes. Your provider reviews AI-assisted clinical work before relying on it, artificial intelligence does not make decisions about your care, and your information is never used to train artificial intelligence models.",
+          body: "Calls to our phone line (516-925-3997) may be answered by Meddy’s automated assistant, which uses artificial intelligence. It will tell you at the start of each call that you are speaking with an automated assistant and that the call is recorded and transcribed. Unlike video visits, these calls are recorded, and recordings, transcripts, and voicemails are kept with your records. We also use artificial intelligence tools, under Business Associate Agreements, to help transcribe conversations, summarize messages, and draft notes. Your provider reviews AI-assisted clinical work before relying on it, and artificial intelligence does not make decisions about your care. Our vendors may not use your information to train their artificial intelligence models. Meddy may use information that has been de-identified, so that it can no longer identify you, to improve its services, including to develop artificial intelligence models, as HIPAA permits.",
         },
         {
           heading: "Response times.",
@@ -102,7 +102,7 @@ export const telehealthConsent: LegalDoc = {
         },
         {
           heading: "Email and text messages.",
-          body: "With your consent, the Practice, or Meddy on its behalf, may send appointment reminders and notifications by email or text message. These contain no clinical details. They are not encrypted and could be read by others, and by consenting to receive them you accept that risk. Message and data rates may apply. Reply STOP to opt out of texts at any time. Consent to texts is not required to receive care.",
+          body: "With your consent, the Practice, or Meddy on its behalf, may send appointment reminders and notifications by email or text message. These contain no clinical details. They are not encrypted and could be read by others, and by consenting to receive them you accept that risk. Message and data rates may apply. Reply STOP to opt out of texts at any time. Consent to texts is not required to receive care. If you text or email us about a health concern, we will reply through the secure patient app and ask you to continue the conversation there.",
         },
       ],
       trailing:
@@ -126,7 +126,7 @@ export const telehealthConsent: LegalDoc = {
           heading: "Your responsibilities.",
           body: "You agree to:",
           bullets: [
-            "Provide accurate and complete information about your health, medications, and location.",
+            "Provide accurate and complete information about your health, medications, location, and insurance or government health program coverage.",
             "Follow your care plan or tell us if you cannot.",
             "Seek in-person or emergency care when your provider recommends it or your symptoms require it.",
             "Keep your portal login private and tell us if you believe it has been compromised.",
@@ -138,8 +138,10 @@ export const telehealthConsent: LegalDoc = {
       number: 8,
       title: "Fees and payment",
       paragraphs: [
-        "Your first consultation is free. The Practice offers monthly membership plans, billed in advance each month, as described at enrollment. You may pay for your plan directly, or use your health insurance for covered visits and pay a membership fee only for non-covered services, such as app access, messaging, and nutrition and exercise planning. If you use insurance, your cost-sharing (copays, deductibles, coinsurance) depends on your plan. Laboratory testing may be billed separately by the laboratory or your insurer, unless included in your plan.",
-        "All fees are charged by and paid to the Practice through its payment processor. The Practice does not store your card number, and Meddy Health LLC does not receive your payments. You may cancel at any time, effective at the end of the current billing month. Full cancellation and refund terms are in our Patient Terms of Service.",
+        "The Practice offers monthly membership plans, billed in advance each month, as described at enrollment. If you pay for your care yourself, your first consultation is free.",
+        "If the Practice accepts your insurance, Medicare, or other government health program, covered services, including your first visit, are billed to your plan, and you pay the copays, deductibles, and coinsurance your plan requires. A membership, if you choose one, covers only features and services your plan does not pay for, and you can receive covered care without one. The plans and payers the Practice accepts are listed on our website.",
+        "Laboratory testing may be billed separately by the laboratory or your insurer, unless included in your plan.",
+        "All fees are charged by and paid to the Practice through its payment processor. The Practice does not store your card number, and Meddy Health LLC does not receive your payments. You may cancel your membership at any time, effective at the end of the current billing month. Full payment, insurance, cancellation, and refund terms are in our Patient Terms of Service.",
       ],
     },
     {
@@ -157,7 +159,7 @@ export const telehealthConsent: LegalDoc = {
             "You can verify your provider’s New York license through the New York State Education Department, Office of the Professions, license verification website.",
             "You may choose not to receive care by telehealth. Alternatives include in-person care with another provider, which may involve travel or delays.",
             "Telehealth visits will not be recorded without your consent.",
-            "HIV-related information and mental health information receive additional confidentiality protections under New York law (Public Health Law Article 27-F and Mental Hygiene Law §33.13), and will not be disclosed except as those laws permit.",
+            "HIV-related information receives additional confidentiality protections under New York Public Health Law Article 27-F, and will not be disclosed except as that law permits.",
           ],
         },
       ],
@@ -166,7 +168,7 @@ export const telehealthConsent: LegalDoc = {
       number: 10,
       title: "Questions",
       paragraphs: [
-        "Sameer Aggarwal Medical PLLC, 515 W 38th Street, Apt 11J, New York, NY 10018 · support@getmeddyhealth.com · 516-925-3997",
+        "Sameer Aggarwal Medical PLLC, 307 W 38th St 16th Floor # 255 New York, NY 10018 · support@getmeddyhealth.com · 516-925-3997",
       ],
     },
     {

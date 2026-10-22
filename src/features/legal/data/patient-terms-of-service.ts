@@ -31,7 +31,7 @@ export const patientTermsOfService: LegalDoc = {
       title: "Eligibility and accounts",
       bullets: [
         "You must be at least 18 years old and physically located in New York, or another state where the Practice’s clinicians are licensed and the Practice offers services, at the time of each visit.",
-        "You agree to provide accurate, current, and complete information, including your identity, contact details, location, and health history, and to keep it updated.",
+        "You agree to provide accurate, current, and complete information, including your identity, contact details, location, insurance or government health program coverage, and health history, and to keep it updated.",
         "You are responsible for keeping your login credentials private. Tell us right away if you believe your account has been accessed without permission.",
         "Your account is for you only. You may not create an account for someone else or share your account.",
       ],
@@ -46,7 +46,11 @@ export const patientTermsOfService: LegalDoc = {
         },
         {
           heading: "Provider-patient relationship.",
-          body: "A provider-patient relationship with the Practice begins when you complete enrollment, accept the Telehealth Informed Consent, and have your first visit with a Practice clinician. Free consultations before enrollment are informational and do not create a provider-patient relationship. Using the Meddy website or app does not by itself create a provider-patient relationship, and no provider-patient relationship exists between you and Meddy Health LLC.",
+          body: "A provider-patient relationship with the Practice begins at your first visit with a Practice clinician, including a free consultation, after you accept the Telehealth Informed Consent. Using the Meddy website or app does not by itself create a provider-patient relationship, and no provider-patient relationship exists between you and Meddy Health LLC.",
+        },
+        {
+          heading: "Free consultations.",
+          body: "Where offered, a free consultation is a video visit with a Practice clinician. It does not require you to become a member, and the clinician decides what care, if any, is appropriate for you. Free consultations may not be available to people whose care is billed to Medicare or another government health program (see Section 5).",
         },
         {
           heading: "Professional judgment.",
@@ -54,11 +58,11 @@ export const patientTermsOfService: LegalDoc = {
         },
         {
           heading: "Nutrition, fitness, and wellness guidance",
-          body: "is provided by the Practice as part of your medical care and is tailored to your health. It is not a substitute for in-person care when your clinician recommends it. Exercise and nutrition changes carry risks, including injury; follow your plan as written, and stop and seek care if you experience concerning symptoms.",
+          body: "is tailored to your health. It is not a substitute for in-person care when your clinician recommends it. Exercise and nutrition changes carry risks, including injury; follow your plan as written, and stop and seek care if you experience concerning symptoms.",
         },
         {
           heading: "Referrals.",
-          body: "If you need in-person care, specialty care, or services we do not provide, your clinician will refer you. Costs of outside care are your responsibility.",
+          body: "If you need in-person care, specialty care, or services we do not provide, your clinician will refer you. Costs of outside care are your responsibility, subject to your insurance coverage.",
         },
       ],
     },
@@ -72,7 +76,7 @@ export const patientTermsOfService: LegalDoc = {
         },
         {
           heading: "Plans.",
-          body: "We offer monthly membership plans. The services included in each plan and its price are shown when you enroll. Services outside your plan, outside laboratory fees, pharmacy costs, and in-person care are not included unless your plan says so.",
+          body: "We offer monthly membership plans. The services included in each plan and its price, which may differ depending on how you pay for your care (see Section 5), are shown when you enroll. Services outside your plan, outside laboratory fees, pharmacy costs, and in-person care are not included unless your plan says so.",
         },
         {
           heading: "Automatic renewal.",
@@ -92,17 +96,41 @@ export const patientTermsOfService: LegalDoc = {
         },
         {
           heading: "Failed payments.",
-          body: "If a payment fails, we may pause non-urgent services until payment is updated. We will not abandon your care; see Section 11.",
+          body: "If a payment fails, we may pause non-urgent membership features until payment is updated. We will not abandon your care; see Section 11.",
         },
       ],
     },
     {
       number: 5,
-      title: "Using insurance",
-      paragraphs: [
-        "You may choose to use your health insurance for eligible services, or to pay without insurance. If you use insurance, the Practice bills your insurer for covered visits through a claims clearinghouse, and your membership fee covers only non-covered services, such as app access, secure messaging, and nutrition and exercise planning. You will not be charged a membership fee for any service billed to your insurer.",
-        "If you use insurance, you are responsible for copays, deductibles, coinsurance, and any services your insurer does not cover. Coverage decisions are made by your insurer, not the Practice. Please check your benefits before your visit.",
-        "If you are enrolled in Medicare or Medicaid, please tell us before enrolling, as different rules may apply.",
+      title: "Insurance, Medicare, and other payers",
+      subsections: [
+        {
+          heading: "Accepted payers.",
+          body: "The Practice accepts the insurance plans and government health programs listed on our website, and we update that list as we add plans. If your plan is not listed, you may pay for your care yourself where the law and your plan allow, and we will give you a receipt you can submit to your insurer.",
+        },
+        {
+          heading: "How billing works.",
+          body: "If your care is billed to your insurance, Medicare, or another payer:",
+          bullets: [
+            "the Practice bills your payer for covered services through a claims clearinghouse;",
+            "you pay the copays, deductibles, and coinsurance your plan requires, which we do not routinely waive;",
+            "your membership fee, if you choose a membership, pays only for features and services your plan does not cover, such as app features, and never for a service billed to your plan;",
+            "you can receive covered care from the Practice without buying a membership; and",
+            "the membership prices and plan details that apply to your coverage are shown when you enroll.",
+          ],
+        },
+        {
+          heading: "Medicare, Medicaid, and other government programs.",
+          body: "If you are enrolled in Medicare, Medicaid, or another government health program, tell us when you enroll. Where the Practice participates in your program, we bill it for covered services as the law requires, and we will not charge you for covered services beyond the cost-sharing your program allows. Where the Practice does not yet participate in your program, we may not be able to provide services to you.",
+        },
+        {
+          heading: "Services your plan may not cover.",
+          body: "Before providing a service your plan is not expected to cover, we will tell you, get your agreement, and give you any notice your program requires, such as Medicare’s Advance Beneficiary Notice.",
+        },
+        {
+          heading: "Coverage decisions",
+          body: "are made by your payer, not the Practice. Please check your benefits before your visit.",
+        },
       ],
     },
     {
@@ -115,18 +143,22 @@ export const patientTermsOfService: LegalDoc = {
         },
         {
           heading: "Secure messaging.",
-          body: "You can message your care team through the patient app or portal at any time. Administrative staff, including Meddy staff and Meddy’s automated assistant acting on the Practice’s behalf, may read messages to answer non-clinical questions (such as scheduling, account, and membership questions) and to route clinical questions to a Practice clinician. Administrative staff and the automated assistant do not give medical advice; all clinical questions are answered by a Practice clinician. Messages are not monitored continuously. We respond within 1 business day for Meddy Care and Meddy Complete members, and within 2 business days for other plans. Do not use messaging for urgent or emergency concerns.",
+          body: "You can message your care team through the patient app or portal at any time. Administrative staff, including Meddy staff and Meddy’s automated assistant acting on the Practice’s behalf, may read messages to answer non-clinical questions (such as scheduling, account, and membership questions) and to route clinical questions to a Practice clinician. Administrative staff and the automated assistant do not give medical advice; all clinical questions are answered by a Practice clinician. Messages are not monitored continuously. We respond within 1 to 2 business days, depending on your plan, as shown when you enroll. Do not use messaging for urgent or emergency concerns.",
         },
         {
           heading: "Phone calls.",
           body: "Calls to 516-925-3997 may be answered by Meddy’s automated assistant, which uses artificial intelligence, on the Practice’s behalf. It will tell you at the start of each call that you are speaking with an automated assistant and that the call is recorded and transcribed. By continuing the call, you agree to the recording and transcription. The assistant can help with scheduling, account, and membership questions, takes messages for your care team, and sends clinical questions to a Practice clinician. It does not give medical advice. Recordings, transcripts, and voicemails are kept with your records. Do not use the phone line for emergencies; call 911.",
         },
         {
-          heading: "Email and text messages.",
-          body: "By providing your phone number and email, you agree that the Practice, and Meddy Health LLC on the Practice’s behalf, may contact you about appointments and reminders, results availability, billing, and your membership. Message and data rates may apply. Reply STOP to opt out of text messages, or update your preferences in the app or portal. Consent to text messages is not required to receive care. We will not send marketing messages without your separate consent.",
+          heading: "Account emails.",
+          body: "We send emails needed for your membership and care, such as receipts, renewal and price-change notices, security alerts, and appointment confirmations.",
         },
         {
-          body: "Standard email and text messages are not encrypted and could be read by others, for example if they are intercepted or sent to a shared device. For that reason, we use them only for appointment, account, billing, and other non-clinical information, and we send detailed health information only through the secure patient app or portal. By providing your phone number and email, you agree to receive these messages despite that risk. You can ask us to stop at any time.",
+          heading: "Text messages and reminders.",
+          body: "If you opt in, the Practice, and Meddy Health LLC on the Practice’s behalf, will send appointment reminders and account updates by text and email. Message frequency varies. Message and data rates may apply. Reply STOP to opt out of text messages or HELP for help, or update your preferences in the app or portal. Consent to text messages is not required to receive care. We never share your mobile number for marketing, and we will not send marketing messages without your separate consent.",
+        },
+        {
+          body: "Standard email and text messages are not encrypted and could be read by others, for example if they are intercepted or sent to a shared device. For that reason, we use them only for appointment, account, billing, and other non-clinical information, and we send detailed health information only through the secure patient app or portal. By opting in to texts, and by giving us your email for account messages, you agree to receive these messages despite that risk. You can ask us to stop optional messages at any time.",
         },
       ],
     },
@@ -135,21 +167,21 @@ export const patientTermsOfService: LegalDoc = {
       title: "Your responsibilities",
       bulletIntro: "You agree to:",
       bullets: [
-        "Give accurate information about your health, medications, and location at every visit.",
+        "Give accurate information about your health, medications, location, and insurance coverage at every visit.",
         "Follow your care plan, or tell your clinician if you cannot or choose not to.",
         "Seek in-person or emergency care when your clinician recommends it or your symptoms require it.",
         "Attend scheduled visits or cancel at least 24 hours in advance.",
         "Treat the Practice’s clinicians and staff, and Meddy staff, with respect.",
       ],
       trailing:
-        "You agree not to misuse our services, including by giving false identity information, obtaining medication for someone else, recording visits without written consent, attempting to access other patients’ information, or interfering with the security of our systems.",
+        "You agree not to misuse our services, including by giving false identity or coverage information, obtaining medication for someone else, recording visits without written consent, attempting to access other patients’ information, or interfering with the security of our systems.",
     },
     {
       number: 8,
       title: "Privacy",
       paragraphs: [
         "We protect your health information as required by HIPAA and New York law. Our Notice of Privacy Practices explains how we use and share your medical information and your rights. We do not sell your health information.",
-        "Meddy Health LLC is the Practice’s business associate under HIPAA. It receives and maintains your health information only to provide technology and administrative services to the Practice, under a Business Associate Agreement that requires it to protect your information and limits how it may be used. Information you give Meddy before you become a patient, and general website data, are covered by Meddy Health LLC’s Privacy Policy.",
+        "Meddy Health LLC is the Practice’s business associate under HIPAA. It receives and maintains your health information only to provide technology and administrative services to the Practice, under a Business Associate Agreement that requires it to protect your information and limits how it may be used. Health information you share when you request a consultation is covered by our Notice of Privacy Practices from the moment you share it. General website data and account details unrelated to your care are covered by Meddy Health LLC’s Privacy Policy.",
       ],
     },
     {
@@ -174,7 +206,7 @@ export const patientTermsOfService: LegalDoc = {
         },
         {
           heading: "Artificial intelligence.",
-          body: "We use artificial intelligence tools, under Business Associate Agreements, to help with tasks such as answering calls, transcribing conversations, summarizing messages, and drafting notes or replies. Your clinician reviews AI-assisted clinical work before relying on it, and artificial intelligence does not make decisions about your care. Your information is never used to train artificial intelligence models.",
+          body: "We use artificial intelligence tools, under Business Associate Agreements, to help with tasks such as answering calls, transcribing conversations, summarizing messages, and drafting notes or replies. Your clinician reviews AI-assisted clinical work before relying on it, and artificial intelligence does not make decisions about your care. Our vendors may not use your information to train their artificial intelligence models. Meddy may use information that has been de-identified, so that it can no longer identify you, to improve its services, including to develop artificial intelligence models, as HIPAA permits.",
         },
         {
           heading: "Website and educational content.",
@@ -218,7 +250,7 @@ export const patientTermsOfService: LegalDoc = {
       ],
       trailing: [
         "Contact:",
-        "Sameer Aggarwal Medical PLLC, 515 W 38th Street, Apt 11J, New York, NY 10018 · support@getmeddyhealth.com · 516-925-3997",
+        "Sameer Aggarwal Medical PLLC, 307 W 38th St 16th Floor # 255 New York, NY 10018 · support@getmeddyhealth.com · 516-925-3997",
       ],
     },
   ],

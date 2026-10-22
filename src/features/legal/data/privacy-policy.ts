@@ -10,8 +10,9 @@ export const privacyPolicy: LegalDoc = {
       paragraphs: [
         "This policy explains how Meddy Health LLC (“Meddy,” “we,” “us”), a New York limited liability company, collects, uses, and shares information through the website getmeddyhealth.com and the Meddy mobile app. Meddy owns and operates the Meddy brand, website, app, and technology, and provides administrative services, such as scheduling and patient communications, to Sameer Aggarwal Medical PLLC (“the Medical Practice”).",
         "Meddy does not practice medicine or provide medical care. All medical services are provided by the Medical Practice and its licensed clinicians. Meddy Health LLC and the Medical Practice are both owned by Dr. Sameer Aggarwal.",
-        "This policy covers information that is not part of your medical care, such as website visits, account and contact details, consultation requests before you become a patient, and how we use cookies and send communications.",
-        "Your medical information is covered by a different notice. Once you become a patient, your health information in the Meddy app, including your records, appointments, messages, and data you log or share from devices, is protected health information of the Medical Practice. Meddy handles it only on the Medical Practice’s behalf, as its business associate under HIPAA, to provide technology and administrative services such as scheduling, appointment reminders, and routing your messages to the Medical Practice’s clinicians. How that information is used and shared, and your rights over it, are described in the Medical Practice’s Notice of Privacy Practices. If this policy and that notice differ about your medical information, the notice controls.",
+        "New York only. Medical services through Meddy are currently available only to people who are located in New York at the time of each consultation and visit.",
+        "This policy covers information that is not part of your medical care, such as website visits, account and contact details, and how we use cookies and send communications.",
+        "Your health information is covered by a different notice. Any health information you share with us, including the health goals, concerns, or measurements you provide when you request a free consultation, is protected health information of the Medical Practice from the moment you share it. The same applies to your records, appointments, messages, and data you log or share from devices once you are a patient. Meddy handles this information only on the Medical Practice’s behalf, as its business associate under HIPAA, to provide technology and administrative services such as scheduling, appointment reminders, and routing your messages to the Medical Practice’s clinicians. How that information is used and shared, and your rights over it, are described in the Medical Practice’s Notice of Privacy Practices. If this policy and that notice differ about your health information, the notice controls.",
       ],
     },
     {
@@ -22,11 +23,6 @@ export const privacyPolicy: LegalDoc = {
           [
             "Contact and account information",
             "Name, email, phone number, state of residence, login credentials",
-            "You",
-          ],
-          [
-            "Consultation requests",
-            "Health goals, concerns, or measurements you choose to share before your first visit",
             "You",
           ],
           [
@@ -41,7 +37,7 @@ export const privacyPolicy: LegalDoc = {
           ],
           [
             "Cookie information",
-            "Session cookies needed to run the site and app; analytics cookies set by Contentsquare on public website pages only",
+            "Session cookies needed to run the site and app; analytics cookies and session recordings by Contentsquare on public website pages, only if you accept them",
             "Automatically, from your device",
           ],
           [
@@ -52,7 +48,7 @@ export const privacyPolicy: LegalDoc = {
         ],
       },
       trailing:
-        "We do not collect biometric identifiers such as fingerprints, facial geometry, retina or iris scans, or voiceprints, or precise location information. We do not buy personal information from data brokers.",
+        "Health information you share when you request a consultation is not listed here because it is covered by the Medical Practice’s Notice of Privacy Practices, as described above. We do not collect biometric identifiers such as fingerprints, facial geometry, retina or iris scans, or voiceprints, or precise location information. We do not buy personal information from data brokers.",
     },
     {
       title: "How we use information",
@@ -64,7 +60,8 @@ export const privacyPolicy: LegalDoc = {
         "Answer calls and texts, including through an automated assistant that uses artificial intelligence. It tells you at the start of each call that it is automated and that the call is recorded and transcribed.",
         "Provide support and respond to your requests, and route any health questions to the Medical Practice’s clinicians. Meddy staff and our automated assistant do not give medical advice.",
         "Keep the site and app secure, prevent fraud, and fix problems",
-        "Understand how the site and app are used so we can improve them, using Contentsquare analytics on our public website pages",
+        "Understand how the site and app are used so we can improve them, using Contentsquare analytics on our public website pages if you accept analytics cookies",
+        "Improve our services using de-identified information that cannot be used to identify you, including to develop and train our own analytics and artificial intelligence models",
         "Comply with the law and enforce our terms",
       ],
       trailing:
@@ -102,9 +99,18 @@ export const privacyPolicy: LegalDoc = {
     {
       title: "Cookies, analytics, and tracking",
       paragraphs: [
-        "We use essential cookies to keep you signed in, remember your settings, and protect the site and app. We also use Contentsquare to understand how visitors use our public website pages, including which pages they view, where they click and scroll, and recordings of how they move through a page. Contentsquare runs only on public pages. It does not run in the patient app or portal, or on pages where you request a consultation, book an appointment, or enter health information, and it is configured to mask anything you type. IP addresses are truncated where the tool allows.",
-        "You can block or delete cookies in your browser settings, though some features may not work without essential cookies. We honor Global Privacy Control signals by turning off any non-essential cookies for that browser.",
+        "We use essential cookies to keep you signed in, remember your settings, and protect the site and app. These are always on.",
+        "With your permission, we also use Contentsquare to understand how visitors use our public website pages, including which pages they view, where they click and scroll, and recordings of how they move through a page. When you first visit our website, we ask whether you accept analytics cookies and session recordings. Contentsquare does not run until you accept, and you can change your choice at any time through the cookie settings link at the bottom of our website.",
       ],
+      bulletIntro: "When it runs, Contentsquare:",
+      bullets: [
+        "runs only on public website pages, and never in the patient app or portal, or on pages where you request a consultation, book an appointment, or enter health information;",
+        "does not record pages about medications or weight management;",
+        "is configured to mask anything you type; and",
+        "truncates IP addresses where the tool allows.",
+      ],
+      trailing:
+        "You can also block or delete cookies in your browser settings, though some features may not work without essential cookies. We honor Global Privacy Control signals by turning off any non-essential cookies for that browser.",
     },
     {
       title: "Communications and your choices",
@@ -135,8 +141,8 @@ export const privacyPolicy: LegalDoc = {
         "Delete your information and close your account",
       ],
       trailing: [
-        "Email support@meddyhealth.ai with your request. We will verify your identity and respond within 30 days. We will not treat you differently for making a request.",
-        "Deleting your Meddy account does not delete medical records the Medical Practice must keep by law. To access, correct, or get copies of your medical records, follow the Medical Practice’s Notice of Privacy Practices.",
+        "Email support@getmeddyhealth.com with your request. We will verify your identity and respond within 30 days. We will not treat you differently for making a request.",
+        "Deleting your Meddy account does not delete medical records the Medical Practice must keep by law. To access, correct, or get copies of your health information, follow the Medical Practice’s Notice of Privacy Practices.",
       ],
     },
     {
@@ -145,8 +151,12 @@ export const privacyPolicy: LegalDoc = {
         headers: ["Information", "How long we keep it"],
         rows: [
           [
-            "Consultation requests from people who do not become patients",
+            "Consultation requests from people who do not have a consultation",
             "Deleted within 12 months, or sooner on request",
+          ],
+          [
+            "Support communications, including call recordings and transcripts, for people who do not become patients",
+            "Deleted within 12 months",
           ],
           [
             "Account information",
@@ -154,11 +164,7 @@ export const privacyPolicy: LegalDoc = {
           ],
           ["Device, usage, and analytics data", "13 months"],
           [
-            "Support communications, including call recordings and transcripts, for people who do not become patients",
-            "2 years",
-          ],
-          [
-            "Medical records, appointments, patient messages, and patient call recordings",
+            "Medical records, including free consultations, appointments, patient messages, and patient call recordings",
             "Kept by the Medical Practice as New York law requires (at least six years), under its Notice of Privacy Practices",
           ],
         ],
@@ -168,7 +174,7 @@ export const privacyPolicy: LegalDoc = {
       title: "Security and breach notification",
       paragraphs: [
         "We protect information with encryption in transit and at rest, multi-factor authentication for administrators, access controls and logging, regular security updates, and encrypted backups, hosted on HIPAA-eligible cloud infrastructure. Meddy staff who handle patient information are trained on HIPAA and can access only what they need for their work. No system is completely secure, so please keep your login private and tell us right away if you think your account has been compromised.",
-        "If a security breach affects your personal information, we will notify you, and the authorities where required, as New York law and HIPAA require. For a breach involving medical information, notice is given by or with the approval of the Medical Practice.",
+        "If a security breach affects your personal information, we will notify you, and the authorities where required, as New York law and HIPAA require. For a breach involving health information, notice is given by or with the approval of the Medical Practice.",
       ],
     },
     {
@@ -186,7 +192,7 @@ export const privacyPolicy: LegalDoc = {
     {
       title: "Contact us",
       paragraphs: [
-        "Meddy Health LLC · 515 W 38th Street, Apt 11J, New York, NY 10018 · support@meddyhealth.ai",
+        "Meddy Health LLC · 2248 Broadway #1071, New York, NY 10024 · support@getmeddyhealth.com",
         "For questions about your medical records or health information, contact Sameer Aggarwal Medical PLLC at support@getmeddyhealth.com or 516-925-3997.",
       ],
     },
