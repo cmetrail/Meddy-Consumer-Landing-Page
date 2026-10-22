@@ -28,7 +28,7 @@ export default function CauseEffectSection() {
   return (
     <section id="cause-effect" className={styles.section} aria-labelledby="cause-effect-title">
       <div className={styles.background}>
-        <Image data-bio-parallax src="/biomarkers/cause-effect-bg.png" alt="" fill unoptimized sizes="(max-width: 1440px) 112vw, 1612px" className={styles.photo} />
+        <Image src="/biomarkers/cause-effect-bg.png" alt="" fill unoptimized sizes="112vw" className={styles.photo} />
       </div>
       <div className={styles.shade} />
       <div className={styles.content}>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import styles from "./CauseEffectCard.module.css";
 import type { CauseEffectMetric, CauseEffectVariation } from "./causeEffectVariations";
 
 // The containing panel supplies --k to scale the chart with its layout.
@@ -19,10 +20,11 @@ function Trend({ size, down }: { size: "lg" | "sm"; down: boolean }) {
   );
 }
 
-function Metric({ label, value, delta, context, direction, small }: CauseEffectMetric) {
+function Metric({ label, value, delta, context, direction, small, alignEnd = false }: CauseEffectMetric & { alignEnd?: boolean }) {
+  const alignment = alignEnd ? "items-end text-right" : "items-start";
   return (
-    <div className="flex min-w-0 flex-col items-start" style={{ gap: k(10) }}>
-      <div className="flex flex-col items-start">
+    <div className={`flex min-w-0 flex-col ${alignment}`} style={{ gap: k(10) }}>
+      <div className={`flex flex-col ${alignment}`}>
         <span className="whitespace-nowrap leading-[1.416] text-white" style={{ fontSize: k(12) }}>
           {label}
         </span>
@@ -54,15 +56,15 @@ export default function CauseEffectCard({ variation }: { variation: CauseEffectV
 
   return (
     <div
-      className="flex h-full flex-col justify-between rounded-[var(--r)] border border-white bg-white/10 p-[var(--cp)]"
+      className={`flex h-full flex-col justify-between border border-white bg-white/10 ${styles.card}`}
       style={{ ["--cp" as string]: k(16.452), ["--r" as string]: k(8.226), gap: k(24) }}
     >
-      <div className="grid grid-cols-2" style={{ width: k(284.5) }}>
+      <div className={`grid grid-cols-2 ${styles.metrics}`}>
         <Metric {...metricA} />
-        <Metric {...metricB} />
+        <Metric {...metricB} alignEnd />
       </div>
 
-      <div className="flex flex-col" style={{ width: k(284.5) }}>
+      <div className="flex w-full flex-col">
         <div className="relative" style={{ height: k(chartH) }}>
           <div className="absolute inset-x-0 bottom-0 flex items-end">
             {images.map((img, i) => (
@@ -74,7 +76,7 @@ export default function CauseEffectCard({ variation }: { variation: CauseEffectV
                 height={img.height}
                 unoptimized
                 className="max-w-none shrink-0"
-                style={{ width: images.length === 1 ? k(284.5) : i === 0 ? k(142.5) : k(142), height: "auto" }}
+                style={{ width: images.length === 1 ? "100%" : i === 0 ? "50.088%" : "49.912%", height: k(img.height) }}
               />
             ))}
           </div>
@@ -89,7 +91,7 @@ export default function CauseEffectCard({ variation }: { variation: CauseEffectV
             style={{
               width: k(lineSvgW),
               height: k(4.64),
-              left: `calc(${k(line.x)} - ${k(lineSvgW / 2)})`,
+              left: `calc(${line.x / 284.5 * 100}% - ${k(lineSvgW / 2)})`,
               top: `calc(${k(line.top - 2.32 + lineSvgW / 2)} - ${k(2.32)})`,
               transform: "rotate(90deg)",
             }}
@@ -98,7 +100,7 @@ export default function CauseEffectCard({ variation }: { variation: CauseEffectV
         <div className="flex items-center justify-between">
           {[legendA, legendB].map((l) => (
             <span key={l.label} className="flex items-center" style={{ gap: k(4) }}>
-              <span className="whitespace-nowrap leading-[1.416] text-white" style={{ fontSize: `max(8px, ${k(10)})` }}>
+              <span className="whitespace-nowrap leading-[1.416] text-white" style={{ fontSize: `max(8px, ${k(12)})` }}>
                 {l.label}
               </span>
               <Trend size="sm" down={l.direction === "down"} />

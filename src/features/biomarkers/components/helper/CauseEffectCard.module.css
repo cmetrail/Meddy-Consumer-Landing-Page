@@ -1,0 +1,6 @@
+.card {
+  padding: var(--cp) !important;
+  border-radius: var(--r);
+}
+
+.metrics { width: 100%; }
