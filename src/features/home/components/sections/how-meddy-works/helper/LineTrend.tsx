@@ -196,10 +196,12 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
             </div>
             </div>
             <div className={styles.chartMetrics}>
-              {trend.metrics.map(metric => <div key={metric.label} data-reveal-x={variant === "nutrition" ? undefined : metric.green ? 648 : 678} data-end-summary={variant === "nutrition" ? "" : undefined} className={metric.green ? styles.driverMetric : styles.outcomeMetric}>
+              {trend.metrics.map(metric => <div key={metric.label} data-reveal-x={variant === "nutrition" ? undefined : metric.green ? 648 : 678} data-end-summary={variant === "nutrition" ? "" : undefined}>
                 <p className={styles.metricLabel}>{metric.label}</p>
-                <p className={metric.green ? styles.green : styles.white}>{metric.change}</p>
-                <p className={styles.range}>{metric.range}</p>
+                <p className={styles.metricValues}>
+                  <span className={styles.metricChange}>{metric.change}</span>{" "}
+                  <span className={styles.range}>{metric.range}</span>
+                </p>
               </div>)}
             </div>
           </div>

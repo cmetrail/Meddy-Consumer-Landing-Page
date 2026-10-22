@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import styles from "./WeightLossPlanSection.module.css";
 
 // Figma: desktop node 12593:13162 (1440 x 1361, fixed px, content box 1200 / padding 120), mobile node 12722:9067 (402 x 798).
 // The revolving text ring uses the SVG textPath + <animate startOffset> technique from MedicationOrbitalSection.
-const ease = [0.22, 1, 0.36, 1] as const;
 
 const P = "/weight-loss/plan";
 const BG = "#E4FAE1";
@@ -18,8 +19,18 @@ type RingGeo = { w: number; h: number; rx: number; ry: number; font: number; sha
 const RING_D: RingGeo = { w: 1027.8, h: 294.1, rx: 421.5, ry: 94.5, font: 32, shadowFont: 36, shadowDy: 56 };
 const RING_M: RingGeo = { w: 384.67, h: 122.23, rx: 156.7, ry: 36.2, font: 14, shadowFont: 15.5, shadowDy: 21 };
 
+const motionQuery = "(prefers-reduced-motion: no-preference)";
+function subscribeMotion(notify: () => void) {
+  const query = window.matchMedia(motionQuery);
+  query.addEventListener("change", notify);
+  return () => query.removeEventListener("change", notify);
+}
+const motionSnapshot = () => window.matchMedia(motionQuery).matches;
+const serverMotionSnapshot = () => false;
+
 /** Elliptical text ring: `front` (green) or `shadow` (blurred, flattened gray reflection). The copy slowly travels along the path. */
 function Ring({ id: baseId, part, g }: { id: string; part: "front" | "shadow"; g: RingGeo }) {
+  const animate = useSyncExternalStore(subscribeMotion, motionSnapshot, serverMotionSnapshot);
   const id = `${baseId}-${part}`;
   const dur = "60s";
   const cx = g.w / 2;
@@ -34,7 +45,7 @@ function Ring({ id: baseId, part, g }: { id: string; part: "front" | "shadow"; g
         <text key={i} fontSize={size} fontWeight="600" fill={fill} stroke={fill} strokeWidth={0.8 * k} style={{ fontFamily: "var(--font-plus-jakarta), sans-serif" }}>
           <textPath href={`#${id}`} startOffset={from} textLength={perim} lengthAdjust="spacing">
             {RING_TEXT}
-            <animate attributeName="startOffset" from={from} to={from + perim} dur={dur} repeatCount="indefinite" />
+            {animate && <animate attributeName="startOffset" from={from} to={from + perim} dur={dur} repeatCount="indefinite" />}
           </textPath>
         </text>
       ))}
@@ -117,145 +128,87 @@ function PhotoStack({ ringId, geo }: { ringId: string; geo: PhotoGeo }) {
   );
 }
 
-type PlanItem = { icon: string; title: string; rows: string[][] };
-
-const PLAN_ITEMS: PlanItem[] = [
-  { icon: "icon-data.svg", title: "Your Data", rows: [["Nutrition", "Exercise", "Sleep"], ["Medications", "Labs", "Weight"]] },
-  { icon: "icon-physician.svg", title: "Your Physician", rows: [] },
-  { icon: "icon-plan.svg", title: "Your Plan", rows: [["Nutrition", "Exercise", "Testing"], ["Medications", "Follow-up"]] },
-  { icon: "icon-response.svg", title: "Measure the response", rows: [] },
+const PLAN_ITEMS = [
+  {
+    icon: "icon-data.svg", label: "Your data", title: "It starts with your whole picture.",
+    description: "Bring your nutrition, exercise, sleep, medications, labs, and weight together. See how your daily habits connect to your progress.",
+    tags: ["Nutrition", "Exercise", "Sleep", "Medications", "Labs", "Weight"],
+    outcome: "Your health data, connected.",
+  },
+  {
+    icon: "icon-physician.svg", label: "Your physician", title: "Shared data. Personal care.",
+    description: "Your physician reviews the same picture you see, alongside your symptoms and health history, to understand what is moving your weight.",
+    tags: ["Health history", "Symptoms", "Connected insights"],
+    outcome: "A physician who sees the whole you.",
+  },
+  {
+    icon: "icon-plan.svg", label: "Your plan", title: "A plan built around you.",
+    description: "Your physician creates a plan around your goals and health, connecting nutrition, exercise, testing, and medication when appropriate.",
+    tags: ["Nutrition", "Exercise", "Testing", "Medications", "Follow-up"],
+    outcome: "Clear next steps, made personal.",
+  },
+  {
+    icon: "icon-response.svg", label: "Your progress", title: "Measure. Learn. Adjust.",
+    description: "Follow changes in your weight, habits, and health markers. Your physician reviews your response and adjusts your plan as your needs change.",
+    tags: ["Weight trends", "Health markers", "Plan adjustments"],
+    outcome: "Your progress informs what comes next.",
+  },
 ];
 
-/** Icon + title + outlined chips. Desktop (Figma 12593:13180): 128px icon, 20px title. Mobile (12785:15700): 40px icon, 14px title. */
-function PlanItemCard({ item, mobile = false }: { item: PlanItem; mobile?: boolean }) {
-  const icon = mobile ? 40 : 128;
+export default function WeightLossPlanSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root) return;
+    const media = gsap.matchMedia();
+    media.add("(min-width: 1024px) and (min-height: 650px) and (prefers-reduced-motion: no-preference)", () => {
+      const trigger = ScrollTrigger.create({
+        trigger: root,
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (self) => setActive(Math.min(3, Math.floor(self.progress * 4))),
+        onRefresh: (self) => setActive(Math.min(3, Math.floor(self.progress * 4))),
+      });
+      return () => trigger.kill();
+    });
+    return () => media.revert();
+  }, []);
+
   return (
-    <div className={`flex flex-col items-center ${mobile ? "shrink-0" : "w-full"}`} style={{ gap: mobile ? 8 : 10 }}>
-      <div className="flex flex-col items-center" style={{ gap: mobile ? 4 : 10 }}>
-        <Image src={`${P}/${item.icon}`} alt="" width={icon} height={icon} unoptimized className="shrink-0" style={{ width: icon, height: icon }} />
-        <p className={`whitespace-nowrap text-right font-normal text-[#46524B] ${mobile ? "text-[14px] leading-[1.5]" : "text-[20px] leading-[normal]"}`}>{item.title}</p>
-      </div>
-      {item.rows.length > 0 && (
-        <div className="flex flex-col items-center" style={{ gap: mobile ? 4 : 8 }}>
-          {item.rows.map((row) => (
-            <div key={row.join()} className="flex items-center" style={{ gap: mobile ? 4 : 5 }}>
-              {row.map((t) => (
-                <span
-                  key={t}
-                  className={`flex items-center justify-center whitespace-nowrap rounded-[55px] border border-solid border-[#6E7A72] text-[12px] font-normal text-[#6E7A72] ${
-                    mobile ? "px-[8px] py-[4px] leading-[1.5]" : "px-[10px] py-[5px] leading-[normal]"
-                  }`}
-                >
-                  {t}
-                </span>
+    <section ref={sectionRef} id="weight-loss-plan" className={styles.section} aria-labelledby="weight-loss-plan-heading" style={{ background: BG }}>
+      <div className={styles.sticky}>
+        <div className={styles.inner}>
+          <header className={styles.heading}>
+            <p className={styles.eyebrow}>CONNECTED DATA. CONTINUOUS CARE.</p>
+            <h2 id="weight-loss-plan-heading">A weight-loss plan that changes when you do.</h2>
+            <p className={`comprehensive-serif ${styles.subtitle}`}>Your physician sees the same data you do.</p>
+          </header>
+
+          <div className={styles.story}>
+            <div className={styles.visual}>
+              <div className={styles.photoDesktop}><PhotoStack ringId="wl-plan-ring-d" geo={PHOTO_D} /></div>
+              <div className={styles.photoMobile}><PhotoStack ringId="wl-plan-ring-m" geo={PHOTO_M} /></div>
+              <div className={styles.visualCaption}><span /> Your data and your care, always connected.</div>
+            </div>
+            <div className={styles.panels}>
+              {PLAN_ITEMS.map((item, index) => (
+                <article key={item.label} id={`weight-loss-step-${index}`} className={styles.panel} data-active={index === active}>
+                  <div className={styles.stepTop}>
+                    <Image src={`${P}/${item.icon}`} alt="" width={96} height={96} unoptimized />
+                    <span className={styles.stepCount}>0{index + 1} <span>/ 04</span></span>
+                  </div>
+                  <p className={styles.stageLabel}>{item.label}</p>
+                  <h3>{item.title}</h3>
+                  <p className={styles.description}>{item.description}</p>
+                  <div className={styles.tags}>{item.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
+                  <p className={styles.outcome}><span aria-hidden="true">↗</span>{item.outcome}</p>
+                </article>
               ))}
             </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-export default function WeightLossPlanSection() {
-  return (
-    <section id="weight-loss-plan" className="relative w-full overflow-hidden" style={{ background: BG }}>
-      {/* ===================== DESKTOP (lg+) ===================== */}
-      <div className="relative hidden lg:block">
-        <div className="mx-auto w-full max-w-[1200px] py-[120px]">
-          <div className="flex flex-col items-center" style={{ gap: 32 }}>
-            <motion.div
-              className="flex flex-col items-center whitespace-nowrap text-[40px]"
-              style={{ gap: 8 }}
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, ease }}
-            >
-              <h2 className="text-center text-[40px] font-medium leading-[1.5] text-[#111110]">A weight-loss plan that changes when you do. </h2>
-              <p className="comprehensive-serif text-[40px] italic leading-[normal] text-[#17925A]">Your physician sees the same data you do.</p>
-            </motion.div>
-
-            <div className="flex w-full items-center justify-between">
-              <motion.div
-                style={{ ["--k" as string]: "1px" } as React.CSSProperties}
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.9, ease }}
-              >
-                <PhotoStack ringId="wl-plan-ring-d" geo={PHOTO_D} />
-              </motion.div>
-
-              <motion.div
-                className="flex shrink-0 flex-col items-start"
-                style={{ width: 218, gap: 24 }}
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.9, delay: 0.15, ease }}
-              >
-                {PLAN_ITEMS.map((item) => (
-                  <PlanItemCard key={item.title} item={item} />
-                ))}
-              </motion.div>
-            </div>
-
-            <motion.ul
-              className="flex w-full flex-col items-start justify-center text-[20px] font-normal text-[#6E7A72]"
-              style={{ gap: 8 }}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, delay: 0.1, ease }}
-            >
-              <li className="ms-[30px] list-disc whitespace-nowrap leading-[1.5]">No generic plan.</li>
-              <li className="ms-[30px] list-disc whitespace-nowrap leading-[1.5]">No waiting months to find out whether it&rsquo;s working.</li>
-            </motion.ul>
           </div>
         </div>
-      </div>
-
-      {/* ===================== MOBILE (<lg): 402 frame, scaled by --k ===================== */}
-      <div
-        className="mx-auto flex w-full max-w-[500px] flex-col py-16 lg:hidden"
-        style={{ gap: 32, ["--k" as string]: "calc(min(100vw, 500px) / 402)" } as React.CSSProperties}
-      >
-        <div className="flex flex-col px-5" style={{ gap: 24 }}>
-          <motion.p
-            className="text-center text-[20px] font-medium leading-[1.5] text-[#111110]"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7, ease }}
-          >
-            A weight-loss plan that changes when you do. <span className="comprehensive-serif italic text-[#17925A]">Your physician sees the same data you do. </span>
-          </motion.p>
-
-          <motion.div
-            className="flex justify-center"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.8, ease }}
-          >
-            <PhotoStack ringId="wl-plan-ring-m" geo={PHOTO_M} />
-          </motion.div>
-        </div>
-
-        {/* items scroll sideways, bleeding to the screen edge like the frame */}
-        <div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex w-max items-start px-5" style={{ gap: 32 }}>
-            {PLAN_ITEMS.map((item) => (
-              <PlanItemCard key={item.title} item={item} mobile />
-            ))}
-          </div>
-        </div>
-
-        <ul className="flex flex-col px-5 text-[12px] font-normal text-[#6E7A72]" style={{ gap: 8 }}>
-          <li className="ms-[18px] list-disc leading-[1.5]">No generic plan.</li>
-          <li className="ms-[18px] list-disc leading-[1.5]">No waiting months to find out whether it&rsquo;s working.</li>
-        </ul>
       </div>
     </section>
   );

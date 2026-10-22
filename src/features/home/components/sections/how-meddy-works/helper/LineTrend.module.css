@@ -10,13 +10,15 @@
 .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
 .mobileMarkers { display: none; }
 .mobileAnnotations { display: none; }
-.chartMetrics > div { position: absolute; z-index: 2; padding: 0.65cqw !important; border: 1px solid; border-radius: 3px; }
-.driverMetric { top: 39%; right: 1.6%; background: #183225e6; border-color: #17925a !important; }
-.scroll[data-variant="fitness"] .driverMetric { right: 0; }
-.scroll[data-variant="sleep"] .driverMetric { right: -1%; }
-.outcomeMetric { top: 70%; right: 11.2%; background: #303b35e6; border-color: #d4ddd7 !important; }
-.chartMetrics .metricLabel, .chartMetrics .range { font-size: clamp(8px, 0.85cqw, 12px); }
-.chartMetrics .green, .chartMetrics .white { font-size: clamp(11px, 1.2cqw, 17px); }
+.chartMetrics { position: absolute; z-index: 2; bottom: calc(2% + 20px); left: 50%; transform: translateX(-50%); display: grid; grid-template-columns: 1fr 1fr; width: max-content; max-width: 100%; text-align: center; }
+.chartMetrics > div { padding: 0 1.6cqw !important; }
+.chartMetrics > div + div { border-left: 1px solid #7b8880; }
+.chartMetrics .metricLabel { font-size: clamp(10px, 1.15cqw, 16px); line-height: 1.5; }
+.metricValues { white-space: nowrap; line-height: 1.5; }
+.metricChange { color: #17925a; font-size: clamp(11px, 1.15cqw, 16px); font-weight: 700; }
+.chartMetrics .range { font-size: clamp(9px, 1.05cqw, 15px); }
+.scroll[data-variant="fitness"] .chartMetrics { width: clamp(280px, 26cqw, 374px); }
+.scroll[data-variant="fitness"] .chartMetrics > div { padding-inline: 0.8cqw !important; }
 .summary { width: 62.5%; max-width: 100%; margin: 0 auto !important; padding: 1.4cqw !important; border-radius: 1.1cqw; background: #183024; }
 .scroll[data-variant="fitness"] .summary { width: 44%; }
 .scroll[data-variant="sleep"] .summary { width: 57.4%; }
@@ -65,11 +67,12 @@
   .mobileWhiteLabel, .mobileGreenLabel { position: absolute; left: 0; font-size: 10px; line-height: 1.4; }
   .mobileWhiteLabel { top: 38%; color: #e7e7e7; }
   .mobileGreenLabel { top: 83%; color: #70d99c; }
-  .chartMetrics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px !important; }
-  .chartMetrics > div { position: static; padding: 8px !important; }
-  .chartMetrics .metricLabel { font-size: 10px; }
-  .chartMetrics .range { font-size: 10px; }
-  .chartMetrics .green, .chartMetrics .white { margin-top: 4px !important; font-size: 16px; }
+  .chartMetrics { position: relative; bottom: auto; left: auto; transform: none; width: 100%; margin-top: 16px !important; }
+  .scroll[data-variant="fitness"] .chartMetrics { width: 100%; }
+  .chartMetrics > div { padding: 0 6px !important; }
+  .chartMetrics .metricLabel { font-size: clamp(9px, 2.8cqw, 14px); }
+  .chartMetrics .range { font-size: clamp(8px, 2.4cqw, 12px); }
+  .metricChange { font-size: clamp(9px, 2.8cqw, 14px); }
   .scroll[data-variant] .summary { width: 100%; margin-top: 6cqw !important; padding: 0 !important; border-radius: 0; background: transparent; text-align: center; }
   .summary h4, .summary .metrics { display: none; }
   .description { font-size: clamp(14px, 3.5cqw, 22px); line-height: 1.5; text-wrap: pretty; }

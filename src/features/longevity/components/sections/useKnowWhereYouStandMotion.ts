@@ -7,7 +7,6 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export function useKnowWhereYouStandMotion(
-  active: number,
   setActive: (index: number) => void,
   categoryCount: number,
 ) {
@@ -40,12 +39,11 @@ export function useKnowWhereYouStandMotion(
         id: "longevity-health-categories",
         trigger: select("[data-stand-categories]")[0],
         start: "top 75%",
-        end: "bottom 40%",
+        end: "bottom 25%",
         invalidateOnRefresh: true,
         onUpdate: syncCategory,
         onRefresh: syncCategory,
       });
-
       // Independent triggers follow the mobile reading order as well as desktop.
       gsap.from(photo, {
         clipPath: "inset(10% 7% 10% 7%)", autoAlpha: 0, y: 28,
@@ -74,20 +72,10 @@ export function useKnowWhereYouStandMotion(
         scale: 1.02, yPercent: 1, ease: "none",
         scrollTrigger: { trigger: photo, start: "top bottom", end: "bottom top", scrub: 1.4 },
       });
+
     });
     return () => media.revert();
   }, { scope: sectionRef, dependencies: [setActive, categoryCount], revertOnUpdate: true });
-
-  useGSAP(() => {
-    const media = gsap.matchMedia();
-    media.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap.from(sectionRef.current!.querySelectorAll("[data-stand-pill]"), {
-        autoAlpha: 0, y: 10, scale: 0.96,
-        duration: 0.55, stagger: 0.065, ease: "power3.out",
-      });
-    });
-    return () => media.revert();
-  }, { scope: sectionRef, dependencies: [active], revertOnUpdate: true });
 
   return sectionRef;
 }

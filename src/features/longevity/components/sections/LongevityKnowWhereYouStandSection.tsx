@@ -11,7 +11,7 @@ import { useKnowWhereYouStandMotion } from "./useKnowWhereYouStandMotion";
 const CATEGORIES = [
   { label: "Heart & Metabolic Health", rows: [["Blood pressure", "Cholesterol"], ["A1C", "Glucose"]] },
   { label: "Body & Nutrition", rows: [["Weight", "BMI", "Nutrition"], ["Vitamins", "Minerals", "Elements"]] },
-  { label: "Fitness", rows: [["Strength", "Cardiovascular activity"], ["VO₂ max"]] },
+  { label: "Fitness", rows: [["Strength", "Cardiovascular activity"], ["VOâ‚‚ max"]] },
   { label: "Sleep & Recovery", rows: [["Sleep quality", "Sleep Architecture"], ["Resting heart rate", "Readiness"]] },
   { label: "Labs & Biomarkers", rows: [["Comprehensive physician-directed testing"]] },
 ];
@@ -19,7 +19,7 @@ const CATEGORIES = [
 export default function LongevityKnowWhereYouStandSection() {
   const [active, setActive] = useState(0);
   const current = CATEGORIES[active];
-  const sectionRef = useKnowWhereYouStandMotion(active, setActive, CATEGORIES.length);
+  const sectionRef = useKnowWhereYouStandMotion(setActive, CATEGORIES.length);
 
   return (
     <section ref={sectionRef} id="longevity-know-stand" className="w-full bg-[#FAFFF9]">
@@ -69,14 +69,14 @@ export default function LongevityKnowWhereYouStandSection() {
             {CATEGORIES.map((category, i) => {
               const isActive = i === active;
               return (
-                <div key={category.label} data-stand-category>
+                <div key={category.label} data-stand-category className="flex h-[30px] items-center lg:h-[96px]">
                   <button
                     type="button"
                     onClick={() => setActive(i)}
                     aria-pressed={isActive}
                     aria-controls="longevity-health-factors"
-                    className={`comprehensive-serif cursor-pointer text-left italic leading-[1.5] transition-all duration-500 motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#17925A] ${
-                      isActive ? "text-[20px] text-[#46524B] lg:text-[64px]" : "text-[16px] text-[#A1AAA3] hover:text-[#6E7A72] lg:text-[40px]"
+                    className={`comprehensive-serif cursor-pointer whitespace-nowrap text-left italic leading-[1.5] transition-colors duration-150 motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#17925A] ${
+                      isActive ? "text-[20px] text-[#46524B] lg:text-[clamp(32px,4.44vw,64px)]" : "text-[16px] text-[#A1AAA3] hover:text-[#6E7A72] lg:text-[clamp(24px,2.77vw,40px)]"
                     }`}
                   >
                     {category.label}
@@ -86,7 +86,7 @@ export default function LongevityKnowWhereYouStandSection() {
             })}
           </div>
 
-          <div data-stand-pills-reveal>
+          <div data-stand-pills-reveal className="min-h-[80px] lg:min-h-0">
             <div
               id="longevity-health-factors"
               aria-live="polite"

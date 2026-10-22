@@ -31,7 +31,6 @@ export const JUMP_TO: { name: string; highlighted: boolean }[] = [
   { name: "Male Health", highlighted: false },
   { name: "Metabolic", highlighted: false },
   { name: "Environmental Toxins", highlighted: false },
-  { name: "Biological Age", highlighted: false },
   { name: "Nutrients", highlighted: false },
   { name: "Stress & Aging", highlighted: false },
   { name: "Liver", highlighted: false },

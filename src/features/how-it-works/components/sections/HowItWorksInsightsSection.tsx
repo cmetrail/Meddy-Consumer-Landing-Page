@@ -30,7 +30,7 @@ function MetricCard({ title, value, warning }: typeof metrics[number]) {
         <div className={styles.sleepChart} role="img" aria-label="Sleep duration for Monday through Sunday">
           {bars.map((height, i) => (
             <div className={styles.barColumn} key={days[i]}>
-              <div className={styles.bar} style={{ height: `calc(${height * 0.598} * var(--insights-unit))` }} />
+              <div className={styles.bar} style={{ height: `calc(${height} * var(--insights-unit))` }} />
               <span>{days[i]}</span>
             </div>
           ))}
@@ -40,7 +40,7 @@ function MetricCard({ title, value, warning }: typeof metrics[number]) {
           <div className={styles.plot}>
             {warning ? (
               <svg viewBox="0 0 220 80" preserveAspectRatio="none" role="img" aria-label="Weight staying near 192 pounds">
-                <defs><linearGradient id="insights-weight-fill" x1="0" x2="0" y1="0" y2="1"><stop stopColor="white" stopOpacity=".7" /><stop offset="1" stopColor="white" stopOpacity=".05" /></linearGradient></defs>
+                <defs><linearGradient id="insights-weight-fill" x1="0" x2="0" y1="0" y2="1"><stop stopColor="#148bd5" stopOpacity=".65" /><stop offset=".6" stopColor="#70c8ec" stopOpacity=".8" /><stop offset="1" stopColor="#b4e3f5" stopOpacity="0" /></linearGradient></defs>
                 <path d="M0 12 C15 18 15 1 30 4 S56 9 65 13 S95 14 112 15 S147 22 166 18 S198 15 220 21 V80 H0 Z" fill="url(#insights-weight-fill)" />
                 <path d="M0 12 C15 18 15 1 30 4 S56 9 65 13 S95 14 112 15 S147 22 166 18 S198 15 220 21" fill="none" stroke="white" strokeWidth=".7" />
               </svg>
@@ -121,7 +121,7 @@ export default function HowItWorksInsightsSection() {
 
   return (
     <section data-story-chapter="insights" ref={sectionRef} className={styles.section} aria-labelledby="insights-heading">
-      <div data-story-photo className={styles.backdrop}><Image src={`${A}/scene.png`} alt="" fill sizes="140vw" className={styles.photo} /></div>
+      <div className={styles.backdrop}><Image src={`${A}/scene.png`} alt="" fill sizes="126vw" className={styles.photo} /></div>
       <div className={styles.canvas}>
         <div className={styles.intro}>
           <h2 id="insights-heading" className={styles.heading}>

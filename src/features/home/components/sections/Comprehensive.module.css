@@ -5,7 +5,8 @@
 .heading em, .tagline em { font-family: var(--font-dm-serif), Georgia, serif !important; font-style: italic; font-weight: 400; color: #009b58; }
 .description { margin-top: 1.38cqw !important; font-size: 1.065cqw; line-height: 1.35; font-weight: 400; }
 .description strong { color: #009b58; font-weight: 700; }
-.map { position: absolute; left: 0; top: 22%; width: 100%; aspect-ratio: 882 / 559; container-type: inline-size; }
+/* Center the artwork (2.15% inset + half its 89% width) with all overlays. */
+.map { position: absolute; left: 3.35%; top: 22%; width: 100%; aspect-ratio: 882 / 559; container-type: inline-size; }
 .mapImage { position: absolute; left: 2.15%; top: 3.9%; display: block; width: 89%; height: auto; }
 .markers { position: absolute; inset: 0; list-style: none; }
 .marker { position: absolute; transform: translate(-50%, -50%); }
@@ -38,7 +39,7 @@
   .heading em { display: block; }
   .description { margin-top: calc(12 * var(--care-unit)) !important; font-size: calc(11 * var(--care-unit)); line-height: calc(14 * var(--care-unit)); }
   .description strong { font-family: inherit; font-weight: 600; }
-  .map { top: calc(244 * var(--care-unit)); left: calc(-8 * var(--care-unit)); width: calc(300 * var(--care-unit)); }
+  .map { top: calc(244 * var(--care-unit)); left: calc(50% - 139.95 * var(--care-unit)); width: calc(300 * var(--care-unit)); }
   .card { width: 62cqw; padding: 3cqw !important; border-radius: 1.5cqw; font-size: 2.6cqw; }
   .logo { border-radius: 1.6cqw; }
   .cityButton { font-size: 1.8cqw; gap: .5cqw; padding: .5cqw 1cqw !important; }

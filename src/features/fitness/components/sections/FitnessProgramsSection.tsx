@@ -6,22 +6,19 @@ const PROGRAMS = [
     title: "STRENGTH",
     image: "/fitness/fitness-programs-strength.png",
     alt: "Dumbbells and a jump rope on a red training surface",
-    left: ["Sets", "Reps", "Weights"],
-    right: ["Loads", "Workout Duration", "Muscle Targets"],
+    rows: [["Sets", "Reps", "Weights"], ["Loads", "Workout Duration", "Muscle Targets"]],
   },
   {
     title: "CARDIO",
     image: "/fitness/fitness-programs-cardio.png",
     alt: "A row of air bikes in a gym",
-    left: ["Duration", "Distance", "Pace", "Incline"],
-    right: ["Resistance", "Cadence", "HR Zones", "Stroke Rate"],
+    rows: [["Duration", "Distance", "Pace", "HR Zones"], ["Incline", "Resistance", "Cadence", "Stroke Rate"]],
   },
   {
     title: "CIRCUIT TRAINING",
     image: "/fitness/fitness-programs-circuit-16ed96.png",
     alt: "Training shoes, dumbbells, and a jump rope on an exercise mat",
-    left: ["Strength", "Cardio"],
-    right: ["Stretch", "Yoga"],
+    rows: [["Strength", "Cardio", "Stretch", "Yoga"]],
   },
 ];
 
@@ -33,15 +30,15 @@ function ProgramCard({ program }: { program: (typeof PROGRAMS)[number] }) {
           src={program.image}
           alt={program.alt}
           fill
-          sizes="(max-width: 767px) 76vw, (max-width: 1023px) calc((100vw - 74px) / 3), (max-width: 1440px) calc((100vw - 144px) / 3), 427px"
+          sizes="(max-width: 767px) 76vw, (max-width: 1023px) calc((100vw - 136px) / 3), (max-width: 1440px) calc((100vw - 208px) / 3), 411px"
           className={styles.image}
         />
       </div>
       <h3 className={styles.title}>{program.title}</h3>
       <div className={styles.features}>
-        {[program.left, program.right].map((column, index) => (
+        {program.rows.map((row, index) => (
           <ul key={index} className={styles.featureList}>
-            {column.map((feature) => (
+            {row.map((feature) => (
               <li key={feature}>{feature}</li>
             ))}
           </ul>

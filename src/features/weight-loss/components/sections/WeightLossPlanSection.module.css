@@ -1,0 +1,64 @@
+.section { position: relative; color: #173c2b; }
+.sticky { overflow: hidden; }
+.inner { width: min(1200px, 90%); margin: 0 auto !important; padding: 72px 0 40px !important; }
+.heading { text-align: center; }
+.eyebrow { color: #496d56; font-size: 10px; font-weight: 600; letter-spacing: .18em; margin-bottom: 12px !important; }
+.heading h2 { font-size: clamp(26px, 2.65vw, 40px); font-weight: 500; line-height: 1.3; letter-spacing: -.045em; color: #111b14; }
+.subtitle { font-size: clamp(26px, 2.65vw, 40px); line-height: 1.2; font-style: italic; color: #17925a; margin-top: 8px !important; }
+.story { display: grid; grid-template-columns: 58% 42%; align-items: center; min-height: 560px; margin-top: 24px !important; }
+.visual { position: relative; height: 100%; min-height: 560px; }
+.photoDesktop { --k: .65px; position: absolute; left: 50%; top: 50%; width: 605px; height: 526px; transform: translate(-54%, -50%); }
+.photoMobile { display: none; }
+.visualCaption { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; align-items: center; white-space: nowrap; color: #43654e; font-size: 10px; }
+.visualCaption > span { width: 5px; height: 5px; background: #17925a; border-radius: 50%; }
+.panels { position: relative; min-width: 0; align-self: stretch; display: grid; align-items: center; padding-left: 36px !important; border-left: 1px solid #173c2b20; }
+.panel { grid-area: 1 / 1; visibility: hidden; opacity: 0; transform: translateY(20px); transition: opacity .4s ease, transform .55s cubic-bezier(.22,1,.36,1), visibility .4s; }
+.panel[data-active="true"] { opacity: 1; visibility: visible; transform: translateY(0); }
+.stepTop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px !important; }
+.stepTop img { width: 84px; height: 84px; margin-left: -10px !important; }
+.stepCount { font-size: 13px; color: #17925a; font-variant-numeric: tabular-nums; }
+.stepCount > span { color: #718372; }
+.stageLabel { color: #17925a; text-transform: uppercase; letter-spacing: .13em; font-size: 10px; font-weight: 600; margin-bottom: 10px !important; }
+.panel h3 { max-width: 380px; font-size: clamp(28px, 2.65vw, 38px); letter-spacing: -.045em; line-height: 1.12; font-weight: 500; }
+.description { max-width: 370px; font-size: 14px; line-height: 1.7; color: #4c6453; margin-top: 16px !important; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; max-width: 370px; margin-top: 20px !important; }
+.tags > span { border: 1px solid #75977d80; border-radius: 30px; padding: 5px 11px !important; font-size: 10px; color: #41654c; }
+.outcome { display: flex; align-items: center; gap: 10px; font-size: 11px; color: #1b7549; margin-top: 24px !important; }
+.outcome > span { font-size: 20px; }
+@media (min-width: 1024px) and (min-height: 650px) and (prefers-reduced-motion: no-preference) {
+  .section { height: 340svh; }
+  .sticky { position: sticky; top: 0; height: 100svh; }
+  .inner { height: 100%; display: flex; flex-direction: column; padding-top: clamp(70px, 10svh, 110px) !important; padding-bottom: 28px !important; }
+  .story { flex: 1; min-height: 0; }
+  .visual { min-height: 0; container-type: size; }
+  .photoDesktop { --k: min(.73px, calc((100cqh - 24px) / 809)); width: calc(931.25 * var(--k)); height: calc(809 * var(--k)); transform: translate(-54%, -50%); }
+}
+@media (max-width: 1023px) {
+  .inner { display: flex; flex-direction: column; max-width: 660px; padding-top: 56px !important; }
+  .story { display: contents; }
+  .visual { order: 1; min-height: 320px; margin-top: 16px !important; }
+  .photoDesktop { display: none; }
+  .photoMobile { display: block; --k: min(1px, .25vw); position: absolute; top: 0; left: 50%; transform: translateX(-50%); }
+  .visualCaption { bottom: 8px; font-size: 9px; }
+  .panels { order: 3; border-left: 0; padding: 20px 0 0 !important; min-height: 330px; }
+  .panel h3 { font-size: 30px; max-width: 100%; }
+  .stepTop { margin-bottom: 4px !important; }
+  .stepTop img { width: 64px; height: 64px; }
+  .description { max-width: 100%; font-size: 13px; margin-top: 12px !important; }
+  .tags { margin-top: 14px !important; }
+  .outcome { margin-top: 16px !important; }
+}
+@media (max-width: 380px) {
+  .visual { min-height: 270px; }
+  .panels { min-height: 360px; }
+  .heading h2, .subtitle { font-size: 25px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .panel { transition: none; }
+}
+
+/* Without the desktop scroll sequence, keep every step available in normal flow. */
+@media (max-width: 1023px), (max-height: 649px), (prefers-reduced-motion: reduce) {
+  .panels { display: flex; flex-direction: column; justify-content: center; gap: 36px; }
+  .panel { visibility: visible; opacity: 1; transform: none; }
+}

@@ -64,7 +64,7 @@ export default function CareQuestionsSection() {
           </div>
 
           <p data-cq-copy className={styles.note}>
-            Outside of normal business hours, AI answers and triages the call and SMS. Video only available during normal business hours.
+            AI answers the call and SMS. Video only available during normal business hours.
           </p>
         </div>
       </div>
