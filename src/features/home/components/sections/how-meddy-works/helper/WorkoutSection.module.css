@@ -57,6 +57,10 @@
   .visual { width: 580px; margin: 28px auto 0 !important; align-self: center; }
 }
 
+@media (min-width: 744px) and (max-width: 1366px) and (orientation: portrait) {
+  .content { min-height: 0; }
+}
+
 @media (max-width: 599px) {
   .content { padding-inline: 16px !important; }
   .visual { width: 358px; height: 390px; }
@@ -71,7 +75,7 @@
   .visual { margin-left: -35px !important; margin-right: -35px !important; align-self: auto; }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 743px) {
   .content { --feature-scale: min(calc((100vw - 40px) / 360px), 1.4); min-height: 0; padding: 48px 20px 32px !important; }
   .visual { order: 0; width: 360px; height: 450px; margin: 0 auto !important; zoom: var(--feature-scale); }
   .photo { left: -20px; top: 5px; width: 316px; }

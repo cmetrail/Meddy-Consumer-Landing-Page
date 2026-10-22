@@ -1,6 +1,12 @@
 .shade, .mobileWord { display: none; }
 
 @layer base {
+  @media (min-width: 744px) and (max-width: 1366px) and (orientation: portrait) {
+    .section, .section .content { min-height: clamp(740px, 80vw, 1024px) !important; }
+  }
+}
+
+@layer base {
   @media (max-width: 767px) {
     .section {
       height: min(163.6816vw, 100svh) !important;

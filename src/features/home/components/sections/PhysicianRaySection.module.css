@@ -66,7 +66,11 @@
 .badge svg { flex-shrink: 0; width: min(1.55cqw, 2.06cqh); height: min(1.55cqw, 2.06cqh); }
 .badge strong { font-weight: 400; }
 
-@media (max-width: 767px) {
+@media (min-width: 744px) and (max-width: 1366px) and (orientation: portrait) {
+  .canvas { height: clamp(580px, 75vw, 1024px); }
+}
+
+@media (max-width: 743px) {
   .canvas {
     --ray-unit: min(calc(100vw / 282), 1.5603px);
     max-width: 440px;

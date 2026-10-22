@@ -36,6 +36,10 @@
   .card { width: 100%; }
   .description { max-width: 600px; font-size: 17px; }
 }
+@media (min-width: 744px) and (max-width: 1366px) and (orientation: portrait) {
+  .section { min-height: clamp(740px, 80vw, 1024px); }
+}
+
 @media (max-width: 540px) {
   .card { --signal-unit: calc((100vw - 2 * var(--section-gutter)) / 482); height: auto; min-height: calc(288 * var(--signal-unit)); }
   .label, .result { font-size: max(9px, calc(12 * var(--signal-unit))); }

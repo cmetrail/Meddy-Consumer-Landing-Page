@@ -35,15 +35,15 @@ function ProgressTrend({ mobile, reduced }: { mobile?: boolean; reduced: boolean
   const width = mobile ? 245.667 : 441.667;
   const height = mobile ? 227.333 : 225.333;
   const points = mobile
-    ? [[5.333, 5.333], [83.181, 30.559], [161.903, 65.244], [240.333, 90.076]]
-    : [[5.333, 5.333], [148.109, 56.333], [292.488, 121.333], [436.333, 152.833]];
+    ? [5.333, 30.559, 65.244, 90.076].map((y, i) => [width * (i + 0.5) / MONTHS.length, y])
+    : [5.333, 56.333, 121.333, 152.833].map((y, i) => [width * (i + 0.5) / MONTHS.length, y]);
   const bottom = mobile ? 146.833 : 224.833;
   const coordinates = points.map(([x, y]) => `${x},${y}`).join(" ");
 
   return (
     <div data-progress-trend className="absolute" style={{
-      left: mobile ? "10.96%" : "6.63%", top: mobile ? 48.16 : 67.05,
-      width: mobile ? "78.07%" : "86.55%", height: 220,
+      left: 0, top: mobile ? 48.16 : 67.05,
+      width: "100%", height: 220,
     }}>
       <svg role="img" aria-label="Weight trend from 205 lbs to 187 lbs, January through October" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" className="h-full w-full overflow-visible">
         <defs>
@@ -79,7 +79,8 @@ function ProgressTrend({ mobile, reduced }: { mobile?: boolean; reduced: boolean
         <motion.p key={milestone.m} data-progress-label variants={reveal(reduced, arrival(i) + 0.2)}
           className="absolute w-[72px] text-[10px] font-normal leading-tight text-black lg:w-[86px] lg:text-[12px]"
           style={{ left: `calc(${points[i][0] / width * 100}% - ${i === 3 ? (mobile ? 68 : 82) : i === 0 ? 0 : (mobile ? 36 : 43)}px)`,
-            top: points[i][1] / height * 220 + (i === 3 ? 30 : i === 0 ? 12 : -34),
+            // Keep every caption below its marker, clear of the descending line.
+            top: points[i][1] / height * 220 + 24,
             textAlign: i === 3 ? "right" : i === 0 ? "left" : "center",
           }}>
           {milestone.label.split(" ")[0]}<br />{milestone.label.split(" ").slice(1).join(" ")}
@@ -89,8 +90,8 @@ function ProgressTrend({ mobile, reduced }: { mobile?: boolean; reduced: boolean
   );
 }
 const PILLS = [
-  { label: "205 lbs", left: "4.2%", top: 42.39 },
-  { label: "187 lbs", left: "89.96%", top: 190.39 },
+  { label: "205 lbs", left: "12.5%", top: 42.39 },
+  { label: "187 lbs", left: "87.5%", top: 190.39 },
 ];
 
 export default function HowItWorksProgressSection() {
@@ -182,10 +183,10 @@ export default function HowItWorksProgressSection() {
                   ))}
 
                   {[
-                    { label: "205 lbs", left: "5.65%", top: 23.16 },
-                    { label: "187 lbs", left: "83.39%", top: 139.39 },
+                    { label: "205 lbs", left: "12.5%", top: 23.16 },
+                    { label: "187 lbs", left: "87.5%", top: 139.39 },
                   ].map((p) => (
-                    <motion.div variants={reveal(reduced, arrival(p.label === "205 lbs" ? 0 : 3) + 0.2)} key={p.label} className="absolute flex items-center justify-center rounded-[28px] border border-solid border-[#17925A] bg-white px-1 py-[2px]" style={{ left: p.left, top: p.top }}>
+                    <motion.div variants={reveal(reduced, arrival(p.label === "205 lbs" ? 0 : 3) + 0.2)} key={p.label} className="absolute flex items-center justify-center rounded-[28px] border border-solid border-[#17925A] bg-white px-1 py-[2px]" style={{ left: p.left, top: p.top, x: "-50%" }}>
                       <p className="whitespace-nowrap text-[8px] font-normal leading-[1.5] text-[#17925A]">{p.label}</p>
                     </motion.div>
                   ))}
@@ -193,9 +194,9 @@ export default function HowItWorksProgressSection() {
                   <ProgressTrend mobile reduced={reduced} />
                 </div>
 
-                <div className="flex w-full shrink-0 items-start justify-between">
+                <div className="grid w-full shrink-0 grid-cols-4 items-start">
                   {MONTHS.map((m, i) => (
-                    <div key={m.m} className="flex w-[65.667px] flex-col items-center justify-center" style={{ gap: 2 }}>
+                    <div key={m.m} className="flex min-w-0 flex-col items-center justify-center" style={{ gap: 2 }}>
                       <span className="block h-[8px] w-px bg-[#111110]" />
                       <p className="whitespace-nowrap text-[10px] font-normal leading-[1.5] text-[#111110]">{m.m}</p>
                       <motion.p data-progress-event variants={reveal(reduced, arrival(i) + 0.22, true)} className="w-full text-center text-[12px] font-medium leading-[1.5] text-[#111110]">{m.event}</motion.p>
@@ -250,7 +251,7 @@ export default function HowItWorksProgressSection() {
                       variants={reveal(reduced, arrival(p.label === "205 lbs" ? 0 : 3) + 0.2)}
                       key={p.label}
                       className="absolute flex items-center justify-center rounded-[28px] border border-solid border-[#17925A] bg-white px-1 py-[2px]"
-                      style={{ left: p.left, top: p.top }}
+                      style={{ left: p.left, top: p.top, x: "-50%" }}
                     >
                       <p className="whitespace-nowrap text-[8px] font-normal leading-[1.5] text-[#7B7B7B]">{p.label}</p>
                     </motion.div>
@@ -260,9 +261,9 @@ export default function HowItWorksProgressSection() {
                 </div>
 
                 {/* x axis */}
-                <div className="flex w-full shrink-0 items-start justify-between">
+                <div className="grid w-full shrink-0 grid-cols-4 items-start">
                   {MONTHS.map((m, i) => (
-                    <div key={m.m} className="flex w-[65.667px] flex-col items-center justify-center" style={{ gap: 2 }}>
+                    <div key={m.m} className="flex min-w-0 flex-col items-center justify-center" style={{ gap: 2 }}>
                       <span className="block h-[8px] w-px bg-[#111110]" />
                       <p className="whitespace-nowrap text-[10px] font-normal leading-[1.5] text-[#111110]">{m.m}</p>
                       <motion.p data-progress-event variants={reveal(reduced, arrival(i) + 0.22, true)} className="text-center text-[12px] font-medium leading-[1.5] text-[#111110]">

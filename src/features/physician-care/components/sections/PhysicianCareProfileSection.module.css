@@ -109,7 +109,11 @@
   white-space: nowrap;
 }
 
-@media (max-width: 767px) {
+@media (min-width: 744px) and (max-width: 1366px) and (orientation: portrait) {
+  .section { height: auto; }
+}
+
+@media (max-width: 743px) {
   .section { --profile-unit: 1px; padding: 24px 20px !important; }
   .layout { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 24px; min-height: 0; height: 100%; }
   .copy { gap: 16px; }

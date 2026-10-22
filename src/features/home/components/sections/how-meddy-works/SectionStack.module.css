@@ -14,7 +14,7 @@
   margin-top: 5rem !important;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 744px) {
   .panel + .panel {
     margin-top: 7rem !important;
   }
@@ -33,6 +33,10 @@
   background: #06120d;
   opacity: 0;
   pointer-events: none;
+}
+
+@media (min-width: 744px) and (max-width: 1366px) and (orientation: portrait) {
+  .panel + .panel { margin-top: 3rem !important; }
 }
 
 @media (min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {

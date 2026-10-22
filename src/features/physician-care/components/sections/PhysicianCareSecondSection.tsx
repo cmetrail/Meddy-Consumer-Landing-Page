@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export default function PhysicianCareSecondSection() {
   return (
-    <section data-pc-chapter="See changes earlier" className="relative mx-auto w-full max-w-360 overflow-hidden bg-[#FFFFF9] px-5 py-14 lg:min-h-[1024px] lg:px-[75px] lg:py-0">
-      <div className="relative mx-auto w-full max-w-360 lg:min-h-[1024px]">
+    <section data-pc-chapter="See changes earlier" className="relative w-full min-h-[var(--dvh)] overflow-hidden bg-[#FFFFF9] px-5 py-14 lg:px-[75px] lg:py-0">
+      <div className="relative mx-auto w-full lg:min-h-[var(--dvh)]">
         {/* Heading (top center) */}
         <div data-pc-reveal
           className="flex flex-col items-center text-center lg:pt-[45px]"
@@ -19,7 +19,7 @@ export default function PhysicianCareSecondSection() {
         </div>
 
         {/* Photo (bottom center on desktop) */}
-        <div className="relative mx-auto mt-8 w-full max-w-[784px] lg:absolute lg:bottom-0 lg:left-1/2 lg:mt-0 lg:w-[784px] lg:-translate-x-1/2">
+        <div className="relative mx-auto mt-8 w-full max-w-[784px] lg:absolute lg:bottom-0 lg:left-1/2 lg:mt-0 lg:w-[min(784px,calc(var(--dvh)-220px))] lg:-translate-x-1/2">
           <Image
             data-pc-prevention-photo
             src="/physician-care/55e6878efd48e3918ab12131fee3c0b0a1839437.png"
@@ -33,14 +33,14 @@ export default function PhysicianCareSecondSection() {
 
         {/* Chart card (bottom-left) */}
         <div data-pc-reveal
-          className="mx-auto mt-10 w-full max-w-[344px] lg:absolute lg:left-0 lg:top-[464px] lg:mx-0 lg:mt-0 lg:w-[344px]"
+          className="mx-auto mt-10 w-full max-w-[344px] lg:absolute lg:left-0 lg:top-[45%] lg:mx-0 lg:mt-0 lg:w-[344px]"
         >
           <ChartCard />
         </div>
 
         {/* Tagline (bottom-right) */}
         <div data-pc-reveal
-          className="mt-6 lg:absolute lg:right-0 lg:top-[431px] lg:mt-0"
+          className="mt-6 lg:absolute lg:right-0 lg:top-[42%] lg:mt-0"
         >
           <div className="flex flex-col items-start gap-[10px] lg:items-end">
             <div className="flex items-center gap-[18px]">

@@ -140,7 +140,7 @@ export default function WearablesHeroSection() {
         width={1434}
         height={1235}
         unoptimized
-        className="pointer-events-none absolute hidden max-w-none mix-blend-overlay md:block"
+        className="pointer-events-none absolute hidden max-w-none mix-blend-overlay min-[744px]:block"
         style={{ left: `calc(50% - ${u(709)})`, top: u(-50), width: u(1434), height: u(1235) }}
       />
 
@@ -151,7 +151,7 @@ export default function WearablesHeroSection() {
         width={1604}
         height={393}
         priority
-        className="pointer-events-none absolute hidden max-w-none md:block"
+        className="pointer-events-none absolute hidden max-w-none min-[744px]:block"
         style={{
           bottom: u(-9),
           left: `calc(50% - ${u(841)})`,
@@ -178,31 +178,31 @@ export default function WearablesHeroSection() {
 
       {/* Stage: stacked copy on mobile, scaled 1440 design from md up */}
       <div
-        className={`relative z-20 mx-auto flex w-full max-w-360 flex-col items-start gap-12 px-5 pb-0 pt-5 md:absolute md:left-1/2 md:top-[var(--stage-top)] md:h-[var(--stage-h)] md:w-[var(--stage-w)] md:max-w-none md:-translate-x-1/2 md:flex-none md:flex-row md:items-center md:justify-start md:p-0 ${styles.stage}`}
+        className={`relative z-20 mx-auto flex w-full max-w-360 flex-col items-start gap-12 px-5 pb-0 pt-5 min-[744px]:absolute min-[744px]:left-1/2 min-[744px]:top-[var(--stage-top)] min-[744px]:h-[var(--stage-h)] min-[744px]:w-[var(--stage-w)] min-[744px]:max-w-none min-[744px]:-translate-x-1/2 min-[744px]:flex-none min-[744px]:flex-row min-[744px]:items-center min-[744px]:justify-start min-[744px]:p-0 ${styles.stage}`}
         style={{ ["--stage-w" as string]: u(1440) } as React.CSSProperties}
       >
         {/* Left — copy */}
-        <div className="relative z-10 flex w-full flex-col gap-4 md:left-[var(--copy-left)] md:w-[var(--copy-w)] md:gap-[var(--copy-gap)]">
-          <div className="flex flex-col gap-[10px] md:gap-[var(--u10)]">
-            <h1 className="comprehensive-serif uppercase leading-[normal] text-[44px] md:text-[length:var(--h1)]">
+        <div className="relative z-10 flex w-full flex-col gap-4 min-[744px]:left-[var(--copy-left)] min-[744px]:w-[var(--copy-w)] min-[744px]:gap-[var(--copy-gap)]">
+          <div className="flex flex-col gap-[10px] min-[744px]:gap-[var(--u10)]">
+            <h1 className="comprehensive-serif uppercase leading-[normal] text-[44px] min-[744px]:text-[length:var(--h1)]">
               <span data-hero-copy className="comprehensive-serif inline-block text-[#E2E2E2]">Your </span>
-              <br className="hidden md:block" />
+              <br className="hidden min-[744px]:block" />
               <span data-hero-copy className="comprehensive-serif inline-block text-white">health data</span>
             </h1>
-            <p data-hero-copy className="font-medium uppercase leading-[normal] text-[#9A9A9A] text-[24px] md:whitespace-nowrap md:text-[length:var(--sub)]">
+            <p data-hero-copy className="font-medium uppercase leading-[normal] text-[#9A9A9A] text-[24px] min-[744px]:whitespace-nowrap min-[744px]:text-[length:var(--sub)]">
               already knows a lot about you.
             </p>
           </div>
 
-          <div className="flex flex-col gap-4 md:max-w-none md:gap-[var(--copy-gap2)]">
+          <div className="flex flex-col gap-4 min-[744px]:max-w-none min-[744px]:gap-[var(--copy-gap2)]">
             <p data-hero-copy className="font-medium uppercase leading-[1.2] text-[#9A9A9A]">
-              <span className="text-[20px] md:text-[length:var(--sub)]">Now your</span>
+              <span className="text-[20px] min-[744px]:text-[length:var(--sub)]">Now your</span>
               <br />
-              <span className="text-[20px] italic leading-[1.2] text-white md:text-[length:var(--lead)]">
+              <span className="text-[20px] italic leading-[1.2] text-white min-[744px]:text-[length:var(--lead)]">
                 physician can too.
               </span>
             </p>
-            <p data-hero-copy className="leading-[normal] text-[#9A9A9A] text-[16px] md:font-medium md:leading-[1.5] md:text-[length:var(--body)]">
+            <p data-hero-copy className="leading-[normal] text-[#9A9A9A] text-[16px] min-[744px]:font-medium min-[744px]:leading-[1.5] min-[744px]:text-[length:var(--body)]">
               Connect the devices you already use and bring your activity,
               sleep, heart rate, recovery, and fitness data into one connected
               picture of your health.
@@ -211,13 +211,13 @@ export default function WearablesHeroSection() {
         </div>
 
         {/* Right — device cluster, absolute in 1440 design coords (md+) */}
-        <DeviceCluster className="hidden md:block" style={{ left: 0, top: 0, width: u(1440), height: u(913) }} />
+        <DeviceCluster className="hidden min-[744px]:block" style={{ left: 0, top: 0, width: u(1440), height: u(913) }} />
       </div>
 
 
       {/* Mobile: same device cluster, scaled so its widest extent (x 396-1280 in design px) fits inside px-5 */}
       <div
-        className={`relative z-10 mt-0 w-full md:hidden ${styles.mobileDevices}`}
+        className={`relative z-10 mt-0 w-full min-[744px]:hidden ${styles.mobileDevices}`}
       >
         <Image
           src="/wearables/sand.png"
@@ -240,15 +240,15 @@ export default function WearablesHeroSection() {
           style={{ left: "calc(-396 * var(--u))", top: u(-110), width: u(1440), height: u(913) }}
         />
       </div>
-      <div data-hero-brands className={`relative z-10 flex flex-col items-center gap-[10px] px-5 pb-16 pt-6 text-center text-[16px] md:hidden ${styles.mobileBrands}`}>
+      <div data-hero-brands className={`relative z-10 flex flex-col items-center gap-[10px] px-5 pb-16 pt-6 text-center text-[16px] min-[744px]:hidden ${styles.mobileBrands}`}>
         <span className="text-[#9A9A9A]">Works with</span>
         <span className="font-medium text-white">• Oura • Apple Watch • Google Pixel Watch • Fitbit</span>
       </div>
 
       {/* Works with */}
-      <div data-hero-brands className="relative z-20 hidden flex-col items-center gap-[10px] md:absolute md:inset-x-0 md:bottom-[var(--works-bottom)] md:flex">
-        <span className="text-[16px] text-[#9A9A9A] md:text-[length:var(--works)]">Works with</span>
-        <span className="text-center font-medium uppercase text-[16px] text-white md:text-[length:var(--works)]">
+      <div data-hero-brands className="relative z-20 hidden flex-col items-center gap-[10px] min-[744px]:absolute min-[744px]:inset-x-0 min-[744px]:bottom-[var(--works-bottom)] min-[744px]:flex">
+        <span className="text-[16px] text-[#9A9A9A] min-[744px]:text-[length:var(--works)]">Works with</span>
+        <span className="text-center font-medium uppercase text-[16px] text-white min-[744px]:text-[length:var(--works)]">
           • Oura • Apple Watch • Google Pixel Watch • Fitbit
         </span>
       </div>

@@ -1,1 +1,9 @@
 .story { position: relative; }
+
+@layer base {
+  @media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
+    .story :global([data-pc-chapter="See changes earlier"]) {
+      --dvh: clamp(960px, 90vw, 1100px);
+    }
+  }
+}
