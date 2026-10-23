@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { WhyMeddyFooterItems } from "./WhyMeddyFooterItems";
+import { FooterItems } from "@/features/home/components/sections/helper/FooterItems";
 import styles from "./WhyMeddyFooter.module.css";
 
 const photo = "/why-meddy/6c4544264640d72d349c7f77f7eb2856c08a65eb.jpg";
@@ -24,7 +24,7 @@ export default function WhyMeddyFooterSection() {
       </div>
       <div data-why-footer className={styles.footer}>
         <Image src={photo} alt="" fill sizes="100vw" className={styles.footerImage} />
-        <WhyMeddyFooterItems noTopMargin referenceLayout className={styles.glass} />
+        <FooterItems noTopMargin mobileReference mobileVariant="why-meddy" className={styles.glass} />
       </div>
     </section>
   );

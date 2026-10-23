@@ -124,6 +124,7 @@
       margin-inline: auto !important;
     }
     .footer .glass [data-footer-brand] > p {
+      display: block !important;
       max-width: calc(190 * var(--footer-unit)) !important;
       margin: calc(12 * var(--footer-unit)) auto 0 !important;
       text-align: center;
@@ -169,11 +170,14 @@
       margin-top: calc(13 * var(--footer-unit)) !important;
     }
     .footer .glass [data-footer-legal] {
+      display: flex !important;
       max-width: calc(190 * var(--footer-unit));
       margin: calc(17 * var(--footer-unit)) auto 0 !important;
       gap: calc(4 * var(--footer-unit)) !important;
       font-size: calc(6.5 * var(--footer-unit)) !important;
       line-height: 1.4 !important;
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 }
