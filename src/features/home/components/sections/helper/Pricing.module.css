@@ -34,13 +34,14 @@
   .features li { display: flex; align-items: center; gap: calc(11.106 * var(--plan-unit)); font-size: calc(14 * var(--plan-unit)); line-height: 1.5; }
   .care .features, .complete .features { color: #fff; gap: calc(10 * var(--plan-unit)); }
   .complete .features { margin-top: calc(10 * var(--plan-unit)) !important; }
+  .care .features li:first-child, .complete .features li:first-child { color: #dadada; }
   .check { display: grid; place-items: center; flex: 0 0 calc(17.77 * var(--plan-unit)); height: calc(17.77 * var(--plan-unit)); }
   .check img { max-width: none; transform: scale(calc(var(--plan-unit) / 1px)); }
-  .button { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 100%; margin-top: auto !important; padding: calc(12 * var(--plan-unit)) calc(20 * var(--plan-unit)) !important; border: 1px solid var(--color-accent); border-radius: 49px; color: #fff; font-size: calc(14 * var(--plan-unit)); line-height: 1.5; text-align: center; transition: background-color 180ms; }
+  .button { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 100%; margin-top: auto !important; padding: calc(12 * var(--plan-unit)) calc(20 * var(--plan-unit)) !important; border: 1px solid var(--color-accent); border-radius: 35px; color: #fff; font-size: calc(14 * var(--plan-unit)); line-height: 1.5; text-align: center; transition: background-color 180ms; }
   .free .button:hover { background: rgb(23 146 90 / 35%); }
   .care .button { background: var(--color-accent); border: 0; }
   .care .button:hover { background: #1ba867; }
-  .complete .button { color: var(--color-accent); background: #fff; border: 0; }
+  .complete .button { color: var(--color-accent); background: #fff; border: 0; border-radius: 49px; }
   .complete .button:hover { background: #f4f4f5; }
   .badge { position: absolute; top: calc(-17.77 * var(--plan-unit)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: calc(8 * var(--plan-unit)); height: calc(28.135 * var(--plan-unit)); padding: calc(4 * var(--plan-unit)) calc(8 * var(--plan-unit)) !important; border-radius: 36px; background: var(--color-accent); font-size: calc(14 * var(--plan-unit)); line-height: 1.5; white-space: nowrap; }
   .badge img { transform: scale(calc(var(--plan-unit) / 1px)); }
