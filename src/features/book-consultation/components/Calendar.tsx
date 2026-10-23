@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { Control, FieldError } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import type { BookConsultationForm } from "../types";
@@ -85,52 +84,44 @@ export default function Calendar({ control, error, availability, onViewChange }:
     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
   ];
 
+  const navArrow = "h-[27.6px] w-[29.19px] transition-opacity";
+
   return (
     <Controller
       control={control}
       name="date"
       rules={{ required: "Select a date." }}
       render={({ field }) => (
-        <div className="flex w-full flex-col items-start gap-[16px]">
-          <div className="flex w-full items-center justify-between">
-            <p className="text-[20px] font-medium leading-[1.5] text-[#212121] lg:text-[24px]">
+        <div className="flex w-full flex-col items-center gap-[8px]">
+          <div className="flex items-center justify-center gap-[16px]">
+            <button
+              type="button"
+              onClick={goPrev}
+              disabled={!canGoPrev}
+              aria-label="Previous month"
+              className={canGoPrev ? "hover:opacity-80" : "cursor-not-allowed opacity-40"}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/book-consultation/cal-prev.svg" alt="" className={navArrow} />
+            </button>
+            <p className="text-[16px] font-normal leading-[1.5] text-[#212121]">
               {MONTHS[viewMonth]} {viewYear}
             </p>
-            <div className="flex items-center gap-[12px] lg:gap-[35px]">
-              <button
-                type="button"
-                onClick={goPrev}
-                disabled={!canGoPrev}
-                aria-label="Previous month"
-                className={`flex h-[28px] w-[28px] items-center justify-center rounded-[8px] bg-white shadow-sm transition-colors lg:h-[36px] lg:w-[36px] ${
-                  canGoPrev
-                    ? "text-[#17925a] hover:bg-[#f0f0eb]"
-                    : "cursor-not-allowed text-[#d9d9d9]"
-                }`}
-              >
-                <ChevronLeft className="h-[16px] w-[16px] lg:h-[20px] lg:w-[20px]" />
-              </button>
-              <button
-                type="button"
-                onClick={goNext}
-                aria-label="Next month"
-                className="flex h-[28px] w-[28px] items-center justify-center rounded-[8px] bg-white text-[#17925a] shadow-sm transition-colors hover:bg-[#f0f0eb] lg:h-[36px] lg:w-[36px]"
-              >
-                <ChevronRight className="h-[16px] w-[16px] lg:h-[20px] lg:w-[20px]" />
-              </button>
-            </div>
+            <button type="button" onClick={goNext} aria-label="Next month" className="hover:opacity-80">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/book-consultation/cal-next.svg" alt="" className={navArrow} />
+            </button>
           </div>
 
-          <div className="w-full rounded-[15px] bg-white p-[12px] lg:p-2">
-            <div className="grid w-full grid-cols-7 gap-y-[2px] lg:gap-y-[10px]">
+          <div className="w-full border-b border-solid border-[rgba(23,23,24,0.2)] px-[8px] py-[16px]">
+            <div className="mb-[24px] grid grid-cols-7">
               {WEEKDAYS.map((d) => (
-                <p
-                  key={d}
-                  className="text-center text-[14px] font-normal leading-[1.5] text-[#212121] lg:mb-3 lg:text-[16px]"
-                >
+                <p key={d} className="text-center text-[14px] font-normal leading-[1.5] text-[#212121]">
                   {d}
                 </p>
               ))}
+            </div>
+            <div className="grid grid-cols-7 gap-y-[10px]">
               {cells.map((d, i) => {
                 if (d === null) return <span key={`empty-${i}`} />;
                 const date = new Date(viewYear, viewMonth, d);
@@ -147,26 +138,29 @@ export default function Calendar({ control, error, availability, onViewChange }:
                     type="button"
                     disabled={disabled && !selected}
                     onClick={() => field.onChange(iso)}
-                    className={`mx-auto flex h-[40px] w-[40px] items-center justify-center rounded-full text-[14px] leading-[1.5] transition-colors lg:h-[44px] lg:w-[44px] lg:text-[16px] ${
+                    aria-pressed={selected}
+                    className={`group relative flex h-[56px] w-full items-center justify-center text-[14px] font-normal leading-[1.5] ${
                       selected
-                        ? "bg-[#17925a] font-bold text-white"
+                        ? "text-white"
                         : disabled
-                          ? "cursor-not-allowed font-bold text-[#212121] opacity-40"
-                          : "font-bold text-[#3f6262] hover:bg-[rgba(23,146,90,0.10)]"
+                          ? "cursor-not-allowed text-[#212121] opacity-40"
+                          : "text-[#3f6262]"
                     }`}
                   >
-                    {d}
+                    <span
+                      aria-hidden
+                      className={`absolute left-1/2 top-1/2 h-[54px] w-[54px] -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors ${
+                        selected ? "bg-[#17925a]" : disabled ? "" : "group-hover:bg-[rgba(23,146,90,0.10)]"
+                      }`}
+                    />
+                    <span className="relative">{d}</span>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {error ? (
-            <p className="text-[12px] leading-[1.5] text-[#d92d20]">
-              {error.message}
-            </p>
-          ) : null}
+          {error ? <p className="text-[12px] leading-[1.5] text-[#d92d20]">{error.message}</p> : null}
         </div>
       )}
     />

@@ -25,7 +25,7 @@ export default function GoalSelect({ control, error }: GoalSelectProps) {
         };
         return (
           <div className="flex w-full flex-col items-start gap-[8px]">
-            <div className="grid w-full grid-cols-1 gap-x-[24px] gap-y-[8px] sm:grid-cols-2 sm:gap-y-[16px]">
+            <div className="grid w-full grid-cols-1 gap-[16px] sm:grid-cols-2">
               {GOALS.map((g) => {
                 const on = selected.includes(g);
                 return (
@@ -33,27 +33,26 @@ export default function GoalSelect({ control, error }: GoalSelectProps) {
                     key={g}
                     type="button"
                     onClick={() => toggle(g)}
-                    className={`flex h-[50px] w-full items-center gap-[12px] rounded-[10px] border border-solid px-[16px] lg:h-[44px] lg:px-[20px] text-left transition-colors ${
+                    aria-pressed={on}
+                    className={`flex w-full items-center gap-[8px] overflow-clip rounded-[10px] border border-solid px-[8px] py-[12px] text-left transition-colors ${
                       on
-                        ? "border-[#33674f] bg-[rgba(23,146,90,0.10)]"
-                        : "border-[#979797] bg-white"
+                        ? "border-[rgba(51,103,79,0.5)] bg-[rgba(23,146,90,0.1)]"
+                        : "border-[rgba(12,13,15,0.2)] bg-white"
                     }`}
                   >
                     <span
-                      className={`flex h-[24px] w-[24px] shrink-0 items-center justify-center rounded-[3px] border border-solid transition-colors ${
+                      className={`flex h-[24px] w-[24px] shrink-0 items-center justify-center rounded-full border border-solid transition-colors ${
                         on ? "border-[#17925a] bg-[#17925a]" : "border-[#979797] bg-transparent"
                       }`}
                     >
                       <Check
-                        size={16}
-                        strokeWidth={3}
+                        size={20}
+                        strokeWidth={2}
                         className={`text-white transition-opacity ${on ? "opacity-100" : "opacity-0"}`}
                       />
                     </span>
                     <span
-                      className={`text-[14px] font-normal leading-[1.5] ${
-                        on ? "text-[#111110]" : "text-[#979797]"
-                      }`}
+                      className={`text-[14px] font-normal leading-[1.5] ${on ? "text-[#111110]" : "text-[#979797]"}`}
                     >
                       {g}
                     </span>

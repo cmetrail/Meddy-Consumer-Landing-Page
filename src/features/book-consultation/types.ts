@@ -6,6 +6,8 @@ export type BookConsultationForm = {
   textReminders: boolean;
   stateOfResidence: string;
   is18OrOlder: boolean;
+  hasMedicare: "yes" | "no" | "";
+  medicareNumber: string;
   goals: string[];
   additionalNotes: string;
   date: string;

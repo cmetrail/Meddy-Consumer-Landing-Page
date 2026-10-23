@@ -14,17 +14,17 @@ type SelectFieldProps = {
 
 export default function SelectField({ label, register, options, helper, error, disabled }: SelectFieldProps) {
   return (
-    <div className="flex w-full flex-col items-start gap-[6px]">
-      <label className="text-[16px] font-normal leading-[1.5] text-[#46524b] lg:text-[16px] lg:font-medium">
+    <div className="flex w-full flex-col items-start gap-[8px]">
+      <label className="px-[2px] text-[16px] font-normal leading-[1.5] text-[#46524b]">
         {label}
       </label>
       <div className="relative w-full">
         <select
           {...register}
           disabled={disabled}
-          className={`h-[50px] w-full appearance-none rounded-[10px] border border-solid bg-white px-[16px] pr-[40px] text-[14px] leading-[1.5] text-[#46524b] outline-none transition-colors focus:border-[#17925a] lg:px-[14px] lg:text-[16px] ${
-            error ? "border-[#d92d20]" : "border-[#d9d9d9]"
-          } ${disabled ? "cursor-not-allowed bg-[#f0f0eb] text-[#7b7b7b]" : ""}`}
+          className={`h-[50px] w-full appearance-none rounded-[10px] border border-solid bg-white px-[16px] pr-[40px] text-[14px] leading-[1.5] text-[#46524b] outline-none transition-colors focus:border-[#17925a] ${
+            error ? "border-[#d92d20]" : "border-[rgba(12,13,15,0.2)]"
+          } ${disabled ? "cursor-not-allowed text-[#979797]" : ""}`}
         >
           {options.map((o) => (
             <option key={o} value={o}>
@@ -32,7 +32,7 @@ export default function SelectField({ label, register, options, helper, error, d
             </option>
           ))}
         </select>
-        <ChevronDown size={18} className="pointer-events-none absolute right-[14px] top-1/2 -translate-y-1/2 text-[#444444]" />
+        <ChevronDown size={20} className="pointer-events-none absolute right-[16px] top-1/2 -translate-y-1/2 text-[#111110]" />
       </div>
       {error ? (
         <p className="text-[12px] leading-[1.5] text-[#d92d20]">{error.message}</p>

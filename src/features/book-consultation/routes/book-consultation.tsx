@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { FormProvider, useForm } from "react-hook-form";
 import type { BookConsultationForm } from "../types";
 import { STEPS } from "../constants";
@@ -12,7 +13,6 @@ import { bookConsultation, type LeadBookingResult } from "../api";
 import AboutYouStep from "../components/steps/AboutYouStep";
 import YourGoalsStep from "../components/steps/YourGoalsStep";
 import ChooseTimeStep from "../components/steps/ChooseTimeStep";
-import BeforeYouVisitStep from "../components/steps/BeforeYouVisitStep";
 import ConfirmationStep from "../components/steps/ConfirmationStep";
 
 const STEP_FIELDS: (keyof BookConsultationForm)[][] = [
@@ -23,10 +23,10 @@ const STEP_FIELDS: (keyof BookConsultationForm)[][] = [
     "mobileNumber",
     "stateOfResidence",
     "is18OrOlder",
+    "medicareNumber",
   ],
   ["goals"],
-  ["date", "time", "agreeTerms"],
-  ["telehealthConsent", "privacyPractices"],
+  ["date", "time", "agreeTerms", "telehealthConsent", "privacyPractices"],
 ];
 
 const DEFAULT_VALUES: BookConsultationForm = {
@@ -37,6 +37,8 @@ const DEFAULT_VALUES: BookConsultationForm = {
   textReminders: false,
   stateOfResidence: "New York",
   is18OrOlder: false,
+  hasMedicare: "",
+  medicareNumber: "",
   goals: [],
   additionalNotes: "",
   date: toISODate(new Date()),
@@ -99,7 +101,7 @@ export const BookConsultationPage = () => {
   const next = async () => {
     const valid = await trigger(STEP_FIELDS[step]);
     if (!valid) return;
-    if (step === STEPS.length - 1) {
+    if (step === STEP_FIELDS.length - 1) {
       await submitBooking();
     } else {
       setStep((s) => s + 1);
@@ -118,33 +120,57 @@ export const BookConsultationPage = () => {
       case 0:
         return <AboutYouStep />;
       case 1:
-        return <YourGoalsStep />;
-      case 2:
-        return <ChooseTimeStep duration={duration} />;
+        return <YourGoalsStep onBack={back} />;
       default:
-        return <BeforeYouVisitStep submitting={submitting} error={submitError} />;
+        return (
+          <ChooseTimeStep duration={duration} onBack={back} submitting={submitting} submitError={submitError} />
+        );
     }
   };
 
   return (
     <FormProvider {...methods}>
-      <div className="flex min-h-dvh w-full flex-col overflow-x-hidden bg-[#f5f5f0] lg:h-dvh lg:overflow-hidden">
-        <main className="flex min-h-0 w-full flex-1 flex-col lg:flex-row">
-          <aside
-            data-lenis-prevent
-            className="hidden shrink-0 lg:flex lg:h-dvh lg:w-[340px] lg:flex-col lg:items-center lg:overflow-y-auto lg:bg-[rgba(23,146,90,0.10)] lg:px-10"
-          >
-            <Stepper step={submitted ? STEPS.length : step} />
-          </aside>
+      <div className="relative flex min-h-dvh w-full flex-col overflow-x-hidden bg-white lg:h-dvh lg:overflow-hidden">
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            alt=""
+            src="/book-consultation/bg-ellipse-blue.svg"
+            className="absolute left-[-373px] top-[-486px] max-w-none rotate-[149.28deg]"
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            alt=""
+            src="/book-consultation/bg-ellipse-green.svg"
+            className="absolute left-[-308px] top-[-778px] max-w-none rotate-[159.86deg]"
+          />
+        </div>
 
-          <div
-            ref={scrollRef}
-            data-lenis-prevent
-            className="flex min-h-0 w-full flex-1 flex-col overflow-x-hidden overflow-y-auto px-5 py-6 lg:px-10 lg:py-[clamp(16px,3dvh,32px)]"
-          >
-            <div className="mb-8 lg:hidden">
+        <div
+          ref={scrollRef}
+          data-lenis-prevent
+          className="relative z-10 flex min-h-0 w-full flex-1 flex-col overflow-x-hidden overflow-y-auto"
+        >
+          <main className="mx-auto flex w-full max-w-[1328px] flex-1 flex-col px-5 py-6 lg:p-16">
+            <div className="mb-8 flex w-full justify-center lg:mb-16">
+              <Link href="/" aria-label="Meddy Health home">
+                <Image
+                  src="/meddy-emr-logo.svg"
+                  alt="Meddy Health"
+                  width={148}
+                  height={24}
+                  unoptimized
+                  className="h-[24px] w-auto"
+                />
+              </Link>
+            </div>
+
+            <div className="mb-8 hidden lg:block">
+              <Stepper step={submitted ? STEPS.length : step} />
+            </div>
+            <div className="mb-6 lg:hidden">
               <MobileStepper
-                step={step}
+                step={submitted ? STEPS.length - 1 : step}
                 onBack={() => {
                   if (submitted) setSubmitted(false);
                   else if (step === 0) window.history.back();
@@ -161,39 +187,13 @@ export const BookConsultationPage = () => {
               }}
               className="flex w-full flex-1 flex-col"
             >
-              <div className="mx-auto flex w-full max-w-[824px] flex-1 flex-col justify-center">
+              <div className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col">
                 {renderStep()}
               </div>
 
-              {!submitted && step > 0 && step < 3 && (
-                <div className="mx-auto mt-10 flex w-full max-w-[824px] items-center justify-between">
-                  {step > 0 ? (
-                    <button
-                      type="button"
-                      onClick={back}
-                      className="hidden items-center gap-[8px] py-[12px] text-[16px] font-medium uppercase leading-[1.5] text-[#17925a] transition-colors hover:text-[#17925a]/80 lg:flex lg:h-[48px] lg:px-6 lg:py-[9px] xl:px-12 lg:text-[16px] lg:underline"
-                    >
-                      <ArrowLeft size={20} className="lg:hidden" />
-                      <ArrowLeft size={24} className="hidden lg:block" />
-                      Back
-                    </button>
-                  ) : (
-                    <span />
-                  )}
-                  <button
-                    type="button"
-                    onClick={next}
-                    className="w-full rounded-[10px] bg-[#17925a] px-[20px] py-[12px] text-[16px] font-medium uppercase leading-[1.5] text-white shadow-[2px_4px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90 lg:w-auto lg:h-[48px] lg:min-w-[220px] xl:min-w-[280px] lg:px-[24px] lg:py-[9px] lg:text-[16px] lg:font-bold"
-                  >
-                    {step === STEPS.length - 1
-                      ? "Get my visit link"
-                      : "Continue"}
-                  </button>
-                </div>
-              )}
             </form>
-          </div>
-        </main>
+          </main>
+        </div>
       </div>
     </FormProvider>
   );
