@@ -183,68 +183,49 @@ function Step3() {
 /* ------------------------------------------------------------------ step 4 */
 function Step4() {
   const fillId = useId();
-  const macros = [
-    { x: 52, width: 228, color: "#1499e3", tag: "P 40%", label: "Protein", tagX: 65, tagWidth: 47, textColor: "#fff" },
-    { x: 280, width: 172, color: "#ffdb45", tag: "F 30%", label: "Fats", tagX: 295, tagWidth: 46, textColor: "#111110" },
-    { x: 453, width: 120, color: "#9affad", tag: "C 30%", label: "Carbs", tagX: 464, tagWidth: 48, textColor: "#111110" },
-  ];
+  const fiberPath = "M100 375 C111 352 120 348 134 355 S157 356 165 337 S179 307 192 316 S219 333 225 309 S240 297 250 302 S263 297 268 288 S284 284 292 286 L300 287";
+  const weightPath = "M300 287 C309 287 311 308 321 307 S339 296 351 301 S360 328 374 331 S393 325 404 332 S414 345 432 346 S449 346 455 361 S481 384 499 380";
   return (
     <motion.div className="absolute inset-0" variants={panelV}>
-      <svg viewBox="0 0 624 520" className="block h-full w-full" fontWeight="400" role="img" aria-label="Nutrition breakdown from January to May: protein 40%, fats 30%, carbs 30%. Current weight 176 pounds, down 8% from 191 pounds.">
+      <svg viewBox="0 0 600 500" className="block h-full w-full" fontWeight="400" role="img" aria-label="Daily fiber increased from 16 grams per day to 32 grams. Current weight decreased from 191 pounds to 176 pounds. Fiber intake rises as body weight falls.">
         <defs>
-          <linearGradient id={fillId} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="white" stopOpacity="0.5" />
+          <linearGradient id={`${fillId}-fiber`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="white" stopOpacity="0.65" />
             <stop offset="1" stopColor="white" stopOpacity="0" />
           </linearGradient>
+          <linearGradient id={`${fillId}-weight`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#17925a" stopOpacity="0.8" />
+            <stop offset="1" stopColor="#17925a" stopOpacity="0" />
+          </linearGradient>
         </defs>
-        <rect x="35.5" y="14.5" width="553" height="491" rx="8" fill="#f5f5f0" fillOpacity="0.1" stroke="white" />
-        <text x="52" y="46" fill="#111110" fontSize="14" fontWeight="600">Nutrition Breakdown</text>
-        <text x="52" y="64" fill="#32647a" fontSize="10">Average Macronutrient Breakdown : Jan&#8211;May</text>
-        <text x="52" y="90" fill="#111110" fontSize="14">Jan - May</text>
-        {macros.map((macro) => (
-          <g key={macro.label}>
-            <line x1={macro.x} y1="119" x2={macro.x} y2="190" stroke={macro.color} strokeWidth="2" />
-            <rect x={macro.tagX} y="119" width={macro.tagWidth} height="20" rx="2" fill={macro.color} />
-            <text x={macro.tagX + 4} y="133" fill={macro.textColor} fontSize="12" fontWeight="700">{macro.tag}</text>
-            {Array.from({ length: Math.floor(macro.width / 10.8) }, (_, i) => (
-              <motion.line key={i} x1={macro.x + (i + 1) * 10.8} y1="151" x2={macro.x + (i + 1) * 10.8} y2="190" stroke={macro.color} strokeWidth="2"
-                variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { delay: 0.2 + i * 0.015 } } }} />
-            ))}
-            <text x={macro.x - 1} y="207" fill="white" fontSize="12" fontWeight="600">{macro.label}</text>
-          </g>
-        ))}
-        <text x="52" y="238" fill="white" fontSize="13">Current Weight</text>
-        <text x="51" y="279" fill="white" fontSize="30" fontWeight="600">176 lbs</text>
-        <circle cx="172" cy="277" r="10" fill="#65e6a3" />
-        <path d="M172 272V282M168 278L172 282L176 278" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <text x="188" y="282" fill="white" fontSize="14">8% down</text>
-        <text x="52" y="305" fill="white" fontSize="13">from 191 lbs</text>
-        <g>
-          <text transform="translate(60 402) rotate(-90)" fill="white" fontSize="8" textAnchor="middle">Weight (lbs)</text>
-          {[200, 190, 180, 170, 160].map((weight, i) => (
-            <g key={weight}>
-              <text x="87" y={351 + i * 27.25} textAnchor="end" fill="white" fontSize="12">{weight}</text>
-              <line x1="92" y1={347 + i * 27.25} x2="573" y2={347 + i * 27.25}
-                stroke={weight === 160 ? "#526d78" : "#618ba1"} strokeOpacity={weight === 160 ? 1 : 0.35} strokeDasharray={weight === 160 ? "2.5 5" : undefined} />
-            </g>
-          ))}
-          <motion.g variants={{ hidden: { clipPath: "inset(0 100% 0 0)" }, show: { clipPath: "inset(0 0% 0 0)", transition: { duration: 1.3, ease, delay: 0.3 } } }}>
-            <path d="M131 369 C205 386 306 404 383 411 S486 417 523 415 L523 456 L131 456 Z" fill={`url(#${fillId})`} />
-            <path d="M131 369 C205 386 306 404 383 411 S486 417 523 415" fill="none" stroke="white" strokeWidth="1.5" />
-            <line x1="523" y1="398" x2="523" y2="456" stroke="white" strokeWidth="1" />
-            <circle cx="523" cy="415" r="4" fill="white" />
-          </motion.g>
-          <g>
-            <rect x="454" y="377" width="84" height="17" rx="4" fill="white" />
-            <path d="M520 394L526 394L523 398Z" fill="white" />
-            <text x="461" y="389" fill="#111110" fontSize="8">May, 2026 - 176 lbs</text>
-          </g>
-          {["Jan", "Feb", "Mar", "Apr", "May"].map((month, i) => (
-            <g key={month}>
-              <line x1={131 + i * 98} y1="467" x2={131 + i * 98} y2="475" stroke="#e2e2e2" strokeWidth="1.5" />
-              <text x={131 + i * 98} y="488" textAnchor="middle" fill="#111110" fontSize="10">{month}</text>
-            </g>
-          ))}
+        <rect x="73" y="49" width="453" height="402" rx="12" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="1.3" />
+        <g fill="white">
+          <text x="100" y="94" fontSize="16">Daily Fiber</text>
+          <text x="499" y="94" textAnchor="end" fontSize="16">Current Weight</text>
+          <text x="100" y="153" fontSize="48" fontWeight="600">32g</text>
+          <text x="499" y="153" textAnchor="end" fontSize="48" fontWeight="600">176 lbs</text>
+          <text x="137" y="200" fontSize="14">from 16 g/day</text>
+          <text x="499" y="200" textAnchor="end" fontSize="14">from 191 lbs</text>
+        </g>
+        <g fill="none" stroke="#17925a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M103 199 L110 192 L117 197 L125 188 M118 188 H125 V195" />
+          <path d="M391 188 L398 195 L405 190 L414 199 M407 199 H414 V192" />
+        </g>
+        <motion.g variants={{ hidden: { clipPath: "inset(0 100% 0 0)" }, show: { clipPath: "inset(0 0% 0 0)", transition: { duration: 1.3, ease, delay: 0.3 } } }}>
+          <path d={`${fiberPath} L300 400 L100 400 Z`} fill={`url(#${fillId}-fiber)`} />
+          <path d={`${weightPath} L499 400 L300 400 Z`} fill={`url(#${fillId}-weight)`} />
+          <path d={fiberPath} fill="none" stroke="white" strokeWidth="1.4" />
+          <path d={weightPath} fill="none" stroke="#17925a" strokeWidth="1.4" />
+          <path d="M300 287 V400" stroke="white" strokeWidth="1" strokeDasharray="2.5 2.5" />
+          <circle cx="300" cy="287" r="3" fill="white" />
+        </motion.g>
+        <g fill="white" fontSize="18">
+          <text x="100" y="418">Fiber Intake</text>
+          <text x="476" y="418" textAnchor="end">Body Weight</text>
+        </g>
+        <g fill="none" stroke="#17925a" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M201 414 L206 409 L210 413 L215 407 M210 407 H215 V412" />
+          <path d="M484 407 L489 412 L493 408 L498 414 M493 414 H498 V409" />
         </g>
       </svg>
     </motion.div>
@@ -324,7 +305,7 @@ const STEP_VIEWS = [Step1, Step2, Step3, Step4, Step5];
 function Card({ i }: { i: number }) {
   const View = STEP_VIEWS[i];
   return (
-    <div className="relative h-[500px] w-[600px] shrink-0 overflow-clip rounded-[12px]" style={{ backgroundImage: "linear-gradient(-31.158deg, rgb(255, 255, 249) 4.4664%, rgb(116, 205, 255) 37.376%, rgb(42, 128, 184) 98.112%)" }}>
+    <div className="relative h-[500px] w-[600px] shrink-0 overflow-clip rounded-[12px]" style={{ backgroundImage: i === 3 ? "linear-gradient(33deg, #2a80b8 0%, #74cdff 67%, #b9e7fa 100%)" : "linear-gradient(-31.158deg, rgb(255, 255, 249) 4.4664%, rgb(116, 205, 255) 37.376%, rgb(42, 128, 184) 98.112%)" }}>
       <AnimatePresence mode="wait">
         <motion.div key={i} className="absolute inset-0" variants={stage} initial="hidden" animate="show" exit="exit">
           <View />

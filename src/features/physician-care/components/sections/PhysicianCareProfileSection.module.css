@@ -1,23 +1,25 @@
 .section {
-  --profile-unit: min(calc(100vw / 1440), calc(100vh / 1080));
-  --profile-unit: min(calc(100vw / 1440), calc(100dvh / 1080));
+  /* Reference canvas: 1920 × 956, with an 840px portrait. */
+  --profile-unit: min(calc(100vw / 1920), calc(100vh / 956));
+  --profile-unit: min(calc(100vw / 1920), calc(100dvh / 956));
   box-sizing: border-box;
   height: 100vh;
   height: 100dvh;
   display: flex;
   align-items: center;
-  padding: calc(120 * var(--profile-unit)) !important;
+  padding: calc(53 * var(--profile-unit)) 40px calc(63 * var(--profile-unit)) !important;
   background: #fff;
   color: #46524b;
 }
 
 .layout {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) calc(576 * var(--profile-unit));
   gap: calc(48 * var(--profile-unit));
   min-height: calc(840 * var(--profile-unit));
   width: 100%;
-  max-width: calc(1200 * var(--profile-unit));
+  /* Match the header's 1440px container and 40px desktop gutters. */
+  max-width: 1360px;
   margin-inline: auto !important;
 }
 
@@ -70,7 +72,7 @@
   position: relative;
   min-height: calc(840 * var(--profile-unit));
   overflow: hidden;
-  background: #d6d6d6;
+  background: #fff;
 }
 
 .imageBox {
@@ -85,7 +87,7 @@
 .nameplate {
   position: absolute;
   left: calc(-29 * var(--profile-unit));
-  top: calc(720 * var(--profile-unit));
+  top: calc(750 * var(--profile-unit));
   padding: calc(32 * var(--profile-unit)) !important;
   border-radius: calc(14 * var(--profile-unit));
   display: flex;
@@ -102,28 +104,24 @@
   white-space: nowrap;
 }
 
-.role {
-  font-size: calc(16 * var(--profile-unit));
-  line-height: normal;
-  opacity: 0.6;
-  white-space: nowrap;
+@media (min-width: 744px) and (max-width: 1366px) and (orientation: portrait) {
+  .section { height: auto; min-height: 100dvh; }
 }
 
-@media (min-width: 744px) and (max-width: 1366px) and (orientation: portrait) {
-  .section { height: auto; }
+@media (min-width: 744px) and (max-width: 1023px) {
+  .section { padding-inline: 20px !important; }
 }
 
 @media (max-width: 743px) {
-  .section { --profile-unit: 1px; padding: 24px 20px !important; }
-  .layout { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 24px; min-height: 0; height: 100%; }
+  .section { --profile-unit: 1px; height: auto; min-height: 100dvh; padding: 24px 20px !important; }
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 24px; min-height: 0; }
   .copy { gap: 16px; }
   .eyebrow { font-size: 22px; }
   .heading em { font-size: clamp(28px, 8vw, 40px); }
   .description, .continuity { font-size: 14px; }
-  .portrait { min-height: 0; }
-  .imageBox { inset: 0; }
+  .portrait { min-height: 0; aspect-ratio: 24 / 35; }
+  .imageBox { inset: 0; width: 100%; transform: none; }
   .image { object-position: center 30%; }
-  .nameplate { left: 0; top: auto; bottom: 0; padding: 16px !important; gap: 8px; }
+  .nameplate { left: -14px; top: auto; bottom: 0; padding: 16px !important; gap: 8px; }
   .name { font-size: clamp(22px, 6vw, 32px); }
-  .role { font-size: 12px; }
 }

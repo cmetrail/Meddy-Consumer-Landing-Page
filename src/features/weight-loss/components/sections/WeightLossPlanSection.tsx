@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import styles from "./WeightLossPlanSection.module.css";
 
-// Figma: desktop node 12593:13162 (1440 x 1361, fixed px, content box 1200 / padding 120), mobile node 12722:9067 (402 x 798).
+// Figma: desktop node 12593:13162 (1440 x 1024, content box 1200 / padding 120).
 // The revolving text ring uses the SVG textPath + <animate startOffset> technique from MedicationOrbitalSection.
 
 const P = "/weight-loss/plan";
@@ -80,12 +80,12 @@ type PhotoGeo = {
   head: Box & { img: [string, string, string, string] };
 };
 const PHOTO_D: PhotoGeo = {
-  w: 931.25,
-  h: 809,
-  body: { l: 167.49, t: 0, w: 581.19, h: 803.94, img: ["115.05%", "-16.38%", "127.32%", "0"] },
-  fade: { l: 155.22, t: 606.54, w: 582.08, h: 202.46, stops: ["20.268%", "92.736%"] },
-  ring: { l: -10, t: 308.39, w: 1027.85, g: RING_D },
-  head: { l: 166.48, t: 0, w: 560.32, h: 465.92, img: ["198.52%", "-16.9%", "132.16%", "0"] },
+  w: 568,
+  h: 528.305,
+  body: { l: 101.54, t: 0, w: 382, h: 525, img: ["115.05%", "-16.38%", "127.32%", "0"] },
+  fade: { l: 94.67, t: 396.12, w: 355.028, h: 132.184, stops: ["20.268%", "92.736%"] },
+  ring: { l: -14.285, t: 208.174, w: 625.319, g: RING_D },
+  head: { l: 101.54, t: 0, w: 368, h: 305, img: ["198.52%", "-16.9%", "132.16%", "0"] },
 };
 const PHOTO_M: PhotoGeo = {
   w: 362,
@@ -128,31 +128,11 @@ function PhotoStack({ ringId, geo }: { ringId: string; geo: PhotoGeo }) {
   );
 }
 
-const PLAN_ITEMS = [
-  {
-    icon: "icon-data.svg", label: "Your data", title: "It starts with your whole picture.",
-    description: "Bring your nutrition, exercise, sleep, medications, labs, and weight together. See how your daily habits connect to your progress.",
-    tags: ["Nutrition", "Exercise", "Sleep", "Medications", "Labs", "Weight"],
-    outcome: "Your health data, connected.",
-  },
-  {
-    icon: "icon-physician.svg", label: "Your physician", title: "Shared data. Personal care.",
-    description: "Your physician reviews the same picture you see, alongside your symptoms and health history, to understand what is moving your weight.",
-    tags: ["Health history", "Symptoms", "Connected insights"],
-    outcome: "A physician who sees the whole you.",
-  },
-  {
-    icon: "icon-plan.svg", label: "Your plan", title: "A plan built around you.",
-    description: "Your physician creates a plan around your goals and health, connecting nutrition, exercise, testing, and medication when appropriate.",
-    tags: ["Nutrition", "Exercise", "Testing", "Medications", "Follow-up"],
-    outcome: "Clear next steps, made personal.",
-  },
-  {
-    icon: "icon-response.svg", label: "Your progress", title: "Measure. Learn. Adjust.",
-    description: "Follow changes in your weight, habits, and health markers. Your physician reviews your response and adjusts your plan as your needs change.",
-    tags: ["Weight trends", "Health markers", "Plan adjustments"],
-    outcome: "Your progress informs what comes next.",
-  },
+const PLAN_STEPS = [
+  { title: "Your Data", icon: "icon-data.svg", tags: ["Nutrition", "Exercise", "Sleep", "Medications", "Labs", "Weight"] },
+  { title: "Your Physician", icon: "icon-physician.svg", tags: ["Health history", "Symptoms", "Connected insights"] },
+  { title: "Your Plan", icon: "icon-plan.svg", tags: ["Nutrition", "Exercise", "Testing", "Medications", "Follow-up"] },
+  { title: "Your Progress", icon: "icon-response.svg", tags: ["Weight trends", "Health markers", "Plan adjustments"] },
 ];
 
 export default function WeightLossPlanSection() {
@@ -164,12 +144,13 @@ export default function WeightLossPlanSection() {
     if (!root) return;
     const media = gsap.matchMedia();
     media.add("(min-width: 1024px) and (min-height: 650px) and (prefers-reduced-motion: no-preference)", () => {
+      const update = (self: ScrollTrigger) => setActive(Math.min(PLAN_STEPS.length - 1, Math.floor(self.progress * PLAN_STEPS.length)));
       const trigger = ScrollTrigger.create({
         trigger: root,
         start: "top top",
         end: "bottom bottom",
-        onUpdate: (self) => setActive(Math.min(3, Math.floor(self.progress * 4))),
-        onRefresh: (self) => setActive(Math.min(3, Math.floor(self.progress * 4))),
+        onUpdate: update,
+        onRefresh: update,
       });
       return () => trigger.kill();
     });
@@ -179,36 +160,39 @@ export default function WeightLossPlanSection() {
   return (
     <section ref={sectionRef} id="weight-loss-plan" className={styles.section} aria-labelledby="weight-loss-plan-heading" style={{ background: BG }}>
       <div className={styles.sticky}>
-        <div className={styles.inner}>
-          <header className={styles.heading}>
-            <p className={styles.eyebrow}>CONNECTED DATA. CONTINUOUS CARE.</p>
-            <h2 id="weight-loss-plan-heading">A weight-loss plan that changes when you do.</h2>
-            <p className={`comprehensive-serif ${styles.subtitle}`}>Your physician sees the same data you do.</p>
-          </header>
+      <div className={styles.inner}>
+        <header className={styles.heading}>
+          <h2 id="weight-loss-plan-heading">A weight-loss plan that changes when you do.</h2>
+          <p className={`comprehensive-serif ${styles.subtitle}`}>Your physician sees the same data you do.</p>
+        </header>
 
-          <div className={styles.story}>
-            <div className={styles.visual}>
-              <div className={styles.photoDesktop}><PhotoStack ringId="wl-plan-ring-d" geo={PHOTO_D} /></div>
-              <div className={styles.photoMobile}><PhotoStack ringId="wl-plan-ring-m" geo={PHOTO_M} /></div>
-              <div className={styles.visualCaption}><span /> Your data and your care, always connected.</div>
+        <div className={styles.story}>
+          <div className={styles.visual}>
+            <div className={styles.photoDesktop}><PhotoStack ringId="wl-plan-ring-d" geo={PHOTO_D} /></div>
+            <div className={styles.photoMobile}><PhotoStack ringId="wl-plan-ring-m" geo={PHOTO_M} /></div>
+          </div>
+          <div className={styles.panels}>
+          {PLAN_STEPS.map((step, index) => (
+          <article key={step.title} className={styles.panel} data-active={active === index} aria-labelledby={`weight-loss-step-${index}`}>
+            <div className={styles.details}>
+              <p className={styles.stepCount}>0{index + 1} /04</p>
+              <div className={styles.stage}>
+                <Image src={`${P}/${step.icon}`} alt="" width={72} height={72} unoptimized />
+                <h3 id={`weight-loss-step-${index}`}>{step.title}</h3>
+              </div>
+              <ul className={styles.tags} aria-label="Connected health data">
+                {step.tags.map(tag => <li key={tag}>{tag}</li>)}
+              </ul>
             </div>
-            <div className={styles.panels}>
-              {PLAN_ITEMS.map((item, index) => (
-                <article key={item.label} id={`weight-loss-step-${index}`} className={styles.panel} data-active={index === active}>
-                  <div className={styles.stepTop}>
-                    <Image src={`${P}/${item.icon}`} alt="" width={96} height={96} unoptimized />
-                    <span className={styles.stepCount}>0{index + 1} <span>/ 04</span></span>
-                  </div>
-                  <p className={styles.stageLabel}>{item.label}</p>
-                  <h3>{item.title}</h3>
-                  <p className={styles.description}>{item.description}</p>
-                  <div className={styles.tags}>{item.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
-                  <p className={styles.outcome}><span aria-hidden="true">↗</span>{item.outcome}</p>
-                </article>
-              ))}
-            </div>
+            <ul className={styles.bullets}>
+              <li>No generic plan.</li>
+              <li>No waiting months to find out whether it&apos;s working.</li>
+            </ul>
+          </article>
+          ))}
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

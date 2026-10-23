@@ -17,11 +17,10 @@ export default function PhysicianCareProfileSection() {
         </div>
         <figure data-pc-profile-portrait className={styles.portrait}>
           <div className={styles.imageBox}>
-            <Image src="/physician-care/profile/sameer-aggarwal.png" alt="Dr. Sameer Aggarwal, Chief Medical Officer at Meddy" fill sizes="(max-width: 767px) calc(100vw - 40px), 40vw" unoptimized className={styles.image} />
+            <Image src="/physician-care/profile/sameer-aggarwal.png" alt="Dr. Sameer Aggarwal, Chief Medical Officer at Meddy" fill sizes="(max-width: 743px) calc(100vw - 40px), 30vw" unoptimized className={styles.image} />
           </div>
           <figcaption data-pc-profile-name className={styles.nameplate}>
             <p className={styles.name}>Sameer <span>Aggarwal, MD</span></p>
-            <p className={styles.role}>Chief Medical Officer, Meddy</p>
           </figcaption>
         </figure>
       </div>
