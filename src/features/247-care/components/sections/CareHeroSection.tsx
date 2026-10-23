@@ -167,6 +167,21 @@ export default function CareHeroSection() {
         >
           <ChatMockup />
         </div>
+
+        <p
+          data-care-disclaimer
+          className={`${motionStyles.disclaimer} mt-[24px] max-w-[549px] text-[14px] italic leading-[1.5] text-[#DFDFDF]`}
+        >
+          Your physician replies to clinical messages during business hours.
+          After hour messages are replied to within 1 business day. For
+          emergencies,{" "}
+          <a
+            href="tel:911"
+            className="font-bold underline transition-colors duration-200 hover:text-white"
+          >
+            call 911.
+          </a>
+        </p>
       </div>
       <div className={motionStyles.mobileChat}>
         <ChatMockup />

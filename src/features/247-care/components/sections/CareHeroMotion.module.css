@@ -28,6 +28,7 @@
   .mobileChat [data-care-message] span:first-child { font-size: 3cqw !important; line-height: 1.4 !important; }
   .mobileChat [data-care-message] span:last-child { font-size: 2.08cqw !important; line-height: 1.2 !important; }
   .mobileChat [data-care-message] svg { width: 1.5cqw !important; height: 1.5cqw !important; }
+  .disclaimer { position: absolute !important; top: calc(475 * var(--care-u)) !important; left: calc(16 * var(--care-u)) !important; right: calc(16 * var(--care-u)) !important; margin-top: 0 !important; max-width: none !important; font-size: calc(10 * var(--care-u)) !important; line-height: 1.5 !important; }
 }
 }
 

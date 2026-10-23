@@ -27,7 +27,8 @@ export function useCareHeroMotion() {
         y: 10, duration: .5, stagger: .06, clearProps: "transform",
       }, 0)
         .from(select("[data-care-description]"), { y: 8, duration: .45, clearProps: "transform" }, .06)
-        .from(select("[data-care-cta]"), { y: 6, duration: .4, clearProps: "transform" }, .1);
+        .from(select("[data-care-cta]"), { y: 6, duration: .4, clearProps: "transform" }, .1)
+        .from(select("[data-care-disclaimer]"), { autoAlpha: 0, y: 8, duration: .5, ease: "power1.out", clearProps: "opacity,visibility,transform" }, .16);
 
       // Keep the LCP image visible while it loads; animate only a small translation.
       intro.from(select("[data-care-portrait]"), {
