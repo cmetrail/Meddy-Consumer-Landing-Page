@@ -1,6 +1,15 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
 
+// Truthful per-route last-modified dates (sourced from git history of each
+// page file). Update a route's date here whenever its content actually changes;
+// never use `new Date()` (that lies by claiming every page changed on each build).
+const LAST_MODIFIED: Record<string, string> = {
+  "/": "2026-10-23",
+};
+
+const DEFAULT_LAST_MODIFIED = "2026-10-20";
+
 const ROUTES = [
   "/",
   "/why-meddy",
@@ -29,7 +38,7 @@ const ROUTES = [
 export default function sitemap(): MetadataRoute.Sitemap {
   return ROUTES.map((route) => ({
     url: `${SITE_URL}${route}`,
-    lastModified: new Date(),
+    lastModified: LAST_MODIFIED[route] ?? DEFAULT_LAST_MODIFIED,
     changeFrequency: route === "/" ? "weekly" : "monthly",
     priority: route === "/" ? 1 : 0.8,
   }));

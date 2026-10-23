@@ -57,7 +57,17 @@ export function buildMetadata({
       description,
       images: [TWITTER_IMAGE],
     },
-    robots: { index: true, follow: true },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-snippet": -1,
+        "max-image-preview": "large",
+        "max-video-preview": -1,
+      },
+    },
   };
 }
 
@@ -105,6 +115,8 @@ export function webPageLd(
     inLanguage: "en-US",
     isPartOf: { "@id": `${SITE_URL}/#website` },
     about: { "@id": `${SITE_URL}/#organization` },
+    publisher: { "@id": `${SITE_URL}/#organization` },
+    reviewedBy: { "@id": `${SITE_URL}/#physician` },
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: breadcrumbFromPath(path),
@@ -177,6 +189,17 @@ export const SITE_GRAPH_LD = {
       telephone: PHONE,
       address: ADDRESS,
       areaServed: "US",
+      knowsAbout: [
+        "primary care",
+        "preventive medicine",
+        "nutrition",
+        "fitness",
+        "sleep",
+        "biomarkers",
+        "longevity",
+        "weight management",
+        "telehealth",
+      ],
     },
     {
       "@type": "MedicalClinic",
@@ -192,9 +215,23 @@ export const SITE_GRAPH_LD = {
       "@type": "Physician",
       "@id": `${SITE_URL}/#physician`,
       name: PHYSICIAN_NAME,
+      url: `${SITE_URL}/physician-care`,
       medicalSpecialty: "InternalMedicine",
       jobTitle: "Physician",
       worksFor: { "@id": `${SITE_URL}/#clinic` },
+      telephone: PHONE,
+      email: EMAIL,
+      address: ADDRESS,
+      knowsAbout: [
+        "primary care",
+        "preventive medicine",
+        "nutrition",
+        "fitness",
+        "sleep",
+        "biomarkers",
+        "longevity",
+        "weight management",
+      ],
     },
     {
       "@type": "WebSite",

@@ -3,38 +3,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
+import { FAQS } from "../../faqs";
 
 // Figma: desktop node 12593:13307 "Desktop - 431" (1440 x 877), cream bg #FFFEF2.
 const ease = [0.22, 1, 0.36, 1] as const;
-
-type Faq = { q: string; a: string };
-
-const FAQS: Faq[] = [
-  {
-    q: "Do I have to count calories?",
-    a: "No. Meddy brings your nutrition into one place and shows your energy balance, so you can understand your progress without logging every single calorie.",
-  },
-  {
-    q: "Does Meddy create a nutrition plan?",
-    a: "Yes. Meddy builds a nutrition plan around your goals, preferences, and metabolic health, and adjusts it as you make progress.",
-  },
-  {
-    q: "Can Meddy track whether my metabolic health is improving?",
-    a: "Yes. Meddy tracks metabolic markers like glucose, A1C, and lipids alongside your weight and activity, so you can see your metabolic health change over time.",
-  },
-  {
-    q: "Does Meddy offer weight-loss medications?",
-    a: "Yes. When clinically appropriate, your Meddy physician can direct weight-loss medication alongside nutrition, activity, and sleep.",
-  },
-  {
-    q: "What if my weight stops changing?",
-    a: "Meddy helps you look beyond the scale. If your weight plateaus, your care team can review your energy balance, activity, sleep, and metabolic markers and adjust your plan.",
-  },
-  {
-    q: "Can my physician see my nutrition and workouts?",
-    a: "Yes. Your physician can see your nutrition, activity, sleep, and lab data alongside the rest of your health history, so it can inform your care.",
-  },
-];
 
 export default function WeightLossFaqSection() {
   const [open, setOpen] = useState<number>(0);
