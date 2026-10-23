@@ -93,10 +93,10 @@ export default function PhysicianRaySection() {
         </div>
 
         <div data-ray-badges className={styles.badges}>
-          {TRUST_BADGES.map(({ Icon, text, boldPart }) => (
+          {TRUST_BADGES.map(({ Icon, text }) => (
             <div key={text} className={styles.badge}>
               <Icon aria-hidden="true" strokeWidth={1.5} />
-              <span>{boldPart && <strong>{boldPart}</strong>}{text}</span>
+              <span>{text}</span>
             </div>
           ))}
         </div>
