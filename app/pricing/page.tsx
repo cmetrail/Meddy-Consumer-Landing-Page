@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { PricingPage } from "@/features/pricing/routes/pricing";
 import { buildMetadata, JsonLd, webPageLd, membershipPlansLd } from "@/lib/seo";
 
-const TITLE = "Pricing — Choose Your Level of Physician Support";
+const TITLE = "Membership Pricing: Plans From $59/month";
 const DESCRIPTION =
-  "Three levels of physician-led support starting at $99/month. Choose Meddy, Meddy Care, or Meddy Complete to match your needs.";
+  "Self-pay plans from $99/month and Medicare plans from $59/month. Choose Meddy, Meddy Care, or Meddy Complete for the level of physician support you need.";
 const PATH = "/pricing";
 
 export const metadata: Metadata = buildMetadata({

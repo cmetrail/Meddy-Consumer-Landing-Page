@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { HowItWorksPage } from "@/features/how-it-works/routes/how-it-works";
 import { buildMetadata, JsonLd, webPageLd } from "@/lib/seo";
 
-const TITLE = "How Meddy Works — Understand Your Health, Not Just Your Data";
+const TITLE = "How Meddy Works: Physician-Guided Care";
 const DESCRIPTION =
   "One place to track your everyday health. Meddy surfaces what actually matters, gives you a physician-built plan, and shows measurable progress over time.";
 const PATH = "/how-it-works";

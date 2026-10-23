@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { WhyMeddyPage } from "@/features/why-meddy/routes/why-meddy";
 import { buildMetadata, JsonLd, webPageLd } from "@/lib/seo";
 
-const TITLE = "Why Meddy — Healthcare Built Around Your Everyday Life";
+const TITLE = "Why Meddy: Care Built Around Your Life";
 const DESCRIPTION =
-  "Healthcare wasn't designed to see everyday life. Meddy gives your physician the complete, connected picture of your habits for less fragmented, better-informed care.";
+  "Healthcare wasn't designed to see everyday life. Meddy gives your physician the connected picture of your habits for less fragmented, better-informed care.";
 const PATH = "/why-meddy";
 
 export const metadata: Metadata = buildMetadata({

@@ -3,7 +3,7 @@ import { NutritionPage } from "@/features/nutrition/routes/nutrition";
 import { buildMetadata, JsonLd, webPageLd, faqLd } from "@/lib/seo";
 import { FAQS } from "@/features/nutrition/faqs";
 
-const TITLE = "Nutrition — See What You Eat Is Doing to Your Body";
+const TITLE = "Nutrition Tracking: Macros, Vitamins & Labs";
 const DESCRIPTION =
   "Track calories, macros, vitamins, minerals, and hydration. See how changes in what you eat connect to changes in your body over time.";
 const PATH = "/nutrition";

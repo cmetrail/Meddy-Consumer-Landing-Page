@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { HomePage } from "@/features/home/routes/home";
 import { buildMetadata, JsonLd, webPageLd } from "@/lib/seo";
 
-const TITLE = "Meddy Health — Physician-Guided Primary Care";
+const TITLE = "Physician-Guided Primary Care in New York | Meddy Health";
 const DESCRIPTION =
   "Meddy Health is physician-guided primary care built around your nutrition, workouts, sleep, and labs. Now accepting our first 500 patients.";
 const PATH = "/";

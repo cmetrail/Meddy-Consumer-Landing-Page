@@ -3,7 +3,7 @@ import { WearablesPage } from "@/features/wearables/routes/wearables";
 import { buildMetadata, JsonLd, webPageLd, faqLd } from "@/lib/seo";
 import { FAQS } from "@/features/wearables/faqs";
 
-const TITLE = "Wearables — Your Health Data, Seen by Your Physician";
+const TITLE = "Apple Watch, Oura & Fitbit Health Data";
 const DESCRIPTION =
   "Connect your Apple Watch, Oura, Fitbit, and more to bring activity, sleep, heart rate, and recovery into one connected picture of your health.";
 const PATH = "/wearables";

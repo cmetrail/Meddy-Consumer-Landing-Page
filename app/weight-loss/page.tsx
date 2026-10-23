@@ -3,7 +3,7 @@ import { WeightLossPage } from "@/features/weight-loss/routes/weight-loss";
 import { buildMetadata, JsonLd, webPageLd, faqLd } from "@/lib/seo";
 import { FAQS } from "@/features/weight-loss/faqs";
 
-const TITLE = "Weight Loss — Understand What's Moving Your Weight";
+const TITLE = "Weight Management With Physician Guidance";
 const DESCRIPTION =
   "Weight loss is more than a number on the scale. Meddy connects your nutrition, activity, sleep, medications, and biomarkers so you know what's working.";
 const PATH = "/weight-loss";
