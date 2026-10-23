@@ -25,6 +25,7 @@ type BuildMetadataInput = {
   description: string;
   path: string;
   keywords?: string[];
+  titleSuffix?: string;
 };
 
 export function buildMetadata({
@@ -32,9 +33,10 @@ export function buildMetadata({
   description,
   path,
   keywords,
+  titleSuffix,
 }: BuildMetadataInput): Metadata {
   const url = `${SITE_URL}${path}`;
-  const fullTitle = `${title} | Meddy Health`;
+  const fullTitle = `${title}${titleSuffix ?? ` | ${SITE_NAME}`}`;
 
   return {
     title: fullTitle,

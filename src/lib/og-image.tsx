@@ -1,5 +1,26 @@
 import { ImageResponse } from "next/og";
 
+const BRAND_GREEN = "#17925a";
+const MINT = "#6ee7a0";
+
+function LogoMark() {
+  return (
+    <svg
+      width="44"
+      height="28"
+      viewBox="0 0 44 28"
+      fill="none"
+      style={{ display: "block" }}
+    >
+      <rect x="0" y="6.47461" width="8.82074" height="20.7238" fill="white" />
+      <path d="M17.5375 0H26.5657L9.1318 27.2H0.103516L17.5375 0Z" fill="white" />
+      <path d="M34.971 0H43.9993L26.5654 27.2H17.5371L34.971 0Z" fill="white" />
+      <rect x="17.5371" width="9.02829" height="27.2" fill="white" />
+      <rect x="34.9727" width="9.02829" height="27.2" fill="white" />
+    </svg>
+  );
+}
+
 export function renderOgImage() {
   return new ImageResponse(
     (
@@ -27,19 +48,16 @@ export function renderOgImage() {
         >
           <div
             style={{
-              width: "52px",
-              height: "52px",
-              borderRadius: "14px",
-              background: "#17925a",
+              width: "56px",
+              height: "56px",
+              borderRadius: "16px",
+              background: BRAND_GREEN,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "36px",
-              fontWeight: 700,
-              color: "#09090b",
             }}
           >
-            +
+            <LogoMark />
           </div>
           <div style={{ fontSize: "30px", fontWeight: 700, letterSpacing: "-0.01em" }}>
             Meddy Health
@@ -82,7 +100,7 @@ export function renderOgImage() {
             style={{
               fontSize: "24px",
               fontWeight: 600,
-              color: "#6ee7a0",
+              color: MINT,
               padding: "10px 22px",
               borderRadius: "999px",
               border: "2px solid rgba(110,231,160,0.4)",
