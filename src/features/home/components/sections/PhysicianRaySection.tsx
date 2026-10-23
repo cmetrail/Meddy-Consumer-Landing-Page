@@ -17,7 +17,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 const TRUST_BADGES = [
   { Icon: ShieldCheck, text: "Board-certified physician" },
   { Icon: Clock, text: "First consultation free" },
-  { Icon: GlobeLock, boldPart: "HIPAA", text: " compliant" },
+  { Icon: GlobeLock, text: "Mobile app included" },
   { Icon: ClockCheck, text: "Available in New York" },
 ];
 

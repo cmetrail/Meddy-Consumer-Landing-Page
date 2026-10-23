@@ -23,7 +23,7 @@ const selfPayPlans: Plan[] = [
     "description": "Personalized guidance to understand your health, improve your habits, and optimize your performance.",
     "price": "99",
     "features": [
-      "24/7 physician messaging",
+      "Unlimited physician messaging",
       "Nutrition & Fitness guidance",
       "Biomarker tracking",
       "Personalized health adjustments"
@@ -36,7 +36,7 @@ const selfPayPlans: Plan[] = [
     "description": "Ongoing physician-led care with regular visits, lab testing, and personalized recommendations.",
     "price": "169",
     "features": [
-      "24/7 physician messaging",
+      "Unlimited physician messaging",
       "Nutrition & Fitness guidance",
       "Biomarker tracking",
       "Personalized health adjustments",
@@ -51,7 +51,7 @@ const selfPayPlans: Plan[] = [
     "description": "High-touch physician care with frequent visits, comprehensive evaluation, and health optimization.",
     "price": "249",
     "features": [
-      "24/7 physician messaging",
+      "Unlimited physician messaging",
       "Nutrition & Fitness guidance",
       "Biomarker tracking",
       "Personalized health adjustments",
