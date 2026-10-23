@@ -88,3 +88,35 @@
     visibility: visible !important;
   }
 }
+
+/* Keep the completed graph behind the takeaway in one stable stage. */
+.storyStage { position: relative; }
+.summaryEyebrow { color: #8dc7a5; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px !important; }
+.scroll[data-motion-story] .sticky { min-height: 100svh; }
+.scroll[data-motion-story] .storyStage { display: grid; align-items: center; }
+.scroll[data-motion-story] .chart,
+.scroll[data-motion-story] .summary { grid-area: 1 / 1; }
+.scroll[data-motion-story] .chart { z-index: 0; pointer-events: none; }
+.scroll[data-variant][data-motion-story] .summary { position: relative; z-index: 1; background: radial-gradient(ellipse at center, #17231de6 0%, #17231db3 55%, #17231d00 78%); text-shadow: 0 2px 12px #17231d; }
+.scroll[data-variant] .chartMetrics { display: none; }
+.scroll[data-variant] .summary { width: min(100%, 840px); padding: 32px 20px !important; margin: 0 auto !important; background: transparent; text-align: center; }
+.scroll[data-variant] .summary h4 { display: block; max-width: 700px; margin: 0 auto !important; font-size: clamp(22px, 2.6cqw, 36px); line-height: 1.25; font-weight: 500; text-wrap: balance; }
+.scroll[data-variant] .summary .metrics { display: grid; gap: 16px; margin: 28px 0 !important; }
+.scroll[data-variant] .metrics > div { padding: 20px 16px !important; border-radius: 16px; border: 1px solid; }
+.scroll[data-variant] .metrics > div[data-series="driver"] { background: #61cf930d; border-color: #61cf9340; }
+.scroll[data-variant] .metrics > div[data-series="outcome"] { background: #a4d5f70d; border-color: #a4d5f740; }
+.driverAccent { color: #61cf93; }
+.outcomeAccent { color: #a4d5f7; }
+.scroll[data-variant] .metrics .white { color: #a4d5f7; }
+.scroll[data-variant] .metrics .metricLabel { font-size: clamp(12px, 1.2cqw, 16px); }
+.scroll[data-variant] .metrics .green,
+.scroll[data-variant] .metrics .white { font-size: clamp(30px, 4.5cqw, 58px); letter-spacing: -0.04em; margin: 8px 0 !important; }
+.scroll[data-variant] .metrics .green { color: #61cf93; }
+.scroll[data-variant] .metrics .range { color: #a6b7ad; font-size: clamp(12px, 1.2cqw, 16px); }
+.scroll[data-variant] .description { max-width: 650px; margin: 0 auto !important; font-size: clamp(14px, 1.25cqw, 17px); line-height: 1.6; text-wrap: pretty; }
+@media (max-width: 767px) {
+  .scroll[data-motion-story] .storyStage { min-height: 380px; }
+  .scroll[data-variant] .summary { padding: 24px 0 !important; }
+  .scroll[data-variant] .chart { margin-top: 0 !important; }
+  .scroll[data-variant] .metrics > div { padding: 16px 8px !important; }
+}

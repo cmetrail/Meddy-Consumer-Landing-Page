@@ -1,277 +1,183 @@
+"use client";
+
+import { useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { CircleCheckBig, Crown } from "lucide-react";
 import styles from "./Pricing.module.css";
 
-const LIGHT_GREEN = "#8ABE85";
-const MINT = "#B9FFB3";
-const GRAY = "#DADADA";
-const WHITE = "#FFFFFF";
-
-type PlanCardProps = {
-  eyebrow: string;
-  eyebrowColor: string;
-  title: string;
-  titleColor: string;
-  titleSize: number;
-  description: string;
-  descriptionColor: string;
-  planName?: string;
-  price?: string;
-  period?: string;
-  priceColor?: string;
-  subheader?: string;
-  subheaderSize?: number;
-  features: string[];
-  featureColor: string;
-  checkColor: string;
+type Plan = {
   variant: "free" | "care" | "complete";
-  badge?: string;
+  name: string;
+  tagline: string;
+  description: string;
+  price: string;
+  subheader?: string;
+  features: string[];
 };
 
-function PlanCard({
-  eyebrow,
-  eyebrowColor,
-  title,
-  titleColor,
-  titleSize,
-  description,
-  descriptionColor,
-  planName,
-  price,
-  period,
-  priceColor = WHITE,
-  subheader,
-  subheaderSize = 16,
-  features,
-  featureColor,
-  checkColor,
-  variant,
-  badge,
-}: PlanCardProps) {
-  const cardClass =
-    variant === "complete"
-      ? "bg-[#17925A]"
-      : variant === "care"
-        ? "border-[3px] border-[#17925A] bg-[#CDCDCD]/20 backdrop-blur-xl"
-        : "bg-[#CDCDCD]/20 backdrop-blur-xl";
+const selfPayPlans: Plan[] = [
+  {
+    "variant": "free",
+    "name": "Meddy",
+    "tagline": "Optimize your health.",
+    "description": "Personalized guidance to understand your health, improve your habits, and optimize your performance.",
+    "price": "99",
+    "features": [
+      "24/7 physician messaging",
+      "Nutrition & Fitness guidance",
+      "Biomarker tracking",
+      "Personalized health adjustments"
+    ]
+  },
+  {
+    "variant": "care",
+    "name": "Meddy Care",
+    "tagline": "Your personal physician.",
+    "description": "Ongoing physician-led care with regular visits, lab testing, and personalized recommendations.",
+    "price": "169",
+    "features": [
+      "24/7 physician messaging",
+      "Nutrition & Fitness guidance",
+      "Biomarker tracking",
+      "Personalized health adjustments",
+      "Monthly physician visit",
+      "Videoconferencing"
+    ]
+  },
+  {
+    "variant": "complete",
+    "name": "Meddy Complete",
+    "tagline": "Your health, fully managed.",
+    "description": "High-touch physician care with frequent visits, comprehensive evaluation, and health optimization.",
+    "price": "249",
+    "features": [
+      "24/7 physician messaging",
+      "Nutrition & Fitness guidance",
+      "Biomarker tracking",
+      "Personalized health adjustments",
+      "Biweekly physician visits",
+      "Videoconferencing",
+      "Physician built weekly fitness plan",
+      "Continuous care coordination"
+    ]
+  }
+];
 
-  const btnClass =
-    variant === "complete"
-      ? "bg-white text-[#17925A] shadow-[0px_3px_3px_rgba(0,0,0,0.25)] hover:bg-[#F4F4F5]"
-      : variant === "care"
-        ? "bg-[#17925A] text-white shadow-[0px_3px_3px_rgba(0,0,0,0.25)] hover:bg-[#1BA867]"
-        : "border border-white text-white hover:bg-white/10";
+const medicarePlans: Plan[] = [
+  {
+    "variant": "free",
+    "name": "Meddy",
+    "tagline": "Understand your health.",
+    "description": "Track your health, understand your progress, and stay connected to your care.",
+    "price": "59",
+    "subheader": "Your membership includes:",
+    "features": [
+      "Personal health dashboard",
+      "Wearable and device syncing",
+      "Biomarker tracking and Health Impact insights",
+      "Nutrition, activity, and sleep tracking",
+      "Video-guided exercise library and workout tracking",
+      "Personalized health goals and reminders",
+      "Health trends and progress reports"
+    ]
+  },
+  {
+    "variant": "care",
+    "name": "Meddy Care",
+    "tagline": "Your personal physician.",
+    "description": "Ongoing physician-led care with regular visits, lab testing, and personalized recommendations.",
+    "price": "79",
+    "subheader": "A personalized plan for better health:",
+    "features": [
+      "Everything in Meddy, plus:",
+      "Personalized workout programs",
+      "Monthly in-app progress reviews"
+    ]
+  },
+  {
+    "variant": "complete",
+    "name": "Meddy Complete",
+    "tagline": "More structure. More personalized guidance.",
+    "description": "Stay on track with weekly fitness programming and priority scheduling.",
+    "price": "99",
+    "subheader": "Your membership includes:",
+    "features": [
+      "Everything in Meddy care, plus:",
+      "Progress reviews every 2 weeks",
+      "Weekly physician-built fitness plans",
+      "Priority appointment scheduling"
+    ]
+  }
+];
+
+function PlanCard({ plan, medicare }: { plan: Plan; medicare: boolean }) {
+  const icons = medicare || plan.variant === "free"
+    ? ["9e8b5", "4a8f9"]
+    : plan.variant === "care"
+      ? ["b1c5d", "c35bc", "b1c5d", "ac77d", "ac77d", "c35bc"]
+      : ["c35bc", "c35bc", "c35bc", "c35bc", "ac77d", "c35bc", "c35bc", "c35bc"];
 
   return (
-    <div className={`${styles.card} ${styles[variant]} relative flex h-full flex-col p-6 lg:p-7 ${cardClass}`}>
-      {badge && (
-        <span className={`${styles.badge} absolute -top-3.5 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 bg-[#17925A] px-3.5 py-1 text-[15px] font-medium leading-[100%] text-white`}>
-          <Crown size={22} /> {badge}
+    <article className={`${styles.card} ${styles[plan.variant]}`} aria-label={plan.name}>
+      {!medicare && plan.variant === "care" && (
+        <span className={styles.badge}>
+          <Image src="/home/pricing/47e2a.svg" width={20} height={20} alt="" />
+          Most popular
         </span>
       )}
-
-      <p
-        className={`${styles.name} text-[32px] font-medium uppercase leading-[100%]`}
-        style={{ color: eyebrowColor }}
-      >
-        {eyebrow}
-      </p>
-
-      <h3
-        className={`${styles.tagline} mt-1 font-bold leading-[100%]`}
-        style={{ color: titleColor, fontSize: titleSize }}
-      >
-        {title}
-      </h3>
-
-      <p
-        className={`${styles.description} mt-4 text-[14px] leading-[1.4]`}
-        style={{ color: descriptionColor }}
-      >
-        {description}
-      </p>
-
-      <div className={`${styles.price} ${planName ? "mt-2" : "mt-4"}`}>
-        {planName ? (
-          <p
-            className="text-[36px] lg:text-[48px] font-semibold uppercase leading-[100%]"
-            style={{ color: titleColor }}
-          >
-            {planName}
-          </p>
-        ) : (
-          <div className="flex items-baseline gap-1.5">
-            <span
-              className="text-[28px] lg:text-[36px] font-semibold uppercase leading-[100%]"
-              style={{ color: priceColor }}
-            >
-              ${price}
-            </span>
-            <span
-              className="text-[18px] font-normal leading-[100%]"
-              style={{ color: WHITE }}
-            >
-              {period}
-            </span>
-          </div>
-        )}
-      </div>
-
-      {subheader && (
-        <p
-          className="mt-5 font-semibold leading-[100%]"
-          style={{ color: WHITE, fontSize: subheaderSize }}
-        >
-          {subheader}
-        </p>
-      )}
-
-      <ul
-        className={`${styles.features} flex flex-1 flex-col gap-[14px] ${subheader ? "mt-[22px]" : "mt-[30px]"}`}
-      >
-        {features.map((f) => (
-          <li key={f} className="flex items-start gap-3">
-            <CircleCheckBig
-              size={18}
-              className="mt-[2px] shrink-0"
-              style={{ color: checkColor }}
-              strokeWidth={2}
-            />
-            <span
-              className="text-[14px] leading-[1.3]"
-              style={{ color: featureColor }}
-            >
-              {f}
-            </span>
-          </li>
-        ))}
+      <h3 className={styles.name}>{plan.name}</h3>
+      <p className={styles.tagline}>{plan.tagline}</p>
+      <p className={styles.description}>{plan.description}</p>
+      <p className={styles.price}><span>${plan.price}</span> <span>/month</span></p>
+      {plan.subheader && <p className={styles.subheader}>{plan.subheader}</p>}
+      <ul className={styles.features}>
+        {plan.features.map((feature, index) => {
+          const large = medicare || plan.variant === "free";
+          return (
+            <li key={feature}>
+              <span className={styles.check}>
+                <Image src={`/home/pricing/${icons[index % icons.length]}.svg`} width={large ? 15.7953 : 13.3285} height={large ? 15.7953 : 13.3273} alt="" />
+              </span>
+              <span>{feature}</span>
+            </li>
+          );
+        })}
       </ul>
-
-      <Link
-        href="/book-consultation"
-        className={`${styles.button} mt-8 flex h-[50px] w-full items-center justify-center rounded-[7px] text-[18px] font-semibold transition-colors duration-200 ${btnClass}`}
-      >
-        Book Your Free Consultation
-      </Link>
-    </div>
+      <Link href="/book-consultation" className={styles.button}>Book your Free Consultation</Link>
+    </article>
   );
 }
 
 export function Pricing() {
+  const [payment, setPayment] = useState<"self-pay" | "medicare">("self-pay");
+  const plansRef = useRef<HTMLDivElement>(null);
+  const medicare = payment === "medicare";
+
   return (
     <>
-      {/* Header */}
-      <div
-        data-pricing-head
-        className={`${styles.heading} flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between`}
-      >
+      <div data-pricing-head className={styles.heading}>
         <div>
-          <p
-            data-line
-            className="text-[#F4F4F5] mb-3.75  uppercase leading-[100%] text-[20px] lg:text-[24px] font-medium"
-          >
-            Pricing
-          </p>
-          <p
-            data-line
-            className="text-white font-semibold leading-[100%] text-[32px] sm:text-[40px] lg:text-[48px] "
-          >
-            Care designed
-          </p>
-          <p
-            data-line
-            className="text-white font-semibold leading-[100%] text-[48px] sm:text-[64px] lg:text-[96px] "
-          >
-            Around you
-          </p>
+          <p data-line>Pricing</p>
+          <h2>
+            <span data-line>Care designed</span>
+            <em data-line>Around you</em>
+          </h2>
         </div>
-        <p
-          data-line
-          className="text-white lg:pb-4 max-w-135.5 lg:text-right tracking-[2%] leading-[1.5] lg:leading-[100%] text-[16px] sm:text-[20px] lg:text-[24px] whitespace-pre-line"
-        >
-          {
-            "Simple, transparent plans,\nphysician-guided care that adapts to your life."
-          }
-        </p>
+        <p data-line>Simple, transparent plans,<br />physician-guided care that adapts to your life.</p>
       </div>
-
-      {/* Plans */}
-      <div className={`${styles.plans} mt-16 grid items-stretch gap-8 md:grid-cols-3 md:gap-4 lg:mt-36 lg:gap-[35px]`} role="region" aria-label="Pricing plans" tabIndex={0}>
-        <div data-plan-card className="h-full">
-          <PlanCard
-            variant="free"
-            eyebrow="Meddy"
-            eyebrowColor={LIGHT_GREEN}
-            title="Optimize your health."
-            titleColor={WHITE}
-            titleSize={20}
-            description="Personalized guidance to understand your health, improve your habits, and optimize your performance."
-            descriptionColor={GRAY}
-            price="99"
-            period="/month"
-            features={[
-              "24/7 physician messaging",
-              "Nutrition & Fitness guidance",
-              "Biomarker tracking",
-              "Personalized health adjustments",
-            ]}
-            featureColor={GRAY}
-            checkColor={LIGHT_GREEN}
-          />
+      <div className={styles.memberships}>
+        <div className={styles.paymentSwitch} role="group" aria-label="Payment type">
+          {(["self-pay", "medicare"] as const).map((option) => (
+            <button key={option} type="button" aria-pressed={payment === option} aria-controls="home-pricing-plans" onClick={() => {
+              setPayment(option);
+              plansRef.current?.scrollTo({ left: 0 });
+            }}>{option === "self-pay" ? "Self - pay" : "Medicare"}</button>
+          ))}
         </div>
-
-        <div data-plan-card className="h-full">
-          <PlanCard
-            variant="care"
-            badge="Most popular"
-            eyebrow="Meddy Care"
-            eyebrowColor={LIGHT_GREEN}
-            title="Your personal physician."
-            titleColor={WHITE}
-            titleSize={20}
-            description="Ongoing physician-led care with regular visits, lab testing, and personalized recommendations."
-            descriptionColor={GRAY}
-            price="169"
-            period="/month"
-            features={[
-              "24/7 physician messaging",
-              "Nutrition & Fitness guidance",
-              "Biomarker tracking",
-              "Personalized health adjustments",
-              "Monthly physician visit",
-              "Videoconferencing",
-            ]}
-            featureColor={WHITE}
-            checkColor={WHITE}
-          />
-        </div>
-
-        <div data-plan-card className="h-full">
-          <PlanCard
-            variant="complete"
-            eyebrow="Meddy Complete"
-            eyebrowColor={WHITE}
-            title="Your health, fully managed."
-            titleColor={MINT}
-            titleSize={17.77}
-            description="High-touch physician care with frequent visits, comprehensive evaluation, and health optimization."
-            descriptionColor={WHITE}
-            price="249"
-            period="/month"
-            priceColor={MINT}
-            features={[
-              "24/7 physician messaging",
-              "Nutrition & Fitness guidance",
-              "Biomarker tracking",
-              "Personalized health adjustments",
-              "Biweekly physician visits",
-              "Videoconferencing",
-              "Physician built weekly fitness plan",
-              "Continuous care coordination",
-            ]}
-            featureColor={WHITE}
-            checkColor={WHITE}
-          />
+        <div ref={plansRef} id="home-pricing-plans" className={styles.plans} data-medicare={medicare} role="region" aria-label={`${medicare ? "Medicare" : "Self-pay"} pricing plans`} tabIndex={0}>
+          {(medicare ? medicarePlans : selfPayPlans).map((plan) => (
+            <div key={plan.variant} data-plan-card><PlanCard plan={plan} medicare={medicare} /></div>
+          ))}
         </div>
       </div>
     </>

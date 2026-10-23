@@ -15,8 +15,8 @@
 .cityButton:focus-visible { outline: 2px solid #009b58; outline-offset: 3px; }
 .cityButton svg { width: 1.05cqw; height: 1.35cqw; flex-shrink: 0; }
 .connection { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.card { position: absolute; left: 3.74%; top: 12.88%; width: 24.38%; z-index: 4; padding: 1.9cqw 1.8cqw 1.7cqw !important; border: 1px solid #e8eee5; border-radius: 0.64cqw; background: rgb(197 219 203 / 88%); box-shadow: 0 .2cqw .75cqw rgb(42 71 49 / 16%); font-size: 1.02cqw; font-weight: 400; line-height: 1.45; opacity: 0; visibility: hidden; transform: translateY(10px) scale(.96); transform-origin: center; transition: opacity 180ms ease, transform 240ms cubic-bezier(.2, .8, .2, 1), visibility 240ms; pointer-events: none; }
-.card[data-active="true"] { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+.card { --card-width: 24.38%; position: absolute; width: var(--card-width); z-index: 4; padding: 1.9cqw 1.8cqw 1.7cqw !important; border: 1px solid #e8eee5; border-radius: 0.64cqw; background: rgb(197 219 203 / 88%); box-shadow: 0 .2cqw .75cqw rgb(42 71 49 / 16%); font-size: 1.02cqw; font-weight: 400; line-height: 1.45; opacity: 0; visibility: hidden; transform: translateY(calc(-100% - 2.2cqw + 10px)) scale(.96); transform-origin: bottom center; transition: opacity 180ms ease, transform 240ms cubic-bezier(.2, .8, .2, 1), visibility 240ms; pointer-events: none; }
+.card[data-active="true"] { opacity: 1; visibility: visible; transform: translateY(calc(-100% - 2.2cqw)) scale(1); }
 .city { color: #009b58; font-weight: 700; text-transform: uppercase; }
 .availability { margin-top: 0.65cqw !important; }
 .benefits { margin-top: 1.17cqw !important; list-style: none; letter-spacing: -0.025cqw; }
@@ -40,7 +40,7 @@
   .description { margin-top: calc(12 * var(--care-unit)) !important; font-size: calc(11 * var(--care-unit)); line-height: calc(14 * var(--care-unit)); }
   .description strong { font-family: inherit; font-weight: 600; }
   .map { top: calc(244 * var(--care-unit)); left: calc(50% - 139.95 * var(--care-unit)); width: calc(300 * var(--care-unit)); }
-  .card { width: 62cqw; padding: 3cqw !important; border-radius: 1.5cqw; font-size: 2.6cqw; }
+  .card { --card-width: 62%; padding: 3cqw !important; border-radius: 1.5cqw; font-size: 2.6cqw; }
   .logo { border-radius: 1.6cqw; }
   .cityButton { font-size: 1.8cqw; gap: .5cqw; padding: .5cqw 1cqw !important; }
   .cityButton svg { width: 1.6cqw; height: 2cqw; }

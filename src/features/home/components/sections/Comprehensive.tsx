@@ -262,6 +262,10 @@ export default function Comprehensive() {
               data-active={activeCity === city.name}
               id={`care-${city.name.replaceAll(" ", "-")}`}
               className={styles.card}
+              style={{
+                left: `clamp(0%, calc(${city.x}% - var(--card-width) / 2), calc(92% - var(--card-width)))`,
+                top: `${city.y}%`,
+              }}
               role="tooltip"
             >
               <p className={styles.city}>{city.name}</p>

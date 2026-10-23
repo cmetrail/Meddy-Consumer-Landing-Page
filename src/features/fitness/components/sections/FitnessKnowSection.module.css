@@ -57,3 +57,45 @@
 @media (min-width: 768px) {
   .diagram { --diagram-u: calc(752 * var(--us) / 504); }
 }
+
+/* Muscle exploration layers stay aligned with the original anatomy canvas. */
+.chip {
+  border: 1px solid transparent;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 240ms, border-color 240ms, box-shadow 240ms;
+}
+.chip:hover, .activeChip {
+  background: #e5eee7;
+  border-color: #17925a;
+  box-shadow: 0 3px 16px #17925a14;
+}
+.activeChip .label { color: #315840; }
+.chip:focus-visible { outline: 2px solid #17925a; outline-offset: 3px; }
+.fill { left: 0; right: auto; transform-origin: left center; }
+.regions { overflow: visible; }
+.region {
+  fill: #17925a;
+  fill-opacity: 0;
+  stroke: #10824e;
+  vector-effect: non-scaling-stroke;
+  stroke-width: 0;
+  cursor: pointer;
+  transition: fill-opacity 350ms, stroke-width 350ms;
+  outline: none;
+}
+.activeRegion { fill-opacity: 0.3; stroke-width: 0; }
+.region:focus-visible { stroke-width: 2; stroke-dasharray: 3 2; }
+.activeConnector path { stroke: #17925a; stroke-width: 1.7; }
+.activeConnector circle { fill: #17925a; }
+.activeConnector [data-connector-end] { r: 2.8; }
+.diagram[data-touring="true"] .activeRegion { animation: musclePulse 2.6s ease-in-out infinite; }
+.diagram[data-touring="true"] .markers { animation: fiberPulse 4s ease-in-out infinite; }
+@keyframes musclePulse { 0%, 100% { fill-opacity: 0.18; } 50% { fill-opacity: 0.42; } }
+@keyframes fiberPulse { 0%, 100% { opacity: 0.65; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .region, .chip { transition: none; }
+  .diagram[data-touring="true"] .activeRegion, .diagram[data-touring="true"] .markers { animation: none; }
+}

@@ -76,7 +76,6 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
       const root = rootRef.current;
       if (!root) return;
       const mask = root.querySelector<SVGRectElement>("[data-graph-reveal]");
-      const summary = Array.from(root.querySelectorAll<HTMLElement>("[data-end-summary]"));
       const cards = Array.from(root.querySelectorAll<SVGElement | HTMLElement>("[data-reveal-x]"));
       // The mask, moving models, and cards all use the same reveal edge.
       const updateCards = () => {
@@ -89,31 +88,46 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
       const observer = new MutationObserver(updateCards);
       if (mask) observer.observe(mask, { attributes: true, attributeFilter: ["width"] });
       gsap.set(cards, { opacity: 0 });
-      if (summary.length) gsap.set(summary, { autoAlpha: 0 });
-      const timeline = gsap.timeline({
+      const plot = root.querySelector<HTMLElement>("[data-story-chart]");
+      const takeaway = root.querySelector<HTMLElement>("[data-story-summary]");
+      const heading = root.querySelector<HTMLElement>(`.${styles.heading}`);
+      const details = root.querySelectorAll("[data-story-detail]");
+      root.dataset.motionStory = "true";
+      gsap.set(plot, { opacity: 1, filter: "blur(0px)" });
+      gsap.set(takeaway, { autoAlpha: 0, y: 18 });
+      // Pin the scene while scroll distance drives every frame in both directions.
+      const story = gsap.timeline({
+        defaults: { ease: "none" },
         scrollTrigger: {
           trigger: root,
-          start: "top 85%",
-          end: "top 10%",
-          scrub: 0.5,
+          start: "top top",
+          end: () => `+=${Math.max(window.innerHeight * 1.5, 900)}`,
+          pin: root.querySelector<HTMLElement>(`.${styles.sticky}`),
+          scrub: true,
           invalidateOnRefresh: true,
         },
       });
-      timeline.fromTo(mask, { attr: { width: 0 } }, {
-        attr: { width: 720 }, duration: 1, ease: "none", lazy: false,
-      });
-      // Give the completed graph its own beat before revealing the takeaway.
-      if (summary.length) {
-        timeline.to(summary, { autoAlpha: 1, duration: 0.22, ease: "power1.out" }, "+=0.06");
-        timeline.to({}, { duration: 0.12 });
-      }
+      story.fromTo(mask, { attr: { width: 0 } }, {
+        attr: { width: 720 }, duration: 2.6, ease: "none", lazy: false,
+        onUpdate: updateCards,
+      })
+        .to({}, { duration: 1.2 })
+        .to(heading, { autoAlpha: 0, duration: 0.4 })
+        .to(plot, { opacity: 0.35, filter: "blur(3px)", duration: 0.65, ease: "none" })
+        .to(takeaway, { autoAlpha: 1, y: 0, duration: 0.65, ease: "none" }, "-=0.15")
+        .fromTo(details, { autoAlpha: 0, y: 12 }, {
+          autoAlpha: 1, y: 0, stagger: 0.14, duration: 0.5, ease: "none",
+        }, "-=0.3");
+      // Leave a final stretch of scroll for reading the completed summary.
+      story.to({}, { duration: 1.2 });
       return () => {
         observer.disconnect();
+        delete root.dataset.motionStory;
         cards.forEach(card => card.style.removeProperty("opacity"));
       };
     });
     return () => media.revert();
-  }, { scope: rootRef });
+  }, { scope: rootRef, dependencies: [variant], revertOnUpdate: true });
   const trend = trends[variant];
   const mobileMarkers = trend.markers.map((marker, index) => {
     // Spread the driver callouts across the mobile plot, as in the references.
@@ -133,9 +147,9 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
         <div className={styles.content}>
           <header className={styles.heading}>
             <h3>{trend.title}</h3>
-            <p>{trend.subtitle}</p>
           </header>
-          <div className={styles.chart}>
+          <div data-story-stage className={styles.storyStage}>
+          <div data-story-chart className={styles.chart}>
             <div className={styles.plot}>
             <svg viewBox="0 0 720 200" preserveAspectRatio="none" role="img" aria-labelledby={refId("title")}>
               <title id={refId("title")}>{`${trend.title}. ${trend.description}`}</title>
@@ -195,26 +209,23 @@ export default function LineTrend({ variant }: { variant: keyof typeof trends })
               <span data-reveal-x={trend.greenLabelX} className={styles.mobileGreenLabel}>{trend.greenLabel}</span>
             </div>
             </div>
-            <div className={styles.chartMetrics}>
-              {trend.metrics.map(metric => <div key={metric.label} data-reveal-x={variant === "nutrition" ? undefined : metric.green ? 648 : 678} data-end-summary={variant === "nutrition" ? "" : undefined}>
-                <p className={styles.metricLabel}>{metric.label}</p>
-                <p className={styles.metricValues}>
-                  <span className={styles.metricChange}>{metric.change}</span>{" "}
-                  <span className={styles.range}>{metric.range}</span>
-                </p>
-              </div>)}
-            </div>
           </div>
-          <div data-reveal-x={variant === "nutrition" ? undefined : "680"} data-end-summary={variant === "nutrition" ? "" : undefined} className={styles.summary}>
-            <h4>{trend.headline}</h4>
+          <div data-story-summary className={styles.summary}>
+            <p className={styles.summaryEyebrow}>Your {variant === "sleep" ? 4 : 8}-week snapshot</p>
+            <h4>
+              <span className={styles.driverAccent}>{trend.headline.split(" coincided with ")[0]}</span>{" "}
+              coincided with{" "}
+              <span className={styles.outcomeAccent}>{trend.headline.split(" coincided with ")[1]}</span>
+            </h4>
             <div className={styles.metrics}>
-              {trend.metrics.map(metric => <div key={metric.label}>
+              {trend.metrics.map(metric => <div data-story-detail data-series={metric.green ? "driver" : "outcome"} key={metric.label}>
                 <p className={styles.metricLabel}>{metric.label}</p>
                 <p className={metric.green ? styles.green : styles.white}>{metric.change}</p>
                 <p className={styles.range}>{metric.range}</p>
               </div>)}
             </div>
-            <p className={styles.description}>{trend.description}</p>
+            <p data-story-detail className={styles.description}>{trend.description}</p>
+          </div>
           </div>
         </div>
       </div>

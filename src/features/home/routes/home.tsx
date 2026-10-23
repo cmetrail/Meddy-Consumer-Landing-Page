@@ -15,7 +15,7 @@ export const HomePage = () => {
       <ProblemSection />
       <HowMeddyWorksSection />
       <MostCareSection />
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
       <Comprehensive />
       <PhysicianRaySection />
       <FooterSection />
