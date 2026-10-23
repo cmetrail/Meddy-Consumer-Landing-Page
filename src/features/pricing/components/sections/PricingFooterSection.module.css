@@ -150,8 +150,8 @@
   @layer utilities {
     .footerGlass { min-height: calc(700 * var(--footer-unit)); }
     .footerGlass [data-footer-inner] {
-      max-width: calc(1200 * var(--footer-unit)) !important;
-      padding: calc(120 * var(--footer-unit)) 0 calc(24 * var(--footer-unit)) !important;
+      max-width: 1440px !important;
+      padding: calc(120 * var(--footer-unit)) 20px calc(24 * var(--footer-unit)) !important;
     }
     .footerGlass [data-footer-grid] {
       grid-template-columns: calc(440 * var(--footer-unit)) minmax(0, 1fr) !important;
@@ -198,6 +198,12 @@
     }
     .footerGlass [data-footer-divider] { margin-top: calc(24 * var(--footer-unit)) !important; }
     .footerGlass [data-footer-legal] { margin-top: calc(40 * var(--footer-unit)) !important; font-size: calc(14 * var(--footer-unit)) !important; gap: calc(16 * var(--footer-unit)) !important; }
+  }
+}
+
+@media (min-width: 1024px) {
+  @layer utilities {
+    .footerGlass [data-footer-inner] { padding-inline: 40px !important; }
   }
 }
 
