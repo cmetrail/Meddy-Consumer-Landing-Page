@@ -33,7 +33,7 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Meddy Health — Physician-Guided Primary Care",
+    default: "Physician-Guided Primary Care in New York | Meddy Health",
     template: "%s",
   },
   description:
@@ -73,14 +73,14 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: "Meddy Health",
-    title: "Meddy Health — Physician-Guided Primary Care",
+    title: "Physician-Guided Primary Care in New York | Meddy Health",
     description:
       "Meddy Health is physician-guided primary care built around your nutrition, workouts, sleep, and labs.",
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Meddy Health" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Meddy Health — Physician-Guided Primary Care",
+    title: "Physician-Guided Primary Care in New York | Meddy Health",
     description:
       "Meddy Health is physician-guided primary care built around your nutrition, workouts, sleep, and labs.",
     images: [TWITTER_IMAGE],

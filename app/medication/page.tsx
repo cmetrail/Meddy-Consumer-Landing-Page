@@ -3,7 +3,7 @@ import { MedicationPage } from "@/features/medication/routes/medication";
 import { buildMetadata, JsonLd, webPageLd, faqLd } from "@/lib/seo";
 import { FAQS } from "@/features/medication/faqs";
 
-const TITLE = "Medication — Know What Your Medications Are Doing";
+const TITLE = "Medication Management With Your Physician";
 const DESCRIPTION =
   "Meddy helps your physician follow what happens before and after a medication starts or changes, so your treatment evolves based on how you respond.";
 const PATH = "/medication";

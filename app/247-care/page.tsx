@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { CarePage } from "@/features/247-care/routes/247-care";
 import { buildMetadata, JsonLd, webPageLd } from "@/lib/seo";
 
-const TITLE = "24/7 Care — Primary Care That Doesn't Clock Out";
+const TITLE = "24/7 Primary Care That Doesn't Clock Out";
 const DESCRIPTION =
-  "See the same physician over time, reach Meddy 24/7, and get help navigating what comes up between appointments.";
+  "See the same physician over time, reach Meddy 24/7 by message, and get help navigating what comes up between appointments, including nights and weekends.";
 const PATH = "/247-care";
 
 export const metadata: Metadata = buildMetadata({

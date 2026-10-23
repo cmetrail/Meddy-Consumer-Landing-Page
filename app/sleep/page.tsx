@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { SleepPage } from "@/features/sleep/routes/sleep";
 import { buildMetadata, JsonLd, webPageLd } from "@/lib/seo";
 
-const TITLE = "Sleep — Know How Well Your Body Is Recovering";
+const TITLE = "Sleep Tracking & Recovery Insights";
 const DESCRIPTION =
-  "See the quality of your sleep, understand your recovery, and discover what may be helping — or getting in the way.";
+  "See the quality of your sleep, understand your recovery, and discover what may be helping or getting in the way, with your physician in the loop.";
 const PATH = "/sleep";
 
 export const metadata: Metadata = buildMetadata({

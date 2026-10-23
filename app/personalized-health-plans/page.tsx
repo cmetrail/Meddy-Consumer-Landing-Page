@@ -3,7 +3,7 @@ import { PersonalizedHealthPlansPage } from "@/features/personalized-health-plan
 import { buildMetadata, JsonLd, webPageLd, faqLd } from "@/lib/seo";
 import { FAQS } from "@/features/personalized-health-plans/faqs";
 
-const TITLE = "Personalized Health Plans — A Plan Built Around You";
+const TITLE = "Personalized Health Plans Built by Physicians";
 const DESCRIPTION =
   "Your nutrition, workouts, sleep, labs, medications, and goals, brought together so your physician can build a plan around how you actually live.";
 const PATH = "/personalized-health-plans";

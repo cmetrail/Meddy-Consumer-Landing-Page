@@ -3,7 +3,7 @@ import { LongevityPage } from "@/features/longevity/routes/longevity";
 import { buildMetadata, JsonLd, webPageLd, faqLd } from "@/lib/seo";
 import { FAQS } from "@/features/longevity/faqs";
 
-const TITLE = "Longevity — Stay Healthier Longer with Preventive Care";
+const TITLE = "Longevity & Preventive Care in New York";
 const DESCRIPTION =
   "Meddy brings your biomarkers, nutrition, fitness, sleep, weight, medications, and health history together so you and your physician can act earlier.";
 const PATH = "/longevity";

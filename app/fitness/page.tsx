@@ -3,7 +3,7 @@ import { FitnessPage } from "@/features/fitness/routes/fitness";
 import { buildMetadata, JsonLd, webPageLd, faqLd } from "@/lib/seo";
 import { FAQS } from "@/features/fitness/faqs";
 
-const TITLE = "Fitness — See What Workouts Are Doing to Your Body";
+const TITLE = "Fitness Tracking & Physician-Built Workouts";
 const DESCRIPTION =
   "Track how you train, understand where you're improving, and get a physician-built workout plan that adapts to your goals and how your body responds.";
 const PATH = "/fitness";

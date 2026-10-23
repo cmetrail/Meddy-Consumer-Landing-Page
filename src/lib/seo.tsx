@@ -143,18 +143,21 @@ export function membershipPlansLd() {
       description:
         "Personalized guidance to understand your health, improve your habits, and optimize your performance.",
       price: "99",
+      medicarePrice: "59",
     },
     {
       name: "Meddy Care",
       description:
         "Ongoing physician-led care with regular visits, lab testing, and personalized recommendations.",
       price: "169",
+      medicarePrice: "79",
     },
     {
       name: "Meddy Complete",
       description:
         "High-touch physician care with frequent visits, comprehensive evaluation, and health optimization.",
       price: "249",
+      medicarePrice: "99",
     },
   ];
   return plans.map((plan) => ({
@@ -164,13 +167,17 @@ export function membershipPlansLd() {
     description: plan.description,
     brand: { "@id": `${SITE_URL}/#organization` },
     category: "Physician-led membership primary care",
-    offers: {
+    offers: [
+      { name: "Self-pay", price: plan.price },
+      { name: "Medicare", price: plan.medicarePrice },
+    ].map((offer) => ({
       "@type": "Offer",
-      price: plan.price,
+      name: offer.name,
+      price: offer.price,
       priceCurrency: "USD",
       url: `${SITE_URL}/pricing`,
       availability: "https://schema.org/InStock",
-    },
+    })),
   }));
 }
 
