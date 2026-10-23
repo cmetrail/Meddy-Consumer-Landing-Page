@@ -1,86 +1,22 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./PricingPlansSection.module.css";
 
 import { CircleCheckBig, Crown } from "lucide-react";
+import { medicarePlans, selfPayPlans, type Plan } from "@/features/home/components/sections/helper/Pricing";
 
-type Variant = "free" | "care" | "complete";
+const CTA = "Book your Free Consultation";
 
-type Plan = {
-  variant: Variant;
-  badge?: string;
-  name: string;
-  tagline: string;
-  description: string;
-  price?: string;
-  features: string[];
-  cta: string;
-};
-
-const PLANS: Plan[] = [
-  {
-    variant: "free",
-    name: "Meddy",
-    tagline: "Optimize your health.",
-    description:
-      "Personalized guidance to understand your health, improve your habits, and optimize your performance.",
-    price: "$99",
-    features: [
-      "Unlimited physician messaging",
-      "Nutrition & Fitness guidance",
-      "Biomarker tracking",
-      "Personalized health adjustments",
-    ],
-    cta: "Book your Free Consultation",
-  },
-  {
-    variant: "care",
-    badge: "Most popular",
-    name: "Meddy Care",
-    tagline: "Your personal physician.",
-    description:
-      "Ongoing physician-led care with regular visits, lab testing, and personalized recommendations.",
-    price: "$169",
-    features: [
-      "Unlimited physician messaging",
-      "Nutrition & Fitness guidance",
-      "Biomarker tracking",
-      "Personalized health adjustments",
-      "Monthly physician visit",
-      "Videoconferencing",
-    ],
-    cta: "Book your Free Consultation",
-  },
-  {
-    variant: "complete",
-    name: "Meddy Complete",
-    tagline: "Your health, fully managed.",
-    description:
-      "High-touch physician care with frequent visits, comprehensive evaluation, and health optimization.",
-    price: "$249",
-    features: [
-      "Unlimited physician messaging",
-      "Nutrition & Fitness guidance",
-      "Biomarker tracking",
-      "Personalized health adjustments",
-      "Biweekly physician visits",
-      "Videoconferencing",
-      "Physician built weekly fitness plan",
-      "Continuous care coordination",
-    ],
-    cta: "Book your Free Consultation",
-  },
-];
-
-function PlanCard({ plan }: { plan: Plan }) {
+function PlanCard({ plan, popular }: { plan: Plan; popular: boolean }) {
   return (
     <article className={`${styles.card} ${styles[plan.variant]}`} aria-label={plan.name} tabIndex={0}>
-      {plan.badge && (
+      {popular && (
         <span className={styles.badge}>
           <Crown size={20} strokeWidth={1.3} aria-hidden="true" />
-          {plan.badge}
+          Most popular
         </span>
       )}
       <div className={styles.intro}>
@@ -89,8 +25,9 @@ function PlanCard({ plan }: { plan: Plan }) {
         <p className={styles.description}>{plan.description}</p>
       </div>
       <p className={styles.price}>
-        {plan.price}<span className={styles.period}>/month</span>
+        ${plan.price}<span className={styles.period}>/month</span>
       </p>
+      {plan.subheader && <p className={styles.subheader}>{plan.subheader}</p>}
       <ul className={styles.features}>
         {plan.features.map((feature) => (
           <li key={feature} className={styles.feature}>
@@ -99,18 +36,37 @@ function PlanCard({ plan }: { plan: Plan }) {
           </li>
         ))}
       </ul>
-      <Link href="/book-consultation" className={styles.button}>{plan.cta}</Link>
+      <Link href="/book-consultation" className={styles.button}>{CTA}</Link>
     </article>
   );
 }
 
 export default function PricingPlansSection() {
+  const [payment, setPayment] = useState<"self-pay" | "medicare">("self-pay");
+  const medicare = payment === "medicare";
+
   return (
     <section className={styles.section} aria-label="Meddy membership plans">
       <Image src="/home/footer-bg.jpg" alt="" fill sizes="100vw" className={styles.background} />
       <div className={styles.overlay} aria-hidden="true" />
-      <div className={styles.plans}>
-        {PLANS.map((plan) => <PlanCard key={plan.name} plan={plan} />)}
+      <div className={styles.content}>
+        <div className={styles.switch} role="group" aria-label="Payment type">
+          {(["self-pay", "medicare"] as const).map((option) => (
+            <button
+              key={option}
+              type="button"
+              aria-pressed={payment === option}
+              onClick={() => setPayment(option)}
+            >
+              {option === "self-pay" ? "Self - pay" : "Medicare"}
+            </button>
+          ))}
+        </div>
+        <div className={styles.plans} data-medicare={medicare}>
+          {(medicare ? medicarePlans : selfPayPlans).map((plan) => (
+            <PlanCard key={plan.name} plan={plan} popular={!medicare && plan.variant === "care"} />
+          ))}
+        </div>
       </div>
     </section>
   );

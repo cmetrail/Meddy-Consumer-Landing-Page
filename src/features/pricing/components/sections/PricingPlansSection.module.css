@@ -11,7 +11,19 @@
 
 .background { object-fit: cover; object-position: center; z-index: -2; }
 .overlay { position: absolute; inset: 0; z-index: -1; background: rgb(0 0 0 / 38%); }
-.plans { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.01867fr) minmax(0, 1fr); gap: 35px; width: 100%; max-width: 1200px; }
+.content { display: flex; flex-direction: column; align-items: center; gap: 32px; width: 100%; max-width: 1200px; }
+.switch { display: flex; gap: 8px; padding: 8px !important; border-radius: 52px; background: rgb(255 255 255 / 10%); -webkit-backdrop-filter: blur(25px); backdrop-filter: blur(25px); }
+.switch button { padding: 8px 16px !important; border: 0; border-radius: 39px; background: transparent; color: #fff; font-size: 16px; line-height: 24px; cursor: pointer; transition: background 180ms ease; }
+.switch button[aria-pressed="true"] { background: #17925a; }
+.switch button:not([aria-pressed="true"]):hover { background: rgb(23 146 90 / 65%); }
+.switch button:focus-visible { outline: 2px solid #b9ffb3; outline-offset: 4px; }
+.subheader { margin-top: 24px !important; font-size: 14px; line-height: 21px; }
+.plans[data-medicare="true"] .card { height: auto; min-height: 604px; }
+.plans[data-medicare="true"] .intro { min-height: 0; }
+.plans[data-medicare="true"] .subheader { margin-top: 16px !important; }
+.plans[data-medicare="true"] .features { margin-top: 16px !important; margin-bottom: 32px !important; gap: 8px; }
+.plans[data-medicare="true"] .care .features, .plans[data-medicare="true"] .complete .features { margin-top: 16px !important; }
+.plans { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.01867fr) minmax(0, 1fr); gap: 35px; width: 100%; }
 .card {
   position: relative;
   display: flex;
@@ -58,7 +70,7 @@
 .care .features { gap: 11px; }
 .complete .features { gap: 11px; margin-top: 14px !important; }
 .feature { display: flex; align-items: center; gap: 11px; font-size: 14px; font-weight: 400; line-height: 20px; }
-.free .feature { color: #dadada; }
+.free .feature, .care .feature:first-child, .complete .feature:first-child, .plans[data-medicare="true"] .feature { color: #dadada; }
 .check { flex-shrink: 0; width: 15px; height: 15px; color: #b9ffb3; }
 .free .check { width: 18px; height: 18px; color: #8abe85; }
 .button {
@@ -70,7 +82,7 @@
   height: 45px;
   margin-top: auto !important;
   border: 1px solid #17925a;
-  border-radius: 30px;
+  border-radius: 35px;
   background: transparent;
   color: #fff;
   font-size: 16px;
@@ -80,7 +92,7 @@
   transition: background 180ms ease;
 }
 .care .button { background: #17925a; }
-.complete .button { background: #fff; border-color: #fff; color: #17925a; }
+.complete .button { background: #fff; border-color: #fff; color: #17925a; border-radius: 49px; }
 .free .button:hover { background: rgb(255 255 255 / 10%); }
 .care .button:hover { background: #1ba867; }
 .complete .button:hover { background: #eaffea; }
@@ -108,6 +120,7 @@
     padding: 0 !important;
     overflow: hidden;
   }
+  .content { max-width: none; gap: 20px; padding-top: calc(32 * var(--plan-unit)) !important; }
   .plans {
     display: flex;
     max-width: none;

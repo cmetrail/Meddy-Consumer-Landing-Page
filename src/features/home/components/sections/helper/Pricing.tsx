@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./Pricing.module.css";
 
-type Plan = {
+export type Plan = {
   variant: "free" | "care" | "complete";
   name: string;
   tagline: string;
@@ -15,7 +15,7 @@ type Plan = {
   features: string[];
 };
 
-const selfPayPlans: Plan[] = [
+export const selfPayPlans: Plan[] = [
   {
     "variant": "free",
     "name": "Meddy",
@@ -63,7 +63,7 @@ const selfPayPlans: Plan[] = [
   }
 ];
 
-const medicarePlans: Plan[] = [
+export const medicarePlans: Plan[] = [
   {
     "variant": "free",
     "name": "Meddy",
