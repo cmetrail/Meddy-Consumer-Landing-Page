@@ -30,9 +30,12 @@ export default function CareQuestionsSection() {
               <Image data-cq-icon src="/247-care/phone-call.svg" alt="" width={48} height={48} />
               <p>Call or message Meddy 24/7.</p>
             </div>
-            <p data-cq-copy className={styles.description}>
+            {/* <p data-cq-copy className={styles.description}>
               Whether you have a question about <strong>a symptom, medication, lab result, or your care plan,</strong>{" "}
               you always have a way to reach us.
+            </p> */}
+            <p data-cq-copy className={styles.description}>
+              AI answers the call and SMS. Video only available during normal business hours.
             </p>
             <div data-cq-cards className={styles.cards}>
               {CARDS.map((card) => (
@@ -63,9 +66,7 @@ export default function CareQuestionsSection() {
             </div>
           </div>
 
-          <p data-cq-copy className={styles.note}>
-            AI answers the call and SMS. Video only available during normal business hours.
-          </p>
+
         </div>
       </div>
     </section>

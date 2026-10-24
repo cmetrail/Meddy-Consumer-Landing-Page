@@ -76,8 +76,9 @@
 .description {
   max-width: 510px;
   margin-top: 40px !important;
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 16px;
+  line-height: 24px;
+  font-style: italic;
 }
 
 .description strong {
@@ -171,7 +172,7 @@
   .contact { gap: 12px; margin-top: 28px !important; }
   .contact img { width: 36px; height: 36px; }
   .contact p { font-size: 24px; }
-  .description { font-size: 16px; line-height: 25px; margin-top: 28px !important; }
+  .description { font-size: 14px; line-height: 22px; margin-top: 28px !important; }
   .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 32px !important; }
   .cardImage { height: auto; aspect-ratio: 170 / 241; border-radius: 12px; }
   .card figcaption { font-size: 16px; line-height: 22px; }
