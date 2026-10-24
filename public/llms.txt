@@ -28,6 +28,7 @@ Meddy connects your everyday health data — nutrition, workouts, sleep, and lab
 
 - [Terms of Use](https://getmeddyhealth.com/terms-of-use)
 - [Privacy Policy](https://getmeddyhealth.com/privacy-policy)
+- [Cookie Policy](https://getmeddyhealth.com/cookie-policy)
 - [Patient Terms of Service](https://getmeddyhealth.com/patient-terms-of-service)
 - [Notice of Privacy Practices](https://getmeddyhealth.com/notice-of-privacy-practices)
 - [Telehealth Informed Consent](https://getmeddyhealth.com/telehealth-consent)

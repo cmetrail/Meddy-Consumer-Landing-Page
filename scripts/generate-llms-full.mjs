@@ -31,6 +31,7 @@ const ROUTES = [
   "book-consultation",
   "terms-of-use",
   "privacy-policy",
+  "cookie-policy",
   "patient-terms-of-service",
   "notice-of-privacy-practices",
   "telehealth-consent",

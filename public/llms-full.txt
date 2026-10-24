@@ -6,25 +6,25 @@ Meddy connects your everyday health data — nutrition, workouts, sleep, and lab
 
 ## Pages
 
-### Meddy Health — Physician-Guided Primary Care
+### Physician-Guided Primary Care in New York | Meddy Health
 
 URL: https://getmeddyhealth.com/
 
 Meddy Health is physician-guided primary care built around your nutrition, workouts, sleep, and labs. Now accepting our first 500 patients.
 
-### Why Meddy — Healthcare Built Around Your Everyday Life
+### Why Meddy: Care Built Around Your Life
 
 URL: https://getmeddyhealth.com/why-meddy
 
-Healthcare wasn't designed to see everyday life. Meddy gives your physician the complete, connected picture of your habits for less fragmented, better-informed care.
+Healthcare wasn't designed to see everyday life. Meddy gives your physician the connected picture of your habits for less fragmented, better-informed care.
 
-### How Meddy Works — Understand Your Health, Not Just Your Data
+### How Meddy Works: Physician-Guided Care
 
 URL: https://getmeddyhealth.com/how-it-works
 
 One place to track your everyday health. Meddy surfaces what actually matters, gives you a physician-built plan, and shows measurable progress over time.
 
-### Longevity — Stay Healthier Longer with Preventive Care
+### Longevity & Preventive Care in New York
 
 URL: https://getmeddyhealth.com/longevity
 
@@ -36,31 +36,31 @@ URL: https://getmeddyhealth.com/biomarkers
 
 Get comprehensive lab testing, track your biomarkers over time, and understand what is actually changing your health and where to focus next.
 
-### Sleep — Know How Well Your Body Is Recovering
+### Sleep Tracking & Recovery Insights
 
 URL: https://getmeddyhealth.com/sleep
 
-See the quality of your sleep, understand your recovery, and discover what may be helping — or getting in the way.
+See the quality of your sleep, understand your recovery, and discover what may be helping or getting in the way, with your physician in the loop.
 
-### Fitness — See What Workouts Are Doing to Your Body
+### Fitness Tracking & Physician-Built Workouts
 
 URL: https://getmeddyhealth.com/fitness
 
 Track how you train, understand where you're improving, and get a physician-built workout plan that adapts to your goals and how your body responds.
 
-### Nutrition — See What You Eat Is Doing to Your Body
+### Nutrition Tracking: Macros, Vitamins & Labs
 
 URL: https://getmeddyhealth.com/nutrition
 
 Track calories, macros, vitamins, minerals, and hydration. See how changes in what you eat connect to changes in your body over time.
 
-### Weight Loss — Understand What's Moving Your Weight
+### Weight Management With Physician Guidance
 
 URL: https://getmeddyhealth.com/weight-loss
 
 Weight loss is more than a number on the scale. Meddy connects your nutrition, activity, sleep, medications, and biomarkers so you know what's working.
 
-### Medication — Know What Your Medications Are Doing
+### Medication Management With Your Physician
 
 URL: https://getmeddyhealth.com/medication
 
@@ -72,13 +72,13 @@ URL: https://getmeddyhealth.com/physician-care
 
 Primary care built around how you actually live — the same physician over time, with the full picture of your health between visits.
 
-### Personalized Health Plans — A Plan Built Around You
+### Personalized Health Plans Built by Physicians
 
 URL: https://getmeddyhealth.com/personalized-health-plans
 
 Your nutrition, workouts, sleep, labs, medications, and goals, brought together so your physician can build a plan around how you actually live.
 
-### Wearables — Your Health Data, Seen by Your Physician
+### Apple Watch, Oura & Fitbit Health Data
 
 URL: https://getmeddyhealth.com/wearables
 
@@ -90,17 +90,17 @@ URL: https://getmeddyhealth.com/what-we-test
 
 Your physician orders labs based on your health, history, and goals. Browse the tests we most often use to understand your health.
 
-### 24/7 Care — Primary Care That Doesn't Clock Out
+### 24/7 Primary Care That Doesn't Clock Out
 
 URL: https://getmeddyhealth.com/247-care
 
-See the same physician over time, reach Meddy 24/7, and get help navigating what comes up between appointments.
+See the same physician over time, reach Meddy 24/7 by message, and get help navigating what comes up between appointments, including nights and weekends.
 
-### Pricing — Choose Your Level of Physician Support
+### Membership Pricing: Plans From $59/month
 
 URL: https://getmeddyhealth.com/pricing
 
-Three levels of physician-led support starting at $99/month. Choose Meddy, Meddy Care, or Meddy Complete to match your needs.
+Self-pay plans from $99/month and Medicare plans from $59/month. Choose Meddy, Meddy Care, or Meddy Complete for the level of physician support you need.
 
 ### Book a Free 30-Minute Consultation
 
@@ -119,6 +119,12 @@ Meddy Health LLC Terms of Use governing your use of the Meddy website, mobile ap
 URL: https://getmeddyhealth.com/privacy-policy
 
 How Meddy Health LLC collects, uses, and shares information through the Meddy website and mobile app.
+
+### Cookie Policy
+
+URL: https://getmeddyhealth.com/cookie-policy
+
+How Meddy Health LLC uses cookies and similar technologies on getmeddyhealth.com, and how you can control them.
 
 ### Patient Terms of Service
 

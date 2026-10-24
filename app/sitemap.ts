@@ -30,6 +30,7 @@ const ROUTES = [
   "/personalized-health-plans",
   "/terms-of-use",
   "/privacy-policy",
+  "/cookie-policy",
   "/patient-terms-of-service",
   "/notice-of-privacy-practices",
   "/telehealth-consent",
