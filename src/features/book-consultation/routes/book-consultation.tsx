@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FormProvider, useForm } from "react-hook-form";
 import type { BookConsultationForm } from "../types";
-import { STEPS } from "../constants";
+import { STEPS, SUPPORTED_STATE } from "../constants";
 import Stepper, { MobileStepper } from "../components/Stepper";
 import { toISODate } from "../components/Calendar";
 import { useBookingContext } from "../hooks";
@@ -14,6 +14,7 @@ import AboutYouStep from "../components/steps/AboutYouStep";
 import YourGoalsStep from "../components/steps/YourGoalsStep";
 import ChooseTimeStep from "../components/steps/ChooseTimeStep";
 import ConfirmationStep from "../components/steps/ConfirmationStep";
+import WaitlistStep from "../components/steps/WaitlistStep";
 
 const STEP_FIELDS: (keyof BookConsultationForm)[][] = [
   [
@@ -35,7 +36,7 @@ const DEFAULT_VALUES: BookConsultationForm = {
   email: "",
   mobileNumber: "",
   textReminders: false,
-  stateOfResidence: "New York",
+  stateOfResidence: SUPPORTED_STATE,
   is18OrOlder: false,
   hasMedicare: "",
   medicareNumber: "",
@@ -52,6 +53,8 @@ const DEFAULT_VALUES: BookConsultationForm = {
 export const BookConsultationPage = () => {
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  // set when the visitor picks a state Meddy doesn't serve; Return clears it and resets the state
+  const [waitlist, setWaitlist] = useState(false);
   const [booking, setBooking] = useState<LeadBookingResult | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -60,7 +63,9 @@ export const BookConsultationPage = () => {
   const allowedDurations = context?.allowedDurations ?? [];
   // The public consultation is a 30-minute visit; fall back to the provider's
   // default duration only when 30 minutes isn't offered.
-  const duration = allowedDurations.includes(30) ? 30 : (context?.defaultDuration ?? 30);
+  const duration = allowedDurations.includes(30)
+    ? 30
+    : (context?.defaultDuration ?? 30);
   const methods = useForm<BookConsultationForm>({
     defaultValues: DEFAULT_VALUES,
     mode: "onTouched",
@@ -91,7 +96,9 @@ export const BookConsultationPage = () => {
       scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
       setSubmitError(
-        error instanceof Error ? error.message : "We couldn't confirm your booking. Please try again.",
+        error instanceof Error
+          ? error.message
+          : "We couldn't confirm your booking. Please try again.",
       );
     } finally {
       setSubmitting(false);
@@ -101,6 +108,10 @@ export const BookConsultationPage = () => {
   const next = async () => {
     const valid = await trigger(STEP_FIELDS[step]);
     if (!valid) return;
+    if (step === 0 && getValues("stateOfResidence") !== SUPPORTED_STATE) {
+      setWaitlist(true);
+      return;
+    }
     if (step === STEP_FIELDS.length - 1) {
       await submitBooking();
     } else {
@@ -118,12 +129,17 @@ export const BookConsultationPage = () => {
     if (submitted) return <ConfirmationStep booking={booking} />;
     switch (step) {
       case 0:
-        return <AboutYouStep />;
+        return <AboutYouStep onUnsupportedState={() => setWaitlist(true)} />;
       case 1:
         return <YourGoalsStep onBack={back} />;
       default:
         return (
-          <ChooseTimeStep duration={duration} onBack={back} submitting={submitting} submitError={submitError} />
+          <ChooseTimeStep
+            duration={duration}
+            onBack={back}
+            submitting={submitting}
+            submitError={submitError}
+          />
         );
     }
   };
@@ -131,7 +147,10 @@ export const BookConsultationPage = () => {
   return (
     <FormProvider {...methods}>
       <div className="relative flex min-h-dvh w-full flex-col overflow-x-hidden bg-white lg:h-dvh lg:overflow-hidden">
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 overflow-hidden"
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             alt=""
@@ -165,33 +184,44 @@ export const BookConsultationPage = () => {
               </Link>
             </div>
 
-            <div className="mb-8 hidden lg:block">
-              <Stepper step={submitted ? STEPS.length : step} />
-            </div>
-            <div className="mb-6 lg:hidden">
-              <MobileStepper
-                step={submitted ? STEPS.length - 1 : step}
-                onBack={() => {
-                  if (submitted) setSubmitted(false);
-                  else if (step === 0) window.history.back();
-                  else back();
+            {waitlist ? (
+              <WaitlistStep
+                onReturn={() => {
+                  // back to step 1 with the state reset to New York; the typed email stays
+                  methods.setValue("stateOfResidence", SUPPORTED_STATE);
+                  setWaitlist(false);
                 }}
               />
-            </div>
+            ) : (
+              <>
+                <div className="mb-8 hidden lg:block">
+                  <Stepper step={submitted ? STEPS.length : step} />
+                </div>
+                <div className="mb-6 lg:hidden">
+                  <MobileStepper
+                    step={submitted ? STEPS.length - 1 : step}
+                    onBack={() => {
+                      if (submitted) setSubmitted(false);
+                      else if (step === 0) window.history.back();
+                      else back();
+                    }}
+                  />
+                </div>
 
-            <form
-              noValidate
-              onSubmit={(e) => {
-                e.preventDefault();
-                next();
-              }}
-              className="flex w-full flex-1 flex-col"
-            >
-              <div className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col">
-                {renderStep()}
-              </div>
-
-            </form>
+                <form
+                  noValidate
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    next();
+                  }}
+                  className="flex w-full flex-1 flex-col"
+                >
+                  <div className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col">
+                    {renderStep()}
+                  </div>
+                </form>
+              </>
+            )}
           </main>
         </div>
       </div>

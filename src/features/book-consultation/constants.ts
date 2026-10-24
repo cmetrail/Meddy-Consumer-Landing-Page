@@ -9,6 +9,9 @@ export const GOALS = [
   "Something else",
 ] as const;
 
+/** The only state Meddy serves today; any other state is routed to the waiting list. */
+export const SUPPORTED_STATE = "New York";
+
 export const US_STATES = [
   "Alabama",
   "Alaska",

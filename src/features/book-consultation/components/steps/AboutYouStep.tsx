@@ -6,8 +6,9 @@ import { useFormContext } from "react-hook-form";
 import type { BookConsultationForm } from "../../types";
 import TextField from "../form/TextField";
 import SelectField from "../form/SelectField";
+import { SUPPORTED_STATE, US_STATES } from "../../constants";
 
-export default function AboutYouStep() {
+export default function AboutYouStep({ onUnsupportedState }: { onUnsupportedState: () => void }) {
   const {
     register,
     watch,
@@ -107,10 +108,15 @@ export default function AboutYouStep() {
 
             <SelectField
               label="State of Residence"
-              options={["New York"]}
-              disabled
+              options={US_STATES}
               helper="Meddy is available in New York only for now. Leave your email and we'll let you know when we launch in your state."
-              register={register("stateOfResidence", { required: "Select your state." })}
+              register={register("stateOfResidence", {
+                required: "Select your state.",
+                // other states get the waiting-list screen straight away
+                onChange: (e) => {
+                  if (e.target.value !== SUPPORTED_STATE) onUnsupportedState();
+                },
+              })}
               error={errors.stateOfResidence}
             />
 

@@ -101,3 +101,13 @@ export function bookConsultation(payload: LeadBookingPayload) {
     }),
   });
 }
+
+export type WaitlistPayload = { email: string; state: string };
+
+// ponytail: assumes POST /scheduling/public/waitlist { email, state } exists on the backend; adjust the path if it differs.
+export function joinWaitlist(payload: WaitlistPayload) {
+  return apiRequest<unknown>(`${PUBLIC_SCHEDULING}/waitlist`, {
+    method: "POST",
+    body: JSON.stringify({ email: payload.email, state: payload.state }),
+  });
+}
