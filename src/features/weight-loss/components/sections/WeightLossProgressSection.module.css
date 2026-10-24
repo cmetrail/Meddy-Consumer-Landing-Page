@@ -60,7 +60,9 @@
   /* keep the chart readable: scroll it sideways instead of shrinking it further */
   .plotScroll { display: block; overflow-x: auto; scrollbar-width: none; }
   .plotScroll::-webkit-scrollbar { display: none; }
-  .plot { min-width: 760px; }
+  /* overflow-x:auto also clips vertically, so leave room for the captions and the card hover lift */
+  .plotScroll { padding-block: 12px !important; }
+  .plot { min-width: 760px; aspect-ratio: 730.994 / 480; }
   .section { background: linear-gradient(102.95deg, #203c31 0.17%, #56a284 99.83%); }
   .content { width: calc(100% - 40px); padding-block: 64px !important; gap: 32px; }
   .header { grid-template-columns: 1fr; gap: 20px; }
