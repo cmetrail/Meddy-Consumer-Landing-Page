@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Plus } from "lucide-react";
+import { FaqIcon } from "@/components/FaqIcon";
 import { FAQS } from "../../faqs";
 
 // Figma: desktop node 12593:13307 "Desktop - 431" (1440 x 877), cream bg #FFFEF2.
@@ -41,11 +41,7 @@ export default function WeightLossFaqSection() {
                       <span className="text-[20px] font-normal leading-[1.5] text-[#46524B]">
                         {f.q}
                       </span>
-                      <Plus
-                        className={`h-[14px] w-[14px] shrink-0 text-[#BFBFBF] transition-transform duration-300 ${
-                          isOpen ? "rotate-45" : ""
-                        }`}
-                      />
+                      <FaqIcon open={isOpen} className="text-[#BFBFBF]" />
                     </button>
                     {isOpen && (
                       <p className="mt-[15px] max-w-[960px] text-[20px] font-normal leading-[1.5] text-[#46524B]/80">
@@ -79,11 +75,7 @@ export default function WeightLossFaqSection() {
                       <span className="text-[18px] font-normal leading-[1.4] text-[#46524B]">
                         {f.q}
                       </span>
-                      <Plus
-                        className={`h-[14px] w-[14px] shrink-0 text-[#BFBFBF] transition-transform duration-300 ${
-                          isOpen ? "rotate-45" : ""
-                        }`}
-                      />
+                      <FaqIcon open={isOpen} className="text-[#BFBFBF]" />
                     </button>
                     {isOpen && (
                       <p className="mt-3 text-[16px] font-normal leading-[1.5] text-[#46524B]/80">

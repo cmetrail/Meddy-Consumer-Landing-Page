@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import { FaqIcon } from "@/components/FaqIcon";
 import { FAQS } from "../../faqs";
 
 // Figma: desktop node 12659:29891 (1440 x 1073, #F5F5F0): 579 x 833 rounded photo with five green blocks on the left, "FAQ" +
@@ -19,28 +20,6 @@ const BLOCKS = [
   { l: 130, t: 516.09, w: 130, h: 114.769 },
   { l: 0, t: 627.9, w: 130, h: 205.103 },
 ];
-
-function Icon({ open }: { open: boolean }) {
-  return open ? (
-    <div className="relative h-0 w-[14px] shrink-0">
-      <div className="absolute" style={{ inset: "-2px 0 0 0" }}>
-        <Image src={`${A}/minus.svg`} alt="" fill unoptimized className="block max-w-none" />
-      </div>
-    </div>
-  ) : (
-    <div className="relative size-[14px] shrink-0">
-      <Image src={`${A}/plus.svg`} alt="" fill unoptimized className="block max-w-none" />
-    </div>
-  );
-}
-
-function Chevron({ open }: { open: boolean }) {
-  return (
-    <span className={`relative block size-[20px] shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}>
-      <Image src={`${A}/down.svg`} alt="" fill unoptimized className="block max-w-none" />
-    </span>
-  );
-}
 
 export default function NutritionFaqSection() {
   const [open, setOpen] = useState(0);
@@ -109,8 +88,8 @@ export default function NutritionFaqSection() {
                   <div className="w-full">
                     <button type="button" onClick={() => setOpen(isOpen ? -1 : i)} aria-expanded={isOpen} className="flex w-full cursor-pointer items-center justify-between gap-2 text-left">
                       <span className="min-w-px flex-1 text-[16px] font-normal leading-[1.5] text-[#111110] lg:text-[20px] lg:text-[#46524B]">{f.q}</span>
-                      <span className="hidden lg:block"><Icon open={isOpen} /></span>
-                      <span className="lg:hidden"><Chevron open={isOpen} /></span>
+                      <span className="hidden lg:block"><FaqIcon open={isOpen} className="text-[#296C25]" /></span>
+                      <span className="lg:hidden"><FaqIcon open={isOpen} className="text-[#296C25]" /></span>
                     </button>
                     <AnimatePresence initial={false}>
                       {isOpen && (

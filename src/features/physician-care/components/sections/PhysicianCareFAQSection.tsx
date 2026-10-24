@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import { FaqIcon } from "@/components/FaqIcon";
 import styles from "./PhysicianCareFAQSection.module.css";
 import { FAQS } from "../../faqs";
 
@@ -29,7 +29,7 @@ export default function PhysicianCareFAQSection() {
                 <h3 className={styles.question}>
                   <button id={buttonId} type="button" aria-expanded={isOpen} aria-controls={panelId} onClick={() => setOpenIndex(isOpen ? null : index)}>
                     <span>{faq.q}</span>
-                    <Image src={`/physician-care/faq/${index === 0 ? "chevron-open" : "chevron-down"}.svg`} alt="" width={20} height={20} unoptimized className={isOpen ? styles.openChevron : undefined} />
+                    <FaqIcon open={isOpen} className="text-[#296C25]" />
                   </button>
                 </h3>
                 <div id={panelId} role="region" aria-labelledby={buttonId} hidden={!isOpen} className={styles.answer}>

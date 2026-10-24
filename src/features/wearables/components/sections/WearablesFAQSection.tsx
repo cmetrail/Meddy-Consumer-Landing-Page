@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { Plus } from "lucide-react";
+import { FaqIcon } from "@/components/FaqIcon";
 import { desktopMotion } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
@@ -111,11 +111,7 @@ export default function WearablesFAQSection() {
                     >
                       {f.q}
                     </span>
-                    <Plus
-                      className={`h-[14px] w-[14px] shrink-0 text-[#F5F5F5] transition-transform duration-300 ${
-                        isOpen ? "rotate-45" : ""
-                      }`}
-                    />
+                    <FaqIcon open={isOpen} className="text-[#F5F5F5]" />
                   </button>
                   {isOpen && (
                     <p className="mt-[15px] text-[14px] font-medium leading-[1.5] text-[#919191]">

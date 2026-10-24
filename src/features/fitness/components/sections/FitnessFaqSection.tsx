@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { FaqIcon } from "@/components/FaqIcon";
 import { FAQS } from "../../faqs";
 
 export default function FitnessFaqSection() {
@@ -36,11 +36,7 @@ export default function FitnessFaqSection() {
                   <span className="text-[18px] font-normal leading-[normal] text-white lg:text-[20px]">
                     {f.q}
                   </span>
-                  <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-white transition-transform duration-300 ${
-                      isOpen ? "rotate-180" : ""
-                    }`}
-                  />
+                  <FaqIcon open={isOpen} className="text-white" />
                 </button>
                 {isOpen && (
                   <p className="mt-2 pr-7 text-[16px] font-light leading-[normal] text-white opacity-60">
