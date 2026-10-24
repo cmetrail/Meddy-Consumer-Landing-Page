@@ -3,6 +3,8 @@ import { Plus_Jakarta_Sans, DM_Serif_Text, Inter, Playfair_Display } from "next/
 import "./globals.css";
 import MobileScrollAnimations from "@/components/MobileScrollAnimations";
 import SmoothScrollProvider from "@/providers/SmoothScrollProvider";
+import { ConsentProvider } from "@/components/consent/ConsentProvider";
+import CookieBanner from "@/components/consent/CookieBanner";
 import { JsonLd, SITE_URL, OG_IMAGE, TWITTER_IMAGE, SITE_GRAPH_LD } from "@/lib/seo";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -107,10 +109,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-dvh flex flex-col" suppressHydrationWarning={true}>
         <JsonLd data={ORGANIZATION_LD} />
-        <SmoothScrollProvider>
-          {children}
-          <MobileScrollAnimations />
-        </SmoothScrollProvider>
+        <ConsentProvider>
+          <SmoothScrollProvider>
+            {children}
+            <MobileScrollAnimations />
+          </SmoothScrollProvider>
+          <CookieBanner />
+        </ConsentProvider>
       </body>
     </html>
   );

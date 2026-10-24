@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "@/components/FooterLink";
 import { motion } from "framer-motion";
 import styles from "./FooterItems.module.css";
+import { useConsent } from "@/components/consent/ConsentProvider";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -97,6 +98,7 @@ export function FooterItems({
   mobileVariant?: "longevity" | "wearables" | "physician" | "how-it-works" | "247-care" | "weight-loss" | "medication" | "personalized-health-plans" | "biomarkers" | "what-we-test" | "fitness" | "sleep" | "nutrition" | "pricing" | "why-meddy";
   className?: string;
 }) {
+  const { openSettings } = useConsent();
   return (
     <div
       className={`${className} ${mobileReference ? styles.reference : ""} ${mobileVariant === "longevity" ? styles.longevityReference : ""} ${mobileVariant === "wearables" ? styles.wearablesReference : ""} ${noTopMargin ? "" : "mt-10"} w-full rounded-t-[22px] bg-white/10 backdrop-blur-xl`}
@@ -291,6 +293,16 @@ export function FooterItems({
                 )}
               </Fragment>
             ))}
+            <span aria-hidden="true" className="opacity-60">
+              ·
+            </span>
+            <button
+              type="button"
+              onClick={() => openSettings()}
+              className="text-[#F4F4F5] underline-offset-2 transition-opacity hover:opacity-70 hover:underline"
+            >
+              Cookie settings
+            </button>
           </p>
         </motion.div>
       </div>
