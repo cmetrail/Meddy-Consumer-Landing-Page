@@ -6,6 +6,7 @@ import type { CareModel } from "@/features/physician-care/components/helper/crea
 import { SCROLL_MOTION } from "@/lib/motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import styles from "./LineTrend.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -173,20 +174,30 @@ export default function A1cTrend({
         },
         (context) => {
           if (!context.conditions?.motion) return;
+          const root = rootRef.current;
+          if (!root) return;
+          root.dataset.motionStory = "true";
+          const takeaway = root.querySelector("[data-story-summary]");
+          const scene = root.querySelector("[data-a1c-scene]");
+          const sharedPenLayer = sharedPen
+            ? root.closest("[data-care-journey]")?.querySelector("[data-care-pen-layer]")
+            : null;
+          const background = [scene, sharedPenLayer].filter((node): node is Element => !!node);
+          gsap.set(background, { opacity: 1, filter: "blur(0px)" });
+          gsap.set(takeaway, { autoAlpha: 0, y: 18 });
           const tl = gsap.timeline({
             defaults: { ease: "none" },
             scrollTrigger: {
               trigger: rootRef.current,
-              start: "top 85%",
-              end: "top 10%",
-              scrub:
-                context.conditions.compact || context.conditions.touch
-                  ? 0.35
-                  : 0.65,
+              start: "top top",
+              end: () => `+=${Math.max(window.innerHeight * 1.5, 900)}`,
+              pin: root.querySelector<HTMLElement>(".a1c-sticky"),
+              scrub: true,
               invalidateOnRefresh: true,
             },
             onUpdate: () => {
-              progressRef.current = tl.progress();
+              // The pen completes its pose with the graph, before the overlay.
+              progressRef.current = Math.min(1, tl.time() / 1);
               modelRef.current?.update(progressRef.current);
             },
           });
@@ -244,7 +255,15 @@ export default function A1cTrend({
               time,
             );
           });
-          tl.to({}, { duration: 0.12 });
+          tl.to({}, { duration: 0.2 })
+            .to("[data-graph-title]", { autoAlpha: 0, duration: 0.08 })
+            .to(background, { opacity: 0.35, filter: "blur(3px)", duration: 0.13 })
+            .to(takeaway, { autoAlpha: 1, y: 0, duration: 0.13 }, "-=0.03")
+            .fromTo("[data-story-detail]", { autoAlpha: 0, y: 12 }, {
+              autoAlpha: 1, y: 0, stagger: 0.028, duration: 0.1,
+            }, "-=0.06")
+            .to({}, { duration: 0.24 });
+          return () => { delete root.dataset.motionStory; };
         },
       );
 
@@ -254,11 +273,16 @@ export default function A1cTrend({
   );
 
   return (
-    <div ref={rootRef} className="a1c-scroll relative w-full">
+    <div ref={rootRef} data-variant="a1c" className={`a1c-scroll relative w-full ${styles.scroll}`}>
       <style>{`
         .a1c-scroll { min-height: 100svh; }
         .a1c-sticky { position: relative; min-height: 100svh; display: flex; align-items: center; }
-        .a1c-content { width: 100%; }
+        .a1c-content { width: 100%; container-type: inline-size; }
+        .a1c-stage { width: 100%; }
+        .a1c-scene { position: relative; width: 100%; }
+        .a1c-scroll[data-motion-story] .a1c-sticky { min-height: 100svh; }
+        .a1c-scroll[data-motion-story] .a1c-scene { grid-area: 1 / 1; z-index: 0; pointer-events: none; }
+        .a1c-scroll[data-motion-story] .a1c-stage { min-height: 380px; }
         .a1c-marker { stroke-dasharray: 3 3; }
         .a1c-pen { position: absolute; left: calc(53.78% - 70px); top: calc(44% - 195px); width: 140px; height: 190px; transform-origin: 50% 100%; pointer-events: none; }
         .a1c-poster, .a1c-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -293,22 +317,11 @@ export default function A1cTrend({
 
       <div className="a1c-sticky">
         <div className="a1c-content max-w-360 mx-auto px-5 flex flex-col gap-6 lg:gap-10 lg:px-10">
-          {/* Title */}
-          <div data-graph-title className="">
-            <div className="flex items-center gap-4.25">
-              <span className="text-white text-xl font-medium tracking-[-2%] leading-[130%]">
-                A1c
-              </span>
-              <span className="h-2 w-2 rounded-full bg-white" />
-              <span className="text-white text-xl font-medium tracking-[-2%] leading-[130%]">
-                Insulin
-              </span>
-            </div>
-            <p className="mt-0.5 text-[15px] font-medium leading-[140%] text-[#E7E7E7]">
-              Health Insight Trend.
-            </p>
-          </div>
-
+          <header data-graph-title className={styles.heading}>
+            <h3>See how your care affects your A1c.</h3>
+          </header>
+          <div className={`a1c-stage ${styles.storyStage}`}>
+          <div data-a1c-scene className="a1c-scene">
           {/* Chart */}
           <div
             data-graph-chart
@@ -488,6 +501,29 @@ export default function A1cTrend({
             <span>01 / Before treatment</span>
             <span>02 / Medication introduced</span>
             <span data-after>03 / Improved follow-up</span>
+          </div>
+          </div>
+          <div data-story-summary className={styles.summary}>
+            <p className={styles.summaryEyebrow}>Your follow-up snapshot</p>
+            <h4><span className={styles.driverAccent}>Lower A1c</span>{" "}
+              following <span className={styles.outcomeAccent}>medication introduction.</span>
+            </h4>
+            <div className={styles.metrics}>
+              <div data-story-detail data-series="driver">
+                <p className={styles.metricLabel}>A1c change</p>
+                <p className={styles.green}>&minus;1.5 pts</p>
+                <p className={styles.range}>7.5% &rarr; 6.0%</p>
+              </div>
+              <div data-story-detail data-series="outcome">
+                <p className={styles.metricLabel}>A1c at follow-up</p>
+                <p className={styles.white}>6.0%</p>
+                <p className={styles.range}>After medication introduction</p>
+              </div>
+            </div>
+            <p data-story-detail className={styles.description}>
+              A1c moved from 7.5% before treatment to 6.0% at follow-up.
+            </p>
+          </div>
           </div>
           <p className="text-[11px] text-white/45">
             Illustrative trend over time. Individual results vary.

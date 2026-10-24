@@ -215,7 +215,7 @@ export default function MedicationStorySection({
             PHYSICIAN-GUIDED. PERSON-CENTERED.
           </span>
           <div className={styles.modelShadow} />
-          <div ref={modelLayerRef} className={styles.modelLayer}>
+          <div ref={modelLayerRef} data-care-pen-layer className={styles.modelLayer}>
             <Image
               src="/models/care-pen.webp"
               alt=""

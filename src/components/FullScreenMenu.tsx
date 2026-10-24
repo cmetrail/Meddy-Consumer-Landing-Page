@@ -43,7 +43,7 @@ const PREVIEWS: Record<string, typeof DEFAULT_PREVIEW> = {
     description: "A physician by your side.",
   },
   "/personalized-health-plans": {
-    src: "/physician-care/physician-hug-28a6d9.png",
+    src: "/personalized-health-plans/goals/health.jpg",
     title: "Uniquely yours.",
     description: "A health plan that fits your life.",
   },
@@ -236,7 +236,7 @@ export default function FullScreenMenu({ id, onClose, logoAnchor, buttonAnchor }
         </aside>
         <div className={styles.footer}>
           <p>Your next chapter starts with a conversation.</p>
-          <Link href="/book-consultation" onClick={onClose} className={`${styles.cta} rounded-[22px] bg-[#FFFFFF] px-[14px] py-[10px] font-medium uppercase leading-[100%] text-[#1A231F] text-[12px] shadow-[2px_4px_4px_rgba(0,0,0,0.25)] whitespace-nowrap sm:px-[19px] sm:py-[13px] sm:text-[14px]`}>Book Free consultation</Link>
+          <Link href="/book-consultation" onClick={onClose} className={`${styles.cta} rounded-[22px] bg-[#17925A] px-[14px] py-[10px] font-medium uppercase leading-[100%] text-white text-[12px] shadow-[2px_4px_4px_rgba(0,0,0,0.25)] whitespace-nowrap sm:px-[19px] sm:py-[13px] sm:text-[14px]`}>Book Free consultation</Link>
         </div>
         </div>
       </motion.div>

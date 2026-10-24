@@ -5,12 +5,13 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { desktopMotion } from "@/lib/motion";
+import styles from "./LongevityChangesSection.module.css";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 // Figma: desktop node 12613:14372 (1440 x ~1091) + chart cards 12613:14938. Blue gradient section with a portrait
 // pinned to the right; the left column holds the heading and a 609.5px chart card (rail of three bars beside it).
-// On desktop the cards cross-fade while the section is pinned (rail bar follows); below that they stack, scaled to fit.
+// On desktop each chart reveals a summary while pinned; mobile cards include a static summary.
 // Chart bodies use fixed geometry and scale together with their value labels and notes.
 const A = "/longevity/changes";
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
@@ -48,6 +49,20 @@ function TrackingCard({ kind }: { kind: 1 | 2 | 3 }) {
     : pressure
       ? "As weight fell from 205 to 152 lbs, blood pressure dropped from 138 to 112 mmHg in six months."
       : "As weight decreased from 204 to 162 lbs, A1c levels dropped from 8% to 5.6% over six months.";
+  const snapshot = fiber
+    ? { driver: "More daily fiber", outcome: "lower LDL", metrics: [
+      { label: "Daily fiber", change: "+10 g/day", range: "18 → 28 g/day" },
+      { label: "LDL cholesterol", change: "−33 mg/dL", range: "145 → 112 mg/dL" },
+    ] }
+    : pressure
+      ? { driver: "Weight loss", outcome: "lower blood pressure", metrics: [
+        { label: "Weight", change: "−53 lbs", range: "205 → 152 lbs" },
+        { label: "Blood pressure", change: "−26 mmHg", range: "138 → 112 mmHg" },
+      ] }
+      : { driver: "Weight loss", outcome: "lower A1c", metrics: [
+        { label: "Weight", change: "−42 lbs", range: "204 → 162 lbs" },
+        { label: "A1c", change: "−2.4 pts", range: "8% → 5.6%" },
+      ] };
   const valuePill = (text: string, x: number, y: number, color: string) => {
     const width = text.length === 1 ? 26 : text.length === 2 ? 34 : 39;
     return (
@@ -58,9 +73,9 @@ function TrackingCard({ kind }: { kind: 1 | 2 | 3 }) {
     );
   };
   return (
-    <div className="tracking-card-wrap relative w-full pb-[66px]">
+    <div className={`${styles.stage} tracking-card-wrap relative w-full`}>
       <div data-card-box className="w-full overflow-hidden rounded-[12px] border border-white bg-white/60 backdrop-blur-[5px]">
-        <svg viewBox="0 0 676 392" className="block h-auto w-full" role="img" aria-label={caption}>
+        <svg data-change-plot viewBox="0 0 676 392" className="block h-auto w-full" role="img" aria-label={caption}>
           <defs>
             <linearGradient id={`${id}-blue`} x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#2a80b8" /><stop offset="100%" stopColor="#2a80b8" stopOpacity="0" />
@@ -105,7 +120,20 @@ function TrackingCard({ kind }: { kind: 1 | 2 | 3 }) {
           ))}
         </svg>
       </div>
-      <p className={`tracking-card-note absolute top-[344px] rounded-[12px] border border-black/20 bg-white/30 px-4 py-2 text-[14px] font-normal leading-[1.5] text-[#111110] backdrop-blur-[10px] ${fiber ? "w-[328px]" : "w-[360px]"}`}>{caption}</p>
+      <div data-change-summary className={styles.snapshot}>
+        <p className={styles.eyebrow}>Your six-month snapshot</p>
+        <h3><span className={styles.driver}>{snapshot.driver}</span> coincided with <span className={styles.outcome}>{snapshot.outcome}.</span></h3>
+        <div className={styles.metrics}>
+          {snapshot.metrics.map((metric, index) => (
+            <div data-change-detail data-series={index === 0 ? "driver" : "outcome"} key={metric.label}>
+              <p className={styles.label}>{metric.label}</p>
+              <p className={styles.value}>{metric.change}</p>
+              <p className={styles.range}>{metric.range}</p>
+            </div>
+          ))}
+        </div>
+        <p data-change-detail className={styles.caption}>{caption}</p>
+      </div>
     </div>
   );
 }
@@ -199,47 +227,45 @@ export default function LongevityChangesSection() {
         applyTop();
         ScrollTrigger.addEventListener("refreshInit", applyTop);
 
-        const wipeIn = { clipPath: "inset(-4% -4% -4% -4%)" };
-        const wipeOut = (flip: boolean) => ({ clipPath: flip ? "inset(-4% -4% -4% 100%)" : "inset(-4% 100% -4% -4%)" });
-
-        // card 1: draws itself once as the section scrolls into view
-        gsap.fromTo("[data-wipe='1']", wipeOut(false), { ...wipeIn, duration: 1.6, ease: "power2.inOut", scrollTrigger: { trigger: rootRef.current, start: "top 60%", once: true } });
-        gsap.fromTo("[data-change-card='1'] [data-pill]", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.5, stagger: 0.1, delay: 0.6, ease: "back.out(2)", scrollTrigger: { trigger: rootRef.current, start: "top 60%", once: true } });
-
-        // Discrete steps (no scrubbed cross-fade): the pinned scroll is split in thirds; crossing a third plays one clean swap
-        const q = (sel: string) => gsap.utils.toArray<HTMLElement>(sel);
-        const cardSel = (i: number) => `[data-change-card='${i + 1}']`;
+        const q = gsap.utils.selector(rootRef);
+        const cards = q(".changes-cards > [data-change-card]");
         const rails = q("[data-change-rail]");
-        gsap.set([cardSel(1), cardSel(2)].join(","), { autoAlpha: 0 });
-        let cur = 0;
-        // Keep the rail centred beside the card, including when the fixed geometry is resized.
-        const railBox = q("[data-change-rails]")[0];
-        const boxH = (i: number) => q(`${cardSel(i)} [data-card-box]`)[0]?.offsetHeight;
-        const fitRails = (i: number, animate: boolean) => {
-          const h = boxH(i);
-          if (railBox && h) gsap.to(railBox, { y: (h - 354) / 2, duration: animate ? 0.4 : 0, ease: "power2.out" });
-        };
-        fitRails(0, false);
+        gsap.set(cards.slice(1), { autoAlpha: 0 });
+        cards.forEach(card => {
+          gsap.set(card.querySelector("[data-change-summary]"), { autoAlpha: 0, y: 18 });
+        });
 
-        const go = (next: number) => {
-          if (next === cur) return;
-          const from = cur;
-          cur = next;
-          gsap.killTweensOf([...q(cardSel(from)), ...q(cardSel(next)), ...q(`${cardSel(next)} [data-wipe]`), ...q(`${cardSel(next)} [data-pill]`)]);
-          gsap.to(cardSel(from), { autoAlpha: 0, y: -24, duration: 0.3, ease: "power2.in" });
-          gsap.fromTo(cardSel(next), { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.6, delay: 0.3, ease: "power3.out" });
-          gsap.fromTo(`${cardSel(next)} [data-wipe]`, wipeOut(false), { ...wipeIn, duration: 1.4, delay: 0.5, ease: "power2.inOut" });
-          gsap.fromTo(`${cardSel(next)} [data-pill]`, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.5, stagger: 0.1, delay: 1, ease: "back.out(2)" });
-          rails.forEach((r, i) => gsap.to(r, { backgroundColor: i === next ? BLUE : "#d9d9d9", duration: 0.3 }));
-          fitRails(next, true);
-        };
-
-        ScrollTrigger.create({
-          trigger: rootRef.current,
-          start: () => `top ${stickTop()}px`,
-          end: "bottom bottom",
-          invalidateOnRefresh: true,
-          onUpdate: (self) => go(self.progress < 0.34 ? 0 : self.progress < 0.67 ? 1 : 2),
+        // Each chart completes, softens behind its takeaway, then leaves time to read.
+        // One scrubbed timeline also restores every phase when scrolling backwards.
+        const story = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: {
+            trigger: rootRef.current,
+            start: () => `top ${stickTop()}px`,
+            end: "bottom bottom",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+        cards.forEach((card, index) => {
+          if (index > 0) {
+            story.to(cards[index - 1], { autoAlpha: 0, y: -18, duration: 0.3 })
+              .fromTo(card, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.4 });
+            rails.forEach((rail, railIndex) => {
+              story.to(rail, { backgroundColor: railIndex === index ? BLUE : "#d9d9d9", duration: 0.2 }, "<");
+            });
+          }
+          story.fromTo(card.querySelector("[data-wipe]"),
+            { clipPath: "inset(-4% 100% -4% -4%)" },
+            { clipPath: "inset(-4% -4% -4% -4%)", duration: 1.4 })
+            .fromTo(card.querySelectorAll("[data-pill]"), { opacity: 0, scale: 0.8 },
+              { opacity: 1, scale: 1, duration: 0.35, stagger: 0.08 }, "-=0.5")
+            .to({}, { duration: 0.8 })
+            .to(card.querySelector("[data-change-plot]"), { opacity: 0.18, filter: "blur(3px)", duration: 0.55 })
+            .to(card.querySelector("[data-change-summary]"), { autoAlpha: 1, y: 0, duration: 0.55 }, "-=0.15")
+            .fromTo(card.querySelectorAll("[data-change-detail]"), { autoAlpha: 0, y: 10 },
+              { autoAlpha: 1, y: 0, duration: 0.35, stagger: 0.1 }, "-=0.2")
+            .to({}, { duration: 1.2 });
         });
 
         return () => ScrollTrigger.removeEventListener("refreshInit", applyTop);
@@ -252,7 +278,6 @@ export default function LongevityChangesSection() {
 
       <div ref={rootRef} className="changes-scroll relative">
         <style>{`
-          .tracking-card-note { right: 0; }
           .changes-scroll { min-height: 100svh; }
           .changes-sticky { position: relative; min-height: 100svh; display: flex; align-items: flex-start; background: linear-gradient(131.78deg, rgb(255, 255, 249) 0%, rgb(116, 205, 255) 20%, rgb(42, 128, 184) 82.462%); }
           @layer theme {
@@ -273,11 +298,14 @@ export default function LongevityChangesSection() {
           }
           }
           @media (min-width: 1024px) { .changes-sticky { align-items: center; background: linear-gradient(145.38deg, rgb(42, 128, 184) 2.2521%, rgb(116, 205, 255) 44.988%, rgb(255, 255, 249) 80.207%); } }
+          @media (max-width: 1023px), (pointer: coarse), (prefers-reduced-motion: reduce) {
+            .changes-scroll [data-change-card], .changes-scroll [data-change-summary], .changes-scroll [data-change-detail] { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+            .changes-scroll [data-change-plot] { opacity: 1 !important; filter: none !important; }
+          }
           @media (min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-            .changes-scroll { min-height: 260svh; }
+            .changes-scroll { min-height: 480svh; }
             .changes-sticky { position: sticky; top: 0; }
             [data-change-card='2'], [data-change-card='3'] { opacity: 0; visibility: hidden; }
-            .tracking-card-note { right: -84px; }
             .changes-cards { gap: 0; }
             .changes-cards > * { grid-area: 1 / 1; }
           }
