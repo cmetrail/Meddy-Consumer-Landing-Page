@@ -10,10 +10,10 @@ const LEGEND = ["Calories", "Total Steps", "Total Workout Time", "Sleep Duration
 
 // Figma's 730.994 x 428.533 plot scales as one composition, preserving alignment.
 const MILESTONES = [
-  { week: 0, weight: 214, x: 0, y: 0, captionX: 11.5, captionWidth: 91.953, title: "STARTING POINT", description: "Build better habits", crop: "start" },
-  { week: 4, weight: 207, x: 163.09, y: 45.69, captionX: 211.09, captionWidth: 145.158, title: "-7 LBS", description: "Early progress from nutrition and activity changes." },
-  { week: 8, weight: 201, x: 407.14, y: 117.98, captionX: 435.47, captionWidth: 108.145, title: "-13 LBS", description: "Steady progress with consistent health." },
-  { week: 16, weight: 194, x: 619.38, y: 204.15, captionX: 640.2, captionWidth: 87.326, title: "-20 LBS", description: "A healthier more sustainable you.", crop: "end" },
+  { week: 0, weight: 214, x: 0, y: 0, captionX: 11.5, captionWidth: 112, title: "STARTING POINT", description: "Build better habits", crop: "start" },
+  { week: 4, weight: 207, x: 163.09, y: 45.69, captionX: 211.09, captionWidth: 165, title: "-7 LBS", description: "Early progress from nutrition and activity changes." },
+  { week: 8, weight: 201, x: 407.14, y: 117.98, captionX: 435.47, captionWidth: 125, title: "-13 LBS", description: "Steady progress with consistent health." },
+  { week: 16, weight: 194, x: 619.38, y: 204.15, captionX: 633, captionWidth: 98, title: "-20 LBS", description: "A healthier more sustainable you.", crop: "end" },
 ] as const;
 
 export default function WeightLossProgressSection() {
@@ -31,6 +31,7 @@ export default function WeightLossProgressSection() {
             <p className={styles.description}>See your weight, energy balance, activity, and metabolic markers change over weeks and months&mdash;not just day to day.</p>
           </div>
         </div>
+        <div className={styles.plotScroll}>
         <div data-progress-plot className={styles.plot} role="group" aria-label="Weight progress over 16 weeks, from 214 to 194 pounds">
           <div className={styles.plotCanvas}>
             <Image data-progress-curve className={styles.curve} src={`${ASSETS}/milestone-curve.svg`} width={682.415} height={306.721} alt="" unoptimized />
@@ -53,6 +54,7 @@ export default function WeightLossProgressSection() {
               </Fragment>
             ))}
           </div>
+        </div>
         </div>
         <div data-progress-footer className={styles.footer}>
           <div className={styles.alongside}>

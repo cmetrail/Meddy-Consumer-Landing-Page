@@ -8,9 +8,10 @@ import styles from "./PricingPlansSection.module.css";
 import { CircleCheckBig, Crown } from "lucide-react";
 import { medicareNote, medicarePlans, selfPayPlans, type Plan } from "@/features/home/components/sections/helper/Pricing";
 
-const CTA = "Book your Free Consultation";
+const SELF_PAY_CTA = "Book your Free Consultation";
+const MEDICARE_CTA = "Book your Consultation";
 
-function PlanCard({ plan, popular }: { plan: Plan; popular: boolean }) {
+function PlanCard({ plan, popular, medicare }: { plan: Plan; popular: boolean; medicare: boolean }) {
   return (
     <article className={`${styles.card} ${styles[plan.variant]}`} aria-label={plan.name} tabIndex={0}>
       {popular && (
@@ -36,7 +37,7 @@ function PlanCard({ plan, popular }: { plan: Plan; popular: boolean }) {
           </li>
         ))}
       </ul>
-      <Link href="/book-consultation" className={styles.button}>{CTA}</Link>
+      <Link href="/book-consultation" className={styles.button}>{medicare ? MEDICARE_CTA : SELF_PAY_CTA}</Link>
     </article>
   );
 }
@@ -64,7 +65,7 @@ export default function PricingPlansSection() {
         </div>
         <div className={styles.plans} data-medicare={medicare}>
           {(medicare ? medicarePlans : selfPayPlans).map((plan) => (
-            <PlanCard key={plan.name} plan={plan} popular={!medicare && plan.variant === "care"} />
+            <PlanCard key={plan.name} plan={plan} popular={!medicare && plan.variant === "care"} medicare={medicare} />
           ))}
         </div>
         {medicare && (

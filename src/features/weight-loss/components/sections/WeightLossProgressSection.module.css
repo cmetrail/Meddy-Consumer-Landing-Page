@@ -22,7 +22,8 @@
 .intro { display: flex; flex-direction: column; gap: 8px; text-align: right; }
 .subtitle { font-size: 32px; line-height: 1.5; }
 .description { font-size: 16px; line-height: 1.5; }
-.plot { position: relative; width: min(730.994px, 100%); aspect-ratio: 730.994 / 428.533; container-type: inline-size; }
+.plotScroll { display: flex; justify-content: center; width: 100%; }
+.plot { position: relative; width: min(1000px, 100%); aspect-ratio: 730.994 / 428.533; container-type: inline-size; }
 .plotCanvas { position: absolute; width: 730.994px; height: 428.533px; transform: scale(calc(100cqw / 730.994px)); transform-origin: top left; }
 .curve { position: absolute; left: 4.63px; top: 116.24px; max-width: none; }
 .card { position: absolute; width: 111.615px; height: 133.591px; perspective: 700px; }
@@ -33,11 +34,11 @@
 .photoImage.start, .photoImage.end { height: 133.39% !important; object-fit: fill; }
 .photoImage.start { top: 0.07% !important; }
 .photoImage.end { top: -0.27% !important; }
-.cardLabel { position: absolute; top: 107.57px; left: 5.784px; width: 100.627px; display: flex; align-items: center; justify-content: space-between; font-size: 6.94px; line-height: 1.5; color: #bdbdbd; }
-.cardLabel span:last-child { font-size: 11.566px; color: #fff; }
-.milestone { position: absolute; top: 382.27px; display: flex; flex-direction: column; gap: 4.627px; font-size: 11.566px; line-height: 1.5; }
-.milestone p:last-child { color: #b3b3b7; font-size: 8.096px; }
-.footer { display: flex; align-items: flex-end; gap: 48px; width: 100%; }
+.cardLabel { position: absolute; top: 107.57px; left: 5.784px; width: 100.627px; display: flex; align-items: center; justify-content: space-between; font-size: 8.5px; line-height: 1.5; color: #bdbdbd; }
+.cardLabel span:last-child { font-size: 13px; color: #fff; }
+.milestone { position: absolute; top: 382.27px; display: flex; flex-direction: column; gap: 4.627px; font-size: 13px; line-height: 1.5; }
+.milestone p:last-child { color: #b3b3b7; font-size: 9.5px; }
+.footer { display: flex; align-items: flex-end; gap: 48px; width: 100%; margin-top: 32px !important; }
 .alongside { flex: 1; min-width: 0; }
 .alongside h3 { font-size: 32px; line-height: 1.5; font-weight: 400; }
 .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; list-style: none; margin-top: 20px !important; font-size: 16px; line-height: 1.5; }
@@ -56,6 +57,10 @@
   .values { font-size: 48px; }
 }
 @media (max-width: 1023px) {
+  /* keep the chart readable: scroll it sideways instead of shrinking it further */
+  .plotScroll { display: block; overflow-x: auto; scrollbar-width: none; }
+  .plotScroll::-webkit-scrollbar { display: none; }
+  .plot { min-width: 760px; }
   .section { background: linear-gradient(102.95deg, #203c31 0.17%, #56a284 99.83%); }
   .content { width: calc(100% - 40px); padding-block: 64px !important; gap: 32px; }
   .header { grid-template-columns: 1fr; gap: 20px; }
