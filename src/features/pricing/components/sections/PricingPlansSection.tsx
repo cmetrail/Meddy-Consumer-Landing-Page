@@ -6,7 +6,7 @@ import Link from "next/link";
 import styles from "./PricingPlansSection.module.css";
 
 import { CircleCheckBig, Crown } from "lucide-react";
-import { medicarePlans, selfPayPlans, type Plan } from "@/features/home/components/sections/helper/Pricing";
+import { medicareNote, medicarePlans, selfPayPlans, type Plan } from "@/features/home/components/sections/helper/Pricing";
 
 const CTA = "Book your Free Consultation";
 
@@ -67,6 +67,13 @@ export default function PricingPlansSection() {
             <PlanCard key={plan.name} plan={plan} popular={!medicare && plan.variant === "care"} />
           ))}
         </div>
+        {medicare && (
+          <div className={styles.medicareNote}>
+            <p>{medicareNote.heading}</p>
+            <ul>{medicareNote.items.map((item) => <li key={item}>{item}</li>)}</ul>
+            <p>{medicareNote.footer}</p>
+          </div>
+        )}
       </div>
     </section>
   );

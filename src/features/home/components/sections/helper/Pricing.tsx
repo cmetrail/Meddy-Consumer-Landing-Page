@@ -63,52 +63,65 @@ export const selfPayPlans: Plan[] = [
   }
 ];
 
+const medicareCore = [
+  "Personal health dashboard",
+  "Wearable and device syncing",
+  "Biomarker tracking and Health Impact insights",
+  "Nutrition, activity, and sleep tracking",
+  "Video-guided exercise library and workout tracking",
+  "Personalized health goals and reminders",
+  "Health trends and progress reports",
+];
+
 export const medicarePlans: Plan[] = [
   {
-    "variant": "free",
-    "name": "Meddy",
-    "tagline": "Understand your health.",
-    "description": "Track your health, understand your progress, and stay connected to your care.",
-    "price": "59",
-    "subheader": "Your membership includes:",
-    "features": [
-      "Personal health dashboard",
-      "Wearable and device syncing",
-      "Biomarker tracking and Health Impact insights",
-      "Nutrition, activity, and sleep tracking",
-      "Video-guided exercise library and workout tracking",
-      "Personalized health goals and reminders",
-      "Health trends and progress reports"
-    ]
+    variant: "free",
+    name: "Meddy",
+    tagline: "Understand your health.",
+    description: "Track your health, understand your progress, and stay connected to your care.",
+    price: "59",
+    subheader: "Your membership includes:",
+    features: medicareCore,
   },
   {
-    "variant": "care",
-    "name": "Meddy Care",
-    "tagline": "Your personal physician.",
-    "description": "Ongoing physician-led care with regular visits, lab testing, and personalized recommendations.",
-    "price": "79",
-    "subheader": "A personalized plan for better health:",
-    "features": [
+    variant: "care",
+    name: "Meddy Care",
+    tagline: "Your personal physician.",
+    description: "Ongoing physician-led care with regular visits, lab testing, and personalized recommendations.",
+    price: "79",
+    subheader: "A personalized plan for better health:",
+    features: [...medicareCore, "Personalized workout programs", "Monthly in-app progress reviews"],
+  },
+  {
+    variant: "complete",
+    name: "Meddy Complete",
+    tagline: "More structure. More personalized guidance.",
+    description: "Stay on track with weekly fitness programming and priority scheduling.",
+    price: "99",
+    subheader: "Your membership includes:",
+    features: [
+      ...medicareCore,
       "Everything in Meddy, plus:",
       "Personalized workout programs",
-      "Monthly in-app progress reviews"
-    ]
-  },
-  {
-    "variant": "complete",
-    "name": "Meddy Complete",
-    "tagline": "More structure. More personalized guidance.",
-    "description": "Stay on track with weekly fitness programming and priority scheduling.",
-    "price": "99",
-    "subheader": "Your membership includes:",
-    "features": [
-      "Everything in Meddy care, plus:",
+      "Monthly in-app progress reviews",
       "Progress reviews every 2 weeks",
       "Weekly physician-built fitness plans",
-      "Priority appointment scheduling"
-    ]
-  }
+      "Priority appointment scheduling",
+    ],
+  },
 ];
+
+/** Shown under the Medicare plans (Figma 14959:4551). */
+export const medicareNote = {
+  heading: "Medical Care Available With Every Membership Billed separately to insurance, when covered:",
+  items: [
+    "Physician consultations and follow-up visits",
+    "Care-team messaging and clinical follow-up",
+    "Laboratory testing, imaging, and specialist referrals",
+    "Nutrition counseling, weight management, and care coordination",
+  ],
+  footer: "Medical services are provided based on clinical necessity and insurance coverage. Copayments, deductibles, and coinsurance may apply.",
+};
 
 function PlanCard({ plan, medicare }: { plan: Plan; medicare: boolean }) {
   const icons = medicare || plan.variant === "free"
@@ -179,6 +192,13 @@ export function Pricing() {
             <div key={plan.variant} data-plan-card><PlanCard plan={plan} medicare={medicare} /></div>
           ))}
         </div>
+        {medicare && (
+          <div className={styles.medicareNote}>
+            <p>{medicareNote.heading}</p>
+            <ul>{medicareNote.items.map((item) => <li key={item}>{item}</li>)}</ul>
+            <p>{medicareNote.footer}</p>
+          </div>
+        )}
       </div>
     </>
   );

@@ -46,15 +46,19 @@
   .badge { position: absolute; top: calc(-17.77 * var(--plan-unit)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: calc(8 * var(--plan-unit)); height: calc(28.135 * var(--plan-unit)); padding: calc(4 * var(--plan-unit)) calc(8 * var(--plan-unit)) !important; border-radius: 36px; background: var(--color-accent); font-size: calc(14 * var(--plan-unit)); line-height: 1.5; white-space: nowrap; }
   .badge img { transform: scale(calc(var(--plan-unit) / 1px)); }
   .subheader { margin-top: calc(24 * var(--plan-unit)) !important; font-size: calc(14 * var(--plan-unit)); line-height: 1.5; }
-  .plans[data-medicare="true"] .card { height: calc(614 * var(--plan-unit)); }
+  .plans[data-medicare="true"] > div { display: flex; }
+  .plans[data-medicare="true"] .card { height: auto; flex: 1; min-height: calc(614 * var(--plan-unit)); }
   .plans[data-medicare="true"] .description { min-height: 0; }
-  .plans[data-medicare="true"] .features { margin-top: calc(16 * var(--plan-unit)) !important; gap: calc(8 * var(--plan-unit)); color: #dadada; }
+  .plans[data-medicare="true"] .features { margin-top: calc(16 * var(--plan-unit)) !important; margin-bottom: calc(32 * var(--plan-unit)) !important; gap: calc(8 * var(--plan-unit)); color: #dadada; }
   .plans[data-medicare="true"] .complete .subheader { margin-top: calc(16 * var(--plan-unit)) !important; }
+  .medicareNote { display: flex; flex-direction: column; align-items: center; gap: calc(8 * var(--plan-unit)); color: #fff; font-size: calc(14 * var(--plan-unit)); line-height: 1.5; text-align: center; }
+  .medicareNote ul { margin: 0; padding-left: calc(21 * var(--plan-unit)) !important; list-style: disc; text-align: left; }
   .overlay { background: transparent !important; pointer-events: none; }
   .backdrop { position: absolute; inset: 0; background: #23452c; }
   .backdrop::before { content: ""; position: absolute; inset: 0; --photo-bottom: calc(100vw * 1.321); background: url('/home/footer-bg.jpg') 8% -27.9vw / 128% auto no-repeat; mask-image: linear-gradient(to bottom, #000 0, #000 calc(var(--photo-bottom) - 160px), transparent var(--photo-bottom)); -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(var(--photo-bottom) - 160px), transparent var(--photo-bottom)); }
   @media (max-width: 1023px) {
     .section { --plan-unit: 1px; }
+    .medicareNote { padding-inline: 20px !important; }
     .content { padding: 64px 0 !important; }
     .heading { padding-inline: 20px !important; gap: 24px; flex-direction: column; }
     .heading > div > p { font-size: 20px; margin-bottom: 12px !important; }
