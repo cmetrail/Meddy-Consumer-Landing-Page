@@ -15,6 +15,7 @@ export default function WaitlistStep({ onReturn }: { onReturn: () => void }) {
     register,
     trigger,
     getValues,
+    reset,
     formState: { errors },
   } = useFormContext<BookConsultationForm>();
   const [submitting, setSubmitting] = useState(false);
@@ -28,6 +29,7 @@ export default function WaitlistStep({ onReturn }: { onReturn: () => void }) {
     setError(null);
     try {
       await joinWaitlist({ email, state: stateOfResidence });
+      reset();
       setDone(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : "We couldn't add you to the list. Please try again.");
@@ -69,14 +71,14 @@ export default function WaitlistStep({ onReturn }: { onReturn: () => void }) {
             }`}
           />
           {errors.email ? <p className="text-[12px] leading-[1.5] text-[#d92d20]">{errors.email.message}</p> : null}
+          {done ? (
+            <p className="text-[14px] leading-[1.5] text-[#17925a]" role="status">
+              You&apos;re on the list. We&apos;ll email you when Meddy launches in your state.
+            </p>
+          ) : null}
         </div>
       </div>
 
-      {done ? (
-        <p className="max-w-[500px] text-center text-[14px] leading-[1.5] text-[#17925a]" role="status">
-          You&apos;re on the list. We&apos;ll email you when Meddy launches in your state.
-        </p>
-      ) : null}
       {error ? <p className="max-w-[500px] text-center text-[12px] leading-[1.5] text-[#d92d20]">{error}</p> : null}
 
       <div className="flex items-start gap-[16px]">
