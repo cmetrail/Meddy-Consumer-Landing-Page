@@ -255,11 +255,36 @@ export function FooterItems({
         />
         {mobileReference && (!mobileVariant || mobileVariant === "physician") && (
           <div data-footer-mobile-legal className={styles.mobileLegal}>
-            <p>Meddy is a service of Meddy Health LLC.</p>
+            <p>Meddy is operated by Meddy Health LLC.</p>
             <p>
-              © 2026 Meddy Health LLC. All rights reserved. Privacy Policy ·
-              Terms of Use · Notice of Privacy Practices · Accessibility ·
-              Contact Us
+              Medical services are provided by Sameer Aggarwal Medical PLLC.
+              Meddy is not for emergencies. If you have a medical emergency,
+              call 911.
+              <br />
+              © 2026 Meddy Health LLC. All rights reserved.
+            </p>
+            <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+              {LEGAL_LINKS.map((link, i) => (
+                <Fragment key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="underline-offset-2 hover:underline"
+                  >
+                    {link.label}
+                  </Link>
+                  {i < LEGAL_LINKS.length - 1 && (
+                    <span aria-hidden="true">·</span>
+                  )}
+                </Fragment>
+              ))}
+              <span aria-hidden="true">·</span>
+              <button
+                type="button"
+                onClick={() => openSettings()}
+                className="underline-offset-2 hover:underline"
+              >
+                Cookie settings
+              </button>
             </p>
           </div>
         )}
