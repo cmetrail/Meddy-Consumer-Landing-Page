@@ -39,6 +39,7 @@ const LEGAL_LINKS: FooterLink[] = [
   { label: "Terms of Use", href: "/terms-of-use" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Cookie Policy", href: "/cookie-policy" },
+  { label: "How We Use AI", href: "/how-we-use-ai" },
   { label: "Patient Terms of Service", href: "/patient-terms-of-service" },
   { label: "Notice of Privacy Practices", href: "/notice-of-privacy-practices" },
   { label: "Telehealth Consent", href: "/telehealth-consent" },
