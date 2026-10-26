@@ -23,9 +23,18 @@ const RULES: Rule[] = [
 
 const COMBINED = new RegExp(RULES.map((r) => `(${r.re.source})`).join("|"), "gi");
 
-const NAME_CLASS = "font-semibold text-[#f4f4f5]";
-const LINK_CLASS =
-  "font-semibold text-[#6ee7a0] underline-offset-2 transition-opacity hover:opacity-80 hover:underline";
+type Tone = "dark" | "light";
+
+const NAME_CLASS: Record<Tone, string> = {
+  dark: "font-semibold text-[#f4f4f5]",
+  light: "font-semibold text-[#111110]",
+};
+
+const LINK_CLASS: Record<Tone, string> = {
+  dark: "font-semibold text-[#6ee7a0] underline-offset-2 transition-opacity hover:opacity-80 hover:underline",
+  light:
+    "font-semibold text-[#17925a] underline-offset-2 transition-opacity hover:opacity-80 hover:underline",
+};
 
 function telHref(value: string): string {
   const digits = value.replace(/\D/g, "");
@@ -42,23 +51,23 @@ function mapsHref(address: string): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
 }
 
-function renderToken(value: string, kind: Kind, key: number): ReactNode {
+function renderToken(value: string, kind: Kind, key: number, tone: Tone): ReactNode {
   switch (kind) {
     case "name":
       return (
-        <span key={key} className={NAME_CLASS}>
+        <span key={key} className={NAME_CLASS[tone]}>
           {value}
         </span>
       );
     case "email":
       return (
-        <a key={key} href={`mailto:${value}`} className={LINK_CLASS}>
+        <a key={key} href={`mailto:${value}`} className={LINK_CLASS[tone]}>
           {value}
         </a>
       );
     case "tel":
       return (
-        <a key={key} href={`tel:${telHref(value)}`} className={LINK_CLASS}>
+        <a key={key} href={`tel:${telHref(value)}`} className={LINK_CLASS[tone]}>
           {value}
         </a>
       );
@@ -69,7 +78,7 @@ function renderToken(value: string, kind: Kind, key: number): ReactNode {
           href={urlHref(value)}
           target="_blank"
           rel="noopener noreferrer"
-          className={LINK_CLASS}
+          className={LINK_CLASS[tone]}
         >
           {value}
         </a>
@@ -81,7 +90,7 @@ function renderToken(value: string, kind: Kind, key: number): ReactNode {
           href={mapsHref(value)}
           target="_blank"
           rel="noopener noreferrer"
-          className={LINK_CLASS}
+          className={LINK_CLASS[tone]}
         >
           {value}
         </a>
@@ -89,7 +98,7 @@ function renderToken(value: string, kind: Kind, key: number): ReactNode {
   }
 }
 
-export function highlightText(text: string): ReactNode {
+export function highlightText(text: string, tone: Tone = "dark"): ReactNode {
   if (!text) return text;
 
   const re = new RegExp(COMBINED.source, "gi");
@@ -114,7 +123,7 @@ export function highlightText(text: string): ReactNode {
         break;
       }
     }
-    parts.push(renderToken(full, kind, key++));
+    parts.push(renderToken(full, kind, key++, tone));
     lastIndex = match.index + full.length;
   }
 
