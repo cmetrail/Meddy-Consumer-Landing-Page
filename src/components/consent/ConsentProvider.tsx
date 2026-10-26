@@ -20,11 +20,14 @@ type ConsentContextValue = {
   categories: ConsentCategories | null;
   bannerOpen: boolean;
   settingsOpen: boolean;
+  confirmationOpen: boolean;
   /** opens the preferences panel; the footer link uses the default source */
   openSettings: (source?: ConsentSource) => void;
   closeSettings: () => void;
   /** hides the banner for this visit only: nothing is saved or logged, so non-essential cookies stay off and we ask again next time */
   dismissBanner: () => void;
+  /** hides the confirmation toast shown after a choice is saved */
+  dismissConfirmation: () => void;
   acceptAll: () => void;
   rejectAll: () => void;
   saveCustom: (categories: ConsentCategories) => void;
@@ -45,6 +48,7 @@ export function ConsentProvider({ children }: { children: ReactNode }) {
   const [categories, setCategories] = useState<ConsentCategories | null>(null);
   const [bannerOpen, setBannerOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [settingsSource, setSettingsSource] = useState<ConsentSource>("settings_link");
 
   // Read the cookie after mount. No saved (or expired / older-policy) choice means ask again.
@@ -66,6 +70,7 @@ export function ConsentProvider({ children }: { children: ReactNode }) {
       setCategories(next);
       setBannerOpen(false);
       setSettingsOpen(false);
+      setConfirmationOpen(true);
       // Rejections are logged exactly like acceptances: one append-only row per decision.
       fetch("/api/consent", {
         method: "POST",
@@ -82,18 +87,20 @@ export function ConsentProvider({ children }: { children: ReactNode }) {
       categories,
       bannerOpen,
       settingsOpen,
+      confirmationOpen,
       openSettings: (source = "settings_link") => {
         setSettingsSource(source);
         setSettingsOpen(true);
       },
       closeSettings: () => setSettingsOpen(false),
       dismissBanner: () => setBannerOpen(false),
+      dismissConfirmation: () => setConfirmationOpen(false),
       acceptAll: () => decide("accept_all", ACCEPT_ALL, settingsOpen ? settingsSource : "banner"),
       rejectAll: () => decide("reject_all", REJECT_ALL, settingsOpen ? settingsSource : "banner"),
       saveCustom: (next) => decide("custom", next, settingsOpen ? settingsSource : "banner"),
       allows: (category) => !!categories?.[category] && !NO_TRACKING_PATHS.some((p) => pathname?.startsWith(p)),
     }),
-    [categories, bannerOpen, settingsOpen, settingsSource, decide, pathname],
+    [categories, bannerOpen, settingsOpen, confirmationOpen, settingsSource, decide, pathname],
   );
 
   return <ConsentContext.Provider value={value}>{children}</ConsentContext.Provider>;

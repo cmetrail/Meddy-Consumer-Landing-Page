@@ -10,12 +10,12 @@ import type { ConsentCategories } from "@/lib/consent";
 const ACTION_BTN =
   "flex w-full items-center justify-center whitespace-nowrap rounded-[35px] border border-solid border-[#17925a] bg-white px-[20px] py-[12px] text-[14px] font-normal leading-[1.5] text-[#17925a] transition-colors hover:bg-[#17925a]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#17925a]";
 const ACCEPT_BTN = ACTION_BTN.replace("bg-white", "bg-[#17925a]").replace("text-[#17925a]", "text-white").replace("hover:bg-[#17925a]/10", "hover:opacity-90");
-const ACTION_ROW = "grid w-full grid-cols-1 gap-[10px] sm:w-auto sm:grid-cols-[repeat(3,minmax(140px,1fr))]";
-const POLICY_LINK = "text-[16px] leading-[1.5] text-[#17925a] underline underline-offset-2 [text-underline-position:from-font]";
+const ACTION_ROW = "grid w-full grid-cols-1 gap-[10px] sm:grid-cols-3";
+const POLICY_LINK = "text-[14px] leading-[1.5] text-[#17925a] underline underline-offset-2 [text-underline-position:from-font]";
 
 function CloseButton({ onClick, label }: { onClick: () => void; label: string }) {
   return (
-    <button type="button" onClick={onClick} aria-label={label} className="absolute right-[16px] top-[14px] flex h-[24px] w-[24px] items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#17925a]">
+    <button type="button" onClick={onClick} aria-label={label} className="absolute right-[6px] top-[7px] flex h-[24px] w-[24px] items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#17925a]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/consent-close.svg" alt="" className="h-[12px] w-[12px]" />
     </button>
@@ -106,8 +106,35 @@ function SettingsDialog() {
   );
 }
 
+function ConfirmationBanner() {
+  const { dismissConfirmation } = useConsent();
+
+  useEffect(() => {
+    const timer = setTimeout(dismissConfirmation, 4000);
+    return () => clearTimeout(timer);
+  }, [dismissConfirmation]);
+
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      className="fixed inset-x-0 bottom-4 z-[1000] mx-auto flex w-[550px] max-w-[calc(100vw-32px)] flex-col items-center rounded-[8px] bg-white p-[32px] text-[#111110]"
+    >
+      <CloseButton onClick={dismissConfirmation} label="Close confirmation message" />
+      <div className="flex w-full flex-col gap-[8px]">
+        <h2 className="text-[20px] font-normal leading-[30px] text-[#111110]">Confirmation message</h2>
+        <p className="text-[12px] leading-[18px] text-[#111110]">
+          Your cookie choices have been saved. You can change them anytime using{" "}
+          <span className="text-[#17925a] underline underline-offset-2 [text-underline-position:from-font]">Cookie settings</span>{" "}
+          at the bottom of any page.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function CookieBanner() {
-  const { bannerOpen, settingsOpen, acceptAll, rejectAll, openSettings, dismissBanner } = useConsent();
+  const { bannerOpen, settingsOpen, confirmationOpen, acceptAll, rejectAll, openSettings, dismissBanner } = useConsent();
   const pathname = usePathname();
   const isCookiePolicyPage = pathname === "/cookie-policy";
 
@@ -117,14 +144,20 @@ export default function CookieBanner() {
         <div
           role="region"
           aria-label="Cookie consent"
-          className="fixed inset-x-4 bottom-4 z-[1000] mx-auto flex max-w-[880px] flex-col items-center gap-[32px] rounded-[8px] bg-white p-[32px] text-[#111110] shadow-[0_8px_30px_rgba(0,0,0,0.18)]"
+          className="fixed inset-x-0 bottom-4 z-[1000] mx-auto flex w-[550px] max-w-[calc(100vw-32px)] flex-col items-center gap-[16px] rounded-[8px] bg-white p-[32px] text-[#111110]"
         >
           <CloseButton onClick={dismissBanner} label="Close cookie banner without saving a choice" />
-          <div className="flex w-full flex-col items-center gap-[16px] text-center">
-            <h2 className="text-[20px] font-medium leading-[1.5] text-[#17925a]">We use cookies</h2>
-            <p className="text-[16px] leading-[1.5]">
-              We use cookies to keep this site working and, with your permission, to understand how visitors use it and to measure and personalize our ads. We don’t use analytics or advertising cookies on our medication or weight-management pages. You can change your choice at any time using the “Cookie settings” link at the bottom of every page.
-            </p>
+          <div className="flex w-full flex-col gap-[16px]">
+            <div className="flex flex-col gap-[8px]">
+              <div className="flex items-center gap-[8px]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/consent-cookie.svg" alt="" className="h-[17px] w-[17px]" />
+                <h2 className="text-[20px] font-normal leading-[30px] text-[#111110]">We use cookies</h2>
+              </div>
+              <p className="text-[12px] leading-[18px] text-[#111110]">
+                We use cookies to keep this site working and, with your permission, to understand how visitors use it and to measure and personalize our ads. We don’t use analytics or advertising cookies on our medication or weight-management pages. You can change your choice at any time using the “Cookie settings” link at the bottom of every page.
+              </p>
+            </div>
             <div className={ACTION_ROW}>
               <button type="button" className={ACCEPT_BTN} onClick={acceptAll}>Accept all</button>
               <button type="button" className={ACTION_BTN} onClick={rejectAll}>Reject all</button>
@@ -135,6 +168,7 @@ export default function CookieBanner() {
         </div>
       )}
       {settingsOpen && !isCookiePolicyPage && <SettingsDialog />}
+      {confirmationOpen && !isCookiePolicyPage && <ConfirmationBanner />}
     </>
   );
 }
