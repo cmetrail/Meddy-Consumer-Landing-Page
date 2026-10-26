@@ -167,6 +167,50 @@ export default function Comprehensive() {
     { scope: sectionRef },
   );
 
+  useGSAP(
+    () => {
+      const section = sectionRef.current;
+      if (!section) return;
+      const map = section.querySelector<HTMLElement>(`.${styles.map}`);
+      const path = section.querySelector<SVGPathElement>("[data-care-connection]");
+      const dot = section.querySelector<SVGCircleElement>("[data-care-dot]");
+      if (!map || !path || !dot) return;
+
+      const updateConnection = () => {
+        const cityIndex = cities.findIndex((city) => city.name === activeCity);
+        const city = cities[cityIndex];
+        const button = map.querySelectorAll<HTMLButtonElement>(`.${styles.cityButton}`)[cityIndex];
+        let x = 203;
+        let y = 245;
+        let d = "M203 245 C223 158 304 105 391 157";
+
+        if (city && button) {
+          // Use the SVG's coordinate system so the line follows the responsive map.
+          x = city.x * 882 / 100;
+          y = city.y * 559 / 100 - (button.offsetHeight / 2 + 4) * 559 / map.clientHeight;
+          const endX = x < 422 ? 391 : 453;
+          const arcY = Math.min(y, 157) - 80;
+          d = `M${x} ${y} C${x} ${arcY} ${endX} ${arcY} ${endX} 157`;
+          // The reveal's original dash length must not clip a longer city connection.
+          gsap.set(path, { strokeDasharray: "none", strokeDashoffset: 0 });
+        }
+
+        const duration = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 0.4;
+        gsap.to(path, { attr: { d }, duration, ease: "power2.out", overwrite: "auto" });
+        gsap.to(dot, { attr: { cx: x, cy: y }, duration, ease: "power2.out", overwrite: "auto" });
+      };
+
+      updateConnection();
+      const observer = new ResizeObserver(updateConnection);
+      observer.observe(map);
+      return () => {
+        observer.disconnect();
+        gsap.killTweensOf([path, dot], "attr");
+      };
+    },
+    { scope: sectionRef, dependencies: [activeCity] },
+  );
+
   return (
     <section
       ref={sectionRef}
