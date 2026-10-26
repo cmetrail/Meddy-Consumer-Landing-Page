@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useConsent } from "./ConsentProvider";
 import type { ConsentCategories } from "@/lib/consent";
 
@@ -98,7 +99,7 @@ function SettingsDialog() {
           </div>
         </div>
         <p className="mt-8 text-center">
-          <Link href="/cookie-policy" className={POLICY_LINK}>Read our Cookie Policy</Link>
+          <Link href="/cookie-policy" className={POLICY_LINK} onClick={closeSettings}>Read our Cookie Policy</Link>
         </p>
       </div>
     </div>
@@ -107,10 +108,12 @@ function SettingsDialog() {
 
 export default function CookieBanner() {
   const { bannerOpen, settingsOpen, acceptAll, rejectAll, openSettings, dismissBanner } = useConsent();
+  const pathname = usePathname();
+  const isCookiePolicyPage = pathname === "/cookie-policy";
 
   return (
     <>
-      {bannerOpen && !settingsOpen && (
+      {bannerOpen && !settingsOpen && !isCookiePolicyPage && (
         <div
           role="region"
           aria-label="Cookie consent"
@@ -128,10 +131,10 @@ export default function CookieBanner() {
               <button type="button" className={ACTION_BTN} onClick={() => openSettings("banner")}>Manage settings</button>
             </div>
           </div>
-          <Link href="/cookie-policy" className={POLICY_LINK}>Read our Cookie Policy</Link>
+          <Link href="/cookie-policy" className={POLICY_LINK} onClick={dismissBanner}>Read our Cookie Policy</Link>
         </div>
       )}
-      {settingsOpen && <SettingsDialog />}
+      {settingsOpen && !isCookiePolicyPage && <SettingsDialog />}
     </>
   );
 }
