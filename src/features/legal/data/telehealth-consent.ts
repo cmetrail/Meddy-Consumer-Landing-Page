@@ -94,7 +94,7 @@ export const telehealthConsent: LegalDoc = {
         },
         {
           heading: "Phone calls and artificial intelligence.",
-          body: "Calls to our phone line (516-925-3997) may be answered by Meddy’s automated assistant, which uses artificial intelligence. It will tell you at the start of each call that you are speaking with an automated assistant and that the call is recorded and transcribed. Unlike video visits, these calls are recorded, and recordings, transcripts, and voicemails are kept with your records. We also use artificial intelligence tools, under Business Associate Agreements, to help transcribe conversations, summarize messages, and draft notes. Your provider reviews AI-assisted clinical work before relying on it, and artificial intelligence does not make decisions about your care. Our vendors may not use your information to train their artificial intelligence models. Meddy may use information that has been de-identified, so that it can no longer identify you, to improve its services, including to develop artificial intelligence models, as HIPAA permits.",
+          body: "Calls to our phone line (516-925-3997) may be answered by Meddy’s automated assistant, which uses artificial intelligence. It will tell you at the start of each call that you are speaking with an automated assistant and that the call is recorded and transcribed. Unlike video visits, these calls are recorded, and recordings, transcripts, and voicemails are kept with your records. We also use artificial intelligence tools, under Business Associate Agreements, to help transcribe conversations and summarize messages. Your physician may also use AI tools to search your medical record and to look up evidence-based medical information. Questions sent to the medical information tool have identifying details removed first. Your physician reviews all results and makes every decision about your care. Your provider reviews AI-assisted clinical work before relying on it, and artificial intelligence does not make decisions about your care. Our vendors may not use your information to train their artificial intelligence models. Meddy may use information that has been de-identified, so that it can no longer identify you, to improve its services, including to develop artificial intelligence models, as HIPAA permits.",
         },
         {
           heading: "Response times.",
@@ -184,13 +184,8 @@ export const telehealthConsent: LegalDoc = {
         "I understand that calls to the Practice’s phone line may be answered by an automated assistant and are recorded and transcribed, and that email and text messages are not encrypted and are used only for non-clinical information.",
         "I consent to receive telehealth services from Sameer Aggarwal Medical PLLC.",
       ],
-      trailing: [
-        "This consent remains in effect until I withdraw it in writing. I agree that checking “I agree” or signing electronically has the same effect as a handwritten signature.",
-        "Patient name: ______________________________",
-        "Date of birth: ______________________________",
-        "Signature: ______________________________ Date: ______________",
-        "If signed by a legal representative: Name and relationship: ______________________________",
-      ],
+      trailing:
+        "This consent remains in effect until I withdraw it in writing. By checking “I agree” in the Meddy app or website, you confirm that you have read and understand this consent and agree to receive care by telehealth. Your acceptance is recorded with the date and time and kept in your medical record. You may request a copy at any time.",
     },
   ],
 };
