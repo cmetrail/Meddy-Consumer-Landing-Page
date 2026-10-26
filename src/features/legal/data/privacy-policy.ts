@@ -81,7 +81,7 @@ export const privacyPolicy: LegalDoc = {
             "To schedule consultations and provide the medical services you request",
           ],
           [
-            "Service providers that work for us, such as Amazon Web Services (hosting and email delivery), Google Workspace (email), Sinch (phone calls and text messages), OpenAI (artificial intelligence processing, including our automated assistant), Stedi (insurance claims processing), and Contentsquare (website analytics)",
+            "Service providers that work for us, such as Amazon Web Services (hosting and email delivery), Google Workspace (email), Sinch (phone calls and text messages), OpenAI (artificial intelligence processing, including our automated assistant), Stedi (insurance claims processing), CME Trail Inc. (clinical reference tool for physicians; an affiliate under common ownership), and Contentsquare (website analytics)",
             "To run the site and app and send communications, under contracts that limit their use of the data to providing services to us. Providers that handle health information sign Business Associate Agreements, and may not use your health information to train artificial intelligence models.",
           ],
           [
