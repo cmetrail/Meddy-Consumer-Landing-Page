@@ -162,7 +162,7 @@ A: Yes. Meddy tracks metabolic markers like glucose, A1C, and lipids alongside y
 
 Q: Does Meddy offer weight-loss medications?
 
-A: Yes. When clinically appropriate, your Meddy physician can direct weight-loss medication alongside nutrition, activity, and sleep.
+A: No. Meddy doesn’t prescribe weight-loss medications. Your Meddy physician focuses on nutrition, activity, and sleep to support your weight goals.
 
 Q: What if my weight stops changing?
 

@@ -15,7 +15,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: "Does Meddy offer weight-loss medications?",
-    a: "Yes. When clinically appropriate, your Meddy physician can direct weight-loss medication alongside nutrition, activity, and sleep.",
+    a: "No. Meddy doesn’t prescribe weight-loss medications. Your Meddy physician focuses on nutrition, activity, and sleep to support your weight goals.",
   },
   {
     q: "What if my weight stops changing?",
