@@ -41,7 +41,10 @@ const LEGAL_LINKS: FooterLink[] = [
   { label: "Cookie Policy", href: "/cookie-policy" },
   { label: "How We Use AI", href: "/how-we-use-ai" },
   { label: "Patient Terms of Service", href: "/patient-terms-of-service" },
-  { label: "Notice of Privacy Practices", href: "/notice-of-privacy-practices" },
+  {
+    label: "Notice of Privacy Practices",
+    href: "/notice-of-privacy-practices",
+  },
   { label: "Telehealth Consent", href: "/telehealth-consent" },
 ];
 
@@ -96,7 +99,22 @@ export function FooterItems({
 }: {
   noTopMargin?: boolean;
   mobileReference?: boolean;
-  mobileVariant?: "longevity" | "wearables" | "physician" | "how-it-works" | "247-care" | "weight-loss" | "medication" | "personalized-health-plans" | "biomarkers" | "what-we-test" | "fitness" | "sleep" | "nutrition" | "pricing" | "why-meddy";
+  mobileVariant?:
+    | "longevity"
+    | "wearables"
+    | "physician"
+    | "how-it-works"
+    | "247-care"
+    | "weight-loss"
+    | "medication"
+    | "personalized-health-plans"
+    | "biomarkers"
+    | "what-we-test"
+    | "fitness"
+    | "sleep"
+    | "nutrition"
+    | "pricing"
+    | "why-meddy";
   className?: string;
 }) {
   const { openSettings } = useConsent();
@@ -109,10 +127,17 @@ export function FooterItems({
         className={`${styles.inner} mx-auto w-full max-w-360 px-5 lg:px-10 py-16 pb-4`}
       >
         {mobileReference && (
-          <nav data-footer-mobile-nav className={styles.mobileNav} aria-label="Footer navigation">
+          <nav
+            data-footer-mobile-nav
+            className={styles.mobileNav}
+            aria-label="Footer navigation"
+          >
             {MOBILE_LINKS.flatMap((link) => {
               if (mobileVariant && link.label === "FAQ") return [];
-              if (mobileVariant === "physician" && link.label === "Medication management") {
+              if (
+                mobileVariant === "physician" &&
+                link.label === "Medication management"
+              ) {
                 return [link, { label: "SEO", href: "/#how-it-works" }];
               }
               return [link];
@@ -128,7 +153,11 @@ export function FooterItems({
           className={`${styles.layout} grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto] lg:gap-x-16 lg:gap-y-0`}
         >
           <div data-footer-brand data-reveal className={styles.brand}>
-            <Link href="/" aria-label="Meddy Health homepage" className="block w-fit">
+            <Link
+              href="/"
+              aria-label="Meddy Health homepage"
+              className="block w-fit"
+            >
               <Image
                 src="/app-logo.png"
                 alt="Meddy Health"
@@ -300,8 +329,7 @@ export function FooterItems({
           <p>
             Medical services are provided by Sameer Aggarwal Medical PLLC. Meddy
             is not for emergencies. If you have a medical emergency, call 911.
-            <br />
-            © 2026 Meddy Health LLC. All rights reserved.
+            <br />© 2026 Meddy Health LLC. All rights reserved.
           </p>
           <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
             {LEGAL_LINKS.map((link, i) => (

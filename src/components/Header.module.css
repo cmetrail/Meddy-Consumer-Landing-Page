@@ -1,0 +1,29 @@
+.floating {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  background: #fef9ef;
+  box-shadow: 0 2px 16px #00000012;
+  transform: translateY(-110%);
+  visibility: hidden;
+  transition: transform 200ms ease, visibility 200ms;
+}
+
+.floating[data-variant="dark"] {
+  background: #1a231f;
+}
+
+.visible {
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.floating :global(.anim-fade-down) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating {
+    transition: none;
+  }
+}

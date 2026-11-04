@@ -1,12 +1,13 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import FullScreenMenu from "./FullScreenMenu";
+import styles from "./Header.module.css";
 
 const NAV_ITEMS = [
   { label: "How it works", href: "/how-it-works" },
@@ -70,10 +71,46 @@ export default function Header({
   const menuId = useId();
   const logoRef = useRef<HTMLAnchorElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const slotRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const [scrollState, setScrollState] = useState({ floating: false, visible: false });
+  const [headerHeight, setHeaderHeight] = useState(0);
   const v = VARIANTS[variant];
 
-  return (
-    <header className="relative mx-auto grid max-w-360 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 px-5 py-5 lg:px-10">
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const observer = new ResizeObserver(() => setHeaderHeight(header.offsetHeight));
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, [scrollState.floating]);
+
+  useEffect(() => {
+    let previousY = Math.max(0, window.scrollY);
+    let direction = 0;
+    let distance = 0;
+    const onScroll = () => {
+      const y = Math.max(0, Math.min(window.scrollY, document.documentElement.scrollHeight - window.innerHeight));
+      const delta = y - previousY;
+      const nextDirection = Math.sign(delta);
+      if (nextDirection !== 0) {
+        distance = nextDirection === direction ? distance + Math.abs(delta) : Math.abs(delta);
+        direction = nextDirection;
+      }
+      previousY = y;
+      const floating = (slotRef.current?.getBoundingClientRect().bottom ?? 0) <= 0;
+      setScrollState((current) => {
+        const visible = floating && (direction < 0 && distance >= 4 ? true : direction > 0 && distance >= 12 ? false : current.visible);
+        return current.floating === floating && current.visible === visible ? current : { floating, visible };
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [pathname]);
+
+  const header = (
+    <header ref={headerRef} className="relative mx-auto grid max-w-360 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 px-5 py-5 lg:px-10">
       {/* Logo */}
       <Link
         ref={logoRef}
@@ -157,6 +194,25 @@ export default function Header({
         </button>
       </div>
 
+    </header>
+  );
+
+  return (
+    <>
+      <div ref={slotRef} style={scrollState.floating ? { height: headerHeight } : undefined}>
+        {!scrollState.floating && header}
+      </div>
+      {scrollState.floating && createPortal(
+        <div
+          className={`${styles.floating} ${scrollState.visible || menuOpen ? styles.visible : ""}`}
+          data-variant={variant}
+          inert={!scrollState.visible && !menuOpen}
+          onFocusCapture={() => setScrollState((current) => ({ ...current, visible: true }))}
+        >
+          {header}
+        </div>,
+        document.body,
+      )}
       {typeof document !== "undefined" &&
         createPortal(
           <AnimatePresence>
@@ -166,6 +222,6 @@ export default function Header({
           </AnimatePresence>,
           document.body,
         )}
-    </header>
+    </>
   );
 }
