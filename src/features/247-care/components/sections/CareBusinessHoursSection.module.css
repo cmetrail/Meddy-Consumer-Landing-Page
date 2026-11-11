@@ -21,6 +21,23 @@
   margin-top: 32px !important;
 }
 
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 40px;
+  margin-top: 32px !important;
+  color: #161616;
+  font-size: clamp(16px, 1.05vw, 20px);
+  line-height: 1.5;
+}
+
+.contact a {
+  color: #17925a;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .day {
   min-width: 0;
   min-height: 108px;

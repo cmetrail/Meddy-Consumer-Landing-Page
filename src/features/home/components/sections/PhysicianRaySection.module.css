@@ -62,7 +62,7 @@
 .availabilityCount span { font-size: 4cqw; line-height: 1.4; text-transform: uppercase; }
 .availabilityRing { width: 22cqw; height: 22cqw; flex-shrink: 0; }
 .badges { position: absolute; top: 83.5%; right: 8.4%; display: grid; grid-template-columns: auto auto; gap: 2.19cqh 2.26cqh; }
-.badge { display: flex; align-items: center; gap: .93cqh; font-size: min(.95cqw, 1.26cqh); line-height: 1.4; white-space: nowrap; font-weight: 400; color: #dbe7d6; }
+.badge { display: flex; align-items: center; gap: .93cqh; font-size: min(1.1cqw, 1.46cqh); line-height: 1.4; white-space: nowrap; font-weight: 400; color: #dbe7d6; }
 .badge svg { flex-shrink: 0; width: min(1.55cqw, 2.06cqh); height: min(1.55cqw, 2.06cqh); }
 .badge strong { font-weight: 400; }
 
@@ -90,6 +90,6 @@
   .portrait { width: calc(300 * var(--ray-unit)); left: calc(-26 * var(--ray-unit)); bottom: calc(-44 * var(--ray-unit)); }
   .social { display: none; }
   .badges { top: calc(294 * var(--ray-unit)); right: calc(12 * var(--ray-unit)); left: calc(16 * var(--ray-unit)); grid-template-columns: auto auto; justify-content: space-between; gap: calc(12 * var(--ray-unit)) calc(12 * var(--ray-unit)); }
-  .badge { font-size: calc(7.8 * var(--ray-unit)); gap: calc(7 * var(--ray-unit)); }
+  .badge { font-size: calc(8.5 * var(--ray-unit)); gap: calc(7 * var(--ray-unit)); }
   .badge svg { width: calc(16 * var(--ray-unit)); height: calc(16 * var(--ray-unit)); }
 }

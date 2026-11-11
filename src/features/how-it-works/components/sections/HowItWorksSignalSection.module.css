@@ -1,5 +1,6 @@
 .section { position: relative; display: flex; align-items: center; width: 100%; min-height: var(--dvh); overflow: hidden; background: #a87b46; /* The desktop composition is 877 units tall, including its padding. */ --signal-unit: min(calc(100vw / 1920), calc(var(--dvh) / 877), 1px); }
-.backdrop { position: absolute; left: -141px; right: -141px; top: 50%; transform: translateY(-50%); aspect-ratio: 1672 / 941; min-height: 100%; pointer-events: none; }
+/* Cover the section with extra room for the scroll animation's vertical travel. */
+.backdrop { position: absolute; inset: -32px -141px; pointer-events: none; }
 .photo { object-fit: cover; }
 .fade { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 15.937%, #030c16 100%); opacity: .6; pointer-events: none; }
 .content { position: relative; z-index: 1; width: calc(100% - 2 * var(--section-gutter)); margin-inline: auto !important; padding-top: calc(134 * var(--signal-unit)) !important; padding-bottom: calc(118 * var(--signal-unit)) !important; }
@@ -26,7 +27,7 @@
 .description { flex: 1; min-width: 0; padding-bottom: calc(1 * var(--signal-unit)) !important; color: white; font-size: calc(20 * var(--signal-unit)); line-height: 1.5; }
 @media (max-width: 1023px) {
   .section { --signal-unit: 1px; }
-  .backdrop { left: calc(50% + 35.5px); right: auto; top: 0; transform: translateX(-50%); width: 1605px; height: 903px; }
+  .backdrop { inset: -16px 0; }
   .content { padding-block: clamp(16px, calc(var(--dvh) * .04), 64px) !important; }
   .heading { font-size: min(clamp(26px, 4.5vw, 44px), calc(var(--dvh) * .05)); line-height: 1.5; }
   .firstLine { height: auto; white-space: normal; line-height: 1.5; }

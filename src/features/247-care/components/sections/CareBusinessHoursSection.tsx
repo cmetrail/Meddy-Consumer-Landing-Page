@@ -25,6 +25,10 @@ export default function CareBusinessHoursSection() {
             </div>
           ))}
         </dl>
+        <div className={styles.contact}>
+          <p>Phone: <a href="tel:+15169253997">516-925-3997</a></p>
+          <p>Fax: 516-925-3996</p>
+        </div>
       </div>
     </section>
   );

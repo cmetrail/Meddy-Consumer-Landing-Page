@@ -130,29 +130,23 @@ export default function MostCareSection() {
   useLayoutEffect(() => {
     const section = sectionRef.current;
     const canvas = section?.querySelector<HTMLElement>(`.${styles.canvas}`);
-    const header = document.querySelector("#hero header");
-    if (!canvas || !header) return;
-    const alignImages = () => {
-      const logo = header.querySelector("img")?.getBoundingClientRect();
-      const button = header.querySelector("button")?.getBoundingClientRect();
-      if (!logo || !button) return;
-      const bounds = canvas.getBoundingClientRect();
+    if (!canvas) return;
+    // The hero header moves into a portal on scroll. Its detached DOM nodes
+    // report zero bounds, so collage positions must stay local to this canvas.
+    const updateScale = () => {
       const isMobile = window.matchMedia("(max-width: 767px)").matches;
       const referenceWidth = isMobile ? 400 : 1440;
-      const scale = bounds.width / referenceWidth;
+      const scale = canvas.getBoundingClientRect().width / referenceWidth;
       canvas.style.setProperty("--collage-scale", `${scale}`);
       canvas.style.setProperty("--sleep-render-scale", `${scale * (isMobile ? .588 : 1.2)}`);
-      canvas.style.setProperty("--collage-left", `${(logo.left - bounds.left) / scale}px`);
-      canvas.style.setProperty("--collage-right", `${(button.right - bounds.left) / scale}px`);
     };
-    alignImages();
-    const observer = new ResizeObserver(alignImages);
+    updateScale();
+    const observer = new ResizeObserver(updateScale);
     observer.observe(canvas);
-    observer.observe(header);
-    window.addEventListener("resize", alignImages);
+    window.addEventListener("resize", updateScale);
     return () => {
       observer.disconnect();
-      window.removeEventListener("resize", alignImages);
+      window.removeEventListener("resize", updateScale);
     };
   }, []);
 

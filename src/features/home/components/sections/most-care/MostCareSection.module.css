@@ -126,12 +126,8 @@
 }
 .mealDescription { min-width: 0; }
 .mealShortName { display: none; }
-.meal { left: var(--collage-left, 120px); }
-.calories { left: calc(var(--collage-right, 1320px) - 286px); }
-.sleep { left: calc(var(--collage-right, 1320px) - 278px); }
 .sleepPhoto { right: 0; }
 @media (min-width: 768px) {
-  .nutrients, .connection { left: var(--collage-left, 120px); }
   .sleepPanel { left: auto; right: 0; }
 }
 .statement h2 { color: #7B7B7B; }
@@ -140,7 +136,7 @@
 
 
 /* Sleep illustration: preserve the supplied reference's photo/panel proportions. */
-.sleep { width: 333.6px; height: 295.2px; left: calc(var(--collage-right, 1320px) - 333.6px); }
+.sleep { width: 333.6px; height: 295.2px; }
 .sleepArtwork { position: relative; width: 278px; height: 246px; transform: scale(1.2); transform-origin: top left; }
 
 .sleepPhoto { left: 0; right: auto; width: 194px; height: 220px; }
@@ -172,11 +168,20 @@
   --sleep-parent-scale: 1;
   --sleep-group-scale: var(--collage-scale, 1);
   width: calc(232.8px + 174px / var(--sleep-group-scale));
-  left: calc(var(--collage-right, 1320px) - (232.8px + 174px / var(--sleep-group-scale)) * var(--sleep-parent-scale));
+  left: calc(1320px - (232.8px + 174px / var(--sleep-group-scale)) * var(--sleep-parent-scale));
 }
 .sleepAxis { font-size: calc(9px / var(--sleep-render-scale, 1.2)); }
 .sleepRange { font-size: calc(9px / var(--sleep-render-scale, 1.2)); }
 .sleepLegend > div { height: calc(20px / var(--sleep-render-scale, 1.2)); }
+
+/* Keep the sleep composition in the same column as the calorie card. */
+@media (min-width: 768px) {
+  .sleep {
+    left: 1034px;
+    scale: calc(286 / (232.8 + 174 / var(--collage-scale, 1)));
+    transform-origin: top left;
+  }
+}
 
 /* Mobile collage follows a 400px reference canvas, scaling as one composition. */
 @media (max-width: 767px) {

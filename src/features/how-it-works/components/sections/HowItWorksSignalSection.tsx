@@ -108,7 +108,7 @@ export default function HowItWorksSignalSection() {
   return (
     <section data-story-chapter="signal" className={styles.section} aria-labelledby="signal-heading">
       <div data-story-photo className={styles.backdrop}>
-        <Image src="/how-it-works/signal/bg.png" alt="" fill sizes="(min-width: 1024px) 120vw, 1605px" className={styles.photo} />
+        <Image src="/how-it-works/signal/bg.png" alt="" fill sizes="(min-width: 1024px) calc(100vw + 282px), 100vw" className={styles.photo} />
       </div>
       <div className={styles.fade} />
       <div className={styles.content}>
